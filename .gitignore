@@ -1,13 +1,13 @@
 apps/app-mobile/node_modules/**/*
-.expo/*
-npm-debug.*
+apps/app-mobile/.expo/*
+apps/app-mobile/npm-debug.*
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
+apps/app-mobile/web-build/
 
 # macOS
-.DS_Store
+apps/app-mobile/.DS_Store
