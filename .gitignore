@@ -8,6 +8,26 @@ apps/app-mobile/npm-debug.*
 *.mobileprovision
 *.orig.*
 apps/app-mobile/web-build/
-
-# macOS
 apps/app-mobile/.DS_Store
+
+/apps/app-web/node_modules
+/apps/app-web/.pnp
+/apps/app-web.pnp.js
+
+# testing
+/apps/app-web/coverage
+
+# production
+/apps/app-web/build
+
+# misc
+/apps/app-web/.DS_Store
+/apps/app-web/.env.local
+/apps/app-web/.env.development.local
+/apps/app-web/.env.test.local
+/apps/app-web/.env.production.local
+
+/apps/app-web/npm-debug.log*
+/apps/app-web/yarn-debug.log*
+/apps/app-web/yarn-error.log*
+
