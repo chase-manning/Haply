@@ -1,3 +1,5 @@
+/.firebase
+
 # Mobile App
 apps/app-mobile/node_modules/**/*
 apps/app-mobile/.expo/*
