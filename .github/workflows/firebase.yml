@@ -1,0 +1,30 @@
+name: firebase-deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: "10.x"
+      - name: Installing App Dependencies
+        run: npm install
+        working-directory: apps/app-web
+      - name: Installing Function Dependencies
+        run: npm install
+        working-directory: functions
+      - name: Building App
+        run: npm run build:prod
+        working-directory: apps/app-web/src
+      - name: Deploying to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
