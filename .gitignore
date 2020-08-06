@@ -1,3 +1,4 @@
+# Mobile App
 apps/app-mobile/node_modules/**/*
 apps/app-mobile/.expo/*
 apps/app-mobile/npm-debug.*
@@ -10,24 +11,23 @@ apps/app-mobile/npm-debug.*
 apps/app-mobile/web-build/
 apps/app-mobile/.DS_Store
 
+# Web App
 /apps/app-web/node_modules
 /apps/app-web/.pnp
 /apps/app-web.pnp.js
-
-# testing
 /apps/app-web/coverage
-
-# production
 /apps/app-web/build
-
-# misc
 /apps/app-web/.DS_Store
 /apps/app-web/.env.local
 /apps/app-web/.env.development.local
 /apps/app-web/.env.test.local
 /apps/app-web/.env.production.local
-
 /apps/app-web/npm-debug.log*
 /apps/app-web/yarn-debug.log*
 /apps/app-web/yarn-error.log*
 
+# Functions
+/functions/**/*.js
+/functions/**/*.js.map
+/functions/typings/
+/functions/node_modules/
