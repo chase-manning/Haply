@@ -20,7 +20,7 @@ jobs:
         run: npm install
         working-directory: functions
       - name: Building App
-        run: npm run build:prod
+        run: npm run build
         working-directory: apps/app-web/src
       - name: Deploying to Firebase
         uses: w9jds/firebase-action@master
