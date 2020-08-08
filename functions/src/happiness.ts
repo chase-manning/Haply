@@ -7,9 +7,9 @@ admin.initializeApp();
 const db = admin.firestore();
 
 export const create = functions.https.onRequest(async (request, response) => {
-  const docRef = db.collection("happiness").doc("qweqwe");
+  const col = db.collection("happiness");
   const happiness = new Happiness(6);
-  const res = await docRef.set(happiness);
+  const res = await col.set(happiness);
   response.send(res);
 });
 
