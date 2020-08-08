@@ -10,6 +10,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/api/happiness/create",
+        "function": "happiness-create"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
