@@ -1,17 +1,19 @@
 /.firebase
 
 # Mobile App
-apps/app-mobile/node_modules/**/*
-apps/app-mobile/.expo/*
-apps/app-mobile/npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-apps/app-mobile/web-build/
+apps/app-mobile/node_modules
+apps/app-mobile/.pnp
+apps/app-mobile/pnp.js
+apps/app-mobile/coverage
+apps/app-mobile/build
 apps/app-mobile/.DS_Store
+apps/app-mobile/.env.local
+apps/app-mobile/.env.development.local
+apps/app-mobile/.env.test.local
+apps/app-mobile/.env.production.local
+apps/app-mobile/npm-debug.log*
+apps/app-mobile/yarn-debug.log*
+apps/app-mobile/yarn-error.log*
 
 # Web App
 /apps/app-web/node_modules
