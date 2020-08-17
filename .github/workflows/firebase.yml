@@ -24,6 +24,7 @@ jobs:
         working-directory: functions
       - name: Building Web App
         run: npm run build
+        working-directory: apps/app-web/src
       - name: Building Mobile App
         run: npm run build
         working-directory: apps/app-mobile/src
