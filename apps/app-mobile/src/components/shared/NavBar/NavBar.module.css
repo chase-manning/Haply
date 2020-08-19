@@ -1,11 +1,14 @@
 .NavBar {
-  height: 20%;
+  height: 10%;
   width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
-  background-color: red;
+  background-color: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .mow {
