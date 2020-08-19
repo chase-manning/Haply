@@ -6,10 +6,12 @@ import TabTwo from "../../tabs/TabTwo/TabTwo";
 
 function App() {
   return (
-    <Router>
-      <Route exact path="/" component={TabOne} />
-      <Route path="/users" component={TabTwo} />
-    </Router>
+    <div className="App">
+      <Router>
+        <Route exact path="/" component={TabOne} />
+        <Route path="/users" component={TabTwo} />
+      </Router>
+    </div>
   );
 }
 
