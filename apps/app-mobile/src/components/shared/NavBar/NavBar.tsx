@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./NavBar.module.css";
+import NavItem from "../NavItem/NavItem";
 
 const NavBar: React.FC = () => (
   <div className={styles.NavBar} data-testid="NavBar">
-    <a href="/">mewow</a>
-    <a href="/users">mewow</a>
+    <NavItem></NavItem>
+    <NavItem></NavItem>
+    <NavItem></NavItem>
+    <NavItem></NavItem>
   </div>
 );
 
