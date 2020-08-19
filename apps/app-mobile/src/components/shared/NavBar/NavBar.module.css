@@ -11,12 +11,12 @@
   align-items: center;
 }
 
-.mow {
-  text-decoration: none;
-  color: black;
-  background-color: green;
-}
-
-.meow {
-  display: none;
+.NavItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: auto;
+  width: 100%;
 }
