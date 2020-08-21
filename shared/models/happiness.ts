@@ -1,4 +1,4 @@
-export class Happiness {
+export class Mood {
   value: number;
   date: Date;
 
