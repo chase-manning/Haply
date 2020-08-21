@@ -9,13 +9,13 @@ const db = admin.firestore();
 export const create = functions.https.onRequest(async (request, response) => {
   const col = db.collection("mood");
   const happiness = new Mood(6);
-  const res = await col.set(happiness);
+  const res = await col.add(happiness);
   response.send(res);
 });
 
 export const update = functions.https.onRequest(async (request, response) => {
-  const docRef = db.collection("mood").doc("qweqwe");
+  const col = db.collection("mood").doc("qweqwe");
   const happiness = new Mood(6);
-  const res = await docRef.set(happiness);
+  const res = await col.set(happiness.json);
   response.send(res);
 });
