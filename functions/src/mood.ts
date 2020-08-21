@@ -9,7 +9,7 @@ const db = admin.firestore();
 export const create = functions.https.onRequest(async (request, response) => {
   const col = db.collection("mood");
   const happiness = new Mood(6);
-  const res = await col.add(happiness);
+  const res = await col.add(happiness.json);
   response.send(res);
 });
 
