@@ -1,10 +1,22 @@
-import React from 'react';
-import styles from './Capture.module.css';
+import React, { Component } from "react";
+import styles from "./Capture.module.css";
 
-const Capture: React.FC = () => (
-  <div className={styles.Capture} data-testid="Capture">
-    Capture Component
-  </div>
-);
+export default class Capture extends Component {
+  meow(): void {
+    console.log("werwerA");
+    fetch(
+      "https://us-central1-happiness-software.cloudfunctions.net/mood-create"
+    )
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }
 
-export default Capture;
+  render() {
+    return (
+      <div className={styles.Capture} data-testid="Capture">
+        Capture Component
+        <button onClick={this.meow}>Meow</button>
+      </div>
+    );
+  }
+}
