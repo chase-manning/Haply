@@ -1,1 +1,1 @@
-exports.happiness = require("./happiness");
+exports.mood = require("./mood");
