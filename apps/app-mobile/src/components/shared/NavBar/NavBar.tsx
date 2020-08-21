@@ -13,19 +13,19 @@ const NavBar: React.FC = () => (
       <AccountBox />
       <span>Profile</span>
     </a>
-    <a href="/" className={styles.NavItem}>
+    <a href="/entries" className={styles.NavItem}>
       <LibraryBooks />
       <span>Entries</span>
     </a>
-    <a href="/users" className={styles.NavItem}>
+    <a href="/capture" className={styles.NavItem}>
       <AddBox />
       <span>Capture</span>
     </a>
-    <a href="/" className={styles.NavItem}>
+    <a href="/stats" className={styles.NavItem}>
       <InsertChart />
       <span>Stats</span>
     </a>
-    <a href="/" className={styles.NavItem}>
+    <a href="/settings" className={styles.NavItem}>
       <Settings />
       <span>Settings</span>
     </a>
