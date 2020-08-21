@@ -6,4 +6,8 @@ export class Mood {
     this.value = value;
     this.date = date;
   }
+
+  get json(): JSON {
+    return JSON.parse(JSON.stringify(this));
+  }
 }
