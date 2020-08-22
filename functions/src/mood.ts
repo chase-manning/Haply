@@ -85,10 +85,7 @@ app.put("/moods/:id", async (request, response) => {
 
     if (!moodId) throw new Error("id is blank");
 
-    const moodRef = await db
-      .collection("moods")
-      .doc(moodId)
-      .set(data, { merge: true });
+    await db.collection("moods").doc(moodId).set(data, { merge: true });
 
     response.json({
       id: moodId,
