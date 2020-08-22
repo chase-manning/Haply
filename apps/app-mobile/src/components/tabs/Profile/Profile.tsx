@@ -1,10 +1,12 @@
-import React from 'react';
-import styles from './Profile.module.css';
+import React, { Component } from "react";
+import styles from "./Profile.module.css";
 
-const Profile: React.FC = () => (
-  <div className={styles.Profile} data-testid="Profile">
-    Profile Component
-  </div>
-);
-
-export default Profile;
+export default class Profile extends Component {
+  render() {
+    return (
+      <div className={styles.Profile} data-testid="Profile">
+        Profile Component
+      </div>
+    );
+  }
+}
