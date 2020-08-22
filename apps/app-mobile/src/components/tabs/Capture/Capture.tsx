@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styles from "./Capture.module.css";
-import Mood from "../../../../../../shared/models/mood";
+import Mood from "../../../models/mood";
 
 export default class Capture extends Component {
   meow(moodValue: number): void {
