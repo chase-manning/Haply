@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./NavBar.css";
+import styles from "./NavBar.module.css";
 import AddBox from "@material-ui/icons/AddBox";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import AccountBox from "@material-ui/icons/AccountBox";
