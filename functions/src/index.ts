@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 
-import { Mood } from "../../shared/models/mood";
+import Mood from "../../shared/models/mood";
 
 const cors = require("cors");
 

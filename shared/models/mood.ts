@@ -1,4 +1,4 @@
-export class Mood {
+export default class Mood {
   value: number;
   date: Date;
 
@@ -7,7 +7,11 @@ export class Mood {
     this.date = date;
   }
 
+  get string(): string {
+    return JSON.stringify(this);
+  }
+
   get json(): JSON {
-    return JSON.parse(JSON.stringify(this));
+    return JSON.parse(this.string);
   }
 }
