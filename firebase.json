@@ -12,10 +12,6 @@
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
-          "source": "/api/happiness/create",
-          "function": "happiness-create"
-        },
-        {
           "source": "**",
           "destination": "/index.html"
         }
@@ -26,10 +22,6 @@
       "public": "apps/app-mobile/build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
-        {
-          "source": "/api/happiness/create",
-          "function": "happiness-create"
-        },
         {
           "source": "**",
           "destination": "/index.html"
