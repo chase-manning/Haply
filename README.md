@@ -12,4 +12,4 @@ Some names that are being considered:
 
 ## Contributing
 
-If you are interested in contributing, please check out the [Contribution Guide](https://github.com/chase-manning/Personal-Website/blob/master/.github/CONTRIBUTING.md).
+If you are interested in contributing, please check out the [Contribution Guide](https://github.com/chase-manning/Mood-Tracker/blob/master/.github/CONTRIBUTING.md).
