@@ -1,8 +1,8 @@
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
 import { Mood } from "../../shared/models/mood";
 
-const admin = require("firebase-admin");
 admin.initializeApp();
 const db = admin.firestore();
 
