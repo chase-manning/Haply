@@ -4,7 +4,7 @@ import Mood from "../../../models/mood";
 
 export default class Capture extends Component {
   meow(moodValue: number): void {
-    const mood: Mood = new Mood(6);
+    const mood: Mood = new Mood(moodValue);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -21,8 +21,16 @@ export default class Capture extends Component {
   render() {
     return (
       <div className={styles.Capture} data-testid="Capture">
-        Capture Component
-        <button onClick={() => this.meow(6)}>Meow</button>
+        <button onClick={() => this.meow(10)}>10</button>
+        <button onClick={() => this.meow(9)}>9</button>
+        <button onClick={() => this.meow(8)}>8</button>
+        <button onClick={() => this.meow(7)}>7</button>
+        <button onClick={() => this.meow(6)}>6</button>
+        <button onClick={() => this.meow(5)}>5</button>
+        <button onClick={() => this.meow(4)}>4</button>
+        <button onClick={() => this.meow(3)}>3</button>
+        <button onClick={() => this.meow(2)}>2</button>
+        <button onClick={() => this.meow(1)}>1</button>
       </div>
     );
   }
