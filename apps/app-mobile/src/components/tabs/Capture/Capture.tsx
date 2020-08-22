@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./Capture.module.css";
+import styles from "./Capture.css";
 import Mood from "../../../models/mood";
 
 export default class Capture extends Component {
