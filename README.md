@@ -1,8 +1,7 @@
-# Mood-Tracker
+## About
 
-An suite of applications to track your mood, and identify correlations with other things in your life
-
-This project is still in very early development, follow along to see the progress or get in contact with me if you would like to contribute.
+An suite of applications to track your mood, and identify correlations with other things in your life.  
+This project is still in very early development, follow along to see the progress or get in contact with me if you would like to contribute.  
 
 Some names that are being considered:
 
@@ -11,20 +10,6 @@ Some names that are being considered:
 - Moodial
 - Happie
 
-# Mobile App
+## Contributing
 
-The Mobile App is the first project being worked on as part of this suite.
-
-It can be found in the directory `apps/app-mobile`.
-
-## Running App Locally
-
-Navigate to the directory `apps/app-mobile/src`, then run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+If you are interested in contributing, please check out the [Contribution Guide](https://github.com/chase-manning/Mood-Tracker/blob/master/.github/CONTRIBUTING.md).
