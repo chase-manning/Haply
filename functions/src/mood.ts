@@ -5,12 +5,15 @@ import * as bodyParser from "body-parser";
 
 //import { Mood } from "../../shared/models/mood";
 
+const cors = require("cors");
+
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
 
 const app = express();
 const main = express();
 
+app.use(cors({ origin: true }));
 main.use("/api", app);
 main.use(bodyParser.json());
 
