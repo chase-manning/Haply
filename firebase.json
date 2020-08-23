@@ -19,7 +19,7 @@
     },
     {
       "site": "happiness-software-app",
-      "public": "apps/app-mobile/build",
+      "public": "apps/mobile/build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {

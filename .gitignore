@@ -1,19 +1,19 @@
 /.firebase
 
 # Mobile App
-apps/app-mobile/node_modules
-apps/app-mobile/.pnp
-apps/app-mobile/pnp.js
-apps/app-mobile/coverage
-apps/app-mobile/build
-apps/app-mobile/.DS_Store
-apps/app-mobile/.env.local
-apps/app-mobile/.env.development.local
-apps/app-mobile/.env.test.local
-apps/app-mobile/.env.production.local
-apps/app-mobile/npm-debug.log*
-apps/app-mobile/yarn-debug.log*
-apps/app-mobile/yarn-error.log*
+apps/mobile/node_modules
+apps/mobile/.pnp
+apps/mobile/pnp.js
+apps/mobile/coverage
+apps/mobile/build
+apps/mobile/.DS_Store
+apps/mobile/.env.local
+apps/mobile/.env.development.local
+apps/mobile/.env.test.local
+apps/mobile/.env.production.local
+apps/mobile/npm-debug.log*
+apps/mobile/yarn-debug.log*
+apps/mobile/yarn-error.log*
 
 # Web App
 /apps/app-web/node_modules
