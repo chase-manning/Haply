@@ -15,21 +15,6 @@ apps/mobile/npm-debug.log*
 apps/mobile/yarn-debug.log*
 apps/mobile/yarn-error.log*
 
-# Web App
-/apps/web/node_modules
-/apps/web/.pnp
-/apps/web.pnp.js
-/apps/web/coverage
-/apps/web/build
-/apps/web/.DS_Store
-/apps/web/.env.local
-/apps/web/.env.development.local
-/apps/web/.env.test.local
-/apps/web/.env.production.local
-/apps/web/npm-debug.log*
-/apps/web/yarn-debug.log*
-/apps/web/yarn-error.log*
-
 # Functions
 /functions/**/*.js
 /functions/**/*.js.map
