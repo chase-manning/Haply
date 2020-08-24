@@ -13,18 +13,12 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: "10.x"
-      - name: Installing Web App Dependencies
-        run: npm install
-        working-directory: apps/web
       - name: Installing Mobile App Dependencies
         run: npm install
         working-directory: apps/mobile
       - name: Installing Function Dependencies
         run: npm install
         working-directory: functions
-      - name: Building Web App
-        run: npm run build
-        working-directory: apps/web/src
       - name: Building Mobile App
         run: npm run build
         working-directory: apps/mobile/src
