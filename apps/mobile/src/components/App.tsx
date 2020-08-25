@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
-import Overlays from "./overlays/Overlays";
 import State, { Tab } from "../models/state";
 
 const StyledApp = styled.div`
