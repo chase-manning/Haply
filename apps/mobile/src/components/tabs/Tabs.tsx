@@ -16,7 +16,7 @@ const StyledTabs = styled.div`
 export default class Tabs extends Component {
   render() {
     return (
-      <StyledTabs data-testid="NavBar">
+      <StyledTabs data-testid="Tabs">
         <Router>
           <Route exact path="/" component={Profile} />
           <Route path="/entries" component={Entries} />
