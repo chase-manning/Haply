@@ -1,7 +1,18 @@
 import React, { Component } from "react";
-import styles from "./Capture.module.css";
 import Mood from "../../../models/mood";
 import styled from "styled-components";
+
+const StyledCapture = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+`;
+
+const Button = styled.button`
+  height: 100%;
+  margin: 5px;
+`;
 
 export default class Capture extends Component {
   meow(moodValue: number): void {
@@ -21,18 +32,18 @@ export default class Capture extends Component {
 
   render() {
     return (
-      <div className={styles.Capture} data-testid="Capture">
-        <button onClick={() => this.meow(10)}>10</button>
-        <button onClick={() => this.meow(9)}>9</button>
-        <button onClick={() => this.meow(8)}>8</button>
-        <button onClick={() => this.meow(7)}>7</button>
-        <button onClick={() => this.meow(6)}>6</button>
-        <button onClick={() => this.meow(5)}>5</button>
-        <button onClick={() => this.meow(4)}>4</button>
-        <button onClick={() => this.meow(3)}>3</button>
-        <button onClick={() => this.meow(2)}>2</button>
-        <button onClick={() => this.meow(1)}>1</button>
-      </div>
+      <StyledCapture data-testid="Capture">
+        <Button onClick={() => this.meow(10)}>10</Button>
+        <Button onClick={() => this.meow(9)}>9</Button>
+        <Button onClick={() => this.meow(8)}>8</Button>
+        <Button onClick={() => this.meow(7)}>7</Button>
+        <Button onClick={() => this.meow(6)}>6</Button>
+        <Button onClick={() => this.meow(5)}>5</Button>
+        <Button onClick={() => this.meow(4)}>4</Button>
+        <Button onClick={() => this.meow(3)}>3</Button>
+        <Button onClick={() => this.meow(2)}>2</Button>
+        <Button onClick={() => this.meow(1)}>1</Button>
+      </StyledCapture>
     );
   }
 }
