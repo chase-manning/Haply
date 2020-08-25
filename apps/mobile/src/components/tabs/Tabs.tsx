@@ -20,7 +20,6 @@ export default class Tabs extends Component {
         <Router>
           <Route exact path="/" component={Profile} />
           <Route path="/entries" component={Entries} />
-          <Route path="/capture" component={Capture} />
           <Route path="/stats" component={Stats} />
           <Route path="/settings" component={Settings} />
         </Router>

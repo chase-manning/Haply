@@ -1,7 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
+import Overlays from "./overlays/Overlays";
+import { render } from "@testing-library/react";
 
 const StyledApp = styled.div`
   display: flex;
@@ -14,13 +16,14 @@ const StyledApp = styled.div`
   width: 100%;
 `;
 
-function App() {
-  return (
-    <StyledApp data-testid="App">
-      <Tabs></Tabs>
-      <NavBar></NavBar>
-    </StyledApp>
-  );
+export default class App extends Component {
+  render() {
+    return (
+      <StyledApp data-testid="App">
+        <Tabs></Tabs>
+        <NavBar></NavBar>
+        <Overlays></Overlays>
+      </StyledApp>
+    );
+  }
 }
-
-export default App;
