@@ -6,9 +6,6 @@ export enum Tab {
 }
 
 export default class State {
-  activeTab: Tab;
-
-  constructor() {
-    this.activeTab = Tab.Profile;
-  }
+  activeTab: Tab = Tab.Profile;
+  moodShowing: boolean = false;
 }
