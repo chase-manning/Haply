@@ -33,12 +33,13 @@ const Circle = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color: red;
   color: white;
   transform: translateY(-30px);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
 export default class NavBar extends Component {
