@@ -7,7 +7,7 @@ import SettingsOutlined from "@material-ui/icons/SettingsOutlined";
 import styled from "styled-components";
 
 const StyledNavBar = styled.div`
-  height: 60px;
+  height: 50px;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -38,7 +38,7 @@ const Circle = styled.div`
   border-radius: 50%;
   background-color: red;
   color: white;
-  transform: translateY(-30px);
+  transform: translateY(-25px);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
