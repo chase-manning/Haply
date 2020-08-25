@@ -37,23 +37,23 @@ export default class NavBar extends Component {
       <StyledNavBar data-testid="NavBar">
         <NavItem href="/">
           <AccountBox />
-          <span>Profile</span>
+          Profile
         </NavItem>
         <NavItem href="/entries">
           <LibraryBooks />
-          <span>Entries</span>
+          Entries
         </NavItem>
         <NavItem href="/capture">
           <AddBox />
-          <span>Capture</span>
+          Capture
         </NavItem>
         <NavItem href="/stats">
           <InsertChart />
-          <span>Stats</span>
+          Stats
         </NavItem>
         <NavItem href="/settings">
           <Settings />
-          <span>Settings</span>
+          Settings
         </NavItem>
       </StyledNavBar>
     );
