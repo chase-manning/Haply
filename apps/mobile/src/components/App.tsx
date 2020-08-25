@@ -3,7 +3,7 @@ import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
 import Overlays from "./overlays/Overlays";
-import { render } from "@testing-library/react";
+import State from "../models/state";
 
 const StyledApp = styled.div`
   display: flex;
@@ -17,11 +17,18 @@ const StyledApp = styled.div`
 `;
 
 export default class App extends Component {
+  state: State;
+
+  constructor(props: any) {
+    super(props);
+    this.state = new State();
+  }
+
   render() {
     return (
       <StyledApp data-testid="App">
         <Tabs></Tabs>
-        <NavBar></NavBar>
+        <NavBar activeTab={this.state.activeTab}></NavBar>
         <Overlays></Overlays>
       </StyledApp>
     );

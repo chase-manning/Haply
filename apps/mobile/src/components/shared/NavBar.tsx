@@ -5,6 +5,7 @@ import AddOutlined from "@material-ui/icons/AddOutlined";
 import BarChart from "@material-ui/icons/BarChart";
 import SettingsOutlined from "@material-ui/icons/SettingsOutlined";
 import styled from "styled-components";
+import { Tab } from "../../models/state";
 
 const StyledNavBar = styled.div`
   height: 50px;
@@ -39,7 +40,11 @@ const Circle = styled.div`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
-export default class NavBar extends Component {
+type Props = {
+  activeTab: Tab;
+};
+
+export default class NavBar extends Component<Props> {
   render() {
     return (
       <StyledNavBar data-testid="NavBar">
