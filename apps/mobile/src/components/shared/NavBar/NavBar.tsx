@@ -5,6 +5,7 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import AccountBox from "@material-ui/icons/AccountBox";
 import InsertChart from "@material-ui/icons/InsertChart";
 import Settings from "@material-ui/icons/Settings";
+import styled from "styled-components";
 
 export default class NavBar extends Component {
   render() {
