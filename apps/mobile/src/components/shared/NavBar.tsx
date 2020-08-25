@@ -29,6 +29,18 @@ const NavItem = styled.a`
   color: black;
 `;
 
+const Circle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  transform: translateY(-30px);
+`;
+
 export default class NavBar extends Component {
   render() {
     return (
@@ -40,7 +52,9 @@ export default class NavBar extends Component {
           <TimelineOutlined />
         </NavItem>
         <NavItem href="/capture">
-          <AddOutlined />
+          <Circle>
+            <AddOutlined />
+          </Circle>
         </NavItem>
         <NavItem href="/stats">
           <BarChart />
