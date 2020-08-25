@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import AddBox from "@material-ui/icons/AddBox";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import AccountBox from "@material-ui/icons/AccountBox";
-import InsertChart from "@material-ui/icons/InsertChart";
-import Settings from "@material-ui/icons/Settings";
+import PersonOutline from "@material-ui/icons/PersonOutline";
+import TimelineOutlined from "@material-ui/icons/TimelineOutlined";
+import AddOutlined from "@material-ui/icons/AddOutlined";
+import BarChart from "@material-ui/icons/BarChart";
+import SettingsOutlined from "@material-ui/icons/SettingsOutlined";
 import styled from "styled-components";
 
 const StyledNavBar = styled.div`
-  height: 10%;
+  height: 60px;
   width: 100%;
   position: absolute;
   bottom: 0;
@@ -21,10 +21,8 @@ const StyledNavBar = styled.div`
 
 const NavItem = styled.a`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 10px;
   margin: auto;
   width: 100%;
   text-decoration: none;
@@ -36,24 +34,19 @@ export default class NavBar extends Component {
     return (
       <StyledNavBar data-testid="NavBar">
         <NavItem href="/">
-          <AccountBox />
-          Profile
+          <PersonOutline />
         </NavItem>
         <NavItem href="/entries">
-          <LibraryBooks />
-          Entries
+          <TimelineOutlined />
         </NavItem>
         <NavItem href="/capture">
-          <AddBox />
-          Capture
+          <AddOutlined />
         </NavItem>
         <NavItem href="/stats">
-          <InsertChart />
-          Stats
+          <BarChart />
         </NavItem>
         <NavItem href="/settings">
-          <Settings />
-          Settings
+          <SettingsOutlined />
         </NavItem>
       </StyledNavBar>
     );
