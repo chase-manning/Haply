@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Profile from "../tabs/Profile";
 import Entries from "../tabs/Entries";
-import Capture from "../tracking/Capture";
+import Capture from "../overlays/Capture";
 import Stats from "../tabs/Stats";
 import Settings from "../tabs/Settings";
 import styled from "styled-components";
