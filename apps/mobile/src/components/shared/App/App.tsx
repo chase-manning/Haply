@@ -17,7 +17,7 @@ const StyledApp = styled.div`
 
 function App() {
   return (
-    <StyledApp className="App">
+    <StyledApp>
       <Router>
         <Route exact path="/" component={Profile} />
         <Route path="/entries" component={Entries} />
