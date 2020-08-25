@@ -6,12 +6,16 @@ import Capture from "../overlays/Capture";
 import Stats from "../tabs/Stats";
 import Settings from "../tabs/Settings";
 import styled from "styled-components";
+import NavBar from "./NavBar";
 
 const StyledApp = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
-  height: 90%;
+  height: 100%;
   width: 100%;
 `;
 
@@ -25,6 +29,7 @@ function App() {
         <Route path="/stats" component={Stats} />
         <Route path="/settings" component={Settings} />
       </Router>
+      <NavBar></NavBar>
     </StyledApp>
   );
 }

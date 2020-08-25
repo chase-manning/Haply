@@ -9,9 +9,6 @@ import styled from "styled-components";
 const StyledNavBar = styled.div`
   height: 50px;
   width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: flex;
