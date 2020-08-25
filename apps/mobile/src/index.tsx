@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./components/shared/App/App";
+import App from "./components/shared/App";
 import * as serviceWorker from "./serviceWorker";
-import NavBar from "./components/shared/NavBar/NavBar";
+import NavBar from "./components/shared/NavBar";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Mood from "../../../models/mood";
+import Mood from "../../models/mood";
 import styled from "styled-components";
 
 const StyledCapture = styled.div`
