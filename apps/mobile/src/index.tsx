@@ -1,12 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./components/shared/App";
 import * as serviceWorker from "./serviceWorker";
 import NavBar from "./components/shared/NavBar";
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <App></App>
     <NavBar></NavBar>
   </React.StrictMode>,
