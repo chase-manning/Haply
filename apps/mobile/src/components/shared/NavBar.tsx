@@ -56,8 +56,8 @@ export default class NavBar extends Component<Props> {
         <NavItem onClick={() => this.props.setActiveTab(Tab.Entries)}>
           <TimelineOutlined />
         </NavItem>
-        <NavItem onClick={() => this.props.showCapture()}>
-          <Circle>
+        <NavItem>
+          <Circle onClick={() => this.props.showCapture()}>
             <AddOutlined />
           </Circle>
         </NavItem>
