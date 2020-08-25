@@ -43,6 +43,7 @@ const Circle = styled.div`
 type Props = {
   activeTab: Tab;
   setActiveTab: (tab: Tab) => void;
+  showCapture: () => void;
 };
 
 export default class NavBar extends Component<Props> {
@@ -55,7 +56,7 @@ export default class NavBar extends Component<Props> {
         <NavItem onClick={() => this.props.setActiveTab(Tab.Entries)}>
           <TimelineOutlined />
         </NavItem>
-        <NavItem>
+        <NavItem onClick={() => this.props.showCapture()}>
           <Circle>
             <AddOutlined />
           </Circle>
