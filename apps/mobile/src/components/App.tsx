@@ -3,7 +3,7 @@ import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
 import Overlays from "./overlays/Overlays";
-import State from "../models/state";
+import State, { Tab } from "../models/state";
 
 const StyledApp = styled.div`
   display: flex;
@@ -27,9 +27,11 @@ export default class App extends Component {
   render() {
     return (
       <StyledApp data-testid="App">
-        <Tabs></Tabs>
-        <NavBar activeTab={this.state.activeTab}></NavBar>
-        <Overlays></Overlays>
+        <Tabs activeTab={this.state.activeTab}></Tabs>
+        <NavBar
+          activeTab={this.state.activeTab}
+          setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}
+        ></NavBar>
       </StyledApp>
     );
   }

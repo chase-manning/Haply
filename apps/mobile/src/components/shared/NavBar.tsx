@@ -42,27 +42,28 @@ const Circle = styled.div`
 
 type Props = {
   activeTab: Tab;
+  setActiveTab: (tab: Tab) => void;
 };
 
 export default class NavBar extends Component<Props> {
   render() {
     return (
       <StyledNavBar data-testid="NavBar">
-        <NavItem href="/">
+        <NavItem onClick={() => this.props.setActiveTab(Tab.Profile)}>
           <PersonOutline />
         </NavItem>
-        <NavItem href="/entries">
+        <NavItem onClick={() => this.props.setActiveTab(Tab.Entries)}>
           <TimelineOutlined />
         </NavItem>
-        <NavItem href="/capture">
+        <NavItem>
           <Circle>
             <AddOutlined />
           </Circle>
         </NavItem>
-        <NavItem href="/stats">
+        <NavItem onClick={() => this.props.setActiveTab(Tab.Stats)}>
           <BarChart />
         </NavItem>
-        <NavItem href="/settings">
+        <NavItem onClick={() => this.props.setActiveTab(Tab.Settings)}>
           <SettingsOutlined />
         </NavItem>
       </StyledNavBar>
