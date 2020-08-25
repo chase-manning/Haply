@@ -25,7 +25,9 @@ export default class App extends Component {
   }
 
   render() {
-    const moodOverlay = this.state.moodShowing ? <Capture /> : null;
+    const moodOverlay = this.state.moodShowing ? (
+      <Capture closeCapture={() => this.setState({ moodShowing: false })} />
+    ) : null;
 
     return (
       <StyledApp data-testid="App">

@@ -19,7 +19,15 @@ const Button = styled.button`
   margin: 5px;
 `;
 
-export default class Capture extends Component {
+type Props = {
+  closeCapture: () => void;
+};
+
+export default class Capture extends Component<Props> {
+  woof(): void {
+    this.props.closeCapture();
+  }
+
   meow(moodValue: number): void {
     const mood: Mood = new Mood(moodValue);
     const requestOptions = {
@@ -32,7 +40,7 @@ export default class Capture extends Component {
       requestOptions
     )
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then((data) => this.woof());
   }
 
   render() {
