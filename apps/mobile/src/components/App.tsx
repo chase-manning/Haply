@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
 import State, { Tab } from "../models/state";
+import Capture from "./overlays/Capture";
 
 const StyledApp = styled.div`
   display: flex;
@@ -24,13 +25,20 @@ export default class App extends Component {
   }
 
   render() {
+    const moodOverlay = this.state.moodShowing ? <Capture /> : null;
+
     return (
       <StyledApp data-testid="App">
-        <Tabs activeTab={this.state.activeTab}></Tabs>
+        <Tabs activeTab={this.state.activeTab} />
         <NavBar
           activeTab={this.state.activeTab}
           setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}
-        ></NavBar>
+          showCapture={() => {
+            console.log("qwe");
+            this.setState({ moodShowing: true });
+          }}
+        />
+        {moodOverlay}
       </StyledApp>
     );
   }
