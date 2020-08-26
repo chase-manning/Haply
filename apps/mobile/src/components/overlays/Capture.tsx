@@ -25,6 +25,12 @@ const Header = styled.div`
   font-weight: 500;
 `;
 
+const Emotion = styled.div`
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
+`;
+
 const Comment = styled.div`
   display: none;
   align-items: center;
@@ -44,8 +50,22 @@ const Button = styled.button`
   border-radius: 10px;
 `;
 
+const moodDescriptions: string[] = [
+  "Miserable",
+  "Dreadful",
+  "Lousy",
+  "Meh",
+  "Okay",
+  "Content",
+  "Good",
+  "Great",
+  "Awesome",
+  "Amazing",
+];
+
 class captureState {
   mood: number = 7;
+  description: string = moodDescriptions[this.mood - 1];
 }
 
 type Props = {
@@ -82,7 +102,10 @@ export default class Capture extends Component<Props> {
   }
 
   handleChange(event: any, newValue: any): void {
-    this.setState({ mood: newValue });
+    this.setState({
+      mood: newValue,
+      description: moodDescriptions[newValue - 1],
+    });
   }
 
   render() {
@@ -90,7 +113,7 @@ export default class Capture extends Component<Props> {
       <StyledCapture data-testid="Capture">
         <Close />
         <Header>How are you feeling?</Header>
-        <div>Good</div>
+        <Emotion>{this.state.description}</Emotion>
         <div>Face</div>
         <Slider
           name="mood"
