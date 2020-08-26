@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { Tab } from "../../models/state";
 
 const StyledNavBar = styled.div`
-  height: 50px;
+  height: 60px;
   width: 100%;
   background-color: white;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -36,7 +36,7 @@ const Circle = styled.div`
   border-radius: 50%;
   background-color: red;
   color: white;
-  transform: translateY(-25px);
+  transform: translateY(-30px);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
