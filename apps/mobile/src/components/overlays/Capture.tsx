@@ -111,7 +111,7 @@ export default class Capture extends Component<Props> {
   render() {
     return (
       <StyledCapture data-testid="Capture">
-        <Close />
+        <Close onClick={() => this.props.closeCapture()} />
         <Header>How are you feeling?</Header>
         <Emotion>{this.state.description}</Emotion>
         <div>Face</div>
