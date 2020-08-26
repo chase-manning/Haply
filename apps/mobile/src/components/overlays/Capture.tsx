@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import Mood from "../../models/mood";
 import styled from "styled-components";
+import Close from "@material-ui/icons/Close";
+import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
+import Slider from "@material-ui/core/Slider";
 
 const StyledCapture = styled.div`
   position: fixed;
@@ -11,25 +14,60 @@ const StyledCapture = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  background-color: white;
+  padding: 40px;
+`;
+
+const Header = styled.div`
+  font-size: 40px;
+  text-align: center;
+  font-weight: 500;
+`;
+
+const Comment = styled.div`
+  display: none;
+  align-items: center;
 `;
 
 const Button = styled.button`
-  height: 100%;
-  margin: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 17px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 10px;
 `;
+
+class captureState {
+  mood: number = 7;
+}
 
 type Props = {
   closeCapture: () => void;
 };
 
 export default class Capture extends Component<Props> {
+  state: captureState;
+
+  constructor(props: any) {
+    super(props);
+    this.state = new captureState();
+    this.handleChange = this.handleChange.bind(this);
+    this.meow = this.meow.bind(this);
+  }
+
   woof(): void {
     this.props.closeCapture();
   }
 
-  meow(moodValue: number): void {
-    const mood: Mood = new Mood(moodValue);
+  meow(): void {
+    const mood: Mood = new Mood(this.state.mood);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,19 +81,34 @@ export default class Capture extends Component<Props> {
       .then((data) => this.woof());
   }
 
+  handleChange(event: any, newValue: any): void {
+    console.log(newValue);
+    this.setState({ mood: newValue });
+  }
+
   render() {
     return (
       <StyledCapture data-testid="Capture">
-        <Button onClick={() => this.meow(10)}>10</Button>
-        <Button onClick={() => this.meow(9)}>9</Button>
-        <Button onClick={() => this.meow(8)}>8</Button>
-        <Button onClick={() => this.meow(7)}>7</Button>
-        <Button onClick={() => this.meow(6)}>6</Button>
-        <Button onClick={() => this.meow(5)}>5</Button>
-        <Button onClick={() => this.meow(4)}>4</Button>
-        <Button onClick={() => this.meow(3)}>3</Button>
-        <Button onClick={() => this.meow(2)}>2</Button>
-        <Button onClick={() => this.meow(1)}>1</Button>
+        <Close />
+        <Header>How are you feeling?</Header>
+        <div>Good</div>
+        <div>Face</div>
+        <Slider
+          name="mood"
+          value={this.state.mood}
+          aria-labelledby="discrete-slider"
+          valueLabelDisplay="auto"
+          step={1}
+          marks
+          min={1}
+          max={10}
+          onChange={this.handleChange}
+        />
+        <Comment>
+          <ChatBubbleOutline />
+          Add a comment
+        </Comment>
+        <Button onClick={this.meow}>Done</Button>
       </StyledCapture>
     );
   }
