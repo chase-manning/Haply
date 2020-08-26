@@ -82,7 +82,6 @@ export default class Capture extends Component<Props> {
   }
 
   handleChange(event: any, newValue: any): void {
-    console.log(newValue);
     this.setState({ mood: newValue });
   }
 
