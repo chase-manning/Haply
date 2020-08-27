@@ -16,25 +16,29 @@ const StyledCapture = styled.div`
   flex-direction: column;
   height: 100%;
   justify-content: space-between;
-  background-color: white;
+  background-color: var(--yellow);
   padding: 40px;
+  color: var(--main);
 `;
 
 const Header = styled.div`
   font-size: 40px;
   text-align: center;
   font-weight: 500;
+  color: var(--main);
 `;
 
 const Emotion = styled.div`
   font-weight: 400;
   font-size: 20px;
   text-align: center;
+  color: var(--main);
 `;
 
 const Comment = styled.div`
   display: none;
   align-items: center;
+  color: var(--main);
 `;
 
 const Button = styled.button`
@@ -42,7 +46,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-color: var(--main);
   color: white;
   border: none;
   padding: 17px;
