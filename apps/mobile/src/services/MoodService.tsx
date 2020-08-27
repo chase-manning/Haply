@@ -13,7 +13,11 @@ const MoodService = {
       headers: { "Content-Type": "application/json" },
       body: mood.string,
     };
-    return await fetch(route, requestOptions);
+    try {
+      return await fetch(route, requestOptions);
+    } catch {
+      return null;
+    }
   },
 };
 
