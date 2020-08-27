@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Slider from "@material-ui/core/Slider";
+import MoodService from "../../services/MoodService";
 
 const StyledCapture = styled.div`
   position: fixed;
@@ -79,26 +80,6 @@ export default class Capture extends Component<Props> {
     super(props);
     this.state = new captureState();
     this.handleChange = this.handleChange.bind(this);
-    this.meow = this.meow.bind(this);
-  }
-
-  woof(): void {
-    this.props.closeCapture();
-  }
-
-  meow(): void {
-    const mood: Mood = new Mood(this.state.mood);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: mood.string,
-    };
-    fetch(
-      "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/moods",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((data) => this.woof());
   }
 
   handleChange(event: any, newValue: any): void {
@@ -106,6 +87,13 @@ export default class Capture extends Component<Props> {
       mood: newValue,
       description: moodDescriptions[newValue - 1],
     });
+  }
+
+  async createMood(): Promise<void> {
+    const mood: Mood = new Mood(this.state.mood);
+    const response = await MoodService.createMood(mood);
+    if (response.ok) this.props.closeCapture();
+    else alert("Mood Creation Failed");
   }
 
   render() {
@@ -130,7 +118,7 @@ export default class Capture extends Component<Props> {
           <ChatBubbleOutline />
           Add a comment
         </Comment>
-        <Button onClick={this.meow}>Done</Button>
+        <Button onClick={async () => await this.createMood()}>Done</Button>
       </StyledCapture>
     );
   }
