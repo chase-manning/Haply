@@ -92,8 +92,11 @@ export default class Capture extends Component<Props> {
   async createMood(): Promise<void> {
     const mood: Mood = new Mood(this.state.mood);
     const response = await MoodService.createMood(mood);
-    if (response.ok) this.props.closeCapture();
-    else alert("Mood Creation Failed");
+    if (!response || !response.ok) {
+      alert("Mood Creation Failed");
+      return;
+    }
+    this.props.closeCapture();
   }
 
   render() {
