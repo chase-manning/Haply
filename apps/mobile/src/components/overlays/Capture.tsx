@@ -12,11 +12,43 @@ const StyledCapture = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
+  background-color: var(--red);
+`;
+
+type Opacity = {
+  opacity: number;
+};
+const BackgroundOverlayYellow = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--yellow);
+  opacity: ${(props: Opacity) => props.opacity};
+  transition: opacity 0.5s;
+`;
+
+const BackgroundOverlayBlue = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--blue);
+  opacity: ${(props: Opacity) => props.opacity};
+  transition: opacity 0.5s;
+`;
+
+const ContentContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: space-between;
-  background-color: var(--yellow);
   padding: 40px;
   color: var(--main);
 `;
@@ -106,26 +138,34 @@ export default class Capture extends Component<Props> {
   render() {
     return (
       <StyledCapture data-testid="Capture">
-        <Close onClick={() => this.props.closeCapture()} />
-        <Header>How are you feeling?</Header>
-        <Emotion>{this.state.description}</Emotion>
-        <div>Face</div>
-        <Slider
-          name="mood"
-          value={this.state.mood}
-          aria-labelledby="discrete-slider"
-          valueLabelDisplay="auto"
-          step={1}
-          marks
-          min={1}
-          max={10}
-          onChange={this.handleChange}
+        <BackgroundOverlayYellow
+          opacity={Math.min(1, (this.state.mood - 1) / 4)}
         />
-        <Comment>
-          <ChatBubbleOutline />
-          Add a comment
-        </Comment>
-        <Button onClick={async () => await this.createMood()}>Done</Button>
+        <BackgroundOverlayBlue
+          opacity={Math.max(0, (this.state.mood - 5) / 5)}
+        />
+        <ContentContainer>
+          <Close onClick={() => this.props.closeCapture()} />
+          <Header>How are you feeling?</Header>
+          <Emotion>{this.state.description}</Emotion>
+          <div>Face</div>
+          <Slider
+            name="mood"
+            value={this.state.mood}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="auto"
+            step={1}
+            marks
+            min={1}
+            max={10}
+            onChange={this.handleChange}
+          />
+          <Comment>
+            <ChatBubbleOutline />
+            Add a comment
+          </Comment>
+          <Button onClick={async () => await this.createMood()}>Done</Button>
+        </ContentContainer>
       </StyledCapture>
     );
   }
