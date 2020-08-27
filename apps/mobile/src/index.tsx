@@ -5,6 +5,13 @@ import * as serviceWorker from "./serviceWorker";
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    --main: #141049;
+    --blue: #D9F3FF;
+    --yellow: #FBE8D1;
+    --red: #FECACC;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
