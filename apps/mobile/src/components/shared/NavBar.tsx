@@ -24,7 +24,7 @@ const NavItem = styled.a`
   margin: auto;
   width: 100%;
   text-decoration: none;
-  color: black;
+  color: #141049;
 `;
 
 const Circle = styled.div`
@@ -34,7 +34,7 @@ const Circle = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: red;
+  background-color: #141049;
   color: white;
   transform: translateY(-30px);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
