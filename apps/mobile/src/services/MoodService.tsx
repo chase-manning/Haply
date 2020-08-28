@@ -19,6 +19,14 @@ const MoodService = {
       return null;
     }
   },
+
+  async getMoods(): Promise<any> {
+    try {
+      return await fetch(route);
+    } catch {
+      return null;
+    }
+  },
 };
 
 export default MoodService;
