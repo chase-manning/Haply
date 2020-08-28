@@ -21,6 +21,7 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 `;
 
 const TabContent = styled.div`
