@@ -29,3 +29,8 @@ export default class Mood {
     return JSON.parse(this.string);
   }
 }
+
+export type MoodResponse = {
+  id: string;
+  data: Mood;
+};
