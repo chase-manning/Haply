@@ -18,6 +18,7 @@ const StyledCapture = styled.div`
 type Opacity = {
   opacity: number;
 };
+
 const BackgroundOverlayYellow = styled.div`
   position: fixed;
   top: 0;
