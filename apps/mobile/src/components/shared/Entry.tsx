@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Mood from "../../models/mood";
 
 const StyledEntry = styled.div`
   width: 100%;
