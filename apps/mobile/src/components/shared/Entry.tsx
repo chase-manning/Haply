@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
+import { moodDescriptions, MoodResponse } from "../../models/mood";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -31,12 +32,18 @@ const EntrySubHeader = styled.div`
   font-size: 12px;
 `;
 
-export default class Entry extends Component {
+type Props = {
+  mood: MoodResponse;
+};
+
+export default class Entry extends Component<Props> {
   render() {
     return (
       <StyledEntry data-testid="Entry">
         <EntryText>
-          <EntryHeader>Awesome!</EntryHeader>
+          <EntryHeader>
+            {moodDescriptions[this.props.mood.data.value]}
+          </EntryHeader>
           <EntrySubHeader>Monday, 2:34pm</EntrySubHeader>
         </EntryText>
         <DeleteOutline />
