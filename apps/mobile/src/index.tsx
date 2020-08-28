@@ -6,12 +6,23 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   :root {
+    --main: black;
+    --sub: #9399A9;
+    --primary: #4071FE; 
+    --blue: #5A8BFF;
+    --yellow: #FFCF66;
+    --red: #FF6C8E;
+  }
+  /*
+  Mono soft
+  :root {
     --main: #141049;
     --sub: #A7A5BB;
     --blue: #D9F3FF;
     --yellow: #FBE8D1;
     --red: #FECACC;
   }
+  */
 
   * {
     box-sizing: border-box;
