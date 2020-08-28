@@ -35,7 +35,7 @@ const Emotion = styled.div`
   font-weight: 400;
   font-size: 20px;
   text-align: center;
-  color: var(--main);
+  color: var(--sub);
 `;
 
 const Comment = styled.div`
