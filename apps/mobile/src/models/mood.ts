@@ -1,3 +1,17 @@
+export const moodDescriptions: string[] = [
+  "...",
+  "Miserable",
+  "Dreadful",
+  "Lousy",
+  "Meh",
+  "Okay",
+  "Content",
+  "Good",
+  "Great",
+  "Awesome",
+  "Amazing!",
+];
+
 export default class Mood {
   value: number;
   date: Date;
