@@ -34,7 +34,7 @@ const EntrySubHeader = styled.div`
 export default class Entry extends Component {
   render() {
     return (
-      <StyledEntry data-testid="Entries">
+      <StyledEntry data-testid="Entry">
         <EntryText>
           <EntryHeader>Awesome!</EntryHeader>
           <EntrySubHeader>Monday, 2:34pm</EntrySubHeader>
