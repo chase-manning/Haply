@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle`
     --main: black;
     --sub: #9399A9;
     --primary: #4071FE; 
+    --bg: #F9FAFC;
     --blue: #5A8BFF;
     --yellow: #FFCF66;
     --red: #FF6C8E;
