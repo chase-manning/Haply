@@ -8,6 +8,9 @@ import styled from "styled-components";
 import { Tab } from "../../models/state";
 
 const StyledNavBar = styled.div`
+  position: fixed;
+  left: 0;
+  bottom: 0;
   height: 60px;
   width: 100%;
   background-color: white;
