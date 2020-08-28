@@ -67,7 +67,7 @@ app.get("/moods", async (request, response) => {
   try {
     const moodQuerySnapshot = await db
       .collection("moods")
-      .orderBy("date")
+      .orderBy("date", "desc")
       .limit(20)
       .get();
     const moods: any[] = [];
