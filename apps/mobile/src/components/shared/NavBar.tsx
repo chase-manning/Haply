@@ -46,7 +46,7 @@ const Circle = styled.div`
   background-color: var(--primary);
   color: white;
   transform: translateY(-30px);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  filter: var(--primary-shadow);
 `;
 
 type Props = {
