@@ -17,6 +17,10 @@ const StyledNavBar = styled.div`
   align-items: center;
 `;
 
+type NavItemProps = {
+  isActive: boolean;
+};
+
 const NavItem = styled.a`
   display: flex;
   justify-content: center;
@@ -24,7 +28,9 @@ const NavItem = styled.a`
   margin: auto;
   width: 100%;
   text-decoration: none;
-  color: #141049;
+  color: ${(props: NavItemProps) => {
+    return props.isActive ? "var(--primary)" : "var(--sub)";
+  }};
 `;
 
 const Circle = styled.div`
@@ -34,7 +40,7 @@ const Circle = styled.div`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: #141049;
+  background-color: var(--primary);
   color: white;
   transform: translateY(-30px);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -50,21 +56,33 @@ export default class NavBar extends Component<Props> {
   render() {
     return (
       <StyledNavBar data-testid="NavBar">
-        <NavItem onClick={() => this.props.setActiveTab(Tab.Profile)}>
+        <NavItem
+          isActive={this.props.activeTab == Tab.Profile}
+          onClick={() => this.props.setActiveTab(Tab.Profile)}
+        >
           <PersonOutline />
         </NavItem>
-        <NavItem onClick={() => this.props.setActiveTab(Tab.Entries)}>
+        <NavItem
+          isActive={this.props.activeTab == Tab.Entries}
+          onClick={() => this.props.setActiveTab(Tab.Entries)}
+        >
           <TimelineOutlined />
         </NavItem>
-        <NavItem>
+        <NavItem isActive={false}>
           <Circle onClick={() => this.props.showCapture()}>
             <AddOutlined />
           </Circle>
         </NavItem>
-        <NavItem onClick={() => this.props.setActiveTab(Tab.Stats)}>
+        <NavItem
+          isActive={this.props.activeTab == Tab.Stats}
+          onClick={() => this.props.setActiveTab(Tab.Stats)}
+        >
           <BarChart />
         </NavItem>
-        <NavItem onClick={() => this.props.setActiveTab(Tab.Settings)}>
+        <NavItem
+          isActive={this.props.activeTab == Tab.Settings}
+          onClick={() => this.props.setActiveTab(Tab.Settings)}
+        >
           <SettingsOutlined />
         </NavItem>
       </StyledNavBar>
