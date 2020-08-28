@@ -60,13 +60,13 @@ export default class NavBar extends Component<Props> {
     return (
       <StyledNavBar data-testid="NavBar">
         <NavItem
-          isActive={this.props.activeTab == Tab.Profile}
+          isActive={this.props.activeTab === Tab.Profile}
           onClick={() => this.props.setActiveTab(Tab.Profile)}
         >
           <PersonOutline />
         </NavItem>
         <NavItem
-          isActive={this.props.activeTab == Tab.Entries}
+          isActive={this.props.activeTab === Tab.Entries}
           onClick={() => this.props.setActiveTab(Tab.Entries)}
         >
           <TimelineOutlined />
@@ -77,13 +77,13 @@ export default class NavBar extends Component<Props> {
           </Circle>
         </NavItem>
         <NavItem
-          isActive={this.props.activeTab == Tab.Stats}
+          isActive={this.props.activeTab === Tab.Stats}
           onClick={() => this.props.setActiveTab(Tab.Stats)}
         >
           <BarChart />
         </NavItem>
         <NavItem
-          isActive={this.props.activeTab == Tab.Settings}
+          isActive={this.props.activeTab === Tab.Settings}
           onClick={() => this.props.setActiveTab(Tab.Settings)}
         >
           <SettingsOutlined />
