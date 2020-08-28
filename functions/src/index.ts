@@ -65,7 +65,11 @@ app.get("/moods/:id", async (request, response) => {
 
 app.get("/moods", async (request, response) => {
   try {
-    const moodQuerySnapshot = await db.collection("moods").get();
+    const moodQuerySnapshot = await db
+      .collection("moods")
+      .orderBy("date")
+      .limit(20)
+      .get();
     const moods: any[] = [];
     moodQuerySnapshot.forEach((doc) => {
       moods.push({
