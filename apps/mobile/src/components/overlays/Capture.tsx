@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Mood from "../../models/mood";
+import Mood, { moodDescriptions } from "../../models/mood";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
@@ -87,20 +87,6 @@ const Button = styled.button`
   font-weight: 400;
   border-radius: 10px;
 `;
-
-const moodDescriptions: string[] = [
-  "...",
-  "Miserable",
-  "Dreadful",
-  "Lousy",
-  "Meh",
-  "Okay",
-  "Content",
-  "Good",
-  "Great",
-  "Awesome",
-  "Amazing!",
-];
 
 class captureState {
   mood: number = 5;
