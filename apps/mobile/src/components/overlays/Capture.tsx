@@ -20,10 +20,6 @@ const StyledCapture = styled.div`
   color: var(--main);
 `;
 
-type Opacity = {
-  opacity: number;
-};
-
 const Header = styled.div`
   font-size: 40px;
   text-align: center;
