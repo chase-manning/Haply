@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Entry from "../shared/Entry";
 import MoodService from "../../services/MoodService";
-import Mood, { MoodResponse } from "../../models/mood";
+import { MoodResponse } from "../../models/mood";
 
 const StyledEntries = styled.div`
   height: 100%;
