@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import { moodDescriptions, MoodResponse } from "../../models/mood";
+import dateFormat from "dateformat";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -44,7 +45,9 @@ export default class Entry extends Component<Props> {
           <EntryHeader>
             {moodDescriptions[this.props.mood.data.value]}
           </EntryHeader>
-          <EntrySubHeader>Monday, 2:34pm</EntrySubHeader>
+          <EntrySubHeader>
+            {dateFormat(this.props.mood.data.date, " dddd h:MM tt")}
+          </EntrySubHeader>
         </EntryText>
         <DeleteOutline />
       </StyledEntry>
