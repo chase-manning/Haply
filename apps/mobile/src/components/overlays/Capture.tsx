@@ -89,6 +89,7 @@ const Button = styled.button`
 `;
 
 const moodDescriptions: string[] = [
+  "...",
   "Miserable",
   "Dreadful",
   "Lousy",
@@ -98,12 +99,12 @@ const moodDescriptions: string[] = [
   "Good",
   "Great",
   "Awesome",
-  "Amazing",
+  "Amazing!",
 ];
 
 class captureState {
-  mood: number = 7;
-  description: string = moodDescriptions[this.mood - 1];
+  mood: number = 5;
+  description: string = moodDescriptions[this.mood];
 }
 
 type Props = {
@@ -122,7 +123,7 @@ export default class Capture extends Component<Props> {
   handleChange(event: any, newValue: any): void {
     this.setState({
       mood: newValue,
-      description: moodDescriptions[newValue - 1],
+      description: moodDescriptions[newValue],
     });
   }
 
@@ -139,9 +140,7 @@ export default class Capture extends Component<Props> {
   render() {
     return (
       <StyledCapture data-testid="Capture">
-        <BackgroundOverlayYellow
-          opacity={Math.min(1, (this.state.mood - 1) / 4)}
-        />
+        <BackgroundOverlayYellow opacity={Math.min(1, this.state.mood / 5)} />
         <BackgroundOverlayBlue
           opacity={Math.max(0, (this.state.mood - 5) / 5)}
         />
@@ -157,7 +156,7 @@ export default class Capture extends Component<Props> {
             valueLabelDisplay="auto"
             step={1}
             marks
-            min={1}
+            min={0}
             max={10}
             onChange={this.handleChange}
           />
