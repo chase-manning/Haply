@@ -57,11 +57,12 @@ export default class Entries extends Component {
       entries.push(<Entry mood={mood} />);
     });
 
-    const content = true ? (
-      <CircularProgress style={{ color: "var(--primary)" }} />
-    ) : (
-      entries
-    );
+    const content =
+      entries.length === 0 ? (
+        <CircularProgress style={{ color: "var(--primary)" }} />
+      ) : (
+        entries
+      );
 
     return (
       <StyledEntries data-testid="Entries">
