@@ -27,6 +27,17 @@ const MoodService = {
       return null;
     }
   },
+
+  async deleteMood(moodId: string): Promise<any> {
+    const requestOptions = {
+      method: "DELETE",
+    };
+    try {
+      return await fetch(route + "/" + moodId, requestOptions);
+    } catch {
+      return null;
+    }
+  },
 };
 
 export default MoodService;
