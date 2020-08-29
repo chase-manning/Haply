@@ -20,3 +20,4 @@ apps/mobile/yarn-error.log*
 /functions/**/*.js.map
 /functions/typings/
 /functions/node_modules/
+/functions/lib
