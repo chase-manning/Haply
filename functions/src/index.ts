@@ -22,7 +22,6 @@ export const webApi = functions.https.onRequest(main);
 app.post("/moods", async (request, response) => {
   try {
     const meow: Mood = new Mood(1);
-    console.log(meow);
 
     const { value, date } = request.body;
     const data = {
