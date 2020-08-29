@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Entry from "../shared/Entry";
 import MoodService from "../../services/MoodService";
 import { MoodResponse } from "../../models/mood";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const StyledEntries = styled.div`
   height: 100%;
@@ -29,6 +30,9 @@ const TabContent = styled.div`
   height: 100%;
   padding: 10px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 class EntriesState {
@@ -53,10 +57,16 @@ export default class Entries extends Component {
       entries.push(<Entry mood={mood} />);
     });
 
+    const content = true ? (
+      <CircularProgress style={{ color: "var(--primary)" }} />
+    ) : (
+      entries
+    );
+
     return (
       <StyledEntries data-testid="Entries">
         <Header>Entries</Header>
-        <TabContent>{entries}</TabContent>
+        <TabContent>{content}</TabContent>
       </StyledEntries>
     );
   }
