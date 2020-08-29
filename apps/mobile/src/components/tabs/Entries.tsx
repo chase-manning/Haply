@@ -79,7 +79,7 @@ export default class Entries extends Component {
 
   removeMood(moodId: string): void {
     const moods: MoodResponse[] = this.state.moods.filter(
-      (mood) => mood.id != moodId
+      (mood) => mood.id !== moodId
     );
     this.setState({ moods: moods });
   }
