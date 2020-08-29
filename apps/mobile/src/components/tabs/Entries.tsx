@@ -78,7 +78,6 @@ export default class Entries extends Component {
   }
 
   removeMood(moodId: string): void {
-    console.log("Moew");
     const moods: MoodResponse[] = this.state.moods.filter(
       (mood) => mood.id != moodId
     );
@@ -88,7 +87,6 @@ export default class Entries extends Component {
   async getMoods(): Promise<void> {
     const response = await MoodService.getMoods();
     const moods: MoodResponse[] = await response.json();
-    console.log(moods);
     this.setState({ moods: moods });
   }
 }
