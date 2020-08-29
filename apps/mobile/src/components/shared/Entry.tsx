@@ -6,7 +6,7 @@ import dateFormat from "dateformat";
 
 const StyledEntry = styled.div`
   width: 100%;
-  margin: 10px 0;
+  margin: 5px 0;
   background-color: white;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
   padding: 15px 20px;
