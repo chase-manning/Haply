@@ -54,7 +54,12 @@ export default class Entries extends Component {
   render() {
     const entries: JSX.Element[] = [];
     this.state.moods.forEach((mood) => {
-      entries.push(<Entry mood={mood} />);
+      entries.push(
+        <Entry
+          removeMood={(moodId: string) => this.removeMood(moodId)}
+          mood={mood}
+        />
+      );
     });
 
     const content =
@@ -70,6 +75,14 @@ export default class Entries extends Component {
         <TabContent>{content}</TabContent>
       </StyledEntries>
     );
+  }
+
+  removeMood(moodId: string): void {
+    console.log("Moew");
+    const moods: MoodResponse[] = this.state.moods.filter(
+      (mood) => mood.id != moodId
+    );
+    this.setState({ moods: moods });
   }
 
   async getMoods(): Promise<void> {

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import { moodDescriptions, MoodResponse } from "../../models/mood";
 import dateFormat from "dateformat";
+import MoodService from "../../services/MoodService";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -35,9 +36,15 @@ const EntrySubHeader = styled.div`
 
 type Props = {
   mood: MoodResponse;
+  removeMood: (moodId: string) => void;
 };
 
 export default class Entry extends Component<Props> {
+  async deleteMood(): Promise<void> {
+    MoodService.deleteMood(this.props.mood.id);
+    this.props.removeMood(this.props.mood.id);
+  }
+
   render() {
     return (
       <StyledEntry data-testid="Entry">
@@ -49,7 +56,7 @@ export default class Entry extends Component<Props> {
             {dateFormat(this.props.mood.data.date, " dddd h:MM tt")}
           </EntrySubHeader>
         </EntryText>
-        <DeleteOutline />
+        <DeleteOutline onClick={() => this.deleteMood()} />
       </StyledEntry>
     );
   }
