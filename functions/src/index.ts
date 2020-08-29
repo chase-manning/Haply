@@ -3,8 +3,6 @@ import * as admin from "firebase-admin";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 
-import Mood from "../../shared/models/mood";
-
 const cors = require("cors");
 
 admin.initializeApp(functions.config().firebase);
@@ -21,8 +19,6 @@ export const webApi = functions.https.onRequest(main);
 
 app.post("/moods", async (request, response) => {
   try {
-    const meow: Mood = new Mood(1);
-
     const { value, date } = request.body;
     const data = {
       value,
