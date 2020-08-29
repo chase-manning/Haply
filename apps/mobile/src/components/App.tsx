@@ -36,7 +36,6 @@ export default class App extends Component {
           activeTab={this.state.activeTab}
           setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}
           showCapture={() => {
-            console.log("qwe");
             this.setState({ moodShowing: true });
           }}
         />
