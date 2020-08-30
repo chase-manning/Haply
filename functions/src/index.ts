@@ -60,11 +60,27 @@ app.get("/moods/:id", async (request, response) => {
 
 app.get("/moods", async (request, response) => {
   try {
-    const moodQuerySnapshot = await db
-      .collection("moods")
-      .orderBy("date", "desc")
-      .limit(20)
-      .get();
+    const order: any = request.query.order;
+    const limit: any = request.query.limit;
+
+    let moodQuerySnapshot;
+    if (!!order && !!limit) {
+      moodQuerySnapshot = await db
+        .collection("moods")
+        .orderBy(order, "desc")
+        .limit(limit)
+        .get();
+    } else if (!!order) {
+      moodQuerySnapshot = await db
+        .collection("moods")
+        .orderBy(order, "desc")
+        .get();
+    } else if (!!limit) {
+      moodQuerySnapshot = await db.collection("moods").limit(limit).get();
+    } else {
+      moodQuerySnapshot = await db.collection("moods").get();
+    }
+
     const moods: any[] = [];
     moodQuerySnapshot.forEach((doc) => {
       moods.push({

@@ -22,7 +22,7 @@ const MoodService = {
 
   async getMoods(): Promise<any> {
     try {
-      return await fetch(route);
+      return await fetch(route + "?" + "order=date" + "&" + "limit=20");
     } catch {
       return null;
     }
