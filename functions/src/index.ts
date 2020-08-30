@@ -62,6 +62,10 @@ app.get("/moods", async (request, response) => {
   try {
     const order: any = request.query.order;
     const limit: any = request.query.limit;
+    console.log(order);
+    console.log(limit);
+    console.log(!!order);
+    console.log(!!limit);
 
     let moodQuerySnapshot;
     if (!!order && !!limit) {
@@ -80,6 +84,7 @@ app.get("/moods", async (request, response) => {
     } else {
       moodQuerySnapshot = await db.collection("moods").get();
     }
+    console.log(moodQuerySnapshot);
 
     const moods: any[] = [];
     moodQuerySnapshot.forEach((doc) => {
