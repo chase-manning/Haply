@@ -63,7 +63,7 @@ app.get("/moods", async (request: any, response) => {
     const order: string = request.query.order;
     const limit: number = request.query.limit;
     console.log(order);
-    console.log(limit);
+    console.log(limit); //TODO Remove Messy Logging
     console.log(!!order);
     console.log(!!limit);
 
