@@ -96,6 +96,7 @@ app.get("/moods", async (request: any, response) => {
 
     response.json(moods);
   } catch (error) {
+    console.log(error);
     response.status(500).send(error);
   }
 });
