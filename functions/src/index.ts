@@ -58,10 +58,10 @@ app.get("/moods/:id", async (request, response) => {
   }
 });
 
-app.get("/moods", async (request, response) => {
+app.get("/moods", async (request: any, response) => {
   try {
-    const order: any = request.query.order;
-    const limit: any = request.query.limit;
+    const order: string = request.query.order;
+    const limit: number = request.query.limit;
     console.log(order);
     console.log(limit);
     console.log(!!order);
