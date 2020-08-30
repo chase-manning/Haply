@@ -72,7 +72,7 @@ app.get("/moods", async (request: any, response) => {
       moodQuerySnapshot = await db
         .collection("moods")
         .orderBy(order, "desc")
-        .limit(limit)
+        .limit(20) //TODO Have this take limit query as input
         .get();
     } else if (!!order) {
       moodQuerySnapshot = await db
