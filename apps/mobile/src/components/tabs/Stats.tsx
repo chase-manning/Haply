@@ -22,20 +22,19 @@ const Header = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 20px;
 `;
 
 const Chart = styled.div`
   width: 100%;
-  height: 200px;
   display: flex;
+  justify-content: space-between;
 `;
 
 const ChartRow = styled.div`
-  height: 100%;
-  width: 100%;
-  margin: 0 10px;
+  height: 150px;
+  width: 20px;
   display: flex;
   flex-direction: column;
 `;
