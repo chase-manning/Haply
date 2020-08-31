@@ -63,7 +63,7 @@ app.get("/moods", async (request: any, response) => {
     const order: string = request.query.order;
     const limit: number = request.query.limit;
     console.log(order);
-    console.log(limit); //TODO Remove Messy Logging
+    console.log(limit);
     console.log(!!order);
     console.log(!!limit);
 
@@ -72,7 +72,7 @@ app.get("/moods", async (request: any, response) => {
       moodQuerySnapshot = await db
         .collection("moods")
         .orderBy(order, "desc")
-        .limit(20) //TODO Have this take limit query as input
+        .limit(20)
         .get();
     } else if (!!order) {
       moodQuerySnapshot = await db
