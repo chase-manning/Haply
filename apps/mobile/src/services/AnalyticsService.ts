@@ -1,4 +1,3 @@
-//TODO Fix the names of the insights, analaytics, stats stuff to be consistant
 import MoodService from "./MoodService";
 import { MoodResponse, moodDescriptions } from "../models/mood";
 import dateFormat from "dateformat";
