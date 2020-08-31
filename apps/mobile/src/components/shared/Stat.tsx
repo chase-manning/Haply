@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Day } from "../../services/AnalyticsService";
 
 const StyledStat = styled.div`
   width: 100%;
@@ -41,12 +42,16 @@ const Column = styled.div`
   position: relative;
 `;
 
+type FilledPercentage = {
+  value: string;
+};
+
 const Filled = styled.div`
   position: absolute;
   left: 0;
   border-radius: 10px;
   bottom: 0;
-  height: 60%;
+  height: ${(props: FilledPercentage) => props.value};
   width: 100%;
   background-color: var(--primary);
 `;
@@ -60,55 +65,28 @@ const Label = styled.div`
   margin-top: 10px;
 `;
 
-export default class Entry extends Component {
+type Props = {
+  days: Day[];
+};
+
+export default class Entry extends Component<Props> {
   render() {
+    let columns: any = [];
+    this.props.days.forEach((day: Day) => {
+      columns.push(
+        <ChartRow>
+          <Column>
+            <Filled value={day.percent}></Filled>
+          </Column>
+          <Label>{day.dayletter}</Label>
+        </ChartRow>
+      );
+    });
+
     return (
       <StyledStat data-testid="Stat">
         <Header>Daily Mood</Header>
-        <Chart>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>M</Label>
-          </ChartRow>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>T</Label>
-          </ChartRow>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>W</Label>
-          </ChartRow>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>T</Label>
-          </ChartRow>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>F</Label>
-          </ChartRow>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>S</Label>
-          </ChartRow>
-          <ChartRow>
-            <Column>
-              <Filled></Filled>
-            </Column>
-            <Label>S</Label>
-          </ChartRow>
-        </Chart>
+        <Chart>{columns}</Chart>
       </StyledStat>
     );
   }
