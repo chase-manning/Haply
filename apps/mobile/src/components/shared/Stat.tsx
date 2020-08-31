@@ -64,7 +64,7 @@ export default class Entry extends Component {
   render() {
     return (
       <StyledStat data-testid="Stat">
-        <Header>Mood by Day</Header>
+        <Header>Daily Mood</Header>
         <Chart>
           <ChartRow>
             <Column>
@@ -76,37 +76,37 @@ export default class Entry extends Component {
             <Column>
               <Filled></Filled>
             </Column>
-            <Label>M</Label>
+            <Label>T</Label>
           </ChartRow>
           <ChartRow>
             <Column>
               <Filled></Filled>
             </Column>
-            <Label>M</Label>
+            <Label>W</Label>
           </ChartRow>
           <ChartRow>
             <Column>
               <Filled></Filled>
             </Column>
-            <Label>M</Label>
+            <Label>T</Label>
           </ChartRow>
           <ChartRow>
             <Column>
               <Filled></Filled>
             </Column>
-            <Label>M</Label>
+            <Label>F</Label>
           </ChartRow>
           <ChartRow>
             <Column>
               <Filled></Filled>
             </Column>
-            <Label>M</Label>
+            <Label>S</Label>
           </ChartRow>
           <ChartRow>
             <Column>
               <Filled></Filled>
             </Column>
-            <Label>M</Label>
+            <Label>S</Label>
           </ChartRow>
         </Chart>
       </StyledStat>
