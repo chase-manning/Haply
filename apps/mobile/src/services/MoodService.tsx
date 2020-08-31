@@ -1,6 +1,5 @@
 import Mood from "../models/mood";
 
-// TODO Move to some global location
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
 
