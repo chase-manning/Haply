@@ -1,5 +1,5 @@
 import MoodService from "./MoodService";
-import { MoodResponse, moodDescriptions } from "../models/mood";
+import { MoodResponse } from "../models/mood";
 import dateFormat from "dateformat";
 
 export class Day {
