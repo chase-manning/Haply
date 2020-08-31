@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     --yellow: #FFCF66;
     --red: #FF6C8E;
     --primary-shadow: drop-shadow( 0px 5px 10px rgba(64,114,253, 0.5));
+    --primary-light: rgba(64,114,253,0.1);
   }
   /*
   Mono soft
