@@ -20,9 +20,14 @@ const MoodService = {
     }
   },
 
-  async getMoods(): Promise<any> {
+  async getMoods(order?: string, limit?: number): Promise<any> {
     try {
-      return await fetch(route + "?order=date&limit=20");
+      let fullRoute: string = route;
+      if (!!order || !!limit) fullRoute += "?";
+      if (!!order) fullRoute += "order=" + order;
+      if (!!order && !!limit) fullRoute += "&";
+      if (!!limit) fullRoute += "limit=" + limit;
+      return await fetch(fullRoute);
     } catch {
       return null;
     }

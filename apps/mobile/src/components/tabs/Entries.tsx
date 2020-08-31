@@ -58,7 +58,7 @@ export default class Entries extends Component {
   }
 
   async getMoods(): Promise<void> {
-    const response = await MoodService.getMoods();
+    const response = await MoodService.getMoods("date", 20);
     const moods: MoodResponse[] = await response.json();
     this.setState({ moods: moods });
   }
