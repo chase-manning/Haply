@@ -110,7 +110,7 @@ export default class Capture extends Component<Props> {
         />
         <Comment>
           <ChatBubbleOutline />
-          Add a comment
+          Add a comment 2
         </Comment>
         <Button onClick={async () => await this.createMood()}>Done</Button>
       </StyledCapture>
