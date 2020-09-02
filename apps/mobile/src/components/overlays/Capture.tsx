@@ -16,6 +16,7 @@ const StyledCapture = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   padding: 40px;
   color: var(--main);
 `;
@@ -32,6 +33,11 @@ const Emotion = styled.div`
   font-size: 20px;
   text-align: center;
   color: var(--sub);
+`;
+
+const Face = styled.div`
+  height: 300px;
+  width: 300px;
 `;
 
 const Comment = styled.div`
@@ -96,7 +102,7 @@ export default class Capture extends Component<Props> {
         <Close onClick={() => this.props.closeCapture()} />
         <Header>How are you feeling?</Header>
         <Emotion>{this.state.description}</Emotion>
-        <div>Face</div>
+        <Face></Face>
         <Slider
           name="mood"
           value={this.state.mood}
