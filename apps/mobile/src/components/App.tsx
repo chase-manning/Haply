@@ -4,6 +4,22 @@ import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
 import State, { Tab } from "../models/state";
 import Capture from "./overlays/Capture";
+import firebase from "firebase/app";
+import "firebase/auth";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import ReactDOM from "react-dom";
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
+  authDomain: "happiness-software.firebaseapp.com",
+  databaseURL: "https://happiness-software.firebaseio.com",
+  projectId: "happiness-software",
+  storageBucket: "happiness-software.appspot.com",
+  messagingSenderId: "293873304513",
+  appId: "1:293873304513:web:49a1114e1603ed6978e540",
+  measurementId: "G-0KC720H0FM",
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const StyledApp = styled.div`
   display: flex;
@@ -41,9 +57,24 @@ const TabContent = styled.div`
 export default class App extends Component {
   state: State;
 
+  uiConfig = {
+    signInFlow: "popup",
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    ],
+    callbacks: {
+      signInSuccessWithAuthResult: () => false,
+    },
+  };
+
   constructor(props: any) {
     super(props);
     this.state = new State();
+  }
+
+  componentWillUnmount() {
+    this.unregisterAuthObserver();
   }
 
   render() {
@@ -65,6 +96,21 @@ export default class App extends Component {
           }}
         />
         {moodOverlay}
+        {this.state.isSignedIn !== undefined && !this.state.isSignedIn && (
+          <div>
+            <StyledFirebaseAuth
+              uiConfig={this.uiConfig}
+              firebaseAuth={firebaseApp.auth()}
+            />
+          </div>
+        )}
+        {this.state.isSignedIn && (
+          <div>
+            Hello {() => firebaseApp.auth().currentUser?.displayName}. You are
+            now signed In!
+            <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
+          </div>
+        )}
       </StyledApp>
     );
   }
@@ -76,5 +122,11 @@ export default class App extends Component {
     else if (activeTab === Tab.Stats) return "Stats";
     else if (activeTab === Tab.Settings) return "Settings";
     else return "Error";
+  }
+
+  unregisterAuthObserver(): void {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      this.setState({ isSignedIn: !!user });
+    });
   }
 }
