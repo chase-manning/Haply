@@ -21,6 +21,10 @@ const StyledCapture = styled.div`
   color: var(--main);
 `;
 
+const TopBar = styled.div`
+  width: 100%;
+`;
+
 const Header = styled.div`
   font-size: 40px;
   text-align: center;
@@ -99,7 +103,9 @@ export default class Capture extends Component<Props> {
   render() {
     return (
       <StyledCapture data-testid="Capture">
-        <Close onClick={() => this.props.closeCapture()} />
+        <TopBar>
+          <Close onClick={() => this.props.closeCapture()} />
+        </TopBar>
         <Header>How are you feeling?</Header>
         <Emotion>{this.state.description}</Emotion>
         <Face></Face>
