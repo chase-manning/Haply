@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.2",
     "dateformat": "^3.0.3",
+    "firebase": "^7.19.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-firebaseui": "^4.1.0",
