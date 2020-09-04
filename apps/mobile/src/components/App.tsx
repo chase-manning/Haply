@@ -6,7 +6,6 @@ import State, { Tab } from "../models/state";
 import Capture from "./overlays/Capture";
 import firebase from "firebase/app";
 import "firebase/auth";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 var firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -53,29 +52,9 @@ const TabContent = styled.div`
   background-color: var(--bg);
 `;
 
-const FullScreen = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-`;
-
 export default class App extends Component {
   state: State;
   unregisterAuthObserver: any;
-
-  uiConfig = {
-    signInFlow: "popup",
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    ],
-    callbacks: {
-      signInSuccessWithAuthResult: () => false,
-    },
-  };
 
   constructor(props: any) {
     super(props);
@@ -113,21 +92,6 @@ export default class App extends Component {
           }}
         />
         {moodOverlay}
-        {this.state.isSignedIn !== undefined && !this.state.isSignedIn && (
-          <FullScreen>
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebaseApp.auth()}
-            />
-          </FullScreen>
-        )}
-        {this.state.isSignedIn && (
-          <FullScreen>
-            Hello {firebaseApp.auth().currentUser?.email}. You are now signed
-            In!
-            <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
-          </FullScreen>
-        )}
       </StyledApp>
     );
   }
