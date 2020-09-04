@@ -25,7 +25,8 @@ export default class Tabs extends Component<Props> {
     if (this.props.activeTab === Tab.Profile) activeTab = <Profile />;
     else if (this.props.activeTab === Tab.Entries)
       activeTab = <Entries user={this.props.user} />;
-    else if (this.props.activeTab === Tab.Stats) activeTab = <Stats />;
+    else if (this.props.activeTab === Tab.Stats)
+      activeTab = <Stats user={this.props.user} />;
     else if (this.props.activeTab === Tab.Settings) activeTab = <Settings />;
     else throw NOTFOUND;
 

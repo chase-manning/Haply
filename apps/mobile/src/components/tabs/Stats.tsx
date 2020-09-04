@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Stat from "../shared/Stat";
 import AnalyticsService, { Day } from "../../services/AnalyticsService";
 import { CircularProgress } from "@material-ui/core";
+import { User } from "firebase";
 
 const StyledStats = styled.div`
   height: 100%;
@@ -16,7 +17,11 @@ class StatsState {
   days: Day[] = [];
 }
 
-export default class Stats extends Component {
+type Props = {
+  user: User;
+};
+
+export default class Stats extends Component<Props> {
   state: StatsState;
 
   constructor(props: any) {
@@ -42,7 +47,9 @@ export default class Stats extends Component {
   }
 
   async getDays(): Promise<void> {
-    const days: Day[] = await AnalyticsService.getDailyMoods();
+    const days: Day[] = await AnalyticsService.getDailyMoods(
+      this.props.user.uid
+    );
     this.setState({ days: days });
   }
 }

@@ -31,8 +31,8 @@ export class Day {
 }
 
 const AnalyticsService = {
-  async getDailyMoods(): Promise<Day[]> {
-    const response: any = await MoodService.getMoods();
+  async getDailyMoods(userId: string): Promise<Day[]> {
+    const response: any = await MoodService.getMoods(userId);
     const moods: MoodResponse[] = await response.json();
     let monday: Day = new Day("Monday");
     let tuesday: Day = new Day("Tuesday");
