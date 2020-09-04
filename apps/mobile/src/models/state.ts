@@ -1,3 +1,5 @@
+import { User } from "firebase";
+
 export enum Tab {
   Profile,
   Entries,
@@ -9,4 +11,5 @@ export default class State {
   activeTab: Tab = Tab.Profile;
   moodShowing: boolean = false;
   isSignedIn: boolean = false;
+  user?: User;
 }
