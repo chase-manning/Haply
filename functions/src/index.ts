@@ -19,10 +19,11 @@ export const webApi = functions.https.onRequest(main);
 
 app.post("/moods", async (request, response) => {
   try {
-    const { value, date } = request.body;
+    const { value, date, userId } = request.body;
     const data = {
       value,
       date,
+      userId,
     };
 
     const moodRef = await db.collection("moods").add(data);
@@ -62,6 +63,7 @@ app.get("/moods", async (request: any, response) => {
   try {
     const order: string = request.query.order;
     const limit: number = request.query.limit;
+    const userId: string = request.query.userId;
     console.log(order);
     console.log(limit);
     console.log(!!order);
@@ -71,18 +73,27 @@ app.get("/moods", async (request: any, response) => {
     if (!!order && !!limit) {
       moodQuerySnapshot = await db
         .collection("moods")
+        .where("userId", "==", userId)
         .orderBy(order, "desc")
         .limit(20)
         .get();
     } else if (!!order) {
       moodQuerySnapshot = await db
         .collection("moods")
+        .where("userId", "==", userId)
         .orderBy(order, "desc")
         .get();
     } else if (!!limit) {
-      moodQuerySnapshot = await db.collection("moods").limit(limit).get();
+      moodQuerySnapshot = await db
+        .collection("moods")
+        .where("userId", "==", userId)
+        .limit(limit)
+        .get();
     } else {
-      moodQuerySnapshot = await db.collection("moods").get();
+      moodQuerySnapshot = await db
+        .collection("moods")
+        .where("userId", "==", userId)
+        .get();
     }
     console.log(moodQuerySnapshot);
 
