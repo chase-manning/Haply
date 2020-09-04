@@ -7,7 +7,6 @@ import Capture from "./overlays/Capture";
 import firebase from "firebase/app";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import ReactDOM from "react-dom";
 
 var firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
