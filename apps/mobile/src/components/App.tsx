@@ -53,8 +53,18 @@ const TabContent = styled.div`
   background-color: var(--bg);
 `;
 
+const FullScreen = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+`;
+
 export default class App extends Component {
   state: State;
+  unregisterAuthObserver: any;
 
   uiConfig = {
     signInFlow: "popup",
@@ -70,6 +80,14 @@ export default class App extends Component {
   constructor(props: any) {
     super(props);
     this.state = new State();
+  }
+
+  componentDidMount() {
+    this.unregisterAuthObserver = firebaseApp
+      .auth()
+      .onAuthStateChanged((user) => {
+        this.setState({ isSignedIn: !!user });
+      });
   }
 
   componentWillUnmount() {
@@ -96,19 +114,19 @@ export default class App extends Component {
         />
         {moodOverlay}
         {this.state.isSignedIn !== undefined && !this.state.isSignedIn && (
-          <div>
+          <FullScreen>
             <StyledFirebaseAuth
               uiConfig={this.uiConfig}
               firebaseAuth={firebaseApp.auth()}
             />
-          </div>
+          </FullScreen>
         )}
         {this.state.isSignedIn && (
-          <div>
-            Hello {() => firebaseApp.auth().currentUser?.displayName}. You are
-            now signed In!
+          <FullScreen>
+            Hello {firebaseApp.auth().currentUser?.email}. You are now signed
+            In!
             <a onClick={() => firebaseApp.auth().signOut()}>Sign-out</a>
-          </div>
+          </FullScreen>
         )}
       </StyledApp>
     );
@@ -121,11 +139,5 @@ export default class App extends Component {
     else if (activeTab === Tab.Stats) return "Stats";
     else if (activeTab === Tab.Settings) return "Settings";
     else return "Error";
-  }
-
-  unregisterAuthObserver(): void {
-    firebaseApp.auth().onAuthStateChanged((user) => {
-      this.setState({ isSignedIn: !!user });
-    });
   }
 }
