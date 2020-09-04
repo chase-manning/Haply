@@ -15,10 +15,12 @@ export const moodDescriptions: string[] = [
 export default class Mood {
   value: number;
   date: Date;
+  userId: string;
 
-  constructor(value: number, date: Date = new Date()) {
+  constructor(value: number, userId: string, date: Date = new Date()) {
     this.value = value;
     this.date = date;
+    this.userId = userId;
   }
 
   get string(): string {
