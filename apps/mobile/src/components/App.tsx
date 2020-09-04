@@ -65,7 +65,16 @@ export default class App extends Component {
     this.unregisterAuthObserver = firebaseApp
       .auth()
       .onAuthStateChanged((user) => {
-        this.setState({ isSignedIn: !!user });
+        this.setState({ user: user });
+      });
+
+    if (this.state.user) return;
+    firebase
+      .auth()
+      .signInAnonymously()
+      .catch(function (error) {
+        var errorMessage = error.message;
+        alert(errorMessage);
       });
   }
 

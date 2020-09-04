@@ -10,6 +10,5 @@ export enum Tab {
 export default class State {
   activeTab: Tab = Tab.Profile;
   moodShowing: boolean = false;
-  isSignedIn: boolean = false;
   user?: User;
 }
