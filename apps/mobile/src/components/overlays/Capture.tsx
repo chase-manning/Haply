@@ -5,6 +5,7 @@ import Close from "@material-ui/icons/Close";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
+import { User } from "firebase";
 
 const StyledCapture = styled.div`
   position: fixed;
@@ -71,6 +72,7 @@ class captureState {
 }
 
 type Props = {
+  user: User;
   closeCapture: () => void;
 };
 
@@ -91,7 +93,7 @@ export default class Capture extends Component<Props> {
   }
 
   async createMood(): Promise<void> {
-    const mood: Mood = new Mood(this.state.mood);
+    const mood: Mood = new Mood(this.state.mood, this.props.user.uid);
     const response = await MoodService.createMood(mood);
     if (!response || !response.ok) {
       alert("Mood Creation Failed");

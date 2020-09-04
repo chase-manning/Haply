@@ -4,6 +4,7 @@ import Entry from "../shared/Entry";
 import MoodService from "../../services/MoodService";
 import { MoodResponse } from "../../models/mood";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { User } from "firebase";
 
 const StyledEntries = styled.div`
   height: 100%;
@@ -17,7 +18,11 @@ class EntriesState {
   moods: MoodResponse[] = [];
 }
 
-export default class Entries extends Component {
+type Props = {
+  user: User;
+};
+
+export default class Entries extends Component<Props> {
   state: EntriesState;
 
   constructor(props: any) {
@@ -58,7 +63,11 @@ export default class Entries extends Component {
   }
 
   async getMoods(): Promise<void> {
-    const response = await MoodService.getMoods("date", 20);
+    const response = await MoodService.getMoods(
+      this.props.user.uid,
+      "date",
+      20
+    );
     const moods: MoodResponse[] = await response.json();
     this.setState({ moods: moods });
   }

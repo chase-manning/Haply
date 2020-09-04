@@ -7,6 +7,7 @@ import Stats from "./Stats";
 import Settings from "./Settings";
 import { Tab } from "../../models/state";
 import { NOTFOUND } from "dns";
+import { User } from "firebase";
 
 const StyledTabs = styled.div`
   height: 100%;
@@ -14,6 +15,7 @@ const StyledTabs = styled.div`
 `;
 
 type Props = {
+  user: User;
   activeTab: Tab;
 };
 
@@ -21,7 +23,8 @@ export default class Tabs extends Component<Props> {
   render() {
     let activeTab;
     if (this.props.activeTab === Tab.Profile) activeTab = <Profile />;
-    else if (this.props.activeTab === Tab.Entries) activeTab = <Entries />;
+    else if (this.props.activeTab === Tab.Entries)
+      activeTab = <Entries user={this.props.user} />;
     else if (this.props.activeTab === Tab.Stats) activeTab = <Stats />;
     else if (this.props.activeTab === Tab.Settings) activeTab = <Settings />;
     else throw NOTFOUND;

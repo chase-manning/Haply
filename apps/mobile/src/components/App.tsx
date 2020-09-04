@@ -84,14 +84,17 @@ export default class App extends Component {
 
   render() {
     const moodOverlay = this.state.moodShowing ? (
-      <Capture closeCapture={() => this.setState({ moodShowing: false })} />
+      <Capture
+        user={this.state.user!}
+        closeCapture={() => this.setState({ moodShowing: false })}
+      />
     ) : null;
 
     return (
       <StyledApp data-testid="App">
         <Header>{this.headerText}</Header>
         <TabContent>
-          <Tabs activeTab={this.state.activeTab} />
+          <Tabs user={this.state.user!} activeTab={this.state.activeTab} />
         </TabContent>
         <NavBar
           activeTab={this.state.activeTab}
