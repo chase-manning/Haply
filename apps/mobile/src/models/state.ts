@@ -11,4 +11,8 @@ export default class State {
   activeTab: Tab = Tab.Profile;
   moodShowing: boolean = false;
   user?: User;
+
+  get isSignedIn(): boolean {
+    return !!this.user;
+  }
 }
