@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import PersonOutline from "@material-ui/icons/PersonOutline";
 import WhatshotOutlined from "@material-ui/icons/WhatshotOutlined";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const StyledProfile = styled.div`
   width: 100%;
@@ -31,6 +32,13 @@ const Photo = styled.div`
   align-items: center;
   color: white;
   margin-bottom: 20px;
+  position: relative;
+`;
+
+const HappinessScale = styled.div`
+  position: absolute;
+  top: -13px;
+  left: -13px;
 `;
 
 const Name = styled.div`
@@ -129,6 +137,14 @@ export default class Profile extends Component {
       <StyledProfile data-testid="Profile">
         <Card>
           <Photo>
+            <HappinessScale>
+              <CircularProgress
+                value={80}
+                variant="static"
+                size="176px"
+                thickness={1.5}
+              />
+            </HappinessScale>
             <PersonOutline style={{ transform: "scale(4)" }} />
           </Photo>
           {false && <Name>Chase Manning</Name>}
