@@ -5,23 +5,12 @@ import WhatshotOutlined from "@material-ui/icons/WhatshotOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
+import { Card } from "../../styles/Card";
 
 const StyledProfile = styled.div`
   width: 100%;
   height: 100%;
-`;
-
-const Card = styled.div`
-  width: 100%;
-  background-color: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
-  display: flex;
-  flex-direction: column;
-  margin: 5px 0px;
-  align-items: center;
-  margin-bottom: 20px;
+  padding: 20px;
 `;
 
 const Photo = styled.div`
