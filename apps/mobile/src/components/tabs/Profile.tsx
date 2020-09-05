@@ -143,6 +143,7 @@ export default class Profile extends Component {
                 variant="static"
                 size="176px"
                 thickness={1.5}
+                style={{ color: "var(--primary)", strokeLinecap: "round" }}
               />
             </HappinessScale>
             <PersonOutline style={{ transform: "scale(4)" }} />
