@@ -117,7 +117,6 @@ export default class Capture extends Component<Props> {
           aria-labelledby="discrete-slider"
           valueLabelDisplay="auto"
           step={1}
-          marks
           min={0}
           max={10}
           onChange={this.handleChange}
