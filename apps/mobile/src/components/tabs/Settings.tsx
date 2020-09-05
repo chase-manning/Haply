@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import NavigateNextOutlined from "@material-ui/icons/NavigateNextOutlined";
+import { Line } from "../../styles/Line";
 
 const StyledSettings = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 20px;
 `;
 
 const Meow = styled.div`
@@ -47,47 +48,30 @@ export default class Settings extends Component {
   render() {
     return (
       <StyledSettings data-testid="Settings">
-        <Section>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-            <Meow>
-              <NavigateNextOutlined />
-            </Meow>
-          </Setting>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-          </Setting>
-        </Section>
-        <Section>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-          </Setting>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-          </Setting>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-          </Setting>
-        </Section>
-        <Section>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Kring?</Value>
-          </Setting>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-          </Setting>
-          <Setting>
-            <Label>Meow</Label>
-            <Value>Meow</Value>
-          </Setting>
-        </Section>
+        <Line>
+          <Label>Meow</Label>
+          <Value>Meow</Value>
+        </Line>
+        <Line>
+          <Label>Meow</Label>
+          <Value>Meow</Value>
+        </Line>
+        <Line>
+          <Label>Meow</Label>
+          <Value>Meow</Value>
+        </Line>
+        <Line>
+          <Label>Meow</Label>
+          <Value>Meow</Value>
+        </Line>
+        <Line>
+          <Label>Meow</Label>
+          <Value>Meow</Value>
+        </Line>
+        <Line>
+          <Label>Meow</Label>
+          <Value>Meow</Value>
+        </Line>
       </StyledSettings>
     );
   }
