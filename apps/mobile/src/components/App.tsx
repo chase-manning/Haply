@@ -44,12 +44,6 @@ const Header = styled.div`
 const TabContent = styled.div`
   width: 100%;
   height: 100%;
-  padding: 10px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--bg);
 `;
 
 export default class App extends Component {
