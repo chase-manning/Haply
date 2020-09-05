@@ -85,7 +85,7 @@ const Acheivement = styled.div`
   align-self: center;
   align-items: center;
   padding: 10px;
-  color: ${(props: any) => {
+  color: ${(props: AcheivementProps) => {
     return props.isActive ? "var(--primary)" : "var(--sub)";
   }};
 `;
@@ -111,7 +111,7 @@ export default class Profile extends Component {
     let i = 0;
     while (i < 40) {
       acheivements.push(
-        <Acheivement>
+        <Acheivement isActive={true}>
           <AcheivementIcon></AcheivementIcon>
           <AcheivementName>Meow</AcheivementName>
         </Acheivement>
@@ -138,10 +138,12 @@ export default class Profile extends Component {
             </Status>
           </StatusContainer>
         </Card>
-        <Card>
-          <Header>Acheivements</Header>
-          <Acheivements>{acheivements}</Acheivements>
-        </Card>
+        {false && (
+          <Card>
+            <Header>Acheivements</Header>
+            <Acheivements>{acheivements}</Acheivements>
+          </Card>
+        )}
       </StyledProfile>
     );
   }
