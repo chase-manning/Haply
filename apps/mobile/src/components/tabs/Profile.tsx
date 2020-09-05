@@ -3,6 +3,8 @@ import styled from "styled-components";
 import PersonOutline from "@material-ui/icons/PersonOutline";
 import WhatshotOutlined from "@material-ui/icons/WhatshotOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import MoodService from "../../services/MoodService";
+import { User } from "firebase";
 
 const StyledProfile = styled.div`
   width: 100%;
@@ -118,7 +120,26 @@ const AcheivementName = styled.div`
   text-align: center;
 `;
 
-export default class Profile extends Component {
+class ProfileState {
+  averageHappiness: number = 0;
+}
+
+type Props = {
+  user: User;
+};
+
+export default class Profile extends Component<Props> {
+  state: ProfileState;
+
+  constructor(props: any) {
+    super(props);
+    this.state = new ProfileState();
+  }
+
+  componentDidMount() {
+    this.setAverageHappiness();
+  }
+
   render() {
     let acheivements: any = [];
 
@@ -139,7 +160,7 @@ export default class Profile extends Component {
           <Photo>
             <HappinessScale>
               <CircularProgress
-                value={80}
+                value={this.state.averageHappiness}
                 variant="static"
                 size="176px"
                 thickness={1.5}
@@ -165,5 +186,12 @@ export default class Profile extends Component {
         )}
       </StyledProfile>
     );
+  }
+  async setAverageHappiness(): Promise<void> {
+    const averageHappiness: number = await MoodService.averageMood(
+      this.props.user.uid
+    );
+    console.log(averageHappiness);
+    this.setState({ averageHappiness: averageHappiness });
   }
 }

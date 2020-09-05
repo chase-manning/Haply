@@ -22,7 +22,8 @@ type Props = {
 export default class Tabs extends Component<Props> {
   render() {
     let activeTab;
-    if (this.props.activeTab === Tab.Profile) activeTab = <Profile />;
+    if (this.props.activeTab === Tab.Profile)
+      activeTab = <Profile user={this.props.user} />;
     else if (this.props.activeTab === Tab.Entries)
       activeTab = <Entries user={this.props.user} />;
     else if (this.props.activeTab === Tab.Stats)
