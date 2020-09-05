@@ -133,7 +133,6 @@ export default class Profile extends Component {
               <WhatshotOutlined fontSize="inherit" />
               33
             </Status>
-            <Status>33</Status>
           </StatusContainer>
         </Card>
         {false && (
