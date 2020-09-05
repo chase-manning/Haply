@@ -87,7 +87,7 @@ app.get("/moods", async (request: any, response) => {
       moodQuerySnapshot = await db
         .collection("moods")
         .where("userId", "==", userId)
-        .limit(limit)
+        .limit(20)
         .get();
     } else {
       moodQuerySnapshot = await db
