@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Mood, { moodDescriptions } from "../../models/mood";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
+import { withStyles } from "@material-ui/core/styles";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
@@ -66,6 +67,36 @@ const Button = styled.button`
   filter: var(--primary-shadow);
 `;
 
+const MoodSlider = withStyles({
+  root: {
+    color: "var(--primary)",
+    height: 8,
+  },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: "#fff",
+    border: "2px solid currentColor",
+    marginTop: -8,
+    marginLeft: -12,
+    "&:focus, &:hover, &$active": {
+      boxShadow: "inherit",
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: "calc(-50% + 4px)",
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4,
+  },
+})(Slider);
+
 class captureState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
@@ -111,7 +142,7 @@ export default class Capture extends Component<Props> {
         <Header>How are you feeling?</Header>
         <Emotion>{this.state.description}</Emotion>
         <Face></Face>
-        <Slider
+        <MoodSlider
           name="mood"
           value={this.state.mood}
           aria-labelledby="discrete-slider"
