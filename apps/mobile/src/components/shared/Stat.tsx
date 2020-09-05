@@ -1,17 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Day } from "../../services/AnalyticsService";
-
-const StyledStat = styled.div`
-  width: 100%;
-  background-color: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
-  display: flex;
-  flex-direction: column;
-  margin: 5px 0px;
-`;
+import { Card } from "../../styles/card";
 
 const Header = styled.div`
   width: 100%;
@@ -84,10 +74,10 @@ export default class Entry extends Component<Props> {
     });
 
     return (
-      <StyledStat data-testid="Stat">
+      <Card data-testid="Stat">
         <Header>Daily Mood</Header>
         <Chart>{columns}</Chart>
-      </StyledStat>
+      </Card>
     );
   }
 }
