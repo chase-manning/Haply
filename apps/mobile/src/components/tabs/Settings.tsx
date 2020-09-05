@@ -21,7 +21,6 @@ const Section = styled.div`
   flex-direction: column;
   margin-bottom: 20px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
-  border: solid 1px var(--primary-light);
   position: relative;
 `;
 
