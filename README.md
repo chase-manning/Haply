@@ -9,6 +9,7 @@ Some names that are being considered:
 - Life Tracker
 - Moodial
 - Happie
+- Haply
 
 ## Contributing
 
