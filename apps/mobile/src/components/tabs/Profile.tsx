@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PersonOutline from "@material-ui/icons/PersonOutline";
+import WhatshotOutlined from "@material-ui/icons/WhatshotOutlined";
 
 const StyledProfile = styled.div`
   width: 100%;
@@ -54,13 +55,13 @@ const StatusContainer = styled.div`
 
 const Status = styled.div`
   border-radius: 15px;
-  background-color: var(--primary-light);
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 7px;
   font-size: 12px;
   color: var(--sub);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
 `;
 
 const Header = styled.div`
@@ -125,17 +126,14 @@ export default class Profile extends Component {
           <Photo>
             <PersonOutline style={{ transform: "scale(4)" }} />
           </Photo>
-          <Name>Chase Manning</Name>
-          <Description>Apprentice</Description>
+          {false && <Name>Chase Manning</Name>}
+          {false && <Description>Apprentice</Description>}
           <StatusContainer>
             <Status>
-              <span>D</span>
+              <WhatshotOutlined fontSize="inherit" />
               33
             </Status>
-            <Status>
-              <span>D</span>
-              33
-            </Status>
+            <Status>33</Status>
           </StatusContainer>
         </Card>
         {false && (
