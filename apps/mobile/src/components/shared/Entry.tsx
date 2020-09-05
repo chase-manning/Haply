@@ -4,19 +4,7 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import { moodDescriptions, MoodResponse } from "../../models/mood";
 import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
-
-const StyledEntry = styled.div`
-  width: 100%;
-  margin: 5px 0;
-  background-color: white;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
-  padding: 15px 20px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--sub);
-`;
+import { Line } from "../../styles/Line";
 
 const EntryText = styled.div`
   display: flex;
@@ -47,7 +35,7 @@ export default class Entry extends Component<Props> {
 
   render() {
     return (
-      <StyledEntry data-testid="Entry">
+      <Line data-testid="Entry">
         <EntryText>
           <EntryHeader>
             {moodDescriptions[this.props.mood.data.value]}
@@ -57,7 +45,7 @@ export default class Entry extends Component<Props> {
           </EntrySubHeader>
         </EntryText>
         <DeleteOutline onClick={() => this.deleteMood()} />
-      </StyledEntry>
+      </Line>
     );
   }
 }
