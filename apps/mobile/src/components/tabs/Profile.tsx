@@ -5,7 +5,7 @@ import WhatshotOutlined from "@material-ui/icons/WhatshotOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
-import { Card } from "../../styles/qwe";
+import { Card } from "../../styles/Card";
 
 const StyledProfile = styled.div`
   width: 100%;
