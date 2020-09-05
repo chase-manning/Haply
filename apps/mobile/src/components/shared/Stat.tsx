@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Day } from "../../services/AnalyticsService";
-import { Card } from "../../styles/Card";
+import { Card } from "../../styles/qwe";
 
 const Header = styled.div`
   width: 100%;
