@@ -36,14 +36,16 @@ export default class Entries extends Component<Props> {
 
   render() {
     const entries: JSX.Element[] = [];
-    this.state.moods.forEach((mood) => {
-      entries.push(
-        <Entry
-          removeMood={(moodId: string) => this.removeMood(moodId)}
-          mood={mood}
-        />
-      );
-    });
+    if (this.state.moods.length > 0) {
+      this.state.moods.forEach((mood) => {
+        entries.push(
+          <Entry
+            removeMood={(moodId: string) => this.removeMood(moodId)}
+            mood={mood}
+          />
+        );
+      });
+    }
 
     const content =
       entries.length === 0 ? (
