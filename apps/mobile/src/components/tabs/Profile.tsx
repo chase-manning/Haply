@@ -54,14 +54,19 @@ const StatusContainer = styled.div`
 `;
 
 const Status = styled.div`
-  border-radius: 15px;
+  border-radius: 14px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 7px;
-  font-size: 12px;
+  padding: 7px 14px;
+  font-size: 14px;
   color: var(--sub);
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.07);
+`;
+
+const StatusNumber = styled.div`
+  color: var(--primary);
+  margin-left: 5px;
 `;
 
 const Header = styled.div`
@@ -131,7 +136,7 @@ export default class Profile extends Component {
           <StatusContainer>
             <Status>
               <WhatshotOutlined fontSize="inherit" />
-              33
+              <StatusNumber>33</StatusNumber>
             </Status>
           </StatusContainer>
         </Card>
