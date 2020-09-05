@@ -1,4 +1,4 @@
-import Mood from "../models/mood";
+import Mood, { MoodResponse } from "../models/mood";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
@@ -39,6 +39,22 @@ const MoodService = {
       return await fetch(route + "/" + moodId, requestOptions);
     } catch {
       return null;
+    }
+  },
+
+  async averageMood(userId: string): Promise<number> {
+    let fullRoute: string = route + "?userId=" + userId + "&limit=100";
+    try {
+      const response = await fetch(fullRoute);
+      const moodResponses: MoodResponse[] = await response.json();
+      if (moodResponses.length === 0) return 0;
+      let moodTotal: number = 0;
+      moodResponses.forEach((moodResponse: MoodResponse) => {
+        moodTotal += moodResponse.data.value;
+      });
+      return moodTotal / moodResponses.length;
+    } catch {
+      return 0;
     }
   },
 };
