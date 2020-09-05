@@ -122,6 +122,7 @@ const AcheivementName = styled.div`
 
 class ProfileState {
   averageHappiness: number = 0;
+  dailyStreak: string = "-";
 }
 
 type Props = {
@@ -164,19 +165,24 @@ export default class Profile extends Component<Props> {
                 variant="static"
                 size="176px"
                 thickness={1.5}
-                style={{ color: "var(--primary)", strokeLinecap: "round" }}
+                style={{
+                  color: "var(--primary)",
+                  strokeLinecap: "round",
+                }}
               />
             </HappinessScale>
             <PersonOutline style={{ transform: "scale(4)" }} />
           </Photo>
           {false && <Name>Chase Manning</Name>}
           {false && <Description>Apprentice</Description>}
-          <StatusContainer>
-            <Status>
-              <WhatshotOutlined fontSize="inherit" />
-              <StatusNumber>33</StatusNumber>
-            </Status>
-          </StatusContainer>
+          {false && (
+            <StatusContainer>
+              <Status>
+                <WhatshotOutlined fontSize="inherit" />
+                <StatusNumber>33</StatusNumber>
+              </Status>
+            </StatusContainer>
+          )}
         </Card>
         {false && (
           <Card>
@@ -188,10 +194,25 @@ export default class Profile extends Component<Props> {
     );
   }
   async setAverageHappiness(): Promise<void> {
+    if (!this.props.user) {
+      //TODO move this duplicate logic somewhere higher up
+      setTimeout(() => {
+        this.setAverageHappiness();
+      }, 500);
+      return;
+    }
     const averageHappiness: number = await MoodService.averageMood(
       this.props.user.uid
     );
-    console.log(averageHappiness);
-    this.setState({ averageHappiness: averageHappiness });
+    this.setState({ averageHappiness: averageHappiness * 10 });
+  }
+
+  async setDailyStreak(): Promise<void> {
+    if (!this.props.user) {
+      setTimeout(() => {
+        this.setDailyStreak();
+      }, 500);
+      return;
+    }
   }
 }
