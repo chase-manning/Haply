@@ -107,7 +107,7 @@ export default class App extends Component {
     if (activeTab === Tab.Profile) return "Profile";
     else if (activeTab === Tab.Entries) return "Entries";
     else if (activeTab === Tab.Stats) return "Stats";
-    else if (activeTab === Tab.Settings) return "Settings";
+    else if (activeTab === Tab.Settings) return "Setup";
     else return "Error";
   }
 }
