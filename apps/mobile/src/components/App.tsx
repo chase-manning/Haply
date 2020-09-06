@@ -28,7 +28,6 @@ const StyledApp = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  overflow: auto;
 `;
 
 const Header = styled.div`
@@ -44,6 +43,7 @@ const Header = styled.div`
 const TabContent = styled.div`
   width: 100%;
   height: 100%;
+  overflow: auto;
 `;
 
 export default class App extends Component {
