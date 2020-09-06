@@ -3,7 +3,7 @@ import PersonOutline from "@material-ui/icons/PersonOutline";
 import TimelineOutlined from "@material-ui/icons/TimelineOutlined";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import BarChart from "@material-ui/icons/BarChart";
-import SettingsOutlined from "@material-ui/icons/SettingsOutlined";
+import MenuOutlined from "@material-ui/icons/MenuOutlined";
 import styled from "styled-components";
 import { Tab } from "../../models/state";
 
@@ -86,7 +86,7 @@ export default class NavBar extends Component<Props> {
           isActive={this.props.activeTab === Tab.Settings}
           onClick={() => this.props.setActiveTab(Tab.Settings)}
         >
-          <SettingsOutlined />
+          <MenuOutlined />
         </NavItem>
       </StyledNavBar>
     );
