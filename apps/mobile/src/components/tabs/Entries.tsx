@@ -44,6 +44,7 @@ const NoDataSub = styled.div`
   color: var(--sub);
   width: 70%;
   text-align: center;
+  line-height: 1.5;
 `;
 
 class EntriesState {
