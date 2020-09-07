@@ -5,6 +5,7 @@ import MoodService from "../../services/MoodService";
 import { MoodResponse } from "../../models/mood";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { User } from "firebase";
+import noData from "../../assets/svgs/undraw_empty_xct9.svg";
 
 const StyledEntries = styled.div`
   height: 100%;
@@ -15,7 +16,38 @@ const StyledEntries = styled.div`
   padding: 0 20px;
 `;
 
+const NoDataContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NoData = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px; /* TODO there should be a better way of doing this */
+`;
+
+const NoDataHeader = styled.div`
+  font-size: 16px;
+  color: var(--main);
+  margin-top: 30px;
+`;
+
+const NoDataSub = styled.div`
+  font-size: 12px;
+  margin-top: 15px;
+  color: var(--sub);
+  width: 70%;
+  text-align: center;
+`;
+
 class EntriesState {
+  isLoading: boolean = true;
   moods: MoodResponse[] = [];
 }
 
@@ -48,12 +80,21 @@ export default class Entries extends Component<Props> {
       });
     }
 
-    const content =
-      entries.length === 0 ? (
-        <CircularProgress style={{ color: "var(--primary)" }} />
-      ) : (
-        entries
-      );
+    const content = this.state.isLoading ? ( //TODO Split out NoData into seperate component
+      <CircularProgress style={{ color: "var(--primary)" }} />
+    ) : this.state.moods.length === 0 ? (
+      <NoDataContainer>
+        <NoData>
+          <img src={noData} alt="No Data Found Illustration" width="60%" />
+          <NoDataHeader>No Entries</NoDataHeader>
+          <NoDataSub>
+            Record How you are Feeling. New Entries will appear here.
+          </NoDataSub>
+        </NoData>
+      </NoDataContainer>
+    ) : (
+      entries
+    );
 
     return <StyledEntries data-testid="Entries">{content}</StyledEntries>;
   }
@@ -72,6 +113,6 @@ export default class Entries extends Component<Props> {
       20
     );
     const moods: MoodResponse[] = await response.json();
-    this.setState({ moods: moods });
+    this.setState({ moods: moods, isLoading: false });
   }
 }
