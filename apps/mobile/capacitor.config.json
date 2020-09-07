@@ -1,5 +1,5 @@
 {
-  "appId": "com.example.app",
+  "appId": "haply.app",
   "appName": "Haply",
   "bundledWebRuntime": false,
   "npmClient": "npm",
