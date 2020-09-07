@@ -89,7 +89,7 @@ export default class Entries extends Component<Props> {
           <img src={noData} alt="No Data Found Illustration" width="60%" />
           <NoDataHeader>No Entries</NoDataHeader>
           <NoDataSub>
-            Record How you are Feeling. New Entries will appear here.
+            Record how you are Feeling. New Entries will appear here.
           </NoDataSub>
         </NoData>
       </NoDataContainer>
