@@ -183,13 +183,6 @@ export default class Profile extends Component<Props> {
     );
   }
   async setAverageHappiness(): Promise<void> {
-    if (!this.props.user) {
-      //TODO move this duplicate logic somewhere higher up
-      setTimeout(() => {
-        this.setAverageHappiness();
-      }, 500);
-      return;
-    }
     const averageHappiness: number = await MoodService.averageMood(
       this.props.user.uid
     );
