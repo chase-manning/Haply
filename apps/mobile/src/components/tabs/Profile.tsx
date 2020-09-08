@@ -105,7 +105,7 @@ export default class Profile extends Component<Props> {
     // The Journey
     achievementList.push(
       new AchievementModel(
-        firstSteps,
+        theJourney,
         Math.min(this.state.moods.length / 10, 1)
       )
     );
