@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PersonOutline from "@material-ui/icons/PersonOutline";
+import EmojiEventsOutlined from "@material-ui/icons/EmojiEventsOutlined";
 import TimelineOutlined from "@material-ui/icons/TimelineOutlined";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import BarChart from "@material-ui/icons/BarChart";
@@ -62,7 +62,7 @@ export default class NavBar extends Component<Props> {
           isActive={this.props.activeTab === Tab.Profile}
           onClick={() => this.props.setActiveTab(Tab.Profile)}
         >
-          <PersonOutline />
+          <EmojiEventsOutlined />
         </NavItem>
         <NavItem
           isActive={this.props.activeTab === Tab.Entries}
