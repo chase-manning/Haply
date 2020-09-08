@@ -7,6 +7,6 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 5px 0px;
+  margin-bottom: 20px;
   border: solid 1px var(--border);
 `;
