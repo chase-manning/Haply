@@ -39,6 +39,7 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: solid 1px var(--border);
 `;
 
 const TabContent = styled.div`
