@@ -82,7 +82,9 @@ export default class Entries extends Component<Props> {
     }
 
     const content = this.state.isLoading ? ( //TODO Split out NoData into seperate component
-      <CircularProgress style={{ color: "var(--primary)" }} />
+      <CircularProgress
+        style={{ color: "var(--primary)", marginTop: "20px" }}
+      />
     ) : this.state.moods.length === 0 ? (
       <NoDataContainer>
         <NoData>
