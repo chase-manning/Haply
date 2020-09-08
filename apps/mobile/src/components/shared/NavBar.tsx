@@ -14,10 +14,10 @@ const StyledNavBar = styled.div`
   height: 60px;
   width: 100%;
   background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  border-top: solid 1px var(--border);
 `;
 
 type NavItemProps = {
