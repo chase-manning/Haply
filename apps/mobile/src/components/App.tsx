@@ -107,7 +107,7 @@ export default class App extends Component {
 
   get headerText(): string {
     const activeTab: Tab = this.state.activeTab;
-    if (activeTab === Tab.Profile) return "Profile";
+    if (activeTab === Tab.Profile) return "Achievements";
     else if (activeTab === Tab.Entries) return "Entries";
     else if (activeTab === Tab.Stats) return "Stats";
     else if (activeTab === Tab.Settings) return "Setup";
