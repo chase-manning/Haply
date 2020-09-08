@@ -11,7 +11,7 @@ const StyledStats = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 20px;
+  padding: 20px;
 `;
 
 class StatsState {
