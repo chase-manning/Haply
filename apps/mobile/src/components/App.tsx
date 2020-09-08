@@ -20,17 +20,18 @@ var firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const StyledApp = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
+  padding: 60px 0;
 `;
 
 const Header = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   background-color: white;
@@ -43,7 +44,6 @@ const Header = styled.div`
 const TabContent = styled.div`
   width: 100%;
   height: 100%;
-  overflow: auto;
 `;
 
 export default class App extends Component {
@@ -87,10 +87,10 @@ export default class App extends Component {
     return (
       !!this.state.user && (
         <StyledApp data-testid="App">
-          <Header>{this.headerText}</Header>
           <TabContent>
             <Tabs user={this.state.user!} activeTab={this.state.activeTab} />
           </TabContent>
+          <Header>{this.headerText}</Header>
           <NavBar
             activeTab={this.state.activeTab}
             setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}

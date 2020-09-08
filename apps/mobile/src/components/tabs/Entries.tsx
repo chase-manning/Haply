@@ -14,6 +14,7 @@ const StyledEntries = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
+  overflow: auto;
 `;
 
 const NoDataContainer = styled.div`
@@ -29,7 +30,6 @@ const NoData = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 60px; /* TODO there should be a better way of doing this */
 `;
 
 const NoDataHeader = styled.div`
