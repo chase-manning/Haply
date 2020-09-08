@@ -7,6 +7,10 @@ import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
+import sadAsset from "../../assets/svgs/undraw_feeling_blue_4b7q.svg";
+import happyAsset from "../../assets/svgs/undraw_smiley_face_lmgm.svg";
+import okayAsset from "../../assets/svgs/undraw_young_and_happy_hfpe.svg";
+import mehAsset from "../../assets/svgs/undraw_windy_day_x63l.svg";
 
 const StyledCapture = styled.div`
   position: fixed;
@@ -44,6 +48,9 @@ const Emotion = styled.div`
 const Face = styled.div`
   height: 300px;
   width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Comment = styled.div`
@@ -145,7 +152,9 @@ export default class Capture extends Component<Props> {
         </TopBar>
         <Header>How are you feeling?</Header>
         <Emotion>{this.state.description}</Emotion>
-        <Face></Face>
+        <Face>
+          <img src={this.moodAsset} alt="Mood Illustration" width="80%" />
+        </Face>
         <MoodSlider
           name="mood"
           value={this.state.mood}
@@ -163,5 +172,12 @@ export default class Capture extends Component<Props> {
         <Button onClick={async () => await this.createMood()}>Done</Button>
       </StyledCapture>
     );
+  }
+
+  get moodAsset(): string {
+    if (this.state.mood <= 2) return sadAsset;
+    if (this.state.mood <= 4) return mehAsset;
+    else if (this.state.mood <= 7) return okayAsset;
+    else return happyAsset;
   }
 }
