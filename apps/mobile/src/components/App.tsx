@@ -85,20 +85,22 @@ export default class App extends Component {
     ) : null;
 
     return (
-      <StyledApp data-testid="App">
-        <Header>{this.headerText}</Header>
-        <TabContent>
-          <Tabs user={this.state.user!} activeTab={this.state.activeTab} />
-        </TabContent>
-        <NavBar
-          activeTab={this.state.activeTab}
-          setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}
-          showCapture={() => {
-            this.setState({ moodShowing: true });
-          }}
-        />
-        {moodOverlay}
-      </StyledApp>
+      !!this.state.user && (
+        <StyledApp data-testid="App">
+          <Header>{this.headerText}</Header>
+          <TabContent>
+            <Tabs user={this.state.user!} activeTab={this.state.activeTab} />
+          </TabContent>
+          <NavBar
+            activeTab={this.state.activeTab}
+            setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}
+            showCapture={() => {
+              this.setState({ moodShowing: true });
+            }}
+          />
+          {moodOverlay}
+        </StyledApp>
+      )
     );
   }
 
