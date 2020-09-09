@@ -14,6 +14,7 @@ import lunchDate from "../../assets/svgs/undraw_eating_together_tjhx.svg";
 import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import feelingAmazing from "../../assets/svgs/undraw_super_thank_you_obwk.svg";
 import merryChristmas from "../../assets/svgs/undraw_christmas_tree_56sw.svg";
+import happyHalloween from "../../assets/svgs/undraw_witch_7uk7.svg";
 import slowDay from "../../assets/svgs/undraw_book_reading_kx9s.svg";
 import activeDay from "../../assets/svgs/undraw_hiking_d24r.svg";
 import meatyDay from "../../assets/svgs/undraw_Hamburger_8ge6.svg";
@@ -157,6 +158,18 @@ export default class Profile extends Component<Props> {
         merryChristmas,
         this.state.moods.some(
           (mood: Mood) => dateFormat(mood.date, "d - m") === "25 = 12"
+        )
+          ? 1
+          : 0
+      )
+    );
+
+    // Happy Halloween
+    achievementList.push(
+      new AchievementModel(
+        happyHalloween,
+        this.state.moods.some(
+          (mood: Mood) => dateFormat(mood.date, "d - m") === "31 = 10"
         )
           ? 1
           : 0
