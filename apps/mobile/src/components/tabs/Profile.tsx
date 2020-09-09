@@ -12,6 +12,7 @@ import firstSteps from "../../assets/svgs/undraw_relaunch_day_902d.svg";
 import earlyBird from "../../assets/svgs/undraw_japan_ubgk.svg";
 import lunchDate from "../../assets/svgs/undraw_eating_together_tjhx.svg";
 import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
+import slowDay from "../../assets/svgs/undraw_book_reading_kx9s.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
@@ -83,7 +84,6 @@ export default class Profile extends Component<Props> {
     const moodResponses: MoodResponse[] = await response.json();
 
     let moods: Mood[] = [];
-    console.log(moodResponses);
     moodResponses.forEach((moodResponse: MoodResponse) => {
       moods.push(moodResponse.data);
     });
@@ -139,6 +139,38 @@ export default class Profile extends Component<Props> {
       )
     );
 
+    const days: string[] = this.state.moods.map((mood: Mood) =>
+      dateFormat(mood.date, "d - m - yyyy")
+    );
+    console.log(days);
+
+    let dayCount: number = 0;
+    days.forEach((day: string) => {
+      let count: number = days.filter((day2: string) => day2 === day).length;
+      if (count > dayCount) dayCount = count;
+    });
+    console.log(dayCount);
+
+    const todaysCount: number =
+      days.filter(
+        (day: string) => day === dateFormat(new Date(), "d - m - yyyy")
+      ).length / 5;
+
+    // Slow Day
+    achievementList.push(
+      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount)
+    );
+
+    // Busy Bee
+    achievementList.push(
+      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount)
+    );
+
+    // Busy Bee
+    achievementList.push(
+      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount)
+    );
+
     // The Journey
     achievementList.push(
       new AchievementModel(
@@ -166,7 +198,6 @@ export default class Profile extends Component<Props> {
 
     this.state.moods.forEach((mood: Mood) => {
       let day: number = Number.parseInt(dateFormat(mood.date, "d"));
-      console.log(day);
       if (day === lastDate - 1) currentDays++;
       lastDate = day;
       if (currentDays > maxDays) maxDays = currentDays;
