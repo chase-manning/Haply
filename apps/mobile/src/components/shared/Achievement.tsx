@@ -36,6 +36,7 @@ const Icon = styled.div`
   border-radius: 50%;
   margin-bottom: 5px;
   overflow: hidden;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
 `;
 
 const Progress = styled.div`
@@ -59,6 +60,22 @@ const Complete = styled.div`
   background-color: var(--primary);
 `;
 
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border-top: solid 2px rgba(255, 255, 255, 0.5);
+  border-left: solid 2px rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(0, 0, 0, 0.2)
+  );
+`;
+
 type Props = {
   achievement: AchievementModel;
 };
@@ -72,6 +89,7 @@ export default class Acheivement extends Component<Props> {
             src={this.props.achievement.svg}
             isComplete={this.props.achievement.percentComplete === 1}
           />
+          <Overlay />
         </Icon>
         {this.props.achievement.percentComplete < 1 && (
           <Progress>
