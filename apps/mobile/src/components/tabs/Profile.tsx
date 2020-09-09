@@ -181,6 +181,8 @@ export default class Profile extends Component<Props> {
       new AchievementModel(aLifestyle, Math.min(maxDays / 365, 1))
     );
 
-    return achievementList;
+    return achievementList.sort(function (a, b) {
+      return b.percentComplete - a.percentComplete;
+    });
   }
 }
