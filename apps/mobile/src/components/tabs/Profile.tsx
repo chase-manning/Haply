@@ -8,8 +8,9 @@ import { CircularProgress } from "@material-ui/core";
 import dateFormat from "dateformat";
 import AchievementModel from "../../models/AchievementModel";
 
-import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import firstSteps from "../../assets/svgs/undraw_relaunch_day_902d.svg";
+import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
+import earlyBird from "../../assets/svgs/undraw_japan_ubgk.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
@@ -104,6 +105,19 @@ export default class Profile extends Component<Props> {
       )
     );
 
+    // Early Bird
+    achievementList.push(
+      new AchievementModel(
+        earlyBird,
+        this.state.moods.some((mood: Mood) => {
+          const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
+          return hour >= 5 || hour <= 7;
+        })
+          ? 1
+          : 0
+      )
+    );
+
     // The Journey
     achievementList.push(
       new AchievementModel(
@@ -115,6 +129,14 @@ export default class Profile extends Component<Props> {
     // Settle In
     achievementList.push(
       new AchievementModel(settleIn, Math.min(this.state.moods.length / 100, 1))
+    );
+
+    // For Breakfast
+    achievementList.push(
+      new AchievementModel(
+        forBreakfast,
+        Math.min(this.state.moods.length / 1000, 1)
+      )
     );
 
     // For Breakfast
