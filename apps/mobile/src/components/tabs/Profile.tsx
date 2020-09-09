@@ -144,20 +144,16 @@ export default class Profile extends Component<Props> {
     const days: string[] = this.state.moods.map((mood: Mood) =>
       dateFormat(mood.date, "d - m - yyyy")
     );
-    console.log(days);
 
     let dayCount: number = 0;
     days.forEach((day: string) => {
       let count: number = days.filter((day2: string) => day2 === day).length;
       if (count > dayCount) dayCount = count;
     });
-    console.log(dayCount);
 
     const todaysCount: number = days.filter(
       (day: string) => day === dateFormat(new Date(), "d - m - yyyy")
     ).length;
-
-    console.log(todaysCount);
 
     // Slow Day
     achievementList.push(
