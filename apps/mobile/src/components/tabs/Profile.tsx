@@ -11,6 +11,7 @@ import AchievementModel from "../../models/AchievementModel";
 import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import firstSteps from "../../assets/svgs/undraw_relaunch_day_902d.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
+import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
 
 const StyledProfile = styled.div`
@@ -111,15 +112,12 @@ export default class Profile extends Component<Props> {
       )
     );
 
-    // Getting Serious
+    // Settle In
     achievementList.push(
-      new AchievementModel(
-        theJourney,
-        Math.min(this.state.moods.length / 100, 1)
-      )
+      new AchievementModel(settleIn, Math.min(this.state.moods.length / 100, 1))
     );
 
-    //
+    // For Breakfast
     achievementList.push(
       new AchievementModel(
         forBreakfast,
