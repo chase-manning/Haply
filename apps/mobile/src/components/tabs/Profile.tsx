@@ -44,6 +44,7 @@ const Acheivements = styled.div`
 class ProfileState {
   moods: Mood[] = [];
   isLoading: boolean = true;
+  achievements: any[] = [];
 }
 
 type Props = {
@@ -63,11 +64,6 @@ export default class Profile extends Component<Props> {
   }
 
   render() {
-    let achievements: any[] = [];
-    this.achievements.forEach((achievement: AchievementModel) => {
-      achievements.push(<Achievement achievement={achievement} />);
-    });
-
     return (
       <StyledProfile data-testid="Profile">
         {this.state.isLoading && (
@@ -75,7 +71,9 @@ export default class Profile extends Component<Props> {
             style={{ color: "var(--primary)", marginTop: "20px" }}
           />
         )}
-        {!this.state.isLoading && <Acheivements>{achievements}</Acheivements>}
+        {!this.state.isLoading && (
+          <Acheivements>{this.state.achievements}</Acheivements>
+        )}
       </StyledProfile>
     );
   }
@@ -94,9 +92,10 @@ export default class Profile extends Component<Props> {
     });
 
     this.setState({ moods: moods, isLoading: false });
+    this.setAchievements();
   }
 
-  get achievements(): AchievementModel[] {
+  setAchievements(): void {
     // TODO Change this to only run once
     let achievementList: AchievementModel[] = [];
 
@@ -252,8 +251,15 @@ export default class Profile extends Component<Props> {
       new AchievementModel(aLifestyle, Math.min(maxDays / 365, 1))
     );
 
-    return achievementList.sort(function (a, b) {
+    achievementList.sort(function (a, b) {
       return b.percentComplete - a.percentComplete;
     });
+
+    let achievements: any[] = [];
+    achievementList.forEach((achievement: AchievementModel) => {
+      achievements.push(<Achievement achievement={achievement} />);
+    });
+
+    this.setState({ achievements: achievements });
   }
 }
