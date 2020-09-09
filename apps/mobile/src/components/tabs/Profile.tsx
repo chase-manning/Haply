@@ -14,6 +14,7 @@ import earlyBird from "../../assets/svgs/undraw_japan_ubgk.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
+import aHabbit from "../../assets/svgs/undraw_icon_design_qvdf.svg";
 
 const StyledProfile = styled.div`
   width: 100%;
@@ -71,7 +72,10 @@ export default class Profile extends Component<Props> {
   }
 
   async getMoods(): Promise<void> {
-    const response: any = await MoodService.getMoods(this.props.user.uid);
+    const response: any = await MoodService.getMoods(
+      this.props.user.uid,
+      "date"
+    );
 
     const moodResponses: MoodResponse[] = await response.json();
 
@@ -85,6 +89,7 @@ export default class Profile extends Component<Props> {
   }
 
   get achievements(): AchievementModel[] {
+    // TODO Change this to only run once
     let achievementList: AchievementModel[] = [];
 
     // First Steps
@@ -145,6 +150,33 @@ export default class Profile extends Component<Props> {
         forBreakfast,
         Math.min(this.state.moods.length / 1000, 1)
       )
+    );
+
+    let maxDays: number = 1;
+    let currentDays: number = 1;
+    let lastDate: number = -1;
+
+    this.state.moods.forEach((mood: Mood) => {
+      let day: number = Number.parseInt(dateFormat(mood.date, "d"));
+      console.log(day);
+      if (day === lastDate - 1) currentDays++;
+      lastDate = day;
+      if (currentDays > maxDays) maxDays = currentDays;
+    });
+
+    // A Habbit
+    achievementList.push(
+      new AchievementModel(aHabbit, Math.min(maxDays / 7, 1))
+    );
+
+    // A Routine
+    achievementList.push(
+      new AchievementModel(forBreakfast, Math.min(maxDays / 30, 1))
+    );
+
+    // A Lifestyle
+    achievementList.push(
+      new AchievementModel(forBreakfast, Math.min(maxDays / 365, 1))
     );
 
     return achievementList;
