@@ -13,6 +13,7 @@ import earlyBird from "../../assets/svgs/undraw_japan_ubgk.svg";
 import lunchDate from "../../assets/svgs/undraw_eating_together_tjhx.svg";
 import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import slowDay from "../../assets/svgs/undraw_book_reading_kx9s.svg";
+import meatyDay from "../../assets/svgs/undraw_Hamburger_8ge6.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
@@ -163,12 +164,12 @@ export default class Profile extends Component<Props> {
 
     // Busy Bee
     achievementList.push(
-      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount)
+      new AchievementModel(slowDay, dayCount >= 20 ? 1 : todaysCount)
     );
 
-    // Busy Bee
+    // Meaty Day
     achievementList.push(
-      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount)
+      new AchievementModel(meatyDay, dayCount >= 50 ? 1 : todaysCount)
     );
 
     // The Journey
