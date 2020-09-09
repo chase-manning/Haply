@@ -117,7 +117,7 @@ const SvgDetails = styled.img`
   width: 100%;
 `;
 
-const Name = styled.div`
+const Title = styled.div`
   text-align: center;
   width: 100%;
   font-size: 16px;
@@ -153,12 +153,7 @@ export default class Acheivement extends Component<Props> {
   render() {
     return (
       <StyledAcheivement data-testid="Achievement">
-        <Icon
-          onClick={() => {
-            this.setState({ detailsOpen: true });
-            console.log(this.props.achievement.percentComplete);
-          }}
-        >
+        <Icon onClick={() => this.setState({ detailsOpen: true })}>
           <Svg
             src={this.props.achievement.svg}
             isComplete={this.props.achievement.percentComplete === 1}
@@ -174,22 +169,14 @@ export default class Acheivement extends Component<Props> {
         )}
         {this.state.detailsOpen && (
           <Shadow>
-            <ExitEvent
-              onClick={() => {
-                this.setState({ detailsOpen: false });
-                console.log("woof");
-                console.log(this.state.detailsOpen);
-              }}
-            />
+            <ExitEvent onClick={() => this.setState({ detailsOpen: false })} />
             <Details>
               <Header>
                 <Close onClick={() => this.setState({ detailsOpen: false })} />
               </Header>
               <SvgDetails src={this.props.achievement.svg} />
-              <Name>Merry Christmas</Name>
-              <Description>
-                SOme workds slsfjlks sdjks sjkdjkj j j jsdkjs jksdf j
-              </Description>
+              <Title>{this.props.achievement.title}</Title>
+              <Description>{this.props.achievement.description}</Description>
             </Details>
           </Shadow>
         )}

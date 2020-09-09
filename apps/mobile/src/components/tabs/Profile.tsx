@@ -101,7 +101,12 @@ export default class Profile extends Component<Props> {
 
     // First Steps
     achievementList.push(
-      new AchievementModel(firstSteps, this.state.moods.length >= 1 ? 1 : 0)
+      new AchievementModel(
+        firstSteps,
+        this.state.moods.length >= 1 ? 1 : 0,
+        "First Steps",
+        "Record your first feeling"
+      )
     );
 
     // Early Bird
@@ -113,7 +118,9 @@ export default class Profile extends Component<Props> {
           return hour >= 5 && hour <= 6;
         })
           ? 1
-          : 0
+          : 0,
+        "Early Bird",
+        "Record a Feeling in The Early Morning between 5am and 7am"
       )
     );
 
@@ -126,7 +133,9 @@ export default class Profile extends Component<Props> {
           return hour === 12;
         })
           ? 1
-          : 0
+          : 0,
+        "Lunch Date",
+        "Record a Feeling at Luch Time between 12am and 1pm"
       )
     );
 
@@ -136,10 +145,12 @@ export default class Profile extends Component<Props> {
         nightOwl,
         this.state.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
-          return hour >= 21 || hour <= 3;
+          return hour >= 23 || hour <= 3;
         })
           ? 1
-          : 0
+          : 0,
+        "Night Owl",
+        "Record a Feeling late at Night between 11pm and 4am"
       )
     );
 
@@ -147,7 +158,9 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         feelingAmazing,
-        this.state.moods.some((mood: Mood) => mood.value === 10) ? 1 : 0
+        this.state.moods.some((mood: Mood) => mood.value === 10) ? 1 : 0,
+        "Feeling Amazing",
+        "Record a Feeling when you are feeling Amazing!"
       )
     );
 
@@ -159,7 +172,9 @@ export default class Profile extends Component<Props> {
           (mood: Mood) => dateFormat(mood.date, "d - m") === "25 = 12"
         )
           ? 1
-          : 0
+          : 0,
+        "Merry Christmas",
+        "Record a Feeling on Christmas Day"
       )
     );
 
@@ -171,7 +186,9 @@ export default class Profile extends Component<Props> {
           (mood: Mood) => dateFormat(mood.date, "d - m") === "31 = 10"
         )
           ? 1
-          : 0
+          : 0,
+        "Happy Halloween",
+        "Record a Feeling on Halloween"
       )
     );
 
@@ -191,37 +208,61 @@ export default class Profile extends Component<Props> {
 
     // Slow Day
     achievementList.push(
-      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount / 5)
+      new AchievementModel(
+        slowDay,
+        dayCount >= 5 ? 1 : todaysCount / 5,
+        "Slow Day",
+        "Record 5 Feelings in a Day"
+      )
     );
 
     // Active Day
     achievementList.push(
-      new AchievementModel(activeDay, dayCount >= 20 ? 1 : todaysCount / 20)
+      new AchievementModel(
+        activeDay,
+        dayCount >= 20 ? 1 : todaysCount / 20,
+        "Active Day",
+        "Record 20 Feelings in a Day"
+      )
     );
 
     // Meaty Day
     achievementList.push(
-      new AchievementModel(meatyDay, dayCount >= 50 ? 1 : todaysCount / 50)
+      new AchievementModel(
+        meatyDay,
+        dayCount >= 50 ? 1 : todaysCount / 50,
+        "Meaty Day",
+        "Record 50 Feelings in a Day"
+      )
     );
 
     // The Journey
     achievementList.push(
       new AchievementModel(
         theJourney,
-        Math.min(this.state.moods.length / 10, 1)
+        Math.min(this.state.moods.length / 10, 1),
+        "The Journey",
+        "Record 10 Feelings"
       )
     );
 
     // Settle In
     achievementList.push(
-      new AchievementModel(settleIn, Math.min(this.state.moods.length / 100, 1))
+      new AchievementModel(
+        settleIn,
+        Math.min(this.state.moods.length / 100, 1),
+        "Settle In",
+        "Record 100 Feelings"
+      )
     );
 
     // For Breakfast
     achievementList.push(
       new AchievementModel(
         forBreakfast,
-        Math.min(this.state.moods.length / 1000, 1)
+        Math.min(this.state.moods.length / 1000, 1),
+        "For Breakfast",
+        "Record 1,000 Feelings"
       )
     );
 
@@ -238,17 +279,32 @@ export default class Profile extends Component<Props> {
 
     // A Habbit
     achievementList.push(
-      new AchievementModel(aHabbit, Math.min(maxDays / 7, 1))
+      new AchievementModel(
+        aHabbit,
+        Math.min(maxDays / 7, 1),
+        "A Habbit",
+        "Record your Feelings every day for a Week"
+      )
     );
 
     // A Routine
     achievementList.push(
-      new AchievementModel(aRoutine, Math.min(maxDays / 30, 1))
+      new AchievementModel(
+        aRoutine,
+        Math.min(maxDays / 30, 1),
+        "A Routine",
+        "Record your Feelings every day for a Month"
+      )
     );
 
     // A Lifestyle
     achievementList.push(
-      new AchievementModel(aLifestyle, Math.min(maxDays / 365, 1))
+      new AchievementModel(
+        aLifestyle,
+        Math.min(maxDays / 365, 1),
+        "A Lifestyle",
+        "Record your Feelings every day for a Year"
+      )
     );
 
     achievementList.sort(function (a, b) {
