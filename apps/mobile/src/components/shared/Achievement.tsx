@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
+import Close from "@material-ui/icons/Close";
 
 const StyledAcheivement = styled.div`
   display: flex;
@@ -72,15 +73,92 @@ const Overlay = styled.div`
   border-left: solid 2px rgba(255, 255, 255, 0.5);
 `;
 
+const Shadow = styled.div`
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ExitEvent = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+`;
+
+const Details = styled.div`
+  width: 70%;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  justify-content: space-between;
+  z-index: 3;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+`;
+
+const SvgDetails = styled.img`
+  width: 100%;
+`;
+
+const Name = styled.div`
+  text-align: center;
+  width: 100%;
+  font-size: 16px;
+  color: var(--main);
+  margin-top: 30px;
+`;
+
+const Description = styled.div`
+  font-size: 12px;
+  margin-top: 15px;
+  color: var(--sub);
+  width: 70%;
+  text-align: center;
+  line-height: 1.5;
+`;
+
 type Props = {
   achievement: AchievementModel;
 };
 
+class State {
+  detailsOpen: boolean = false;
+}
+
 export default class Acheivement extends Component<Props> {
+  state: State;
+
+  constructor(props: any) {
+    super(props);
+    this.state = new State();
+  }
+
   render() {
     return (
       <StyledAcheivement data-testid="Achievement">
-        <Icon>
+        <Icon
+          onClick={() => {
+            this.setState({ detailsOpen: true });
+            console.log(this.props.achievement.percentComplete);
+          }}
+        >
           <Svg
             src={this.props.achievement.svg}
             isComplete={this.props.achievement.percentComplete === 1}
@@ -93,6 +171,27 @@ export default class Acheivement extends Component<Props> {
               percentComplete={this.props.achievement.percentComplete}
             />
           </Progress>
+        )}
+        {this.state.detailsOpen && (
+          <Shadow>
+            <ExitEvent
+              onClick={() => {
+                this.setState({ detailsOpen: false });
+                console.log("woof");
+                console.log(this.state.detailsOpen);
+              }}
+            />
+            <Details>
+              <Header>
+                <Close onClick={() => this.setState({ detailsOpen: false })} />
+              </Header>
+              <SvgDetails src={this.props.achievement.svg} />
+              <Name>Merry Christmas</Name>
+              <Description>
+                SOme workds slsfjlks sdjks sjkdjkj j j jsdkjs jksdf j
+              </Description>
+            </Details>
+          </Shadow>
         )}
       </StyledAcheivement>
     );
