@@ -106,7 +106,7 @@ export default class Profile extends Component<Props> {
         earlyBird,
         this.state.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
-          return hour >= 5 && hour <= 7;
+          return hour >= 5 && hour <= 6;
         })
           ? 1
           : 0
@@ -119,7 +119,7 @@ export default class Profile extends Component<Props> {
         lunchDate,
         this.state.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
-          return hour >= 12 && hour <= 13;
+          return hour === 12;
         })
           ? 1
           : 0
@@ -132,7 +132,7 @@ export default class Profile extends Component<Props> {
         nightOwl,
         this.state.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
-          return hour >= 21 || hour <= 4;
+          return hour >= 21 || hour <= 3;
         })
           ? 1
           : 0
