@@ -15,6 +15,7 @@ import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
 import aHabbit from "../../assets/svgs/undraw_icon_design_qvdf.svg";
+import aLifestyle from "../../assets/svgs/undraw_snap_the_moment_oyn6.svg";
 
 const StyledProfile = styled.div`
   width: 100%;
@@ -176,7 +177,7 @@ export default class Profile extends Component<Props> {
 
     // A Lifestyle
     achievementList.push(
-      new AchievementModel(forBreakfast, Math.min(maxDays / 365, 1))
+      new AchievementModel(aLifestyle, Math.min(maxDays / 365, 1))
     );
 
     return achievementList;
