@@ -13,6 +13,7 @@ import earlyBird from "../../assets/svgs/undraw_japan_ubgk.svg";
 import lunchDate from "../../assets/svgs/undraw_eating_together_tjhx.svg";
 import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import slowDay from "../../assets/svgs/undraw_book_reading_kx9s.svg";
+import activeDay from "../../assets/svgs/undraw_hiking_d24r.svg";
 import meatyDay from "../../assets/svgs/undraw_Hamburger_8ge6.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
@@ -152,24 +153,25 @@ export default class Profile extends Component<Props> {
     });
     console.log(dayCount);
 
-    const todaysCount: number =
-      days.filter(
-        (day: string) => day === dateFormat(new Date(), "d - m - yyyy")
-      ).length / 5;
+    const todaysCount: number = days.filter(
+      (day: string) => day === dateFormat(new Date(), "d - m - yyyy")
+    ).length;
+
+    console.log(todaysCount);
 
     // Slow Day
     achievementList.push(
-      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount)
+      new AchievementModel(slowDay, dayCount >= 5 ? 1 : todaysCount / 5)
     );
 
-    // Busy Bee
+    // Active Day
     achievementList.push(
-      new AchievementModel(slowDay, dayCount >= 20 ? 1 : todaysCount)
+      new AchievementModel(activeDay, dayCount >= 20 ? 1 : todaysCount / 20)
     );
 
     // Meaty Day
     achievementList.push(
-      new AchievementModel(meatyDay, dayCount >= 50 ? 1 : todaysCount)
+      new AchievementModel(meatyDay, dayCount >= 50 ? 1 : todaysCount / 50)
     );
 
     // The Journey
