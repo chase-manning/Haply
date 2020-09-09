@@ -10,7 +10,7 @@ import AchievementModel from "../../models/AchievementModel";
 
 import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import firstSteps from "../../assets/svgs/undraw_relaunch_day_902d.svg";
-import theJourney from "../../assets/svgs/undraw_through_the_park_lxnl.svg";
+import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 
 const StyledProfile = styled.div`
   width: 100%;
