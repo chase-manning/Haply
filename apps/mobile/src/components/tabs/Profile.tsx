@@ -106,7 +106,7 @@ export default class Profile extends Component<Props> {
         earlyBird,
         this.state.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
-          return hour >= 5 || hour <= 7;
+          return hour >= 5 && hour <= 7;
         })
           ? 1
           : 0
