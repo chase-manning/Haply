@@ -115,6 +115,12 @@ const Header = styled.div`
 
 const SvgDetails = styled.img`
   width: 100%;
+  filter: ${(props: SvgProps) => {
+    return props.isComplete ? "grayscale(0%)" : "grayscale(100%)";
+  }};
+  opacity: ${(props: SvgProps) => {
+    return props.isComplete ? "1" : "0.5";
+  }};
 `;
 
 const Title = styled.div`
@@ -174,7 +180,10 @@ export default class Acheivement extends Component<Props> {
               <Header>
                 <Close onClick={() => this.setState({ detailsOpen: false })} />
               </Header>
-              <SvgDetails src={this.props.achievement.svg} />
+              <SvgDetails
+                src={this.props.achievement.svg}
+                isComplete={this.props.achievement.percentComplete === 1}
+              />
               <Title>{this.props.achievement.title}</Title>
               <Description>{this.props.achievement.description}</Description>
             </Details>
