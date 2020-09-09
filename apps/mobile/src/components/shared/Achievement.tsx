@@ -37,6 +37,7 @@ const Icon = styled.div`
   margin-bottom: 5px;
   overflow: hidden;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  background-color: white;
 `;
 
 const Progress = styled.div`
