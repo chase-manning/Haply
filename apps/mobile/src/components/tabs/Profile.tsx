@@ -9,8 +9,9 @@ import dateFormat from "dateformat";
 import AchievementModel from "../../models/AchievementModel";
 
 import firstSteps from "../../assets/svgs/undraw_relaunch_day_902d.svg";
-import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import earlyBird from "../../assets/svgs/undraw_japan_ubgk.svg";
+import lunchDate from "../../assets/svgs/undraw_eating_together_tjhx.svg";
+import nightOwl from "../../assets/svgs/undraw_working_late_pukg.svg";
 import theJourney from "../../assets/svgs/undraw_home_cinema_l7yl.svg";
 import settleIn from "../../assets/svgs/undraw_decorative_friends_q2np.svg";
 import forBreakfast from "../../assets/svgs/undraw_breakfast_psiw.svg";
@@ -99,19 +100,6 @@ export default class Profile extends Component<Props> {
       new AchievementModel(firstSteps, this.state.moods.length >= 1 ? 1 : 0)
     );
 
-    // Night Owl
-    achievementList.push(
-      new AchievementModel(
-        nightOwl,
-        this.state.moods.some((mood: Mood) => {
-          const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
-          return hour >= 21 || hour <= 4;
-        })
-          ? 1
-          : 0
-      )
-    );
-
     // Early Bird
     achievementList.push(
       new AchievementModel(
@@ -119,6 +107,32 @@ export default class Profile extends Component<Props> {
         this.state.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
           return hour >= 5 || hour <= 7;
+        })
+          ? 1
+          : 0
+      )
+    );
+
+    // Lunch Date
+    achievementList.push(
+      new AchievementModel(
+        lunchDate,
+        this.state.moods.some((mood: Mood) => {
+          const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
+          return hour >= 12 && hour <= 13;
+        })
+          ? 1
+          : 0
+      )
+    );
+
+    // Night Owl
+    achievementList.push(
+      new AchievementModel(
+        nightOwl,
+        this.state.moods.some((mood: Mood) => {
+          const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
+          return hour >= 21 || hour <= 4;
         })
           ? 1
           : 0
@@ -136,14 +150,6 @@ export default class Profile extends Component<Props> {
     // Settle In
     achievementList.push(
       new AchievementModel(settleIn, Math.min(this.state.moods.length / 100, 1))
-    );
-
-    // For Breakfast
-    achievementList.push(
-      new AchievementModel(
-        forBreakfast,
-        Math.min(this.state.moods.length / 1000, 1)
-      )
     );
 
     // For Breakfast
