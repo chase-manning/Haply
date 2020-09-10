@@ -9,12 +9,13 @@ const GlobalStyle = createGlobalStyle`
     --main: black;
     --sub: #9399A9;
     --primary: #4071FE; 
+    --primary-light: rgba(64,114,253,0.1);
+    --primary-shadow: drop-shadow( 0px 5px 10px rgba(64,114,253, 0.5));
+    --highlight: #FF6584;
     --bg: #F9FAFC;
     --blue: #5A8BFF;
     --yellow: #FFCF66;
     --red: #FF6C8E;
-    --primary-shadow: drop-shadow( 0px 5px 10px rgba(64,114,253, 0.5));
-    --primary-light: rgba(64,114,253,0.1);
     --border: rgba(0,0,0,0.1);
   }
 
