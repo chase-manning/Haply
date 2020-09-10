@@ -64,6 +64,6 @@ export default class StatBar extends Component<Props> {
       );
     });
 
-    return <Chart>{columns}</Chart>;
+    return <Chart data-testid="StatBar">{columns}</Chart>;
   }
 }
