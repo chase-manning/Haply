@@ -8,22 +8,50 @@ const Chart = styled.div`
 `;
 
 const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  labels: ["J", "F", "M", "A", "M", "J", "J", "F", "M", "A", "M", "J"],
   datasets: [
     {
-      label: "First dataset",
-      data: [33, 53, 85, 41, 44, 65],
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)",
-    },
-    {
-      label: "Second dataset",
-      data: [33, 25, 35, 51, 54, 76],
+      data: [33, 53, 85, 41, 44, 65, 33, 53, 85, 41, 44, 65],
+      backgroundColor: "rgba(64,114,253,0.1)",
+      borderColor: "#4071FE",
       fill: false,
-      borderColor: "#742774",
+      pointRadius: 12,
+      pointBorderColor: "rgba(0,0,0,0)",
+      pointBackgroundColor: "rgba(0,0,0,0)",
     },
   ],
+};
+
+const options = {
+  legend: {
+    display: false,
+  },
+  scales: {
+    xAxes: [
+      {
+        display: true,
+        gridLines: {
+          display: false,
+        },
+        ticks: {
+          fontColor: "#9399A9",
+          fontSize: "16",
+        },
+      },
+    ],
+    yAxes: [
+      {
+        display: false,
+      },
+    ],
+  },
+  tooltips: {
+    callbacks: {
+      title: function () {},
+    },
+    displayColors: false,
+    backgroundColor: "#FF6584",
+  },
 };
 
 type Props = {
@@ -34,7 +62,7 @@ export default class StatChart extends Component<Props> {
   render() {
     return (
       <Chart data-testid="StatChart">
-        <Line data={data} />
+        <Line data={data} options={options} />
       </Chart>
     );
   }
