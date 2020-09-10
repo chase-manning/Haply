@@ -59,7 +59,7 @@ export default class StatBar extends Component<Props> {
           return (
             <ChartRow>
               <StyledColumn>
-                <Filled value={dataPoint.value}></Filled>
+                <Filled value={dataPoint.value / 10}></Filled>
               </StyledColumn>
               <Label>{dataPoint.label}</Label>
             </ChartRow>
