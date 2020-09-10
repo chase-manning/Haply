@@ -7,21 +7,6 @@ const Chart = styled.div`
   width: 100%;
 `;
 
-const data = {
-  labels: ["J", "F", "M", "A", "M", "J", "J", "F", "M", "A", "M", "J"],
-  datasets: [
-    {
-      data: [33, 53, 85, 41, 44, 65, 33, 53, 85, 41, 44, 65],
-      backgroundColor: "rgba(64,114,253,0.1)",
-      borderColor: "#4071FE",
-      fill: false,
-      pointRadius: 12,
-      pointBorderColor: "rgba(0,0,0,0)",
-      pointBackgroundColor: "rgba(0,0,0,0)",
-    },
-  ],
-};
-
 const options = {
   legend: {
     display: false,
@@ -60,6 +45,25 @@ type Props = {
 
 export default class StatChart extends Component<Props> {
   render() {
+    const data = {
+      labels: this.props.dataPoints.map(
+        (dataPoint: DataPoint) => dataPoint.label
+      ),
+      datasets: [
+        {
+          data: this.props.dataPoints.map(
+            (dataPoint: DataPoint) => dataPoint.value
+          ),
+          backgroundColor: "rgba(64,114,253,0.1)",
+          borderColor: "#4071FE",
+          fill: false,
+          pointRadius: 12,
+          pointBorderColor: "rgba(0,0,0,0)",
+          pointBackgroundColor: "rgba(0,0,0,0)",
+        },
+      ],
+    };
+
     return (
       <Chart data-testid="StatChart">
         <Line data={data} options={options} />
