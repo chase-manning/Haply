@@ -15,6 +15,7 @@ const StyledStats = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  overflow: auto;
 `;
 
 class StatsState {
@@ -52,7 +53,7 @@ export default class Stats extends Component<Props> {
     let moods: Mood[] = await this.getMoods();
     let stats: StatModel[] = [];
 
-    // Feeling by Week Day
+    // Average Feeling by Day
     const weekDays: string[] = [
       "Mon",
       "Tue",
@@ -73,6 +74,7 @@ export default class Stats extends Component<Props> {
       }),
     });
 
+    // Average Feeling by Month
     const months: string[] = [
       "Jan",
       "Feb",
@@ -96,6 +98,41 @@ export default class Stats extends Component<Props> {
           value: Math.round(this.dateAverage(moods, "mmm", month)),
         };
       }),
+    });
+
+    // Average Feeling by Hour
+    const hours: string[] = [
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+    ];
+
+    stats.push({
+      title: "Average Feeling by Hour",
+      type: StatType.Bar,
+      dataPoints: hours
+        .filter((hour: string) => this.dateAverage(moods, "h", hour) > 0)
+        .map((hour: string) => {
+          return {
+            label: hour,
+            value: Math.round(this.dateAverage(moods, "h", hour)),
+          };
+        }),
     });
 
     // End Processing
