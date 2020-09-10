@@ -68,7 +68,7 @@ export default class Stats extends Component<Props> {
       dataPoints: weekDays.map((weekDay: string) => {
         return {
           label: weekDay.substring(0, 1),
-          value: this.dateAverage(moods, "ddd", weekDay) / 10,
+          value: this.dateAverage(moods, "ddd", weekDay),
         };
       }),
     });
@@ -89,7 +89,7 @@ export default class Stats extends Component<Props> {
     ];
     stats.push({
       title: "Feeling by Month",
-      type: StatType.Chart,
+      type: StatType.Bar,
       dataPoints: months.map((month: string) => {
         return {
           label: month.substring(0, 1),
