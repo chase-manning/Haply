@@ -63,7 +63,7 @@ export default class Stats extends Component<Props> {
       "Sun",
     ];
     stats.push({
-      title: "Feeling by Week Day",
+      title: "Average Feeling by Day",
       type: StatType.Bar,
       dataPoints: weekDays.map((weekDay: string) => {
         return {
@@ -88,7 +88,7 @@ export default class Stats extends Component<Props> {
       "Dec",
     ];
     stats.push({
-      title: "Feeling by Month",
+      title: "Average Feeling by Month",
       type: StatType.Bar,
       dataPoints: months.map((month: string) => {
         return {
