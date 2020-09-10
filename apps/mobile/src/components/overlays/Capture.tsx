@@ -72,6 +72,7 @@ const Button = styled.button`
   border-radius: 10px;
   background-color: var(--primary);
   filter: var(--primary-shadow);
+  outline: none;
 `;
 
 const MoodSlider = withStyles({
