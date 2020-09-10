@@ -44,6 +44,7 @@ const Label = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 10px;
+  font-size: 16px;
 `;
 
 type Props = {
