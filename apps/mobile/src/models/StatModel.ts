@@ -1,5 +1,6 @@
 export enum StatType {
   Bar,
+  Chart,
 }
 
 export type StatModel = {
@@ -7,10 +8,10 @@ export type StatModel = {
   type: StatType;
 
   //Bar
-  columns: Column[];
+  dataPoints: DataPoint[];
 };
 
-export type Column = {
-  percent: number;
+export type DataPoint = {
+  value: number;
   label: string;
 };

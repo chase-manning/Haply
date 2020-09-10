@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Stat from "../shared/Stat";
 import { CircularProgress } from "@material-ui/core";
 import { User } from "firebase";
-import { StatModel, StatType, Column } from "../../models/StatModel";
+import { StatModel, StatType, DataPoint } from "../../models/StatModel";
 import Mood, { MoodResponse } from "../../models/mood";
 import MoodService from "../../services/MoodService";
 import dateFormat from "dateformat";
@@ -65,12 +65,18 @@ export default class Stats extends Component<Props> {
     stats.push({
       title: "Feeling by Week Day",
       type: StatType.Bar,
-      columns: weekDays.map((weekDay: string) => {
+      dataPoints: weekDays.map((weekDay: string) => {
         return {
           label: weekDay.substring(0, 1),
-          percent: this.dailyAverage(moods, weekDay) / 10,
+          value: this.dailyAverage(moods, weekDay) / 10,
         };
       }),
+    });
+
+    stats.push({
+      title: "Meow",
+      type: StatType.Chart,
+      dataPoints: [],
     });
 
     // End Processing

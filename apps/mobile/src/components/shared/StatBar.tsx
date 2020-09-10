@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Column } from "../../models/StatModel";
+import { DataPoint } from "../../models/StatModel";
 
 const Chart = styled.div`
   width: 100%;
@@ -47,23 +47,24 @@ const Label = styled.div`
 `;
 
 type Props = {
-  columns: Column[];
+  dataPoints: DataPoint[];
 };
 
 export default class StatBar extends Component<Props> {
   render() {
-    let columns: any = [];
-    this.props.columns.forEach((colum: Column) => {
-      columns.push(
-        <ChartRow>
-          <StyledColumn>
-            <Filled value={colum.percent}></Filled>
-          </StyledColumn>
-          <Label>{colum.label}</Label>
-        </ChartRow>
-      );
-    });
-
-    return <Chart data-testid="StatBar">{columns}</Chart>;
+    return (
+      <Chart data-testid="StatBar">
+        {this.props.dataPoints.map((dataPoint: DataPoint) => {
+          return (
+            <ChartRow>
+              <StyledColumn>
+                <Filled value={dataPoint.value}></Filled>
+              </StyledColumn>
+              <Label>{dataPoint.label}</Label>
+            </ChartRow>
+          );
+        })}
+      </Chart>
+    );
   }
 }

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Card } from "../../styles/Card";
-import { StatModel } from "../../models/StatModel";
+import { StatModel, StatType } from "../../models/StatModel";
 import StatBar from "./StatBar";
+import StatChart from "./StatChart";
 
 const Header = styled.div`
   width: 100%;
@@ -21,7 +22,12 @@ export default class Stat extends Component<Props> {
     return (
       <Card data-testid="Stat">
         <Header>{this.props.stat.title}</Header>
-        <StatBar columns={this.props.stat.columns}></StatBar>
+        {this.props.stat.type === StatType.Bar && (
+          <StatBar dataPoints={this.props.stat.dataPoints}></StatBar>
+        )}
+        {this.props.stat.type === StatType.Chart && (
+          <StatChart dataPoints={this.props.stat.dataPoints}></StatChart>
+        )}
       </Card>
     );
   }
