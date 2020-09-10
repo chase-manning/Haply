@@ -14,7 +14,6 @@ apps/mobile/.env.production.local
 apps/mobile/npm-debug.log*
 apps/mobile/yarn-debug.log*
 apps/mobile/yarn-error.log*
-apps/mobile/android
 
 # Functions
 /functions/**/*.js
