@@ -33,6 +33,19 @@ export default class Settings extends Component {
   render() {
     return (
       <StyledSettings data-testid="Settings">
+        <Header>Contact</Header>
+        <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
+          <Label>Suggest a Feature</Label>
+          <ChevronRight />
+        </Line>
+        <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
+          <Label>Report an Issue</Label>
+          <ChevronRight />
+        </Line>
+        <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
+          <Label>Say Hi</Label>
+          <ChevronRight />
+        </Line>
         <Header>About</Header>
         <Line onClick={() => window.open("https://chasemanning.co.nz/")}>
           <Label>Created By</Label>
