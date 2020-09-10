@@ -68,15 +68,34 @@ export default class Stats extends Component<Props> {
       dataPoints: weekDays.map((weekDay: string) => {
         return {
           label: weekDay.substring(0, 1),
-          value: this.dailyAverage(moods, weekDay) / 10,
+          value: this.dateAverage(moods, "ddd", weekDay) / 10,
         };
       }),
     });
 
+    const months: string[] = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     stats.push({
-      title: "Meow",
+      title: "Feeling by Month",
       type: StatType.Chart,
-      dataPoints: [],
+      dataPoints: months.map((month: string) => {
+        return {
+          label: month.substring(0, 1),
+          value: Math.round(this.dateAverage(moods, "mmm", month)),
+        };
+      }),
     });
 
     // End Processing
@@ -100,13 +119,16 @@ export default class Stats extends Component<Props> {
     return moods;
   }
 
-  dailyAverage(moods: Mood[], day: string): number {
+  dateAverage(moods: Mood[], format: string, value: string): number {
     let dayList: Mood[] = moods.filter(
-      (mood: Mood) => dateFormat(mood.date, "ddd") === day
+      (mood: Mood) => dateFormat(mood.date, format) === value
     );
     return dayList.length === 0
       ? 0
-      : dayList.map((day: Mood) => day.value).reduce((a, b) => a + b) /
-          dayList.length;
+      : Math.round(
+          (dayList.map((day: Mood) => day.value).reduce((a, b) => a + b) /
+            dayList.length) *
+            10
+        ) / 10;
   }
 }
