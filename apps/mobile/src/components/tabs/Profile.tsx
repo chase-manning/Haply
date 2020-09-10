@@ -79,6 +79,7 @@ export default class Profile extends Component<Props> {
   }
 
   async getMoods(): Promise<void> {
+    // TODO This shouldn't need to save data to state. Instead it should be part of the set achievment function and just get the data for the time it needs it
     const response: any = await MoodService.getMoods(
       this.props.user.uid,
       "date"
