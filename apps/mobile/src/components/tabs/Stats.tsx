@@ -168,7 +168,7 @@ export default class Stats extends Component<Props> {
     return {
       title: "Feeling by " + periodName,
       type: StatType.Chart,
-      locked: dataPoints.length >= 3,
+      locked: dataPoints.length < 3,
       lockedMessage:
         "Record your Feeling three " + periodName + "s in a row to unlock",
       percentComplete: dataPoints.length / 3,
