@@ -146,10 +146,10 @@ export default class Stats extends Component<Props> {
   ): StatModel {
     let periods: string[] = [];
 
-    for (let i: number = 1; i < 20; i++) {
+    for (let i: number = 0; i < 20; i++) {
       periods.push(
         dateFormat(
-          new Date().setHours(new Date().getHours() - i * daysIncrement),
+          new Date().setDate(new Date().getDate() - i * daysIncrement),
           format
         )
       );
