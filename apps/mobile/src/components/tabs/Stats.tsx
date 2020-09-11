@@ -111,7 +111,6 @@ export default class Stats extends Component<Props> {
           "20",
           "21",
           "22",
-          "23",
         ],
         "Hour",
         false
