@@ -196,7 +196,7 @@ export default class Stats extends Component<Props> {
       title: "Average Feeling by " + periodName,
       type: StatType.Bar,
       locked: dataPoints.length < periods.length,
-      lockedMessage: "Record a feeling for every " + periodName,
+      lockedMessage: "Record a feeling for every " + periodName + " to unlock",
       percentComplete: dataPoints.length / periods.length,
       dataPoints: dataPoints,
     };
