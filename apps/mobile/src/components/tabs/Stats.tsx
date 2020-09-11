@@ -53,12 +53,38 @@ export default class Stats extends Component<Props> {
     let moods: Mood[] = await this.getMoods();
     let stats: StatModel[] = [];
 
+    // Feeling by Hour
+    let hours2: string[] = []; // TODO fix variable scope issues
+    let dayFormat: string = "hh - d/m/yyyy";
+
+    let today: Date = new Date();
+    let i: number = 1;
+    while (i < 20) {
+      today.setHours(today.getHours() - 1);
+      hours2.push(dateFormat(today, dayFormat));
+      i++;
+    }
+
+    stats.push({
+      title: "Feeling by Hour",
+      type: StatType.Chart,
+      dataPoints: hours2
+        .filter((hour: string) => this.dateAverage(moods, dayFormat, hour) > 0)
+        .map((hour: string) => {
+          return {
+            label: "",
+            value: this.dateAverage(moods, dayFormat, hour),
+          };
+        })
+        .reverse(),
+    });
+
     // Feeling by Day
     let days: string[] = [];
-    const dayFormat: string = "d/m/yyyy";
+    dayFormat = "d/m/yyyy";
 
-    const today: Date = new Date();
-    let i: number = 1;
+    today = new Date();
+    i = 1;
     while (i < 20) {
       today.setDate(today.getDate() - 1);
       days.push(dateFormat(today, dayFormat));
@@ -75,7 +101,8 @@ export default class Stats extends Component<Props> {
             label: "",
             value: this.dateAverage(moods, dayFormat, day),
           };
-        }),
+        })
+        .reverse(),
     });
 
     // Average Feeling by Day
