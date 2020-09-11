@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Stat from "../shared/Stat";
 import { CircularProgress } from "@material-ui/core";
 import { User } from "firebase";
-import { StatModel, StatType, DataPoint } from "../../models/StatModel";
+import { StatModel, StatType } from "../../models/StatModel";
 import Mood, { MoodResponse } from "../../models/mood";
 import MoodService from "../../services/MoodService";
 import dateFormat from "dateformat";
