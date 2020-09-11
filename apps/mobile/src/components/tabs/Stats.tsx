@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Stat from "../shared/Stat";
 import { CircularProgress } from "@material-ui/core";
 import { User } from "firebase";
-import { StatModel, StatType } from "../../models/StatModel";
+import { StatModel, StatType, DataPoint } from "../../models/StatModel";
 import Mood, { MoodResponse } from "../../models/mood";
 import MoodService from "../../services/MoodService";
 import dateFormat from "dateformat";
@@ -53,139 +53,69 @@ export default class Stats extends Component<Props> {
     let moods: Mood[] = await this.getMoods();
     let stats: StatModel[] = [];
 
-    // Feeling by Hour
-    let hours2: string[] = []; // TODO fix variable scope issues
-    let dayFormat: string = "hh - d/m/yyyy";
+    stats.push(this.createStatLine(moods, "d/m/yyyy", 1, "Day"));
 
-    let today: Date = new Date();
-    let i: number = 1;
-    while (i < 20) {
-      today.setHours(today.getHours() - 1);
-      hours2.push(dateFormat(today, dayFormat));
-      i++;
-    }
+    stats.push(
+      this.createStatBar(
+        moods,
+        "ddd",
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        "Day",
+        true
+      )
+    );
 
-    stats.push({
-      title: "Feeling by Hour",
-      type: StatType.Chart,
-      dataPoints: hours2
-        .filter((hour: string) => this.dateAverage(moods, dayFormat, hour) > 0)
-        .map((hour: string) => {
-          return {
-            label: "",
-            value: this.dateAverage(moods, dayFormat, hour),
-          };
-        })
-        .reverse(),
-    });
+    stats.push(
+      this.createStatBar(
+        moods,
+        "mmm",
+        [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        "Month",
+        true
+      )
+    );
 
-    // Feeling by Day
-    let days: string[] = [];
-    dayFormat = "d/m/yyyy";
-
-    today = new Date();
-    i = 1;
-    while (i < 20) {
-      today.setDate(today.getDate() - 1);
-      days.push(dateFormat(today, dayFormat));
-      i++;
-    }
-
-    stats.push({
-      title: "Feeling by Day",
-      type: StatType.Chart,
-      dataPoints: days
-        .filter((day: string) => this.dateAverage(moods, dayFormat, day) > 0)
-        .map((day: string) => {
-          return {
-            label: "",
-            value: this.dateAverage(moods, dayFormat, day),
-          };
-        })
-        .reverse(),
-    });
-
-    // Average Feeling by Day
-    const weekDays: string[] = [
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat",
-      "Sun",
-    ];
-    stats.push({
-      title: "Average Feeling by Day",
-      type: StatType.Bar,
-      dataPoints: weekDays.map((weekDay: string) => {
-        return {
-          label: weekDay.substring(0, 1),
-          value: this.dateAverage(moods, "ddd", weekDay),
-        };
-      }),
-    });
-
-    // Average Feeling by Month
-    const months: string[] = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    stats.push({
-      title: "Average Feeling by Month",
-      type: StatType.Bar,
-      dataPoints: months.map((month: string) => {
-        return {
-          label: month.substring(0, 1),
-          value: this.dateAverage(moods, "mmm", month),
-        };
-      }),
-    });
-
-    // Average Feeling by Hour
-    const hours: string[] = [
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21",
-      "22",
-      "23",
-      "24",
-    ];
-
-    stats.push({
-      title: "Average Feeling by Hour",
-      type: StatType.Bar,
-      dataPoints: hours
-        .filter((hour: string) => this.dateAverage(moods, "h", hour) > 0)
-        .map((hour: string) => {
-          return {
-            label: hour,
-            value: this.dateAverage(moods, "h", hour),
-          };
-        }),
-    });
+    stats.push(
+      this.createStatBar(
+        moods,
+        "H",
+        [
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23",
+          "24",
+        ],
+        "Hour",
+        false
+      )
+    );
 
     // End Processing
     this.setState({
@@ -208,12 +138,76 @@ export default class Stats extends Component<Props> {
     return moods;
   }
 
+  createStatLine(
+    moods: Mood[],
+    format: string,
+    daysIncrement: number,
+    periodName: string
+  ): StatModel {
+    let periods: string[] = [];
+
+    for (let i: number = 1; i < 20; i++) {
+      periods.push(
+        dateFormat(
+          new Date().setHours(new Date().getHours() - i * daysIncrement),
+          format
+        )
+      );
+    }
+
+    const dataPoints: DataPoint[] = periods
+      .filter((period: string) => this.dateAverage(moods, format, period) >= 0)
+      .map((period: string) => {
+        return {
+          label: "",
+          value: this.dateAverage(moods, format, period),
+        };
+      })
+      .reverse();
+
+    return {
+      title: "Feeling by " + periodName,
+      type: StatType.Chart,
+      locked: dataPoints.length >= 3,
+      lockedMessage:
+        "Record your Feeling three " + periodName + "s in a row to unlock",
+      percentComplete: dataPoints.length / 3,
+      dataPoints: dataPoints,
+    };
+  }
+
+  createStatBar(
+    moods: Mood[],
+    format: string,
+    periods: string[],
+    periodName: string,
+    truncateLabel: boolean
+  ): StatModel {
+    let dataPoints: DataPoint[] = periods
+      .filter((period: string) => this.dateAverage(moods, format, period) >= 0)
+      .map((period: string) => {
+        return {
+          label: truncateLabel ? period.substring(0, 1) : period,
+          value: this.dateAverage(moods, format, period),
+        };
+      });
+
+    return {
+      title: "Average Feeling by " + periodName,
+      type: StatType.Bar,
+      locked: dataPoints.length < periods.length,
+      lockedMessage: "Record a feeling for every " + periodName,
+      percentComplete: dataPoints.length / periods.length,
+      dataPoints: dataPoints,
+    };
+  }
+
   dateAverage(moods: Mood[], format: string, value: string): number {
     let dayList: Mood[] = moods.filter(
       (mood: Mood) => dateFormat(mood.date, format) === value
     );
     return dayList.length === 0
-      ? 0
+      ? -1
       : Math.round(
           (dayList.map((day: Mood) => day.value).reduce((a, b) => a + b) /
             dayList.length) *
