@@ -117,6 +117,9 @@ export default class Stats extends Component<Props> {
       )
     );
 
+    stats.sort(function (a, b) {
+      return b.percentComplete - a.percentComplete;
+    });
     // End Processing
     this.setState({
       stats: stats.map((stat: StatModel) => <Stat stat={stat} />),
