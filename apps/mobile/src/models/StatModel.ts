@@ -6,6 +6,9 @@ export enum StatType {
 export type StatModel = {
   title: string;
   type: StatType;
+  locked: boolean;
+  lockedMessage: string;
+  percentComplete: number;
 
   //Bar
   dataPoints: DataPoint[];
