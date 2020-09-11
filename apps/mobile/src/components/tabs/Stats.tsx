@@ -55,6 +55,7 @@ export default class Stats extends Component<Props> {
 
     stats.push(this.createStatLine(moods, "d/m/yyyy", 1, "Day"));
     stats.push(this.createStatLine(moods, "m/yyyy", 365 / 12, "Month"));
+    stats.push(this.createStatLine(moods, "yyyy", 365, "Year"));
 
     stats.push(
       this.createStatBar(
