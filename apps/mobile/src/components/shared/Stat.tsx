@@ -42,11 +42,17 @@ const ProgressBar = styled.div`
   background-color: var(--primary-light);
 `;
 
+type CompleteProps = {
+  percentComplete: number;
+};
+
 const Complete = styled.div`
   height: 6px;
   border-radius: 3px;
   background-color: var(--primary);
-  width: 50%;
+  width: ${(props: CompleteProps) => {
+    return props.percentComplete * 100 + "%";
+  }};
 `;
 
 type Props = {
@@ -63,7 +69,7 @@ export default class Stat extends Component<Props> {
             <Svg src={noData} />
             <Description>{this.props.stat.lockedMessage}</Description>
             <ProgressBar>
-              <Complete />
+              <Complete percentComplete={this.props.stat.percentComplete} />
             </ProgressBar>
           </LockedStat>
         )}
