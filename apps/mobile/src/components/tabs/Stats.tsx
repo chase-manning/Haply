@@ -9,7 +9,6 @@ import MoodService from "../../services/MoodService";
 import dateFormat from "dateformat";
 
 const StyledStats = styled.div`
-  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
