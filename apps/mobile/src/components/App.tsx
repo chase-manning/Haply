@@ -22,10 +22,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const uiConfig = {
   signInFlow: "popup",
-  signInOptions: [
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-  ],
+  signInOptions: [firebase.auth.EmailAuthProvider.PROVIDER_ID],
   callbacks: {
     signInSuccessWithAuthResult: () => false,
   },
@@ -131,14 +128,15 @@ export default class App extends Component {
             {moodOverlay}
           </div>
         )}
-        {!!this.state.loggingIn && this.state.user?.isAnonymous && (
-          <OverlayContainer>
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebaseApp.auth()}
-            />
-          </OverlayContainer>
-        )}
+        {!!this.state.loggingIn &&
+          (this.state.user?.isAnonymous || !this.state.user) && (
+            <OverlayContainer>
+              <StyledFirebaseAuth
+                uiConfig={uiConfig}
+                firebaseAuth={firebaseApp.auth()}
+              />
+            </OverlayContainer>
+          )}
       </StyledApp>
     );
   }
