@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Line } from "../../styles/Line";
 import ChevronRight from "@material-ui/icons/ChevronRight";
+import { User } from "firebase";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -28,11 +29,21 @@ const Value = styled.div`
   color: var(--main);
   width: 50%;
 `;
+type Props = {
+  user: User;
+  login: () => void;
+};
 
-export default class Settings extends Component {
+export default class Settings extends Component<Props> {
   render() {
     return (
       <StyledSettings data-testid="Settings">
+        <Header>Profile</Header>
+        <Line onClick={() => this.props.login()}>
+          <Label>Cloud Sync</Label>
+          <Value>{this.props.user.isAnonymous ? "Disabled" : "Enabled"}</Value>
+          <ChevronRight />
+        </Line>
         <Header>Contact</Header>
         <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
           <Label>Suggest a Feature</Label>

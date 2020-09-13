@@ -143,6 +143,7 @@ export default class Capture extends Component<Props> {
       return;
     }
     this.props.closeCapture();
+    console.log(this.props.user.uid);
   }
 
   render() {

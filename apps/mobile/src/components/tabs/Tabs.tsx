@@ -18,6 +18,7 @@ const StyledTabs = styled.div`
 type Props = {
   user: User;
   activeTab: Tab;
+  login: () => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -29,7 +30,10 @@ export default class Tabs extends Component<Props> {
       activeTab = <Entries user={this.props.user} />;
     else if (this.props.activeTab === Tab.Stats)
       activeTab = <Stats user={this.props.user} />;
-    else if (this.props.activeTab === Tab.Settings) activeTab = <Settings />;
+    else if (this.props.activeTab === Tab.Settings)
+      activeTab = (
+        <Settings user={this.props.user} login={() => this.props.login()} />
+      );
     else throw NOTFOUND;
 
     return <StyledTabs data-testid="Tabs">{activeTab}</StyledTabs>;
