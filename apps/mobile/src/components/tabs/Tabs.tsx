@@ -12,6 +12,7 @@ import { User } from "firebase";
 const StyledTabs = styled.div`
   height: 100%;
   width: 100%;
+  overflow: auto;
 `;
 
 type Props = {

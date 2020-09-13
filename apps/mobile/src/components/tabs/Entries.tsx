@@ -9,12 +9,10 @@ import noData from "../../assets/svgs/undraw_empty_xct9.svg";
 
 const StyledEntries = styled.div`
   height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
-  overflow: auto;
 `;
 
 const NoDataContainer = styled.div`

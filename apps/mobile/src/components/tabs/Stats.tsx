@@ -14,7 +14,6 @@ const StyledStats = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  overflow: auto;
 `;
 
 class StatsState {

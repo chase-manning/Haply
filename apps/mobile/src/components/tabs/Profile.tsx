@@ -27,9 +27,7 @@ import aLifestyle from "../../assets/svgs/undraw_snap_the_moment_oyn6.svg";
 
 const StyledProfile = styled.div`
   width: 100%;
-  height: 100%;
   padding: 20px;
-  overflow: auto;
   display: flex;
   align-items: center;
   flex-direction: column;
