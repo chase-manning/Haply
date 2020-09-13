@@ -154,16 +154,11 @@ app.get("/meow", async (request, response) => {
   try {
     const moodQuerySnapshot = await db.collection("moods").get();
 
-    const batch = db.batch();
-    moodQuerySnapshot.forEach((doc) => {
-      const nycRef = db.collection("moods").doc(doc.id);
-      batch.set(nycRef, {
+    moodQuerySnapshot.forEach(async (doc) => {
+      await db.collection("moods").doc(doc.id).set({
         userId: "L49gTrfL5rbqLBZkniffrrrFETg1",
       });
     });
-
-    // Commit the batch
-    await batch.commit();
 
     response.json({
       meow: "woof",
