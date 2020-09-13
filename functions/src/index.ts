@@ -155,9 +155,12 @@ app.get("/meow", async (request, response) => {
     const moodQuerySnapshot = await db.collection("moods").get();
 
     moodQuerySnapshot.forEach(async (doc) => {
-      await db.collection("moods").doc(doc.id).set({
-        userId: "L49gTrfL5rbqLBZkniffrrrFETg1",
-      });
+      await db.collection("moods").doc(doc.id).set(
+        {
+          userId: "L49gTrfL5rbqLBZkniffrrrFETg1",
+        },
+        { merge: true }
+      );
     });
 
     response.json({
