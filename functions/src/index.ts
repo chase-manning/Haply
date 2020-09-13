@@ -149,3 +149,25 @@ app.delete("/moods/:id", async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+app.get("/meow", async (request, response) => {
+  try {
+    let moodQuerySnapshot = await db.collection("moods").get();
+
+    const batch = db.batch();
+    moodQuerySnapshot.forEach((doc) => {
+      db.collection("moods").doc(doc.id).set({
+        userId: "L49gTrfL5rbqLBZkniffrrrFETg1",
+      });
+    });
+
+    // Commit the batch
+    await batch.commit();
+
+    response.json({
+      meow: "woof",
+    });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
