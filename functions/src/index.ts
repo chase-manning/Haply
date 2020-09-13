@@ -44,7 +44,7 @@ app.get("/moods/:id", async (request, response) => {
 
     if (!moodId) throw new Error("Mood ID is required");
 
-    const mood = await db.collection("fights").doc(moodId).get();
+    const mood = await db.collection("moods").doc(moodId).get();
 
     if (!mood.exists) {
       throw new Error("Mood doesnt exist.");
