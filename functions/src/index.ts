@@ -156,7 +156,8 @@ app.get("/meow", async (request, response) => {
 
     const batch = db.batch();
     moodQuerySnapshot.forEach((doc) => {
-      db.collection("moods").doc(doc.id).set({
+      const nycRef = db.collection("moods").doc(doc.id);
+      batch.set(nycRef, {
         userId: "L49gTrfL5rbqLBZkniffrrrFETg1",
       });
     });
