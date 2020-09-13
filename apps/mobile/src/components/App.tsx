@@ -34,7 +34,6 @@ const StyledApp = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  padding: 60px 0;
 `;
 
 const Header = styled.div`
@@ -49,6 +48,15 @@ const Header = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: solid 1px var(--border);
+`;
+
+const ContentContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px 0;
 `;
 
 const TabContent = styled.div`
@@ -109,7 +117,7 @@ export default class App extends Component {
     return (
       <StyledApp data-testid="App">
         {!!this.state.user && (
-          <div>
+          <ContentContainer>
             <TabContent>
               <Tabs
                 user={this.state.user!}
@@ -126,7 +134,7 @@ export default class App extends Component {
               }}
             />
             {moodOverlay}
-          </div>
+          </ContentContainer>
         )}
         {!!this.state.loggingIn &&
           (this.state.user?.isAnonymous || !this.state.user) && (
