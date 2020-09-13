@@ -152,7 +152,7 @@ app.delete("/moods/:id", async (request, response) => {
 
 app.get("/meow", async (request, response) => {
   try {
-    let moodQuerySnapshot = await db.collection("moods").get();
+    const moodQuerySnapshot = await db.collection("moods").get();
 
     const batch = db.batch();
     moodQuerySnapshot.forEach((doc) => {
