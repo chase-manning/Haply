@@ -81,12 +81,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    this.unregisterAuthObserver = firebaseApp
-      .auth()
-      .onAuthStateChanged((user) => {
-        this.setState({ user: user });
-      });
-
     if (this.state.user) return;
     firebase
       .auth()
@@ -97,9 +91,7 @@ export default class App extends Component {
       });
   }
 
-  componentWillUnmount() {
-    this.unregisterAuthObserver();
-  }
+  componentWillUnmount() {}
 
   render() {
     const moodOverlay = this.state.moodShowing ? (
