@@ -108,12 +108,12 @@ const MoodSlider = withStyles({
 class captureState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
-  creatingMood: boolean = false;
 }
 
 type Props = {
   user: User;
   closeCapture: () => void;
+  addMood: (mood: Mood) => void;
 };
 
 export default class Capture extends Component<Props> {
@@ -132,18 +132,11 @@ export default class Capture extends Component<Props> {
     });
   }
 
-  async createMood(): Promise<void> {
-    if (this.state.creatingMood) return;
-    this.setState({ creatingMood: true });
+  createMood(): void {
     const mood: Mood = new Mood(this.state.mood, this.props.user.uid);
-    const response = await MoodService.createMood(mood);
-    this.setState({ creatingMood: false });
-    if (!response || !response.ok) {
-      alert("Mood Creation Failed");
-      return;
-    }
+    MoodService.createMood(mood);
+    this.props.addMood(mood);
     this.props.closeCapture();
-    console.log(this.props.user.uid);
   }
 
   render() {

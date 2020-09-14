@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import MoodService from "../../services/MoodService";
 import { User } from "firebase";
 import Achievement from "../shared/Achievement";
-import Mood, { MoodResponse } from "../../models/mood";
-import { CircularProgress } from "@material-ui/core";
+import Mood from "../../models/mood";
 import dateFormat from "dateformat";
 import AchievementModel from "../../models/AchievementModel";
 
@@ -39,62 +37,21 @@ const Acheivements = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
 `;
 
-class ProfileState {
-  moods: Mood[] = [];
-  isLoading: boolean = true;
-  achievements: any[] = [];
-}
-
 type Props = {
   user: User;
+  moods: Mood[];
 };
 
 export default class Profile extends Component<Props> {
-  state: ProfileState;
-
-  constructor(props: any) {
-    super(props);
-    this.state = new ProfileState();
-  }
-
-  componentDidMount() {
-    this.getMoods();
-  }
-
   render() {
     return (
       <StyledProfile data-testid="Profile">
-        {this.state.isLoading && (
-          <CircularProgress
-            style={{ color: "var(--primary)", marginTop: "20px" }}
-          />
-        )}
-        {!this.state.isLoading && (
-          <Acheivements>{this.state.achievements}</Acheivements>
-        )}
+        <Acheivements>{this.achievements}</Acheivements>
       </StyledProfile>
     );
   }
 
-  async getMoods(): Promise<void> {
-    // TODO This shouldn't need to save data to state. Instead it should be part of the set achievment function and just get the data for the time it needs it
-    const response: any = await MoodService.getMoods(
-      this.props.user.uid,
-      "date"
-    );
-
-    const moodResponses: MoodResponse[] = await response.json();
-
-    let moods: Mood[] = [];
-    moodResponses.forEach((moodResponse: MoodResponse) => {
-      moods.push(moodResponse.data);
-    });
-
-    this.setState({ moods: moods, isLoading: false });
-    this.setAchievements();
-  }
-
-  setAchievements(): void {
+  get achievements(): any[] {
     // TODO Change this to only run once
     let achievementList: AchievementModel[] = [];
 
@@ -102,7 +59,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         firstSteps,
-        this.state.moods.length >= 1 ? 1 : 0,
+        this.props.moods.length >= 1 ? 1 : 0,
         "First Steps",
         "Record your first feeling"
       )
@@ -112,7 +69,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         earlyBird,
-        this.state.moods.some((mood: Mood) => {
+        this.props.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
           return hour >= 5 && hour <= 6;
         })
@@ -127,7 +84,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         lunchDate,
-        this.state.moods.some((mood: Mood) => {
+        this.props.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
           return hour === 12;
         })
@@ -142,7 +99,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         nightOwl,
-        this.state.moods.some((mood: Mood) => {
+        this.props.moods.some((mood: Mood) => {
           const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
           return hour >= 23 || hour <= 3;
         })
@@ -157,7 +114,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         feelingAmazing,
-        this.state.moods.some((mood: Mood) => mood.value === 10) ? 1 : 0,
+        this.props.moods.some((mood: Mood) => mood.value === 10) ? 1 : 0,
         "Feeling Amazing",
         "Record a Feeling when you are feeling Amazing!"
       )
@@ -167,7 +124,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         merryChristmas,
-        this.state.moods.some(
+        this.props.moods.some(
           (mood: Mood) => dateFormat(mood.date, "d - m") === "25 = 12"
         )
           ? 1
@@ -181,7 +138,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         happyHalloween,
-        this.state.moods.some(
+        this.props.moods.some(
           (mood: Mood) => dateFormat(mood.date, "d - m") === "31 = 10"
         )
           ? 1
@@ -191,7 +148,7 @@ export default class Profile extends Component<Props> {
       )
     );
 
-    const days: string[] = this.state.moods.map((mood: Mood) =>
+    const days: string[] = this.props.moods.map((mood: Mood) =>
       dateFormat(mood.date, "d - m - yyyy")
     );
 
@@ -239,7 +196,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         theJourney,
-        Math.min(this.state.moods.length / 10, 1),
+        Math.min(this.props.moods.length / 10, 1),
         "The Journey",
         "Record 10 Feelings"
       )
@@ -249,7 +206,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         settleIn,
-        Math.min(this.state.moods.length / 100, 1),
+        Math.min(this.props.moods.length / 100, 1),
         "Settle In",
         "Record 100 Feelings"
       )
@@ -259,7 +216,7 @@ export default class Profile extends Component<Props> {
     achievementList.push(
       new AchievementModel(
         forBreakfast,
-        Math.min(this.state.moods.length / 1000, 1),
+        Math.min(this.props.moods.length / 1000, 1),
         "For Breakfast",
         "Record 1,000 Feelings"
       )
@@ -269,7 +226,7 @@ export default class Profile extends Component<Props> {
     let currentDays: number = 1;
     let lastDate: number = -1;
 
-    this.state.moods.forEach((mood: Mood) => {
+    this.props.moods.forEach((mood: Mood) => {
       let day: number = Number.parseInt(dateFormat(mood.date, "d"));
       if (day === lastDate - 1) currentDays++;
       lastDate = day;
@@ -315,6 +272,6 @@ export default class Profile extends Component<Props> {
       achievements.push(<Achievement achievement={achievement} />);
     });
 
-    this.setState({ achievements: achievements });
+    return achievements;
   }
 }

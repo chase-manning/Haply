@@ -8,6 +8,7 @@ import Settings from "./Settings";
 import { Tab } from "../../models/state";
 import { NOTFOUND } from "dns";
 import { User } from "firebase";
+import Mood from "../../models/mood";
 
 const StyledTabs = styled.div`
   width: 100%;
@@ -19,17 +20,25 @@ type Props = {
   user: User;
   activeTab: Tab;
   login: () => void;
+  moods: Mood[];
+  removeMood: (mood: Mood) => void;
 };
 
 export default class Tabs extends Component<Props> {
   render() {
     let activeTab;
     if (this.props.activeTab === Tab.Profile)
-      activeTab = <Profile user={this.props.user} />;
+      activeTab = <Profile moods={this.props.moods} user={this.props.user} />;
     else if (this.props.activeTab === Tab.Entries)
-      activeTab = <Entries user={this.props.user} />;
+      activeTab = (
+        <Entries
+          removeMood={(mood: Mood) => this.props.removeMood(mood)}
+          moods={this.props.moods}
+          user={this.props.user}
+        />
+      );
     else if (this.props.activeTab === Tab.Stats)
-      activeTab = <Stats user={this.props.user} />;
+      activeTab = <Stats moods={this.props.moods} user={this.props.user} />;
     else if (this.props.activeTab === Tab.Settings)
       activeTab = (
         <Settings user={this.props.user} login={() => this.props.login()} />

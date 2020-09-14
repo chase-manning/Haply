@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import { moodDescriptions, MoodResponse } from "../../models/mood";
+import { moodDescriptions } from "../../models/mood";
 import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
 import { Line } from "../../styles/Line";
+import Mood from "../../models/mood";
 
 const EntryText = styled.div`
   display: flex;
@@ -23,25 +24,23 @@ const EntrySubHeader = styled.div`
 `;
 
 type Props = {
-  mood: MoodResponse;
-  removeMood: (moodId: string) => void;
+  mood: Mood;
+  removeMood: (mood: Mood) => void;
 };
 
 export default class Entry extends Component<Props> {
   async deleteMood(): Promise<void> {
-    MoodService.deleteMood(this.props.mood.id);
-    this.props.removeMood(this.props.mood.id);
+    MoodService.deleteMood(this.props.mood.moodId!);
+    this.props.removeMood(this.props.mood);
   }
 
   render() {
     return (
       <Line data-testid="Entry">
         <EntryText>
-          <EntryHeader>
-            {moodDescriptions[this.props.mood.data.value]}
-          </EntryHeader>
+          <EntryHeader>{moodDescriptions[this.props.mood.value]}</EntryHeader>
           <EntrySubHeader>
-            {dateFormat(this.props.mood.data.date, " dddd h:MM tt")}
+            {dateFormat(this.props.mood.date, " dddd h:MM tt")}
           </EntrySubHeader>
         </EntryText>
         <DeleteOutline onClick={() => this.deleteMood()} />

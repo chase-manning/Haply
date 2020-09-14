@@ -1,4 +1,5 @@
 import { User } from "firebase";
+import Mood from "./mood";
 
 export enum Tab {
   Profile,
@@ -12,6 +13,7 @@ export default class State {
   moodShowing: boolean = false;
   user?: User;
   loggingIn: boolean = false;
+  moods: Mood[] = [];
 
   get isSignedIn(): boolean {
     return !!this.user;

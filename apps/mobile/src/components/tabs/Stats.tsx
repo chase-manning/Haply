@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Stat from "../shared/Stat";
-import { CircularProgress } from "@material-ui/core";
 import { User } from "firebase";
 import { StatModel, StatType, DataPoint } from "../../models/StatModel";
-import Mood, { MoodResponse } from "../../models/mood";
-import MoodService from "../../services/MoodService";
+import Mood from "../../models/mood";
 import dateFormat from "dateformat";
 
 const StyledStats = styled.div`
@@ -16,48 +14,28 @@ const StyledStats = styled.div`
   padding: 20px;
 `;
 
-class StatsState {
-  stats: any = [];
-}
-
 type Props = {
   user: User;
+  moods: Mood[];
 };
 
 export default class Stats extends Component<Props> {
-  state: StatsState;
-
-  constructor(props: any) {
-    super(props);
-    this.state = new StatsState();
-  }
-
-  componentDidMount() {
-    this.populateStats();
-  }
-
   render() {
-    return (
-      <StyledStats data-testid="Stats">
-        {this.state.stats.length === 0 && (
-          <CircularProgress style={{ color: "var(--primary)" }} />
-        )}
-        {this.state.stats}
-      </StyledStats>
-    );
+    return <StyledStats data-testid="Stats">{this.stats}</StyledStats>;
   }
 
-  async populateStats(): Promise<void> {
-    let moods: Mood[] = await this.getMoods();
+  get stats(): JSX.Element[] {
     let stats: StatModel[] = [];
 
-    stats.push(this.createStatLine(moods, "d/m/yyyy", 1, "Day"));
-    stats.push(this.createStatLine(moods, "m/yyyy", 365 / 12, "Month"));
-    stats.push(this.createStatLine(moods, "yyyy", 365, "Year"));
+    stats.push(this.createStatLine(this.props.moods, "d/m/yyyy", 1, "Day"));
+    stats.push(
+      this.createStatLine(this.props.moods, "m/yyyy", 365 / 12, "Month")
+    );
+    stats.push(this.createStatLine(this.props.moods, "yyyy", 365, "Year"));
 
     stats.push(
       this.createStatBar(
-        moods,
+        this.props.moods,
         "ddd",
         ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         "Day",
@@ -67,7 +45,7 @@ export default class Stats extends Component<Props> {
 
     stats.push(
       this.createStatBar(
-        moods,
+        this.props.moods,
         "mmm",
         [
           "Jan",
@@ -90,7 +68,7 @@ export default class Stats extends Component<Props> {
 
     stats.push(
       this.createStatBar(
-        moods,
+        this.props.moods,
         "H",
         [
           "7",
@@ -123,25 +101,7 @@ export default class Stats extends Component<Props> {
       return b.locked + a.locked;
     });
 
-    // End Processing
-    this.setState({
-      stats: stats.map((stat: StatModel) => <Stat stat={stat} />),
-    });
-  }
-
-  async getMoods(): Promise<Mood[]> {
-    const response: any = await MoodService.getMoods(
-      this.props.user.uid,
-      "date"
-    );
-
-    const moodResponses: MoodResponse[] = await response.json();
-
-    let moods: Mood[] = [];
-    moodResponses.forEach((moodResponse: MoodResponse) => {
-      moods.push(moodResponse.data);
-    });
-    return moods;
+    return stats.map((stat: StatModel) => <Stat stat={stat} />);
   }
 
   createStatLine(

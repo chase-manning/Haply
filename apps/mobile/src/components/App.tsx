@@ -7,6 +7,8 @@ import Capture from "./overlays/Capture";
 import firebase from "firebase/app";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import MoodService from "../services/MoodService";
+import Mood, { MoodResponse } from "../models/mood";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -81,6 +83,11 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      this.setState({ user: user });
+      this.hardUpdate();
+    });
+
     if (this.state.user) return;
     firebase
       .auth()
@@ -94,21 +101,16 @@ export default class App extends Component {
   componentWillUnmount() {}
 
   render() {
-    const moodOverlay = this.state.moodShowing ? (
-      <Capture
-        user={this.state.user!}
-        closeCapture={() => this.setState({ moodShowing: false })}
-      />
-    ) : null;
-
     return (
       <StyledApp data-testid="App">
         {!!this.state.user && (
           <ContentContainer>
             <Tabs
+              moods={this.state.moods}
               user={this.state.user!}
               activeTab={this.state.activeTab}
               login={() => this.setState({ loggingIn: true })}
+              removeMood={(mood: Mood) => this.removeMood(mood)}
             />
             <Header>{this.headerText}</Header>
             <NavBar
@@ -118,7 +120,6 @@ export default class App extends Component {
                 this.setState({ moodShowing: true });
               }}
             />
-            {moodOverlay}
           </ContentContainer>
         )}
         {!!this.state.loggingIn &&
@@ -130,6 +131,13 @@ export default class App extends Component {
               />
             </OverlayContainer>
           )}
+        {this.state.moodShowing && (
+          <Capture
+            addMood={(mood: Mood) => this.addMood(mood)}
+            user={this.state.user!}
+            closeCapture={() => this.setState({ moodShowing: false })}
+          />
+        )}
       </StyledApp>
     );
   }
@@ -141,5 +149,50 @@ export default class App extends Component {
     else if (activeTab === Tab.Stats) return "Stats";
     else if (activeTab === Tab.Settings) return "More";
     else return "Error";
+  }
+
+  async hardUpdate(): Promise<void> {
+    await this.updateMoods();
+    await this.softUpdate();
+  }
+
+  async softUpdate(): Promise<void> {}
+
+  async updateMoods(): Promise<void> {
+    const response: any = await MoodService.getMoods(
+      this.state.user!.uid,
+      "date"
+    );
+
+    const moodResponses: MoodResponse[] = await response.json();
+
+    let moods: Mood[] = [];
+    moodResponses.forEach((moodResponse: MoodResponse) => {
+      moods.push(
+        new Mood(
+          moodResponse.data.value,
+          moodResponse.data.userId,
+          moodResponse.data.date,
+          moodResponse.id
+        )
+      );
+    });
+
+    this.setState({ moods: moods });
+  }
+
+  removeMood(mood: Mood): void {
+    let moods: Mood[] = this.state.moods;
+    const index = moods.indexOf(mood);
+    if (index > -1) {
+      moods.splice(index, 1);
+    }
+    this.setState({ moods: moods });
+  }
+
+  addMood(mood: Mood): void {
+    let moods: Mood[] = this.state.moods;
+    moods.unshift(mood);
+    this.setState({ moods: moods });
   }
 }
