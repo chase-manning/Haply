@@ -52,6 +52,8 @@ const SubHeader = styled.div`
   margin-top: 2rem;
 `;
 
+const Link = styled.a``;
+
 const AppIcons = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -80,8 +82,12 @@ export default class App extends Component {
               Healthier Perspective
             </SubHeader>
             <AppIcons>
-              <AppIcon src={iosAppStore} />
-              <AppIcon src={googleAppStore} />
+              <Link href="https://apps.apple.com/us/app/id1530768759">
+                <AppIcon src={iosAppStore} />
+              </Link>
+              <Link href="https://play.google.com/store/apps/details?id=haply.app">
+                <AppIcon src={googleAppStore} />
+              </Link>
             </AppIcons>
           </Left>
           <Phone src={phone} />
