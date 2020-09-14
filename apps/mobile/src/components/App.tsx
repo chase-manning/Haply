@@ -9,6 +9,10 @@ import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import MoodService from "../services/MoodService";
 import Mood, { MoodResponse } from "../models/mood";
+import { StatModel } from "../models/StatModel";
+import StatService from "../services/StatService";
+import AchievementService from "../services/AchievementService";
+import AchievementModel from "../models/AchievementModel";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -106,6 +110,8 @@ export default class App extends Component {
         {!!this.state.user && (
           <ContentContainer>
             <Tabs
+              achivements={this.state.achievements}
+              stats={this.state.stats}
               moods={this.state.moods}
               user={this.state.user!}
               activeTab={this.state.activeTab}
@@ -133,6 +139,7 @@ export default class App extends Component {
           )}
         {this.state.moodShowing && (
           <Capture
+            softUpdate={() => this.softUpdate()}
             addMood={(mood: Mood) => this.addMood(mood)}
             user={this.state.user!}
             closeCapture={() => this.setState({ moodShowing: false })}
@@ -156,7 +163,14 @@ export default class App extends Component {
     await this.softUpdate();
   }
 
-  async softUpdate(): Promise<void> {}
+  async softUpdate(): Promise<void> {
+    const stats: StatModel[] = StatService.getStats(this.state.moods);
+    this.setState({ stats: stats });
+    const achievements: AchievementModel[] = AchievementService.getAchievements(
+      this.state.moods
+    );
+    this.setState({ achievements: achievements });
+  }
 
   async updateMoods(): Promise<void> {
     const response: any = await MoodService.getMoods(
