@@ -74,17 +74,13 @@ export default class Entries extends Component<Props> {
   }
 
   get entries(): JSX.Element[] {
-    const entries: JSX.Element[] = [];
-    if (this.props.moods.length > 0) {
-      this.props.moods.splice(0, 30).forEach((mood) => {
-        entries.push(
-          <Entry
-            removeMood={(mood: Mood) => this.props.removeMood(mood)}
-            mood={mood}
-          />
-        );
-      });
-    }
-    return entries;
+    return this.props.moods
+      .slice(0, 30)
+      .map((mood: Mood) => (
+        <Entry
+          removeMood={(mood: Mood) => this.props.removeMood(mood)}
+          mood={mood}
+        />
+      ));
   }
 }
