@@ -10,8 +10,8 @@ import { NOTFOUND } from "dns";
 import { User } from "firebase";
 
 const StyledTabs = styled.div`
-  height: 100%;
   width: 100%;
+  height: 100%;
   overflow: auto;
 `;
 
