@@ -19,9 +19,15 @@ jobs:
       - name: Installing Function Dependencies
         run: npm install
         working-directory: functions
+      - name: Installing Website Dependencies
+        run: npm install
+        working-directory: apps/website
       - name: Building Mobile App
         run: npm run build
         working-directory: apps/mobile/src
+      - name: Building Website
+        run: npm run build
+        working-directory: apps/website/src
       - name: Install Firebase Tools
         run: npm install -g firebase-tools
       - name: Deploying to Firebase
