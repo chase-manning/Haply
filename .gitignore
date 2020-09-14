@@ -15,6 +15,10 @@ apps/mobile/npm-debug.log*
 apps/mobile/yarn-debug.log*
 apps/mobile/yarn-error.log*
 
+# Website
+apps/website/node_modules
+apps/website/build
+
 # Functions
 /functions/**/*.js
 /functions/**/*.js.map
