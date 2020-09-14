@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Entry from "../shared/Entry";
-import Mood, { MoodResponse } from "../../models/mood";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Mood from "../../models/mood";
 import { User } from "firebase";
 import noData from "../../assets/svgs/undraw_empty_xct9.svg";
 
