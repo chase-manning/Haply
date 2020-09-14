@@ -114,7 +114,6 @@ type Props = {
   user: User;
   closeCapture: () => void;
   addMood: (mood: Mood) => void;
-  softUpdate: () => void;
 };
 
 export default class Capture extends Component<Props> {
@@ -138,7 +137,6 @@ export default class Capture extends Component<Props> {
     MoodService.createMood(mood);
     this.props.addMood(mood);
     this.props.closeCapture();
-    this.props.softUpdate();
   }
 
   render() {

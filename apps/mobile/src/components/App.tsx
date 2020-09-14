@@ -139,7 +139,6 @@ export default class App extends Component {
           )}
         {this.state.moodShowing && (
           <Capture
-            softUpdate={() => this.softUpdate()}
             addMood={(mood: Mood) => this.addMood(mood)}
             user={this.state.user!}
             closeCapture={() => this.setState({ moodShowing: false })}
@@ -202,11 +201,13 @@ export default class App extends Component {
       moods.splice(index, 1);
     }
     this.setState({ moods: moods });
+    this.softUpdate();
   }
 
   addMood(mood: Mood): void {
     let moods: Mood[] = this.state.moods;
     moods.unshift(mood);
     this.setState({ moods: moods });
+    this.softUpdate();
   }
 }
