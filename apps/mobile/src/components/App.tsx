@@ -59,11 +59,6 @@ const ContentContainer = styled.div`
   padding: 60px 0;
 `;
 
-const TabContent = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
 const OverlayContainer = styled.div`
   background-color: white;
   display: flex;
@@ -118,13 +113,11 @@ export default class App extends Component {
       <StyledApp data-testid="App">
         {!!this.state.user && (
           <ContentContainer>
-            <TabContent>
-              <Tabs
-                user={this.state.user!}
-                activeTab={this.state.activeTab}
-                login={() => this.setState({ loggingIn: true })}
-              />
-            </TabContent>
+            <Tabs
+              user={this.state.user!}
+              activeTab={this.state.activeTab}
+              login={() => this.setState({ loggingIn: true })}
+            />
             <Header>{this.headerText}</Header>
             <NavBar
               activeTab={this.state.activeTab}
