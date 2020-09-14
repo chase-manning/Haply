@@ -102,8 +102,6 @@ export default class App extends Component {
       });
   }
 
-  componentWillUnmount() {}
-
   render() {
     return (
       <StyledApp data-testid="App">
