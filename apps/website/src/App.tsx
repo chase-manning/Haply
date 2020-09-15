@@ -12,26 +12,45 @@ const StyledApp = styled.div`
   top: 0;
   left: 0;
   background-color: var(--bg);
+  @media (max-width: 925px) {
+    overflow: auto;
+  }
 `;
 
 const Background = styled.img`
   position: fixed;
-  width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+
+  @media (min-width: 926px) {
+    width: 100%;
+  }
+
+  @media (max-width: 925px) {
+    z-index: -1;
+  }
 `;
 
 const Content = styled.div`
-  padding: 5rem;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  @media (min-width: 926px) {
+    padding: 5rem;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  @media (max-width: 925px) {
+    flex-direction: column;
+    z-index: 1;
+    padding: 2rem;
+  }
 `;
 
 const Left = styled.div`
@@ -39,6 +58,13 @@ const Left = styled.div`
   flex-direction: column;
   width: 40%;
   text-align: center;
+
+  @media (max-width: 925px) {
+    flex-direction: column;
+    z-index: 1;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
 `;
 
 const Header = styled.h1`
@@ -57,16 +83,32 @@ const Link = styled.a``;
 const AppIcons = styled.div`
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   margin-top: 3rem;
+
+  @media (max-width: 925px) {
+    margin-top: 2rem;
+  }
 `;
 
 const AppIcon = styled.img`
   width: 10rem;
+
+  @media (max-width: 925px) {
+    width: 8rem;
+  }
 `;
 
 const Phone = styled.img`
-  height: 70%;
   transform: rotate(-10deg);
+
+  @media (min-width: 926px) {
+    height: 70%;
+  }
+
+  @media (max-width: 925px) {
+    width: 80%;
+  }
 `;
 
 export default class App extends Component {
