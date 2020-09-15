@@ -92,10 +92,10 @@ const AppIcons = styled.div`
 `;
 
 const AppIcon = styled.img`
-  width: 10rem;
+  height: 4rem;
 
   @media (max-width: 925px) {
-    width: 8rem;
+    height: 2.5rem;
   }
 `;
 
