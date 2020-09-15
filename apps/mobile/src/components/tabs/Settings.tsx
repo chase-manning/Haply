@@ -64,9 +64,7 @@ export default class Settings extends Component<Props> {
           <ChevronRight />
         </Line>
         <Line
-          onClick={() =>
-            window.open("https://github.com/chase-manning/Mood-Tracker/")
-          }
+          onClick={() => window.open("https://github.com/chase-manning/Haply/")}
         >
           <Label>Source Code</Label>
           <Value>GitHub</Value>
@@ -75,7 +73,7 @@ export default class Settings extends Component<Props> {
         <Line
           onClick={() =>
             window.open(
-              "https://github.com/chase-manning/Mood-Tracker/blob/master/LICENSE"
+              "https://github.com/chase-manning/Haply/blob/master/LICENSE"
             )
           }
         >
