@@ -77,6 +77,7 @@ export default class Entries extends Component<Props> {
       .slice(0, 30)
       .map((mood: Mood) => (
         <Entry
+          user={this.props.user}
           removeMood={(mood: Mood) => this.props.removeMood(mood)}
           mood={mood}
         />

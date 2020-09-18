@@ -134,7 +134,7 @@ export default class Capture extends Component<Props> {
 
   createMood(): void {
     const mood: Mood = new Mood(this.state.mood, this.props.user.uid);
-    MoodService.createMood(mood);
+    MoodService.createMood(this.props.user, mood);
     this.props.addMood(mood);
     this.props.closeCapture();
   }

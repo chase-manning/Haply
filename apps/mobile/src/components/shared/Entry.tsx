@@ -6,6 +6,7 @@ import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
 import { Line } from "../../styles/Line";
 import Mood from "../../models/mood";
+import { User } from "firebase";
 
 const EntryText = styled.div`
   display: flex;
@@ -24,13 +25,14 @@ const EntrySubHeader = styled.div`
 `;
 
 type Props = {
+  user: User;
   mood: Mood;
   removeMood: (mood: Mood) => void;
 };
 
 export default class Entry extends Component<Props> {
   async deleteMood(): Promise<void> {
-    MoodService.deleteMood(this.props.mood.moodId!);
+    MoodService.deleteMood(this.props.user, this.props.mood.moodId!);
     this.props.removeMood(this.props.mood);
   }
 

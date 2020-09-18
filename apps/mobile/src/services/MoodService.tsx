@@ -1,4 +1,5 @@
-import Mood, { MoodResponse } from "../models/mood";
+import { User } from "firebase";
+import Mood from "../models/mood";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
@@ -6,55 +7,80 @@ const api: string =
 const route: string = api + "moods";
 
 const MoodService = {
-  async createMood(mood: Mood): Promise<any> {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: mood.string,
-    };
+  async createMood(user: User, mood: Mood): Promise<any> {
     try {
-      return await fetch(route, requestOptions);
-    } catch {
+      return user
+        .getIdToken()
+        .then(async (idToken) => {
+          const requestOptions = {
+            method: "POST",
+            body: mood.string,
+            headers: {
+              Authorization: "Bearer " + idToken,
+              "Content-Type": "application/json",
+            },
+          };
+
+          return await fetch(route, requestOptions);
+        })
+        .catch(function (error) {
+          console.log(error);
+          return null;
+        });
+    } catch (error) {
+      console.log(error);
       return null;
     }
   },
 
-  async getMoods(userId: string, order?: string, limit?: number): Promise<any> {
-    let fullRoute: string = route + "?userId=" + userId;
-    if (!!order) fullRoute += "&order=" + order;
-    if (!!limit) fullRoute += "&limit=" + limit;
-
+  async getMoods(user: User, order?: string, limit?: number): Promise<any> {
     try {
-      return await fetch(fullRoute);
-    } catch {
+      return user
+        .getIdToken()
+        .then(async (idToken: string) => {
+          const requestOptions = {
+            headers: {
+              Authorization: "Bearer " + idToken,
+            },
+          };
+
+          let fullRoute: string = route + "?userId=" + user.uid;
+          if (!!order) fullRoute += "&order=" + order;
+          if (!!limit) fullRoute += "&limit=" + limit;
+
+          return await fetch(fullRoute, requestOptions);
+        })
+        .catch(function (error) {
+          console.log(error);
+          return null;
+        });
+    } catch (error) {
+      console.log(error);
       return null;
     }
   },
 
-  async deleteMood(moodId: string): Promise<any> {
-    const requestOptions = {
-      method: "DELETE",
-    };
+  async deleteMood(user: User, moodId: string): Promise<any> {
     try {
-      return await fetch(route + "/" + moodId, requestOptions);
-    } catch {
-      return null;
-    }
-  },
+      return user
+        .getIdToken()
+        .then(async (idToken) => {
+          const requestOptions = {
+            method: "DELETE",
+            headers: {
+              Authorization: "Bearer " + idToken,
+            },
+          };
 
-  async averageMood(userId: string): Promise<number> {
-    let fullRoute: string = route + "?userId=" + userId + "&limit=100";
-    try {
-      const response = await fetch(fullRoute);
-      const moodResponses: MoodResponse[] = await response.json();
-      if (moodResponses.length === 0) return 0;
-      let moodTotal: number = 0;
-      moodResponses.forEach((moodResponse: MoodResponse) => {
-        moodTotal += moodResponse.data.value;
-      });
-      return moodTotal / moodResponses.length;
-    } catch {
-      return 0;
+          return await fetch(route + "/" + moodId, requestOptions);
+        })
+        .catch(function (error) {
+          console.log(error);
+          return null;
+        });
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   },
 };

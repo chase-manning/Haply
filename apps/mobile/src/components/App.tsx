@@ -96,6 +96,10 @@ export default class App extends Component {
     firebase
       .auth()
       .signInAnonymously()
+      .then((meow: any) => {
+        console.log("memqmqm");
+        console.log(meow);
+      })
       .catch(function (error) {
         var errorMessage = error.message;
         alert(errorMessage);
@@ -170,10 +174,8 @@ export default class App extends Component {
   }
 
   async updateMoods(): Promise<void> {
-    const response: any = await MoodService.getMoods(
-      this.state.user!.uid,
-      "date"
-    );
+    const response: any = await MoodService.getMoods(this.state.user!, "date");
+    console.log(response);
 
     const moodResponses: MoodResponse[] = await response.json();
 
