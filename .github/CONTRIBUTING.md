@@ -20,9 +20,9 @@ Just be sure to add the `requires validation` tag, and I will take care of doing
 
 ## Issues
 
-There are a bunch of [open issues](https://github.com/chase-manning/Mood-Tracker/issues) that would be great if you could help with.  
+There are a bunch of [open issues](https://github.com/chase-manning/Haply/issues) that would be great if you could help with.  
 Feel free to work on any issue that isn't already assigned to someone.  
-Issues that are tagged with [good first issue](https://github.com/chase-manning/Mood-Tracker/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) are the best place to start.
+Issues that are tagged with [good first issue](https://github.com/chase-manning/Haply/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) are the best place to start.
 
 ## Projects
 
