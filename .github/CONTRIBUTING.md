@@ -15,8 +15,6 @@ If you want to fix the bug yourself, then also assign the Issue to yourself and 
 Suggestions to improve the project or codebase are very welcomed!  
 Please first create an Issue with the idea.  
 If it improves the site for visitors, assign it the `enhancement` tag, or if it is technical, then assign it the `technical` tag.  
-If the goal of the suggestion is to try increase visitor conversion, then we will need to validate it to prove that it increases conversion.  
-Just be sure to add the `requires validation` tag, and I will take care of doing the validation once you have created a PR.
 
 ## Issues
 
@@ -26,17 +24,8 @@ Issues that are tagged with [good first issue](https://github.com/chase-manning/
 
 ## Projects
 
-There one project which contains all the issues for the repo.  
-
-### Personal Website
-The issues in this project are ordered by their perceived priority and so this is a good place to see what to work on.  
-
-## Development Workflow
-
-If you are contributing, please create a branch off of Master.  
-Make your changes in this branch until you are happy.  
-And then create a PR back into Master.  
-Please also link the Issue that the PR relates to, and include a screenshot of your changes if relevant
+The Issues are split up into seperate projects based on the area of the application they releate to.  
+Make sure that when you create issues that you assign them to the right projects.  
 
 ## Anything Goes
 
