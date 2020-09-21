@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "293873304513",
+    "firebase_url": "https://happiness-software.firebaseio.com",
+    "project_id": "happiness-software",
+    "storage_bucket": "happiness-software.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293873304513:android:4e395e861ae3191978e540",
+        "android_client_info": {
+          "package_name": "haply.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293873304513-ma6ivtv65ra1ha92m8l68n9sfcikgt4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqDWT_E_Oki3eEf2KtUqD1Fw4deeEeNKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293873304513-ma6ivtv65ra1ha92m8l68n9sfcikgt4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
