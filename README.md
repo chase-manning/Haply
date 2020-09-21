@@ -3,7 +3,8 @@
 ## About
 
 An suite of applications to track your mood, and identify correlations with other things in your life.  
-This project is still in very early development, follow along to see the progress or get in contact with me if you would like to contribute.  
+The Mobile App is live in the Google and Apple App stores, links can be [found here](https://haply.app/) to download.
+This project is still in early development, follow along to see the progress or [get in contact](https://chasemanning.co.nz/) with me if you would like to contribute.  
 
 ## Contributing
 
