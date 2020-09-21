@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
-import Close from "@material-ui/icons/Close";
+import Popup from "./Popup";
 
 const StyledAcheivement = styled.div`
   display: flex;
@@ -41,12 +41,30 @@ const Icon = styled.div`
   background-color: white;
 `;
 
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border-top: solid 2px rgba(255, 255, 255, 0.5);
+  border-left: solid 2px rgba(255, 255, 255, 0.5);
+`;
+
 const Progress = styled.div`
   width: 80%;
   height: 4px;
   border-radius: 2px;
   background-color: var(--primary-light);
   margin-top: 5px;
+`;
+
+const PopupContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 type CompleteProps = {
@@ -60,57 +78,6 @@ const Complete = styled.div`
   height: 4px;
   border-radius: 2px;
   background-color: var(--primary);
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border-top: solid 2px rgba(255, 255, 255, 0.5);
-  border-left: solid 2px rgba(255, 255, 255, 0.5);
-`;
-
-const Shadow = styled.div`
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ExitEvent = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-`;
-
-const Details = styled.div`
-  width: 70%;
-  background-color: white;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  justify-content: space-between;
-  z-index: 3;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  display: flex;
-  margin-bottom: 20px;
 `;
 
 const SvgDetails = styled.img`
@@ -157,6 +124,17 @@ export default class Acheivement extends Component<Props> {
   }
 
   render() {
+    const popupContent: JSX.Element = (
+      <PopupContent>
+        <SvgDetails
+          src={this.props.achievement.svg}
+          isComplete={this.props.achievement.percentComplete === 1}
+        />
+        <Title>{this.props.achievement.title}</Title>
+        <Description>{this.props.achievement.description}</Description>
+      </PopupContent>
+    );
+
     return (
       <StyledAcheivement data-testid="Achievement">
         <Icon onClick={() => this.setState({ detailsOpen: true })}>
@@ -174,20 +152,10 @@ export default class Acheivement extends Component<Props> {
           </Progress>
         )}
         {this.state.detailsOpen && (
-          <Shadow>
-            <ExitEvent onClick={() => this.setState({ detailsOpen: false })} />
-            <Details>
-              <Header>
-                <Close onClick={() => this.setState({ detailsOpen: false })} />
-              </Header>
-              <SvgDetails
-                src={this.props.achievement.svg}
-                isComplete={this.props.achievement.percentComplete === 1}
-              />
-              <Title>{this.props.achievement.title}</Title>
-              <Description>{this.props.achievement.description}</Description>
-            </Details>
-          </Shadow>
+          <Popup
+            content={popupContent}
+            closePopup={() => this.setState({ detailsOpen: false })}
+          ></Popup>
         )}
       </StyledAcheivement>
     );
