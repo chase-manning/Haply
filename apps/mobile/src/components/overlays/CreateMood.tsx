@@ -12,7 +12,7 @@ import happyAsset from "../../assets/svgs/undraw_smiley_face_lmgm.svg";
 import okayAsset from "../../assets/svgs/undraw_young_and_happy_hfpe.svg";
 import mehAsset from "../../assets/svgs/undraw_windy_day_x63l.svg";
 
-const StyledCapture = styled.div`
+const StyledCreateMood = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -105,7 +105,7 @@ const MoodSlider = withStyles({
   },
 })(Slider);
 
-class captureState {
+class createMoodState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
 }
@@ -116,12 +116,12 @@ type Props = {
   addMood: (mood: Mood) => void;
 };
 
-export default class Capture extends Component<Props> {
-  state: captureState;
+export default class CreateMood extends Component<Props> {
+  state: createMoodState;
 
   constructor(props: any) {
     super(props);
-    this.state = new captureState();
+    this.state = new createMoodState();
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -141,7 +141,7 @@ export default class Capture extends Component<Props> {
 
   render() {
     return (
-      <StyledCapture data-testid="Capture">
+      <StyledCreateMood data-testid="Capture">
         <TopBar>
           <Close onClick={() => this.props.closeCapture()} />
         </TopBar>
@@ -165,7 +165,7 @@ export default class Capture extends Component<Props> {
           Add a comment 2
         </Comment>
         <Button onClick={async () => await this.createMood()}>Done</Button>
-      </StyledCapture>
+      </StyledCreateMood>
     );
   }
 

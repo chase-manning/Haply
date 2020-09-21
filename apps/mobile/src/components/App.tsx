@@ -3,7 +3,7 @@ import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
 import State, { Tab } from "../models/state";
-import Capture from "./overlays/Capture";
+import CreateMood from "./overlays/CreateMood";
 import firebase from "firebase/app";
 import "firebase/auth";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
@@ -140,7 +140,7 @@ export default class App extends Component {
             </OverlayContainer>
           )}
         {this.state.moodShowing && (
-          <Capture
+          <CreateMood
             addMood={(mood: Mood) => this.addMood(mood)}
             user={this.state.user!}
             closeCapture={() => this.setState({ moodShowing: false })}
@@ -175,8 +175,6 @@ export default class App extends Component {
 
   async updateMoods(): Promise<void> {
     const response: any = await MoodService.getMoods(this.state.user!, "date");
-    console.log(response);
-
     const moodResponses: MoodResponse[] = await response.json();
 
     let moods: Mood[] = [];
