@@ -44,7 +44,7 @@ const MoodService = {
             },
           };
 
-          let fullRoute: string = "";
+          let fullRoute: string = route;
           if (!!order || !!limit) fullRoute += "?";
           if (!!order) fullRoute += "order=" + order;
           if (!!order && !!limit) fullRoute += "&";
