@@ -11,22 +11,13 @@ const db = admin.firestore();
 const app = express();
 const main = express();
 
-const validateFirebaseIdToken = async (req: any, res: any, next: any) => {
-  console.log("Check if request is authorized with Firebase ID token");
-
+async function getUserId(req: any): Promise<string> {
   if (
     (!req.headers.authorization ||
       !req.headers.authorization.startsWith("Bearer ")) &&
     !(req.cookies && req.cookies.__session)
   ) {
-    console.error(
-      "No Firebase ID token was passed as a Bearer token in the Authorization header.",
-      "Make sure you authorize your request by providing the following HTTP header:",
-      "Authorization: Bearer <Firebase ID Token>",
-      'or by passing a "__session" cookie.'
-    );
-    res.status(403).send("Unauthorized");
-    return;
+    return "";
   }
 
   let idToken;
@@ -34,42 +25,33 @@ const validateFirebaseIdToken = async (req: any, res: any, next: any) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ")
   ) {
-    console.log('Found "Authorization" header');
-    // Read the ID Token from the Authorization header.
     idToken = req.headers.authorization.split("Bearer ")[1];
   } else if (req.cookies) {
-    console.log('Found "__session" cookie');
-    // Read the ID Token from cookie.
     idToken = req.cookies.__session;
   } else {
-    // No cookie
-    res.status(403).send("Unauthorized");
-    return;
+    return "";
   }
 
   try {
-    const decodedIdToken = await admin.auth().verifyIdToken(idToken);
-    console.log("ID Token correctly decoded", decodedIdToken);
-    req.user = decodedIdToken;
-    next();
-    return;
+    const user = await admin.auth().verifyIdToken(idToken);
+    return user.uid;
   } catch (error) {
-    console.error("Error while verifying Firebase ID token:", error);
-    res.status(403).send("Unauthorized");
-    return;
+    return "";
   }
-};
+}
 
 app.use(cors({ origin: true }));
 main.use("/api", app);
 main.use(bodyParser.json());
-main.use(validateFirebaseIdToken);
 
 export const webApi = functions.https.onRequest(main);
 
 app.post("/moods", async (request, response) => {
   try {
-    const { value, date, userId } = request.body;
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const { value, date } = request.body;
     const data = {
       value,
       date,
@@ -90,6 +72,9 @@ app.post("/moods", async (request, response) => {
 
 app.get("/moods/:id", async (request, response) => {
   try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
     const moodId = request.params.id;
 
     if (!moodId) throw new Error("Mood ID is required");
@@ -99,6 +84,9 @@ app.get("/moods/:id", async (request, response) => {
     if (!mood.exists) {
       throw new Error("Mood doesnt exist.");
     }
+
+    if (mood.data()?.userId !== userId)
+      response.status(403).send("Unauthorized");
 
     response.json({
       id: mood.id,
@@ -111,9 +99,11 @@ app.get("/moods/:id", async (request, response) => {
 
 app.get("/moods", async (request: any, response) => {
   try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
     const order: string = request.query.order;
     const limit: number = request.query.limit;
-    const userId: string = request.query.userId;
 
     let moodQuerySnapshot;
     if (!!order && !!limit) {
@@ -160,6 +150,9 @@ app.get("/moods", async (request: any, response) => {
 
 app.put("/moods/:id", async (request, response) => {
   try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
     const moodId = request.params.id;
     const { value, date } = request.body;
     const data = {
@@ -182,6 +175,9 @@ app.put("/moods/:id", async (request, response) => {
 
 app.delete("/moods/:id", async (request, response) => {
   try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
     const moodId = request.params.id;
 
     if (!moodId) throw new Error("id is blank");
