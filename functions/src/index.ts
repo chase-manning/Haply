@@ -114,10 +114,6 @@ app.get("/moods", async (request: any, response) => {
     const order: string = request.query.order;
     const limit: number = request.query.limit;
     const userId: string = request.query.userId;
-    console.log(order);
-    console.log(limit);
-    console.log(!!order);
-    console.log(!!limit);
 
     let moodQuerySnapshot;
     if (!!order && !!limit) {
