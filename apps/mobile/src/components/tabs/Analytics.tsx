@@ -5,7 +5,7 @@ import Mood from "../../models/mood";
 import { StatModel } from "../../models/StatModel";
 import Stat from "../shared/Stat";
 
-const StyledStats = styled.div`
+const StyledAnalytics = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -19,9 +19,9 @@ type Props = {
   stats: StatModel[];
 };
 
-export default class Stats extends Component<Props> {
+export default class Analytics extends Component<Props> {
   render() {
-    return <StyledStats data-testid="Stats">{this.stats}</StyledStats>;
+    return <StyledAnalytics data-testid="Stats">{this.stats}</StyledAnalytics>;
   }
 
   get stats(): JSX.Element[] {

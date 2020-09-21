@@ -154,7 +154,7 @@ export default class App extends Component {
     const activeTab: Tab = this.state.activeTab;
     if (activeTab === Tab.Profile) return "Achievements";
     else if (activeTab === Tab.Entries) return "Entries";
-    else if (activeTab === Tab.Stats) return "Stats";
+    else if (activeTab === Tab.Stats) return "Analytics";
     else if (activeTab === Tab.Settings) return "More";
     else return "Error";
   }

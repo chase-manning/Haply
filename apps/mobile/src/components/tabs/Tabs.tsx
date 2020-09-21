@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Achievements from "./Achievements";
 import Entries from "./Entries";
-import Stats from "./Stats";
+import Analytics from "./Analytics";
 import Settings from "./Settings";
 import { Tab } from "../../models/state";
 import { NOTFOUND } from "dns";
@@ -49,7 +49,7 @@ export default class Tabs extends Component<Props> {
       );
     else if (this.props.activeTab === Tab.Stats)
       activeTab = (
-        <Stats
+        <Analytics
           stats={this.props.stats}
           moods={this.props.moods}
           user={this.props.user}
