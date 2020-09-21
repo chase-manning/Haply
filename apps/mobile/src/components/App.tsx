@@ -13,6 +13,12 @@ import { StatModel } from "../models/StatModel";
 import StatService from "../services/StatService";
 import AchievementService from "../services/AchievementService";
 import AchievementModel from "../models/AchievementModel";
+import {
+  Plugins,
+  PushNotification,
+  PushNotificationToken,
+  PushNotificationActionPerformed,
+} from "@capacitor/core";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -25,6 +31,8 @@ const firebaseConfig = {
   measurementId: "G-0KC720H0FM",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+const { PushNotifications } = Plugins;
 
 const uiConfig = {
   signInFlow: "popup",
@@ -104,6 +112,40 @@ export default class App extends Component {
         var errorMessage = error.message;
         alert(errorMessage);
       });
+
+    PushNotifications.requestPermission().then((result) => {
+      if (result.granted) {
+        PushNotifications.register();
+      } else {
+        console.log("Push Notification Permission Failed");
+        alert("Error");
+      }
+    });
+
+    PushNotifications.addListener(
+      "registration",
+      (token: PushNotificationToken) => {
+        alert("Push registration success, token: " + token.value);
+      }
+    );
+
+    PushNotifications.addListener("registrationError", (error: any) => {
+      alert("Error on registration: " + JSON.stringify(error));
+    });
+
+    PushNotifications.addListener(
+      "pushNotificationReceived",
+      (notification: PushNotification) => {
+        alert("Push received: " + JSON.stringify(notification));
+      }
+    );
+
+    PushNotifications.addListener(
+      "pushNotificationActionPerformed",
+      (notification: PushNotificationActionPerformed) => {
+        alert("Push action performed: " + JSON.stringify(notification));
+      }
+    );
   }
 
   render() {
