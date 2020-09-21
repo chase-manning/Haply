@@ -5,7 +5,7 @@ import Mood from "../../models/mood";
 import AchievementModel from "../../models/AchievementModel";
 import Acheivement from "../shared/Achievement";
 
-const StyledProfile = styled.div`
+const StyledAchievements = styled.div`
   width: 100%;
   padding: 20px;
   display: flex;
@@ -25,12 +25,12 @@ type Props = {
   achievements: AchievementModel[];
 };
 
-export default class Profile extends Component<Props> {
+export default class Achievements extends Component<Props> {
   render() {
     return (
-      <StyledProfile data-testid="Profile">
+      <StyledAchievements data-testid="Profile">
         <Acheivements>{this.achievements}</Acheivements>
-      </StyledProfile>
+      </StyledAchievements>
     );
   }
 

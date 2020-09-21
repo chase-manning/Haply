@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import Profile from "./Profile";
+import Achievements from "./Achievements";
 import Entries from "./Entries";
 import Stats from "./Stats";
 import Settings from "./Settings";
@@ -33,7 +33,7 @@ export default class Tabs extends Component<Props> {
     let activeTab;
     if (this.props.activeTab === Tab.Profile)
       activeTab = (
-        <Profile
+        <Achievements
           achievements={this.props.achivements}
           moods={this.props.moods}
           user={this.props.user}
