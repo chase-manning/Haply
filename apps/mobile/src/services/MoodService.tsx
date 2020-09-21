@@ -44,9 +44,11 @@ const MoodService = {
             },
           };
 
-          let fullRoute: string = route + "?userId=" + user.uid;
-          if (!!order) fullRoute += "&order=" + order;
-          if (!!limit) fullRoute += "&limit=" + limit;
+          let fullRoute: string = "";
+          if (!!order || !!limit) fullRoute += "?";
+          if (!!order) fullRoute += "order=" + order;
+          if (!!order && !!limit) fullRoute += "&";
+          if (!!limit) fullRoute += "limit=" + limit;
 
           return await fetch(fullRoute, requestOptions);
         })
