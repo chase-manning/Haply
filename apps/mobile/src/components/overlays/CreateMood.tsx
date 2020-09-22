@@ -60,6 +60,7 @@ const Additions = styled.div`
   display: flex;
   justify-content: space-between;
   color: var(--sub);
+  margin-bottom: 10px;
 `;
 
 const Addition = styled.div`
