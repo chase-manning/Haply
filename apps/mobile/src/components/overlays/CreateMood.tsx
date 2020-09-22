@@ -191,14 +191,18 @@ export default class CreateMood extends Component<Props> {
           </Addition>
         </Additions>
         <Button onClick={async () => await this.createMood()}>Done</Button>
-        <Popup
-          content={commentPopupContent}
-          closePopup={() => this.setState({ commentOpen: false })}
-        ></Popup>
-        <Popup
-          content={tagsPopupContent}
-          closePopup={() => this.setState({ tagsOpen: false })}
-        ></Popup>
+        {this.state.commentOpen && (
+          <Popup
+            content={commentPopupContent}
+            closePopup={() => this.setState({ commentOpen: false })}
+          ></Popup>
+        )}
+        {this.state.tagsOpen && (
+          <Popup
+            content={tagsPopupContent}
+            closePopup={() => this.setState({ tagsOpen: false })}
+          ></Popup>
+        )}
       </StyledCreateMood>
     );
   }
