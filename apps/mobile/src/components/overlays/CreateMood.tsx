@@ -138,6 +138,7 @@ const MoodSlider = withStyles({
 class createMoodState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
+  comment: string = "";
   commentOpen: boolean = false;
   tagsOpen: boolean = false;
 }
@@ -155,12 +156,19 @@ export default class CreateMood extends Component<Props> {
     super(props);
     this.state = new createMoodState();
     this.handleChange = this.handleChange.bind(this);
+    this.handleCommentChange = this.handleCommentChange.bind(this);
   }
 
   handleChange(event: any, newValue: any): void {
     this.setState({
       mood: newValue,
       description: moodDescriptions[newValue],
+    });
+  }
+
+  handleCommentChange(event: any): void {
+    this.setState({
+      comment: event.target.value,
     });
   }
 
@@ -209,8 +217,14 @@ export default class CreateMood extends Component<Props> {
           <Popup
             content={
               <CommentContent>
-                <CommentBox placeholder="Comment here..."></CommentBox>
-                <Button>Done</Button>
+                <CommentBox
+                  value={this.state.comment}
+                  placeholder="Note here..."
+                  onChange={this.handleCommentChange}
+                ></CommentBox>
+                <Button onClick={() => this.setState({ commentOpen: false })}>
+                  Done
+                </Button>
               </CommentContent>
             }
             closePopup={() => this.setState({ commentOpen: false })}
