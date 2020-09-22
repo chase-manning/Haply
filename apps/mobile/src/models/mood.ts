@@ -40,6 +40,10 @@ export default class Mood {
   get json(): JSON {
     return JSON.parse(this.string);
   }
+
+  get description(): string {
+    return moodDescriptions[this.value];
+  }
 }
 
 export type MoodResponse = {
