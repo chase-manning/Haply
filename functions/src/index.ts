@@ -2,8 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-
-const cors = require("cors");
+import * as cors from "cors";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -51,10 +50,11 @@ app.post("/moods", async (request, response) => {
     const userId = await getUserId(request);
     if (userId === "") response.status(403).send("Unauthorized");
 
-    const { value, date } = request.body;
+    const { value, date, note } = request.body;
     const data = {
       value,
       date,
+      note,
       userId,
     };
 
@@ -154,10 +154,11 @@ app.put("/moods/:id", async (request, response) => {
     if (userId === "") response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
-    const { value, date } = request.body;
+    const { value, date, note } = request.body;
     const data = {
       value,
       date,
+      note,
     };
 
     if (!moodId) throw new Error("id is blank");
