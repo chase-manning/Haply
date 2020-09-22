@@ -105,6 +105,21 @@ const NoteBox = styled.textarea`
   resize: none;
 `;
 
+const NoteButton = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  border: solid 1px var(--primary);
+  padding: 17px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 10px;
+  background-color: white;
+  outline: none;
+`;
+
 const MoodSlider = withStyles({
   root: {
     color: "var(--primary)",
@@ -226,9 +241,9 @@ export default class CreateMood extends Component<Props> {
                   placeholder="Note here..."
                   onChange={this.handleNoteChange}
                 ></NoteBox>
-                <Button onClick={() => this.setState({ noteOpen: false })}>
+                <NoteButton onClick={() => this.setState({ noteOpen: false })}>
                   Done
-                </Button>
+                </NoteButton>
               </NoteContent>
             }
             closePopup={() => this.setState({ noteOpen: false })}
