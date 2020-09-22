@@ -96,12 +96,11 @@ const CommentContent = styled.div`
 
 const CommentBox = styled.textarea`
   width: 100%;
-  margin-bottom: 0px 0px 30px;
+  margin-bottom: 30px;
   height: 200px;
-  border: none;
-  background-color: rgb(204, 204, 204);
+  border: solid 1px var(--border);
   padding: 20px;
-  border-radius: 20px;
+  border-radius: 10px;
   outline: none;
   resize: none;
 `;
