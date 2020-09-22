@@ -3,6 +3,7 @@ import Mood from "../models/mood";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
+//const api: string = "http://localhost:5001/happiness-software/us-central1/webApi/api/";
 
 const route: string = api + "moods";
 
