@@ -90,6 +90,7 @@ export default class Entry extends Component<Props> {
   }
 
   async deleteMood(): Promise<void> {
+    this.setState({ popupOpen: false });
     MoodService.deleteMood(this.props.user, this.props.mood.moodId!);
     this.props.removeMood(this.props.mood);
   }
