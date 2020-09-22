@@ -238,7 +238,7 @@ export default class CreateMood extends Component<Props> {
               <NoteContent>
                 <NoteBox
                   value={this.state.note}
-                  placeholder="Note here..."
+                  placeholder="Write Note here..."
                   onChange={this.handleNoteChange}
                 ></NoteBox>
                 <NoteButton onClick={() => this.setState({ noteOpen: false })}>
