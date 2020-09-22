@@ -17,17 +17,20 @@ export default class Mood {
   date: Date;
   userId: string;
   moodId?: string;
+  note: string;
 
   constructor(
     value: number,
     userId: string,
     date: Date = new Date(),
-    moodId: string = ""
+    moodId: string = "",
+    note: string = ""
   ) {
     this.value = value;
     this.date = date;
     this.userId = userId;
     if (moodId !== "") this.moodId = moodId;
+    this.note = note;
   }
 
   get string(): string {
