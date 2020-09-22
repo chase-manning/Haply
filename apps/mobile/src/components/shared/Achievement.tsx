@@ -124,17 +124,6 @@ export default class Acheivement extends Component<Props> {
   }
 
   render() {
-    const popupContent: JSX.Element = (
-      <PopupContent>
-        <SvgDetails
-          src={this.props.achievement.svg}
-          isComplete={this.props.achievement.percentComplete === 1}
-        />
-        <Title>{this.props.achievement.title}</Title>
-        <Description>{this.props.achievement.description}</Description>
-      </PopupContent>
-    );
-
     return (
       <StyledAcheivement data-testid="Achievement">
         <Icon onClick={() => this.setState({ detailsOpen: true })}>
@@ -153,7 +142,16 @@ export default class Acheivement extends Component<Props> {
         )}
         {this.state.detailsOpen && (
           <Popup
-            content={popupContent}
+            content={
+              <PopupContent>
+                <SvgDetails
+                  src={this.props.achievement.svg}
+                  isComplete={this.props.achievement.percentComplete === 1}
+                />
+                <Title>{this.props.achievement.title}</Title>
+                <Description>{this.props.achievement.description}</Description>
+              </PopupContent>
+            }
             closePopup={() => this.setState({ detailsOpen: false })}
           ></Popup>
         )}
