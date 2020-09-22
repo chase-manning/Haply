@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
+import LocalOfferOutlined from "@material-ui/icons/LocalOfferOutlined";
 import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
@@ -11,6 +12,7 @@ import sadAsset from "../../assets/svgs/undraw_feeling_blue_4b7q.svg";
 import happyAsset from "../../assets/svgs/undraw_smiley_face_lmgm.svg";
 import okayAsset from "../../assets/svgs/undraw_young_and_happy_hfpe.svg";
 import mehAsset from "../../assets/svgs/undraw_windy_day_x63l.svg";
+import Popup from "../shared/Popup";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -53,11 +55,23 @@ const Face = styled.div`
   align-items: center;
 `;
 
-const Comment = styled.div`
-  display: none;
-  align-items: center;
-  color: var(--main);
+const Additions = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: var(--sub);
 `;
+
+const Addition = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const AdditionText = styled.p`
+  margin: 0 10px;
+`;
+
+const TagText = styled.p``;
 
 const Button = styled.button`
   width: 100%;
@@ -108,6 +122,8 @@ const MoodSlider = withStyles({
 class createMoodState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
+  commentOpen: boolean = false;
+  tagsOpen: boolean = false;
 }
 
 type Props = {
@@ -140,6 +156,10 @@ export default class CreateMood extends Component<Props> {
   }
 
   render() {
+    const commentPopupContent = <p>Comment Popup</p>;
+
+    const tagsPopupContent = <p>Tags Popup</p>;
+
     return (
       <StyledCreateMood data-testid="Capture">
         <TopBar>
@@ -160,11 +180,25 @@ export default class CreateMood extends Component<Props> {
           max={10}
           onChange={this.handleChange}
         />
-        <Comment>
-          <ChatBubbleOutline />
-          Add a comment 2
-        </Comment>
+        <Additions>
+          <Addition onClick={() => this.setState({ commentOpen: true })}>
+            <ChatBubbleOutline />
+            <AdditionText>Note</AdditionText>
+          </Addition>
+          <Addition onClick={() => this.setState({ tagsOpen: true })}>
+            <AdditionText>Tags</AdditionText>
+            <LocalOfferOutlined />
+          </Addition>
+        </Additions>
         <Button onClick={async () => await this.createMood()}>Done</Button>
+        <Popup
+          content={commentPopupContent}
+          closePopup={() => this.setState({ commentOpen: false })}
+        ></Popup>
+        <Popup
+          content={tagsPopupContent}
+          closePopup={() => this.setState({ tagsOpen: false })}
+        ></Popup>
       </StyledCreateMood>
     );
   }
