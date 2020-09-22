@@ -87,14 +87,14 @@ const Button = styled.button`
   outline: none;
 `;
 
-const CommentContent = styled.div`
+const NoteContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const CommentBox = styled.textarea`
+const NoteBox = styled.textarea`
   width: 100%;
   margin-bottom: 30px;
   height: 200px;
@@ -138,8 +138,8 @@ const MoodSlider = withStyles({
 class createMoodState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
-  comment: string = "";
-  commentOpen: boolean = false;
+  note: string = "";
+  noteOpen: boolean = false;
   tagsOpen: boolean = false;
 }
 
@@ -156,7 +156,7 @@ export default class CreateMood extends Component<Props> {
     super(props);
     this.state = new createMoodState();
     this.handleChange = this.handleChange.bind(this);
-    this.handleCommentChange = this.handleCommentChange.bind(this);
+    this.handleNoteChange = this.handleNoteChange.bind(this);
   }
 
   handleChange(event: any, newValue: any): void {
@@ -166,9 +166,9 @@ export default class CreateMood extends Component<Props> {
     });
   }
 
-  handleCommentChange(event: any): void {
+  handleNoteChange(event: any): void {
     this.setState({
-      comment: event.target.value,
+      note: event.target.value,
     });
   }
 
@@ -203,7 +203,7 @@ export default class CreateMood extends Component<Props> {
           onChange={this.handleChange}
         />
         <Additions>
-          <Addition onClick={() => this.setState({ commentOpen: true })}>
+          <Addition onClick={() => this.setState({ noteOpen: true })}>
             <ChatBubbleOutline />
             <AdditionText>Note</AdditionText>
           </Addition>
@@ -213,21 +213,21 @@ export default class CreateMood extends Component<Props> {
           </Addition>
         </Additions>
         <Button onClick={async () => await this.createMood()}>Done</Button>
-        {this.state.commentOpen && (
+        {this.state.noteOpen && (
           <Popup
             content={
-              <CommentContent>
-                <CommentBox
-                  value={this.state.comment}
+              <NoteContent>
+                <NoteBox
+                  value={this.state.note}
                   placeholder="Note here..."
-                  onChange={this.handleCommentChange}
-                ></CommentBox>
-                <Button onClick={() => this.setState({ commentOpen: false })}>
+                  onChange={this.handleNoteChange}
+                ></NoteBox>
+                <Button onClick={() => this.setState({ noteOpen: false })}>
                   Done
                 </Button>
-              </CommentContent>
+              </NoteContent>
             }
-            closePopup={() => this.setState({ commentOpen: false })}
+            closePopup={() => this.setState({ noteOpen: false })}
           ></Popup>
         )}
         {this.state.tagsOpen && (
