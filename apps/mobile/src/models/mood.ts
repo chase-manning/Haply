@@ -22,9 +22,9 @@ export default class Mood {
   constructor(
     value: number,
     userId: string,
+    note: string = "",
     date: Date = new Date(),
-    moodId: string = "",
-    note: string = ""
+    moodId: string = ""
   ) {
     this.value = value;
     this.date = date;
