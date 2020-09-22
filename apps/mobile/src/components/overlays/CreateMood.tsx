@@ -71,8 +71,6 @@ const AdditionText = styled.p`
   margin: 0 10px;
 `;
 
-const TagText = styled.p``;
-
 const Button = styled.button`
   width: 100%;
   display: flex;
@@ -87,6 +85,25 @@ const Button = styled.button`
   background-color: var(--primary);
   filter: var(--primary-shadow);
   outline: none;
+`;
+
+const CommentContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const CommentBox = styled.textarea`
+  width: 100%;
+  margin-bottom: 0px 0px 30px;
+  height: 200px;
+  border: none;
+  background-color: rgb(204, 204, 204);
+  padding: 20px;
+  border-radius: 20px;
+  outline: none;
+  resize: none;
 `;
 
 const MoodSlider = withStyles({
@@ -156,8 +173,6 @@ export default class CreateMood extends Component<Props> {
   }
 
   render() {
-    const commentPopupContent = <p>Comment Popup</p>;
-
     const tagsPopupContent = <p>Tags Popup</p>;
 
     return (
@@ -193,7 +208,12 @@ export default class CreateMood extends Component<Props> {
         <Button onClick={async () => await this.createMood()}>Done</Button>
         {this.state.commentOpen && (
           <Popup
-            content={commentPopupContent}
+            content={
+              <CommentContent>
+                <CommentBox placeholder="Comment here..."></CommentBox>
+                <Button>Done</Button>
+              </CommentContent>
+            }
             closePopup={() => this.setState({ commentOpen: false })}
           ></Popup>
         )}
