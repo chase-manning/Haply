@@ -226,10 +226,10 @@ export default class CreateMood extends Component<Props> {
             <ChatBubbleOutline />
             <AdditionText>Note</AdditionText>
           </Addition>
-          <Addition onClick={() => this.setState({ tagsOpen: true })}>
+          {/* <Addition onClick={() => this.setState({ tagsOpen: true })}>
             <AdditionText>Tags</AdditionText>
             <LocalOfferOutlined />
-          </Addition>
+          </Addition> */}
         </Additions>
         <Button onClick={async () => await this.createMood()}>Done</Button>
         {this.state.noteOpen && (
