@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
-// import LocalOfferOutlined from "@material-ui/icons/LocalOfferOutlined";
+import LocalOfferOutlined from "@material-ui/icons/LocalOfferOutlined";
 import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
@@ -227,10 +227,10 @@ export default class CreateMood extends Component<Props> {
             <ChatBubbleOutline />
             <AdditionText>Note</AdditionText>
           </Addition>
-          {/* <Addition onClick={() => this.setState({ tagsOpen: true })}>
+          <Addition onClick={() => this.setState({ tagsOpen: true })}>
             <AdditionText>Tags</AdditionText>
             <LocalOfferOutlined />
-          </Addition> */}
+          </Addition>
         </Additions>
         <Button onClick={async () => await this.createMood()}>Done</Button>
         {this.state.noteOpen && (
