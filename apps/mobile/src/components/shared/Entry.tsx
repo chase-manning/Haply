@@ -8,7 +8,7 @@ import Mood from "../../models/mood";
 import { User } from "firebase";
 import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
-import { SelectedTag } from "../../styles/Shared";
+import { SelectedTag, SelectedTags } from "../../styles/Shared";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -162,6 +162,15 @@ export default class Entry extends Component<Props> {
                     <HighlightedWord>Note: </HighlightedWord>
 
                     {this.props.mood.note}
+                  </PopupDetails>
+                )}
+                {this.props.mood.tags.length > 0 && (
+                  <PopupDetails>
+                    <SelectedTags>
+                      {this.props.mood.tags.map((tag: string) => (
+                        <SelectedTag includeMargin={true}>{tag}</SelectedTag>
+                      ))}
+                    </SelectedTags>
                   </PopupDetails>
                 )}
                 <Button onClick={() => this.deleteMood()}>Delete</Button>
