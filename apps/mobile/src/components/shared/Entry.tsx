@@ -8,6 +8,7 @@ import Mood from "../../models/mood";
 import { User } from "firebase";
 import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
+import { SelectedTag } from "../../styles/Shared";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -17,6 +18,7 @@ const EntryText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 50%;
 `;
 
 const EntryHeader = styled.div`
@@ -27,6 +29,25 @@ const EntryHeader = styled.div`
 const EntrySubHeader = styled.div`
   color: var(--sub);
   font-size: 12px;
+`;
+
+const EntryNote = styled.div`
+  color: var(--sub);
+  font-size: 12px;
+  margin-bottom: 10px;
+`;
+
+const EntryTags = styled.div`
+  color: var(--sub);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+`;
+
+const EntryTagMoreText = styled.div`
+  color: var(--sub);
+  font-size: 12px;
+  margin-left: 5px;
 `;
 
 const PopupContent = styled.div`
@@ -105,10 +126,22 @@ export default class Entry extends Component<Props> {
               {dateFormat(this.props.mood.date, " dddd h:MM tt")}
             </EntrySubHeader>
           </EntryText>
-          <EntrySubHeader>
-            {this.props.mood.note.substring(0, 20) +
-              (this.props.mood.note.length > 20 ? "..." : "")}
-          </EntrySubHeader>
+          <EntryText>
+            <EntryNote>
+              {this.props.mood.note.substring(0, 20) +
+                (this.props.mood.note.length > 20 ? "..." : "")}
+            </EntryNote>
+            <EntryTags>
+              {this.props.mood.tags.slice(0, 1).map((tag: string) => (
+                <SelectedTag includeMargin={false}>{tag}</SelectedTag>
+              ))}
+              {this.props.mood.tags.length > 1 && (
+                <EntryTagMoreText>
+                  +{this.props.mood.tags.length - 1}
+                </EntryTagMoreText>
+              )}
+            </EntryTags>
+          </EntryText>
           <ChevronRight />
         </Line>
         {this.state.popupOpen && (
