@@ -153,7 +153,7 @@ const SelectedTagsPlaceholderText = styled.div`
   color: var(--sub);
   font-size: 12px;
   margin-left: 5px;
-  margin-top: 4px;
+  margin-top: 7px;
 `;
 
 const TagOptions = styled.div`

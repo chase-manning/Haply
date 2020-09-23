@@ -50,11 +50,12 @@ app.post("/moods", async (request, response) => {
     const userId = await getUserId(request);
     if (userId === "") response.status(403).send("Unauthorized");
 
-    const { value, date, note } = request.body;
+    const { value, date, note, tags } = request.body;
     const data = {
       value,
       date,
       note,
+      tags,
       userId,
     };
 
@@ -154,11 +155,12 @@ app.put("/moods/:id", async (request, response) => {
     if (userId === "") response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
-    const { value, date, note } = request.body;
+    const { value, date, note, tags } = request.body;
     const data = {
       value,
       date,
       note,
+      tags,
     };
 
     if (!moodId) throw new Error("id is blank");
