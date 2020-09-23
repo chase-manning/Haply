@@ -301,6 +301,7 @@ export default class CreateMood extends Component<Props> {
                 <SelectedTags>
                   {this.state.tags.map((tag: string) => (
                     <SelectedTag
+                      includeMargin={true}
                       onClick={() => {
                         let tags: string[] = this.state.tags.filter(
                           (selectedTag: string) => selectedTag !== tag
