@@ -249,7 +249,8 @@ export default class CreateMood extends Component<Props> {
     const mood: Mood = new Mood(
       this.state.mood,
       this.props.user.uid,
-      this.state.note
+      this.state.note,
+      this.state.tags
     );
     MoodService.createMood(this.props.user, mood);
     this.props.addMood(mood);
