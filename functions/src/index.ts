@@ -50,11 +50,12 @@ app.post("/moods", async (request, response) => {
     const userId = await getUserId(request);
     if (userId === "") response.status(403).send("Unauthorized");
 
-    const { value, date, note } = request.body;
+    const { value, date, note, tags } = request.body;
     const data = {
       value,
       date,
       note,
+      tags,
       userId,
     };
 
