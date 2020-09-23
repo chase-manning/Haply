@@ -227,6 +227,7 @@ export default class App extends Component {
           moodResponse.data.value,
           moodResponse.data.userId,
           moodResponse.data.note,
+          moodResponse.data.tags,
           moodResponse.data.date,
           moodResponse.id
         )

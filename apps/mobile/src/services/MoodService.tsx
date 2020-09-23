@@ -5,11 +5,10 @@ const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
 //const api: string = "http://localhost:5001/happiness-software/us-central1/webApi/api/";
 
-const route: string = api + "moods";
-
 const MoodService = {
   async createMood(user: User, mood: Mood): Promise<any> {
     try {
+      const route: string = api + "v1/moods";
       return user
         .getIdToken()
         .then(async (idToken) => {
@@ -36,6 +35,7 @@ const MoodService = {
 
   async getMoods(user: User, order?: string, limit?: number): Promise<any> {
     try {
+      const route: string = api + "moods";
       return user
         .getIdToken()
         .then(async (idToken: string) => {
@@ -65,6 +65,7 @@ const MoodService = {
 
   async deleteMood(user: User, moodId: string): Promise<any> {
     try {
+      const route: string = api + "moods";
       return user
         .getIdToken()
         .then(async (idToken) => {
