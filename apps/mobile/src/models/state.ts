@@ -18,6 +18,20 @@ export default class State {
   moods: Mood[] = [];
   stats: StatModel[] = [];
   achievements: AchievementModel[] = [];
+  tabOptions: string[] = [
+    "With Friends",
+    "With Family",
+    "Tired",
+    "Well Rested",
+    "In Pain",
+    "Sick",
+    "Working",
+    "At Home",
+    "On Holiday",
+    "Eating Well",
+    "Eating Poorly",
+    "Exercising",
+  ];
 
   get isSignedIn(): boolean {
     return !!this.user;
