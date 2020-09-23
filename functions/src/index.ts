@@ -70,6 +70,32 @@ app.post("/moods", async (request, response) => {
   }
 });
 
+app.post("/v1/moods", async (request, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const { value, date, note, tags } = request.body;
+    const data = {
+      value,
+      date,
+      note,
+      tags,
+      userId,
+    };
+
+    const moodRef = await db.collection("moods").add(data);
+    const mood = await moodRef.get();
+
+    response.json({
+      id: moodRef.id,
+      data: mood.data(),
+    });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 app.get("/moods/:id", async (request, response) => {
   try {
     const userId = await getUserId(request);
@@ -154,10 +180,11 @@ app.put("/moods/:id", async (request, response) => {
     if (userId === "") response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
-    const { value, date, note } = request.body;
+    const { value, date, note, tags } = request.body;
     const data = {
       value,
       date,
+      tags,
       note,
     };
 
