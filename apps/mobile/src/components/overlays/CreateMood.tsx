@@ -13,7 +13,7 @@ import happyAsset from "../../assets/svgs/undraw_smiley_face_lmgm.svg";
 import okayAsset from "../../assets/svgs/undraw_young_and_happy_hfpe.svg";
 import mehAsset from "../../assets/svgs/undraw_windy_day_x63l.svg";
 import Popup from "../shared/Popup";
-import { SelectedTag } from "../../styles/Shared";
+import { SelectedTag, SelectedTags } from "../../styles/Shared";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -126,15 +126,6 @@ const TagPopupContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const SelectedTags = styled.div`
-  width: 100%;
-  border: solid 1px var(--border);
-  border-radius: 15px;
-  padding: 5px;
-  margin-bottom: 10px;
-  min-height: 41px;
 `;
 
 const SelectedTagsPlaceholderText = styled.div`
