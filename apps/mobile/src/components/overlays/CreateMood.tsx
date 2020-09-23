@@ -322,17 +322,21 @@ export default class CreateMood extends Component<Props> {
                   )}
                 </SelectedTags>
                 <TagOptions>
-                  {this.props.tabOptions.map((tag: string) => (
-                    <TagOption
-                      onClick={() => {
-                        let tags: string[] = this.state.tags;
-                        tags.push(tag);
-                        this.setState({ tags: tags });
-                      }}
-                    >
-                      {tag}
-                    </TagOption>
-                  ))}
+                  {this.props.tabOptions
+                    .filter(
+                      (tag: string) => this.state.tags.indexOf(tag) === -1
+                    )
+                    .map((tag: string) => (
+                      <TagOption
+                        onClick={() => {
+                          let tags: string[] = this.state.tags;
+                          tags.push(tag);
+                          this.setState({ tags: tags });
+                        }}
+                      >
+                        {tag}
+                      </TagOption>
+                    ))}
                 </TagOptions>
                 <PopupButton onClick={() => this.setState({ noteOpen: false })}>
                   Done
