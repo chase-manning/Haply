@@ -257,8 +257,6 @@ export default class CreateMood extends Component<Props> {
   }
 
   render() {
-    const tagsPopupContent = <p>Tags Popup</p>;
-
     return (
       <StyledCreateMood data-testid="Capture">
         <TopBar>
