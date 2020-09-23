@@ -334,7 +334,7 @@ export default class CreateMood extends Component<Props> {
                       </TagOption>
                     ))}
                 </TagOptions>
-                <PopupButton onClick={() => this.setState({ noteOpen: false })}>
+                <PopupButton onClick={() => this.setState({ tagsOpen: false })}>
                   Done
                 </PopupButton>
               </TagPopupContent>
