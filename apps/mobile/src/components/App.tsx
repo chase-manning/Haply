@@ -186,6 +186,7 @@ export default class App extends Component {
             addMood={(mood: Mood) => this.addMood(mood)}
             user={this.state.user!}
             closeCapture={() => this.setState({ moodShowing: false })}
+            tabOptions={this.state.tabOptions}
           />
         )}
       </StyledApp>

@@ -97,7 +97,6 @@ const NoteContent = styled.div`
 
 const NoteBox = styled.textarea`
   width: 100%;
-  margin-bottom: 30px;
   height: 200px;
   border: solid 1px var(--border);
   padding: 20px;
@@ -106,7 +105,7 @@ const NoteBox = styled.textarea`
   resize: none;
 `;
 
-const NoteButton = styled.button`
+const PopupButton = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -118,6 +117,62 @@ const NoteButton = styled.button`
   font-weight: 400;
   border-radius: 10px;
   background-color: white;
+  outline: none;
+  margin-top: 20px;
+`;
+
+const TagPopupContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const SelectedTags = styled.div`
+  width: 100%;
+  border: solid 1px var(--border);
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 10px;
+  min-height: 34px;
+`;
+
+const SelectedTag = styled.button`
+  padding: 5px 8px;
+  border-radius: 12px;
+  background-color: var(--primary-light);
+  font-size: 12px;
+  margin: 0 5px 5px 0;
+  color: var(--primary);
+  display: inline-block;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+`;
+
+const SelectedTagsPlaceholderText = styled.div`
+  color: var(--sub);
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 4px;
+`;
+
+const TagOptions = styled.div`
+  width: 100%;
+  border: solid 1px var(--border);
+  border-radius: 15px;
+  padding: 5px;
+`;
+
+const TagOption = styled.button`
+  padding: 5px 8px;
+  border-radius: 12px;
+  background-color: var(--sub-light);
+  font-size: 12px;
+  margin: 0 5px 5px 0;
+  color: var(--sub);
+  display: inline-block;
+  text-overflow: ellipsis;
+  border: none;
   outline: none;
 `;
 
@@ -155,6 +210,7 @@ class createMoodState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
   note: string = "";
+  tags: string[] = [];
   noteOpen: boolean = false;
   tagsOpen: boolean = false;
 }
@@ -163,6 +219,7 @@ type Props = {
   user: User;
   closeCapture: () => void;
   addMood: (mood: Mood) => void;
+  tabOptions: string[];
 };
 
 export default class CreateMood extends Component<Props> {
@@ -242,9 +299,9 @@ export default class CreateMood extends Component<Props> {
                   placeholder="Write Note here..."
                   onChange={this.handleNoteChange}
                 ></NoteBox>
-                <NoteButton onClick={() => this.setState({ noteOpen: false })}>
+                <PopupButton onClick={() => this.setState({ noteOpen: false })}>
                   Done
-                </NoteButton>
+                </PopupButton>
               </NoteContent>
             }
             closePopup={() => this.setState({ noteOpen: false })}
@@ -252,7 +309,36 @@ export default class CreateMood extends Component<Props> {
         )}
         {this.state.tagsOpen && (
           <Popup
-            content={tagsPopupContent}
+            content={
+              <TagPopupContent>
+                <SelectedTags>
+                  {this.state.tags.map((tag: string) => (
+                    <SelectedTag>{tag}</SelectedTag>
+                  ))}
+                  {this.state.tags.length === 0 && (
+                    <SelectedTagsPlaceholderText>
+                      Select Tags Below...
+                    </SelectedTagsPlaceholderText>
+                  )}
+                </SelectedTags>
+                <TagOptions>
+                  {this.props.tabOptions.map((tag: string) => (
+                    <TagOption
+                      onClick={() => {
+                        let tags: string[] = this.state.tags;
+                        tags.push(tag);
+                        this.setState({ tags: tags });
+                      }}
+                    >
+                      {tag}
+                    </TagOption>
+                  ))}
+                </TagOptions>
+                <PopupButton onClick={() => this.setState({ noteOpen: false })}>
+                  Done
+                </PopupButton>
+              </TagPopupContent>
+            }
             closePopup={() => this.setState({ tagsOpen: false })}
           ></Popup>
         )}
