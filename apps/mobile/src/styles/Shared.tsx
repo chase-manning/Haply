@@ -18,3 +18,12 @@ export const SelectedTag = styled.button`
   border: none;
   outline: none;
 `;
+
+export const SelectedTags = styled.div`
+  width: 100%;
+  border: solid 1px var(--border);
+  border-radius: 15px;
+  padding: 5px;
+  margin-bottom: 10px;
+  min-height: 41px;
+`;
