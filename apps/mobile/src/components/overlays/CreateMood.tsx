@@ -133,7 +133,7 @@ const SelectedTags = styled.div`
   border-radius: 15px;
   padding: 5px;
   margin-bottom: 10px;
-  min-height: 34px;
+  min-height: 41px;
 `;
 
 const SelectedTag = styled.button`
@@ -313,7 +313,16 @@ export default class CreateMood extends Component<Props> {
               <TagPopupContent>
                 <SelectedTags>
                   {this.state.tags.map((tag: string) => (
-                    <SelectedTag>{tag}</SelectedTag>
+                    <SelectedTag
+                      onClick={() => {
+                        let tags: string[] = this.state.tags.filter(
+                          (selectedTag: string) => selectedTag !== tag
+                        );
+                        this.setState({ tags: tags });
+                      }}
+                    >
+                      {tag}
+                    </SelectedTag>
                   ))}
                   {this.state.tags.length === 0 && (
                     <SelectedTagsPlaceholderText>
