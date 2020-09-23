@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --main: black;
     --sub: #9399A9;
+    --sub-light: rgba(147,154,169, 0.1);
     --primary: #4071FE; 
     --primary-light: rgba(64,114,253,0.1);
     --primary-shadow: drop-shadow( 0px 5px 10px rgba(64,114,253, 0.5));
