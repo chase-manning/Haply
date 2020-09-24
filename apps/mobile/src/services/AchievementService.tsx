@@ -30,7 +30,8 @@ const AchievementService = {
         firstSteps,
         moods.length >= 1 ? 1 : 0,
         "First Steps",
-        "Record your first feeling"
+        "Record your first feeling",
+        "#4071FE"
       )
     );
 
@@ -45,7 +46,8 @@ const AchievementService = {
           ? 1
           : 0,
         "Early Bird",
-        "Record a Feeling in The Early Morning between 5am and 7am"
+        "Record a Feeling in The Early Morning between 5am and 7am",
+        "#FF0000"
       )
     );
 
@@ -60,7 +62,8 @@ const AchievementService = {
           ? 1
           : 0,
         "Lunch Date",
-        "Record a Feeling at Luch Time between 12am and 1pm"
+        "Record a Feeling at Luch Time between 12am and 1pm",
+        "#FFD700"
       )
     );
 
@@ -75,7 +78,8 @@ const AchievementService = {
           ? 1
           : 0,
         "Night Owl",
-        "Record a Feeling late at Night between 11pm and 4am"
+        "Record a Feeling late at Night between 11pm and 4am",
+        "#FFA500"
       )
     );
 
@@ -85,7 +89,8 @@ const AchievementService = {
         feelingAmazing,
         moods.some((mood: Mood) => mood.value === 10) ? 1 : 0,
         "Feeling Amazing",
-        "Record a Feeling when you are feeling Amazing!"
+        "Record a Feeling when you are feeling Amazing!",
+        "#FF8C00"
       )
     );
 
@@ -97,7 +102,8 @@ const AchievementService = {
           ? 1
           : 0,
         "Merry Christmas",
-        "Record a Feeling on Christmas Day"
+        "Record a Feeling on Christmas Day",
+        "#FFFF00"
       )
     );
 
@@ -109,7 +115,8 @@ const AchievementService = {
           ? 1
           : 0,
         "Happy Halloween",
-        "Record a Feeling on Halloween"
+        "Record a Feeling on Halloween",
+        "#7CFC00"
       )
     );
 
@@ -133,7 +140,8 @@ const AchievementService = {
         slowDay,
         dayCount >= 5 ? 1 : todaysCount / 5,
         "Slow Day",
-        "Record 5 Feelings in a Day"
+        "Record 5 Feelings in a Day",
+        "#008000"
       )
     );
 
@@ -143,7 +151,8 @@ const AchievementService = {
         activeDay,
         dayCount >= 20 ? 1 : todaysCount / 20,
         "Active Day",
-        "Record 20 Feelings in a Day"
+        "Record 20 Feelings in a Day",
+        "#808000"
       )
     );
 
@@ -153,7 +162,8 @@ const AchievementService = {
         meatyDay,
         dayCount >= 50 ? 1 : todaysCount / 50,
         "Meaty Day",
-        "Record 50 Feelings in a Day"
+        "Record 50 Feelings in a Day",
+        "#00FFFF"
       )
     );
 
@@ -163,7 +173,8 @@ const AchievementService = {
         theJourney,
         Math.min(moods.length / 10, 1),
         "The Journey",
-        "Record 10 Feelings"
+        "Record 10 Feelings",
+        "#40E0D0"
       )
     );
 
@@ -173,7 +184,8 @@ const AchievementService = {
         settleIn,
         Math.min(moods.length / 100, 1),
         "Settle In",
-        "Record 100 Feelings"
+        "Record 100 Feelings",
+        "#00BFFF"
       )
     );
 
@@ -183,7 +195,8 @@ const AchievementService = {
         forBreakfast,
         Math.min(moods.length / 1000, 1),
         "For Breakfast",
-        "Record 1,000 Feelings"
+        "Record 1,000 Feelings",
+        "#483D8B"
       )
     );
 
@@ -204,7 +217,8 @@ const AchievementService = {
         aHabbit,
         Math.min(maxDays / 7, 1),
         "A Habbit",
-        "Record your Feelings every day for a Week"
+        "Record your Feelings every day for a Week",
+        "#7B68EE"
       )
     );
 
@@ -214,7 +228,8 @@ const AchievementService = {
         aRoutine,
         Math.min(maxDays / 30, 1),
         "A Routine",
-        "Record your Feelings every day for a Month"
+        "Record your Feelings every day for a Month",
+        "#EE82EE"
       )
     );
 
@@ -224,9 +239,26 @@ const AchievementService = {
         aLifestyle,
         Math.min(maxDays / 365, 1),
         "A Lifestyle",
-        "Record your Feelings every day for a Year"
+        "Record your Feelings every day for a Year",
+        "#FF00FF"
       )
     );
+
+    // #8A2BE2
+    // #FA8072
+    // #8B008B
+    // #FF69B4
+    // #FF1493
+    // #C0C0C0
+    // #808080
+    // #708090
+    // #2F4F4F
+    // #000000
+    // #DEB887
+    // #BC8F8F
+    // #DAA520
+    // #D2691E
+    // #A52A2A
 
     achievements.sort(function (a, b) {
       return b.percentComplete - a.percentComplete;
