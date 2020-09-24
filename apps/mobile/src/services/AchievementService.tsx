@@ -245,18 +245,32 @@ const AchievementService = {
     );
 
     // #8A2BE2
+    // #FFFAFA
     // #FA8072
+    // #F0FFF0
     // #8B008B
+    // #F5FFFA
     // #FF69B4
+    // #FFFFFF
+    // #F0FFFF
     // #FF1493
+    // #F0F8FF
     // #C0C0C0
+    // #F5F5F5
     // #808080
+    // #FFF5EE
     // #708090
+    // #F5F5DC
     // #2F4F4F
+    // #FFFAF0
     // #000000
+    // #FFFFF0
     // #DEB887
+    // #FAEBD7
     // #BC8F8F
+    // #FFF0F5
     // #DAA520
+    // #FFE4E1
     // #D2691E
     // #A52A2A
 
