@@ -42,8 +42,25 @@ const Header = styled.div`
   margin-bottom: 20px;
 `;
 
+const PopupButton = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+  border: solid 1px var(--primary);
+  padding: 17px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 10px;
+  background-color: white;
+  outline: none;
+  margin-top: 20px;
+`;
+
 type Props = {
   content: JSX.Element;
+  showButton: boolean;
   closePopup: () => void;
 };
 
@@ -57,6 +74,11 @@ export default class Popup extends Component<Props> {
             <Close onClick={() => this.props.closePopup()} />
           </Header>
           {this.props.content}
+          {this.props.showButton && (
+            <PopupButton onClick={() => this.props.closePopup()}>
+              Done
+            </PopupButton>
+          )}
         </Details>
       </Shadow>
     );
