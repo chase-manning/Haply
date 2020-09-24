@@ -85,7 +85,6 @@ const Button = styled.button`
   font-weight: 400;
   border-radius: 10px;
   background-color: var(--primary);
-  filter: var(--primary-shadow);
   outline: none;
 `;
 
@@ -104,22 +103,6 @@ const NoteBox = styled.textarea`
   border-radius: 10px;
   outline: none;
   resize: none;
-`;
-
-const PopupButton = styled.button`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--primary);
-  border: solid 1px var(--primary);
-  padding: 17px;
-  font-size: 16px;
-  font-weight: 400;
-  border-radius: 10px;
-  background-color: white;
-  outline: none;
-  margin-top: 20px;
 `;
 
 const TagPopupContent = styled.div`
@@ -277,11 +260,9 @@ export default class CreateMood extends Component<Props> {
                   placeholder="Write Note here..."
                   onChange={this.handleNoteChange}
                 ></NoteBox>
-                <PopupButton onClick={() => this.setState({ noteOpen: false })}>
-                  Done
-                </PopupButton>
               </NoteContent>
             }
+            showButton={true}
             closePopup={() => this.setState({ noteOpen: false })}
           ></Popup>
         )}
@@ -326,11 +307,9 @@ export default class CreateMood extends Component<Props> {
                       </TagOption>
                     ))}
                 </TagOptions>
-                <PopupButton onClick={() => this.setState({ tagsOpen: false })}>
-                  Done
-                </PopupButton>
               </TagPopupContent>
             }
+            showButton={true}
             closePopup={() => this.setState({ tagsOpen: false })}
           ></Popup>
         )}
