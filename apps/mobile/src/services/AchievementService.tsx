@@ -187,7 +187,7 @@ const AchievementService = {
       )
     );
 
-    let maxDays: number = 1;
+    let maxDays: number = 0;
     let currentDays: number = 1;
     let lastDate: number = -1;
 
