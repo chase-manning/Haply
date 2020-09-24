@@ -53,7 +53,7 @@ const GlobalStyle = createGlobalStyle`
     --sub: #9399A9;
     --sub-light: rgba(147,154,169, 0.1);
     --primary: ${(props: GlobalSyleProps) => props.colorPrimary}; 
-    --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "18"};
+    --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "22"};
     --highlight: #FF6584;
     --bg: #F9FAFC;
     --border: rgba(0,0,0,0.1);
