@@ -32,6 +32,7 @@ export default class State {
     "Eating Poorly",
     "Exercising",
   ];
+  colorPrimary: string = "#4071FE";
 
   get isSignedIn(): boolean {
     return !!this.user;
