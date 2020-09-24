@@ -176,6 +176,7 @@ export default class Entry extends Component<Props> {
                 <Button onClick={() => this.deleteMood()}>Delete</Button>
               </PopupContent>
             }
+            showButton={false}
             closePopup={() => this.setState({ popupOpen: false })}
           ></Popup>
         )}
