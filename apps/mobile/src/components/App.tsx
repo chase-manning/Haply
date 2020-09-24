@@ -19,6 +19,7 @@ import {
   PushNotificationToken,
   PushNotificationActionPerformed,
 } from "@capacitor/core";
+import { createGlobalStyle } from "styled-components";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -41,6 +42,30 @@ const uiConfig = {
     signInSuccessWithAuthResult: () => false,
   },
 };
+
+type GlobalSyleProps = {
+  colorPrimary: string;
+};
+
+const GlobalStyle = createGlobalStyle`
+  :root {
+    --main: black;
+    --sub: #9399A9;
+    --sub-light: rgba(147,154,169, 0.1);
+    --primary: ${(props: GlobalSyleProps) => props.colorPrimary}; 
+    --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "18"};
+    --highlight: #FF6584;
+    --bg: #F9FAFC;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+  }
+`;
 
 const StyledApp = styled.div`
   position: fixed;
@@ -151,6 +176,7 @@ export default class App extends Component {
   render() {
     return (
       <StyledApp data-testid="App">
+        <GlobalStyle colorPrimary={this.state.colorPrimary} />
         {!!this.state.user && (
           <ContentContainer>
             <Tabs
@@ -161,6 +187,10 @@ export default class App extends Component {
               activeTab={this.state.activeTab}
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
+              colorPrimary={this.state.colorPrimary}
+              setColorPrimary={(colorPrimary: string) =>
+                this.setState({ colorPrimary: colorPrimary })
+              }
             />
             <Header>{this.headerText}</Header>
             <NavBar

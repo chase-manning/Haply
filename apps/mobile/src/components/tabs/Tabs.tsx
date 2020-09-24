@@ -26,6 +26,8 @@ type Props = {
   removeMood: (mood: Mood) => void;
   stats: StatModel[];
   achivements: AchievementModel[];
+  colorPrimary: string;
+  setColorPrimary: (colorPrimary: string) => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -57,7 +59,13 @@ export default class Tabs extends Component<Props> {
       );
     else if (this.props.activeTab === Tab.Settings)
       activeTab = (
-        <Settings user={this.props.user} login={() => this.props.login()} />
+        <Settings
+          user={this.props.user}
+          login={() => this.props.login()}
+          colorPrimary={this.props.colorPrimary}
+          achievements={this.props.achivements}
+          setColorPrimary={this.props.setColorPrimary}
+        />
       );
     else throw NOTFOUND;
 
