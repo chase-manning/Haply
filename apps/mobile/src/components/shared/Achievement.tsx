@@ -152,6 +152,7 @@ export default class Acheivement extends Component<Props> {
                 <Description>{this.props.achievement.description}</Description>
               </PopupContent>
             }
+            showButton={false}
             closePopup={() => this.setState({ detailsOpen: false })}
           ></Popup>
         )}
