@@ -41,6 +41,7 @@ const options = {
 
 type Props = {
   dataPoints: DataPoint[];
+  colorPrimary: string;
 };
 
 export default class StatChart extends Component<Props> {
@@ -55,7 +56,7 @@ export default class StatChart extends Component<Props> {
             (dataPoint: DataPoint) => dataPoint.value
           ),
           backgroundColor: "rgba(64,114,253,0.1)",
-          borderColor: "#4071FE",
+          borderColor: this.props.colorPrimary,
           fill: false,
           pointRadius: 12,
           pointBorderColor: "rgba(0,0,0,0)",

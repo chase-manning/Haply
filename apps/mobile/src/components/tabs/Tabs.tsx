@@ -55,6 +55,7 @@ export default class Tabs extends Component<Props> {
           stats={this.props.stats}
           moods={this.props.moods}
           user={this.props.user}
+          colorPrimary={this.props.colorPrimary}
         />
       );
     else if (this.props.activeTab === Tab.Settings)

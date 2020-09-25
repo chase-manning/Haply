@@ -57,6 +57,7 @@ const Complete = styled.div`
 
 type Props = {
   stat: StatModel;
+  colorPrimary: string;
 };
 
 export default class Stat extends Component<Props> {
@@ -77,7 +78,10 @@ export default class Stat extends Component<Props> {
           <StatBar dataPoints={this.props.stat.dataPoints}></StatBar>
         )}
         {!this.props.stat.locked && this.props.stat.type === StatType.Chart && (
-          <StatChart dataPoints={this.props.stat.dataPoints}></StatChart>
+          <StatChart
+            dataPoints={this.props.stat.dataPoints}
+            colorPrimary={this.props.colorPrimary}
+          ></StatChart>
         )}
       </Card>
     );

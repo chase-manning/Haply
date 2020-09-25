@@ -17,6 +17,7 @@ type Props = {
   user: User;
   moods: Mood[];
   stats: StatModel[];
+  colorPrimary: string;
 };
 
 export default class Analytics extends Component<Props> {
@@ -25,6 +26,8 @@ export default class Analytics extends Component<Props> {
   }
 
   get stats(): JSX.Element[] {
-    return this.props.stats.map((stat: StatModel) => <Stat stat={stat} />);
+    return this.props.stats.map((stat: StatModel) => (
+      <Stat stat={stat} colorPrimary={this.props.colorPrimary} />
+    ));
   }
 }
