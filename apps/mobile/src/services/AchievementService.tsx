@@ -79,7 +79,8 @@ const AchievementService = {
           : 0,
         "Night Owl",
         "Record a Feeling late at Night between 11pm and 4am",
-        "#FFA500"
+        "#FFA500",
+        ["Dark Mode"]
       )
     );
 
