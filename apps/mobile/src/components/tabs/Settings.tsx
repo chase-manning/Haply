@@ -156,7 +156,8 @@ export default class Settings extends Component<Props> {
                   {this.props.achievements
                     .filter(
                       (achievement: AchievementModel) =>
-                        achievement.colorPrimary !== ""
+                        achievement.colorPrimary !== "" &&
+                        achievement.percentComplete === 1
                     )
                     .map((achievement: AchievementModel) => (
                       <ColorOption
