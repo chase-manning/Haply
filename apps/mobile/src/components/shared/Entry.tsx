@@ -22,7 +22,7 @@ const EntryText = styled.div`
 `;
 
 const EntryHeader = styled.div`
-  color: black;
+  color: var(--main);
   margin-bottom: 10px;
 `;
 
@@ -87,7 +87,7 @@ const Button = styled.button`
   font-size: 16px;
   font-weight: 400;
   border-radius: 10px;
-  background-color: white;
+  background-color: var(--bg-mid);
   outline: none;
   margin-top: 20px;
 `;

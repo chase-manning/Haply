@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
-import State, { Tab } from "../models/state";
+import State, { Mode, Tab } from "../models/state";
 import CreateMood from "./overlays/CreateMood";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -47,18 +47,43 @@ const uiConfig = {
 
 type GlobalSyleProps = {
   colorPrimary: string;
+  mode: Mode;
 };
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --main: black;
-    --sub: #9399A9;
-    --sub-light: rgba(147,154,169, 0.1);
+    --main: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "black"
+        : "rgba(255,255,255,0.87)"} ;
+    --sub: ;
+    --sub: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "#9399A9"
+        : "rgba(255,255,255,0.60)"} ;
+    --sub-light: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "rgba(147,154,169, 0.1)"
+        : "rgba(255,255,255,0.087)"} ;
     --primary: ${(props: GlobalSyleProps) => props.colorPrimary}; 
     --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "22"};
     --highlight: #FF6584;
-    --bg: #F9FAFC;
-    --border: rgba(0,0,0,0.1);
+    --bg: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "white"
+        : "#121212"} ;
+    --bg-mid: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "white"
+        : "#1F1F1F"} ;
+    --bg-top: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "white"
+        : "#2E2E2E"} ;
+    --border: ${(props: GlobalSyleProps) =>
+      props.mode === Mode.Default || props.mode === Mode.Light
+        ? "rgba(0,0,0,0.1)"
+        : "none"} ;
   }
 
   * {
@@ -83,7 +108,7 @@ const Header = styled.div`
   left: 0;
   width: 100%;
   height: 60px;
-  background-color: white;
+  background-color: var(--bg-top);
   color: var(--main);
   display: flex;
   justify-content: center;
@@ -98,10 +123,11 @@ const ContentContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 60px 0;
+  background-color: var(--bg);
 `;
 
 const OverlayContainer = styled.div`
-  background-color: white;
+  background-color: var(--bg);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -184,7 +210,10 @@ export default class App extends Component {
   render() {
     return (
       <StyledApp data-testid="App">
-        <GlobalStyle colorPrimary={this.state.colorPrimary} />
+        <GlobalStyle
+          colorPrimary={this.state.colorPrimary}
+          mode={this.state.mode}
+        />
         {!!this.state.user && (
           <ContentContainer>
             <Tabs
@@ -200,6 +229,8 @@ export default class App extends Component {
                 this.setState({ colorPrimary: colorPrimary });
                 this.saveState();
               }}
+              mode={this.state.mode}
+              toggleMode={() => this.toggleMode()}
             />
             <Header>{this.headerText}</Header>
             <NavBar
@@ -296,5 +327,10 @@ export default class App extends Component {
 
   async saveState(): Promise<void> {
     Storage.set({ key: "state", value: JSON.stringify(this.state) });
+  }
+
+  toggleMode(): void {
+    if (this.state.mode === Mode.Dark) this.setState({ mode: Mode.Light });
+    else this.setState({ mode: Mode.Dark });
   }
 }

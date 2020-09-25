@@ -26,7 +26,7 @@ const ExitEvent = styled.div`
 
 const Details = styled.div`
   width: 70%;
-  background-color: white;
+  background-color: var(--bg-mid);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -40,6 +40,7 @@ const Header = styled.div`
   width: 100%;
   display: flex;
   margin-bottom: 20px;
+  color: var(--main);
 `;
 
 const PopupButton = styled.button`
@@ -53,7 +54,7 @@ const PopupButton = styled.button`
   font-size: 16px;
   font-weight: 400;
   border-radius: 10px;
-  background-color: white;
+  background-color: var(--bg-mid);
   outline: none;
   margin-top: 20px;
 `;

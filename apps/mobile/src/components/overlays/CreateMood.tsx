@@ -21,7 +21,7 @@ const StyledCreateMood = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: white;
+  background-color: var(--bg);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -78,7 +78,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--bg);
   border: none;
   padding: 17px;
   font-size: 16px;
@@ -103,6 +103,8 @@ const NoteBox = styled.textarea`
   border-radius: 10px;
   outline: none;
   resize: none;
+  background-color: var(--bg-top);
+  color: var(--main);
 `;
 
 const TagPopupContent = styled.div`
@@ -123,6 +125,7 @@ const TagOptions = styled.div`
   border: solid 1px var(--border);
   border-radius: 15px;
   padding: 5px;
+  background-color: var(--bg-top);
 `;
 
 const TagOption = styled.button`
@@ -146,7 +149,7 @@ const MoodSlider = withStyles({
   thumb: {
     height: 24,
     width: 24,
-    backgroundColor: "#fff",
+    backgroundColor: "var(--bg)",
     border: "2px solid currentColor",
     marginTop: -8,
     marginLeft: -12,

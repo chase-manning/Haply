@@ -26,4 +26,5 @@ export const SelectedTags = styled.div`
   padding: 5px;
   margin-bottom: 10px;
   min-height: 41px;
+  background-color: var(--bg-top);
 `;

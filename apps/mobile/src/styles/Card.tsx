@@ -9,4 +9,5 @@ export const Card = styled.div`
   align-items: center;
   margin-bottom: 20px;
   border: solid 1px var(--border);
+  background-color: var(--bg-mid);
 `;

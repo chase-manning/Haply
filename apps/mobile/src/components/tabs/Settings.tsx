@@ -5,6 +5,7 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import { User } from "firebase";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
+import { Mode } from "../../models/state";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -83,6 +84,8 @@ type Props = {
   colorPrimary: string;
   achievements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
+  mode: Mode;
+  toggleMode: () => void;
 };
 
 export default class Settings extends Component<Props> {
@@ -107,6 +110,13 @@ export default class Settings extends Component<Props> {
           <Label>Theme</Label>
           <Value>
             <Color color={this.props.colorPrimary} />
+          </Value>
+          <ChevronRight />
+        </Line>
+        <Line onClick={() => this.props.toggleMode()}>
+          <Label>Dark Mode</Label>
+          <Value>
+            {this.props.mode === Mode.Dark ? "Enabled" : "Disabled"}
           </Value>
           <ChevronRight />
         </Line>

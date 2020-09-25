@@ -12,6 +12,7 @@ const Header = styled.div`
   justify-content: space-between;
   margin-bottom: 20px;
   font-size: 18px;
+  color: var(--main);
 `;
 
 const LockedStat = styled.div`

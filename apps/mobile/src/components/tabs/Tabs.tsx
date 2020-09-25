@@ -5,7 +5,7 @@ import Achievements from "./Achievements";
 import Entries from "./Entries";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
-import { Tab } from "../../models/state";
+import { Mode, Tab } from "../../models/state";
 import { NOTFOUND } from "dns";
 import { User } from "firebase";
 import Mood from "../../models/mood";
@@ -28,6 +28,8 @@ type Props = {
   achivements: AchievementModel[];
   colorPrimary: string;
   setColorPrimary: (colorPrimary: string) => void;
+  mode: Mode;
+  toggleMode: () => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -66,6 +68,8 @@ export default class Tabs extends Component<Props> {
           colorPrimary={this.props.colorPrimary}
           achievements={this.props.achivements}
           setColorPrimary={this.props.setColorPrimary}
+          mode={this.props.mode}
+          toggleMode={() => this.props.toggleMode()}
         />
       );
     else throw NOTFOUND;

@@ -10,6 +10,12 @@ export enum Tab {
   Settings,
 }
 
+export enum Mode {
+  Default,
+  Dark,
+  Light,
+}
+
 export default class State {
   activeTab: Tab = Tab.Profile;
   moodShowing: boolean = false;
@@ -33,6 +39,7 @@ export default class State {
     "Exercising",
   ];
   colorPrimary: string = "#4071FE";
+  mode: Mode = Mode.Default;
 
   get isSignedIn(): boolean {
     return !!this.user;

@@ -13,7 +13,7 @@ const StyledNavBar = styled.div`
   bottom: 0;
   height: 60px;
   width: 100%;
-  background-color: white;
+  background-color: var(--bg-top);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -58,7 +58,7 @@ const Circle = styled.button`
   display: flex;
   border-radius: 50%;
   background-color: var(--primary);
-  color: white;
+  color: var(--bg);
   transform: translateY(-30px);
 `;
 
