@@ -154,10 +154,10 @@ export default class Settings extends Component<Props> {
               <PopupContent>
                 <ColorOptions>
                   {this.props.achievements
-                    // .filter(
-                    //   (achievement: AchievementModel) =>
-                    //     achievement.colorPrimary !== ""
-                    // )
+                    .filter(
+                      (achievement: AchievementModel) =>
+                        achievement.colorPrimary !== ""
+                    )
                     .map((achievement: AchievementModel) => (
                       <ColorOption
                         onClick={() =>
