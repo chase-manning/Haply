@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import DoneOutlinedIcon from "@material-ui/icons/DoneOutlined";
+import { inherits } from "util";
 
 const StyledAcheivement = styled.div`
   display: flex;
@@ -100,11 +103,56 @@ const Title = styled.div`
 
 const Description = styled.div`
   font-size: 12px;
-  margin-top: 15px;
+  margin: 10px 0 12px 0;
   color: var(--sub);
   width: 70%;
   text-align: center;
   line-height: 1.5;
+`;
+
+const RewardsHeader = styled.div`
+  color: var(--main);
+  font-size: 14px;
+  padding-top: 12px;
+  margin-bottom: 6px;
+  border-top: solid 1px var(--sub);
+  text-align: center;
+  width: 80%;
+`;
+
+const Reward = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  align-items: center;
+`;
+
+type RewardIconProps = {
+  color: string;
+};
+
+const RewardIcon = styled.div`
+  color: ${(props: RewardIconProps) => props.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RewardDescription = styled.div`
+  color: var(--sub);
+  margin-left: 5px;
+`;
+
+type ColorProps = {
+  color: string;
+};
+
+const Color = styled.div`
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: ${(props: ColorProps) => props.color};
+  margin-left: 5px;
 `;
 
 type Props = {
@@ -150,6 +198,21 @@ export default class Acheivement extends Component<Props> {
                 />
                 <Title>{this.props.achievement.title}</Title>
                 <Description>{this.props.achievement.description}</Description>
+                <RewardsHeader>Rewards</RewardsHeader>
+                <Reward>
+                  {this.props.achievement.percentComplete !== 1 && (
+                    <RewardIcon color={"var(--sub)"}>
+                      <LockOutlinedIcon fontSize={"inherit"} />
+                    </RewardIcon>
+                  )}
+                  {this.props.achievement.percentComplete === 1 && (
+                    <RewardIcon color={"var(--primary)"}>
+                      <DoneOutlinedIcon fontSize={"inherit"} />
+                    </RewardIcon>
+                  )}
+                  <RewardDescription>Theme Color</RewardDescription>
+                  <Color color={this.props.achievement.colorPrimary} />
+                </Reward>
               </PopupContent>
             }
             showButton={false}
