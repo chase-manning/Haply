@@ -127,18 +127,19 @@ export default class App extends Component {
       this.hardUpdate();
     });
 
-    if (this.state.user) return;
-    firebase
-      .auth()
-      .signInAnonymously()
-      .then((meow: any) => {
-        console.log("memqmqm");
-        console.log(meow);
-      })
-      .catch(function (error) {
-        var errorMessage = error.message;
-        alert(errorMessage);
-      });
+    if (!this.state.user) {
+      firebase
+        .auth()
+        .signInAnonymously()
+        .then((meow: any) => {
+          console.log("memqmqm");
+          console.log(meow);
+        })
+        .catch(function (error) {
+          var errorMessage = error.message;
+          alert(errorMessage);
+        });
+    }
 
     Storage.get({ key: "colorPrimary" }).then((colorPrimary: any) => {
       if (colorPrimary.value)
