@@ -107,7 +107,9 @@ export default class Settings extends Component<Props> {
         <Header>Settings</Header>
         <Line onClick={() => this.setState({ themePopupOpen: true })}>
           <Label>Theme</Label>
-          <Value>Meow</Value>
+          <Value>
+            <Color color={this.props.colorPrimary} />
+          </Value>
           <ChevronRight />
         </Line>
         <Header>Contact</Header>
