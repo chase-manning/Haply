@@ -4,7 +4,6 @@ import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import DoneOutlinedIcon from "@material-ui/icons/DoneOutlined";
-import { inherits } from "util";
 
 const StyledAcheivement = styled.div`
   display: flex;
