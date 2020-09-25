@@ -115,7 +115,8 @@ export default class Settings extends Component<Props> {
         </Line>
         {this.props.achievements.some(
           (achievement: AchievementModel) =>
-            achievement.unlocks.indexOf("Dark Mode") >= 0
+            achievement.unlocks.indexOf("Dark Mode") >= 0 &&
+            achievement.percentComplete === 1
         ) && (
           <Line onClick={() => this.props.toggleMode()}>
             <Label>Dark Mode</Label>
