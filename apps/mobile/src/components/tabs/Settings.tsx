@@ -5,8 +5,6 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import { User } from "firebase";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
-import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
 
 const StyledSettings = styled.div`
   width: 100%;
