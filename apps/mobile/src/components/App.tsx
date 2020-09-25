@@ -20,6 +20,8 @@ import {
   PushNotificationActionPerformed,
 } from "@capacitor/core";
 import { createGlobalStyle } from "styled-components";
+import { Plugins as CapacitorPlugins } from "@capacitor/core";
+const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -138,6 +140,11 @@ export default class App extends Component {
         alert(errorMessage);
       });
 
+    Storage.get({ key: "colorPrimary" }).then((colorPrimary: any) => {
+      if (colorPrimary.value)
+        this.setState({ colorPrimary: colorPrimary.value });
+    });
+
     PushNotifications.requestPermission().then((result) => {
       if (result.granted) {
         PushNotifications.register();
@@ -188,9 +195,10 @@ export default class App extends Component {
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
               colorPrimary={this.state.colorPrimary}
-              setColorPrimary={(colorPrimary: string) =>
-                this.setState({ colorPrimary: colorPrimary })
-              }
+              setColorPrimary={(colorPrimary: string) => {
+                this.setState({ colorPrimary: colorPrimary });
+                Storage.set({ key: "colorPrimary", value: colorPrimary });
+              }}
             />
             <Header>{this.headerText}</Header>
             <NavBar
