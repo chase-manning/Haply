@@ -121,7 +121,13 @@ export default class App extends Component {
     this.state = new State();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    let ret: { value: any } = await Storage.get({ key: "state" });
+    if (ret.value) {
+      let state: State = JSON.parse(ret.value);
+      this.setState({ ...state });
+    }
+
     firebaseApp.auth().onAuthStateChanged((user) => {
       this.setState({ user: user });
       this.hardUpdate();
@@ -140,12 +146,6 @@ export default class App extends Component {
           alert(errorMessage);
         });
     }
-
-    Storage.get({ key: "colorPrimary" }).then((colorPrimary: any) => {
-      if (colorPrimary.value)
-        this.setState({ colorPrimary: colorPrimary.value });
-    });
-
     PushNotifications.requestPermission().then((result) => {
       if (result.granted) {
         PushNotifications.register();
@@ -198,7 +198,7 @@ export default class App extends Component {
               colorPrimary={this.state.colorPrimary}
               setColorPrimary={(colorPrimary: string) => {
                 this.setState({ colorPrimary: colorPrimary });
-                Storage.set({ key: "colorPrimary", value: colorPrimary });
+                this.saveState();
               }}
             />
             <Header>{this.headerText}</Header>
@@ -253,6 +253,7 @@ export default class App extends Component {
       this.state.moods
     );
     this.setState({ achievements: achievements });
+    this.saveState();
   }
 
   async updateMoods(): Promise<void> {
@@ -291,5 +292,9 @@ export default class App extends Component {
     moods.unshift(mood);
     this.setState({ moods: moods });
     this.softUpdate();
+  }
+
+  async saveState(): Promise<void> {
+    Storage.set({ key: "state", value: JSON.stringify(this.state) });
   }
 }
