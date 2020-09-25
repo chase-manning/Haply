@@ -211,7 +211,7 @@ export default class App extends Component {
             />
           </ContentContainer>
         )}
-        {!!this.state.loggingIn &&
+        {this.state.loggingIn &&
           (this.state.user?.isAnonymous || !this.state.user) && (
             <OverlayContainer>
               <StyledFirebaseAuth
