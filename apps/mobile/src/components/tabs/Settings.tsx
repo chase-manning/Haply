@@ -40,11 +40,28 @@ const PopupContent = styled.div`
   flex-direction: column;
 `;
 
-const ColorOption = styled.div`
-  display: flex;
+const ColorOptions = styled.div`
   width: 100%;
+  display: grid;
+  grid-row-gap: 10px;
   align-items: center;
-  margin-bottom: 5px;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+`;
+
+type ColorOptionProps = {
+  selected: boolean;
+};
+
+const ColorOption = styled.div`
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: ${(props: ColorOptionProps) =>
+    props.selected ? "solid 2px var(--primary)" : "none"};
 `;
 
 type ColorProps = {
@@ -135,26 +152,25 @@ export default class Settings extends Component<Props> {
           <Popup
             content={
               <PopupContent>
-                {this.props.achievements
-                  .filter(
-                    (achievement: AchievementModel) =>
-                      achievement.colorPrimary !== ""
-                  )
-                  .map((achievement: AchievementModel) => (
-                    <ColorOption
-                      onClick={() =>
-                        this.props.setColorPrimary(achievement.colorPrimary)
-                      }
-                    >
-                      {achievement.colorPrimary === this.props.colorPrimary && (
-                        <RadioButtonCheckedIcon />
-                      )}
-                      {achievement.colorPrimary !== this.props.colorPrimary && (
-                        <RadioButtonUncheckedIcon />
-                      )}
-                      <Color color={achievement.colorPrimary} />
-                    </ColorOption>
-                  ))}
+                <ColorOptions>
+                  {this.props.achievements
+                    // .filter(
+                    //   (achievement: AchievementModel) =>
+                    //     achievement.colorPrimary !== ""
+                    // )
+                    .map((achievement: AchievementModel) => (
+                      <ColorOption
+                        onClick={() =>
+                          this.props.setColorPrimary(achievement.colorPrimary)
+                        }
+                        selected={
+                          achievement.colorPrimary === this.props.colorPrimary
+                        }
+                      >
+                        <Color color={achievement.colorPrimary} />
+                      </ColorOption>
+                    ))}
+                </ColorOptions>
               </PopupContent>
             }
             showButton={true}
