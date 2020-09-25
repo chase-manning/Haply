@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import DoneOutlinedIcon from "@material-ui/icons/DoneOutlined";
+import AcheivementReward from "./AchievementReward";
 
 const StyledAcheivement = styled.div`
   display: flex;
@@ -119,41 +118,6 @@ const RewardsHeader = styled.div`
   width: 80%;
 `;
 
-const Reward = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  align-items: center;
-`;
-
-type RewardIconProps = {
-  color: string;
-};
-
-const RewardIcon = styled.div`
-  color: ${(props: RewardIconProps) => props.color};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const RewardDescription = styled.div`
-  color: var(--sub);
-  margin-left: 5px;
-`;
-
-type ColorProps = {
-  color: string;
-};
-
-const Color = styled.div`
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: ${(props: ColorProps) => props.color};
-  margin-left: 5px;
-`;
-
 type Props = {
   achievement: AchievementModel;
 };
@@ -198,20 +162,17 @@ export default class Acheivement extends Component<Props> {
                 <Title>{this.props.achievement.title}</Title>
                 <Description>{this.props.achievement.description}</Description>
                 <RewardsHeader>Rewards</RewardsHeader>
-                <Reward>
-                  {this.props.achievement.percentComplete !== 1 && (
-                    <RewardIcon color={"var(--sub)"}>
-                      <LockOutlinedIcon fontSize={"inherit"} />
-                    </RewardIcon>
-                  )}
-                  {this.props.achievement.percentComplete === 1 && (
-                    <RewardIcon color={"var(--primary)"}>
-                      <DoneOutlinedIcon fontSize={"inherit"} />
-                    </RewardIcon>
-                  )}
-                  <RewardDescription>Theme Color</RewardDescription>
-                  <Color color={this.props.achievement.colorPrimary} />
-                </Reward>
+                <AcheivementReward
+                  unlocked={this.props.achievement.percentComplete === 1}
+                  description={"Theme Color"}
+                  color={this.props.achievement.colorPrimary}
+                />
+                {this.props.achievement.unlocks.map((unlock: string) => (
+                  <AcheivementReward
+                    unlocked={this.props.achievement.percentComplete === 1}
+                    description={unlock}
+                  />
+                ))}
               </PopupContent>
             }
             showButton={false}
