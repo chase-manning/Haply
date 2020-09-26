@@ -25,7 +25,7 @@ const ExitEvent = styled.div`
 `;
 
 const Details = styled.div`
-  width: 70%;
+  width: 80%;
   background-color: var(--bg-mid);
   border-radius: 20px;
   display: flex;
