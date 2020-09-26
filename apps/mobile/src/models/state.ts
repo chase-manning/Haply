@@ -16,11 +16,8 @@ export enum Mode {
   Light,
 }
 
-export default class State {
-  activeTab: Tab = Tab.Profile;
-  moodShowing: boolean = false;
+export class Persist {
   user?: User;
-  loggingIn: boolean = false;
   moods: Mood[] = [];
   stats: StatModel[] = [];
   achievements: AchievementModel[] = [];
@@ -44,4 +41,11 @@ export default class State {
   get isSignedIn(): boolean {
     return !!this.user;
   }
+}
+
+export default class State {
+  activeTab: Tab = Tab.Profile;
+  moodShowing: boolean = false;
+  loggingIn: boolean = false;
+  persist: Persist = new Persist();
 }

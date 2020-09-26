@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
-import State, { Mode, Tab } from "../models/state";
+import State, { Mode, Tab, Persist } from "../models/state";
 import CreateMood from "./overlays/CreateMood";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -150,16 +150,16 @@ export default class App extends Component {
   async componentDidMount() {
     let ret: { value: any } = await Storage.get({ key: "state" });
     if (ret.value) {
-      let state: State = JSON.parse(ret.value);
-      this.setState({ ...state });
+      let state: Persist = JSON.parse(ret.value);
+      this.setState({ persist: { ...state } });
     }
 
     firebaseApp.auth().onAuthStateChanged((user) => {
-      this.setState({ user: user });
+      this.setState({ persist: { ...this.state.persist, user: user } });
       this.hardUpdate();
     });
 
-    if (!this.state.user) {
+    if (!this.state.persist.user) {
       firebase
         .auth()
         .signInAnonymously()
@@ -211,25 +211,30 @@ export default class App extends Component {
     return (
       <StyledApp data-testid="App">
         <GlobalStyle
-          colorPrimary={this.state.colorPrimary}
-          mode={this.state.mode}
+          colorPrimary={this.state.persist.colorPrimary}
+          mode={this.state.persist.mode}
         />
-        {!!this.state.user && (
+        {!!this.state.persist.user && (
           <ContentContainer>
             <Tabs
-              achivements={this.state.achievements}
-              stats={this.state.stats}
-              moods={this.state.moods}
-              user={this.state.user!}
+              achivements={this.state.persist.achievements}
+              stats={this.state.persist.stats}
+              moods={this.state.persist.moods}
+              user={this.state.persist.user!}
               activeTab={this.state.activeTab}
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
-              colorPrimary={this.state.colorPrimary}
+              colorPrimary={this.state.persist.colorPrimary}
               setColorPrimary={(colorPrimary: string) => {
-                this.setState({ colorPrimary: colorPrimary });
+                this.setState({
+                  persist: {
+                    ...this.state.persist,
+                    colorPrimary: colorPrimary,
+                  },
+                });
                 this.saveState();
               }}
-              mode={this.state.mode}
+              mode={this.state.persist.mode}
               toggleMode={() => this.toggleMode()}
             />
             <Header>{this.headerText}</Header>
@@ -243,7 +248,8 @@ export default class App extends Component {
           </ContentContainer>
         )}
         {this.state.loggingIn &&
-          (this.state.user?.isAnonymous || !this.state.user) && (
+          (this.state.persist.user?.isAnonymous ||
+            !this.state.persist.user) && (
             <OverlayContainer>
               <StyledFirebaseAuth
                 uiConfig={uiConfig}
@@ -254,9 +260,9 @@ export default class App extends Component {
         {this.state.moodShowing && (
           <CreateMood
             addMood={(mood: Mood) => this.addMood(mood)}
-            user={this.state.user!}
+            user={this.state.persist.user!}
             closeCapture={() => this.setState({ moodShowing: false })}
-            tabOptions={this.state.tabOptions}
+            tabOptions={this.state.persist.tabOptions}
           />
         )}
       </StyledApp>
@@ -278,17 +284,22 @@ export default class App extends Component {
   }
 
   async softUpdate(): Promise<void> {
-    const stats: StatModel[] = StatService.getStats(this.state.moods);
-    this.setState({ stats: stats });
+    const stats: StatModel[] = StatService.getStats(this.state.persist.moods);
+    this.setState({ persist: { ...this.state.persist, stats: stats } });
     const achievements: AchievementModel[] = AchievementService.getAchievements(
-      this.state.moods
+      this.state.persist.moods
     );
-    this.setState({ achievements: achievements });
+    this.setState({
+      persist: { ...this.state.persist, achievements: achievements },
+    });
     this.saveState();
   }
 
   async updateMoods(): Promise<void> {
-    const response: any = await MoodService.getMoods(this.state.user!, "date");
+    const response: any = await MoodService.getMoods(
+      this.state.persist.user!,
+      "date"
+    );
     const moodResponses: MoodResponse[] = await response.json();
 
     let moods: Mood[] = [];
@@ -305,32 +316,33 @@ export default class App extends Component {
       );
     });
 
-    this.setState({ moods: moods });
+    this.setState({ persist: { ...this.state.persist, moods: moods } });
   }
 
   removeMood(mood: Mood): void {
-    let moods: Mood[] = this.state.moods;
+    let moods: Mood[] = this.state.persist.moods;
     const index = moods.indexOf(mood);
     if (index > -1) {
       moods.splice(index, 1);
     }
-    this.setState({ moods: moods });
+    this.setState({ persist: { ...this.state.persist, moods: moods } });
     this.softUpdate();
   }
 
   addMood(mood: Mood): void {
-    let moods: Mood[] = this.state.moods;
+    let moods: Mood[] = this.state.persist.moods;
     moods.unshift(mood);
-    this.setState({ moods: moods });
+    this.setState({ persist: { ...this.state.persist, moods: moods } });
     this.softUpdate();
   }
 
   async saveState(): Promise<void> {
-    Storage.set({ key: "state", value: JSON.stringify(this.state) });
+    Storage.set({ key: "state", value: JSON.stringify(this.state.persist) });
   }
 
   toggleMode(): void {
-    if (this.state.mode === Mode.Dark) this.setState({ mode: Mode.Light });
-    else this.setState({ mode: Mode.Dark });
+    if (this.state.persist.mode === Mode.Dark)
+      this.setState({ persist: { ...this.state.persist, mode: Mode.Light } });
+    else this.setState({ persist: { ...this.state.persist, mode: Mode.Dark } });
   }
 }
