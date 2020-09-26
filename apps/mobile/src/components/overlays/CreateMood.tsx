@@ -160,6 +160,10 @@ const MoodSlider = withStyles({
   active: {},
   valueLabel: {
     left: "calc(-50% + 4px)",
+    "& *": {
+      background: "var(--primary)",
+      color: "var(--bg)",
+    },
   },
   track: {
     height: 8,
