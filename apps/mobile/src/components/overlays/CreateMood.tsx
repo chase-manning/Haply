@@ -188,7 +188,7 @@ type Props = {
   user: User;
   closeCapture: () => void;
   addMood: (mood: Mood) => void;
-  tabOptions: string[];
+  tagOptions: string[];
 };
 
 export default class CreateMood extends Component<Props> {
@@ -266,7 +266,7 @@ export default class CreateMood extends Component<Props> {
                   value={this.state.note}
                   placeholder="Write Note here..."
                   onChange={this.handleNoteChange}
-                ></NoteBox>
+                />
               </NoteContent>
             }
             showButton={true}
@@ -298,7 +298,7 @@ export default class CreateMood extends Component<Props> {
                   )}
                 </SelectedTags>
                 <TagOptions>
-                  {this.props.tabOptions
+                  {this.props.tagOptions
                     .filter(
                       (tag: string) => this.state.tags.indexOf(tag) === -1
                     )
