@@ -107,7 +107,8 @@ const Header = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 60px;
+  height: 80px;
+  padding-top: 20px;
   background-color: var(--bg-top);
   color: var(--main);
   display: flex;
@@ -122,7 +123,7 @@ const ContentContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 60px 0;
+  padding: 80px 0 60px 0;
   background-color: var(--bg);
 `;
 
