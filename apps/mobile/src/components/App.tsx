@@ -151,6 +151,7 @@ export default class App extends Component {
     await this.loadState();
 
     firebaseApp.auth().onAuthStateChanged(async (user) => {
+      if (!user) return;
       await this.setState({ persist: { ...this.state.persist, user: user } });
       this.hardUpdate();
     });
