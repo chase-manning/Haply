@@ -70,11 +70,11 @@ const StatService = {
       )
     );
 
-    stats.sort(function (a, b) {
+    stats.sort(function(a, b) {
       return b.percentComplete - a.percentComplete;
     });
 
-    stats.sort(function (a: any, b: any) {
+    stats.sort(function(a: any, b: any) {
       return b.locked + a.locked;
     });
 
@@ -99,13 +99,13 @@ const StatService = {
     }
 
     const dataPoints: DataPoint[] = periods
-      .filter((period: string) => this.dateAverage(moods, format, period) >= 0)
       .map((period: string) => {
         return {
           label: "",
           value: this.dateAverage(moods, format, period),
         };
       })
+      .filter((dataPoint: DataPoint) => dataPoint.value >= 0)
       .reverse();
 
     return {
@@ -127,13 +127,13 @@ const StatService = {
     truncateLabel: boolean
   ): StatModel {
     let dataPoints: DataPoint[] = periods
-      .filter((period: string) => this.dateAverage(moods, format, period) >= 0)
       .map((period: string) => {
         return {
           label: truncateLabel ? period.substring(0, 1) : period,
           value: this.dateAverage(moods, format, period),
         };
-      });
+      })
+      .filter((dataPoint: DataPoint) => dataPoint.value >= 0);
 
     return {
       title: "Average Feeling by " + periodName,
