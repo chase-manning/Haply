@@ -17,6 +17,7 @@ export const SelectedTag = styled.button`
   text-overflow: ellipsis;
   border: none;
   outline: none;
+  height: 24px;
 `;
 
 export const SelectedTags = styled.div`
