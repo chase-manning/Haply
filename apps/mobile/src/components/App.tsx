@@ -148,11 +148,7 @@ export default class App extends Component {
   }
 
   async componentDidMount() {
-    let ret: { value: any } = await Storage.get({ key: "state" });
-    if (ret.value) {
-      let state: Persist = JSON.parse(ret.value);
-      this.setState({ persist: { ...state } });
-    }
+    await this.loadState();
 
     firebaseApp.auth().onAuthStateChanged((user) => {
       this.setState({ persist: { ...this.state.persist, user: user } });
@@ -341,6 +337,14 @@ export default class App extends Component {
 
   async saveState(): Promise<void> {
     Storage.set({ key: "state", value: JSON.stringify(this.state.persist) });
+  }
+
+  async loadState(): Promise<void> {
+    let ret: { value: any } = await Storage.get({ key: "state" });
+    if (ret.value) {
+      let persist: Persist = JSON.parse(ret.value);
+      this.setState({ persist: { ...this.state.persist, ...persist } });
+    }
   }
 
   toggleMode(): void {
