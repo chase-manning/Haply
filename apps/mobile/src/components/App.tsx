@@ -159,13 +159,9 @@ export default class App extends Component {
       firebase
         .auth()
         .signInAnonymously()
-        .then((meow: any) => {
-          console.log("memqmqm");
-          console.log(meow);
-        })
         .catch(function(error) {
           var errorMessage = error.message;
-          alert(errorMessage);
+          console.log(errorMessage);
         });
     }
     PushNotifications.requestPermission().then((result) => {
