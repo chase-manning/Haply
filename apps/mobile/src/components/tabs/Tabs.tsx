@@ -30,6 +30,9 @@ type Props = {
   setColorPrimary: (colorPrimary: string) => void;
   mode: Mode;
   toggleMode: () => void;
+  tagOptions: string[];
+  removeTag: (tag: string) => void;
+  addTag: (tag: string) => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -70,6 +73,9 @@ export default class Tabs extends Component<Props> {
           setColorPrimary={this.props.setColorPrimary}
           mode={this.props.mode}
           toggleMode={() => this.props.toggleMode()}
+          tagOptions={this.props.tagOptions}
+          removeTag={this.props.removeTag}
+          addTag={this.props.addTag}
         />
       );
     else throw NOTFOUND;

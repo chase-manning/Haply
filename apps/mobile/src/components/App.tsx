@@ -167,7 +167,7 @@ export default class App extends Component {
           console.log("memqmqm");
           console.log(meow);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           var errorMessage = error.message;
           alert(errorMessage);
         });
@@ -236,6 +236,9 @@ export default class App extends Component {
               }}
               mode={this.state.persist.mode}
               toggleMode={() => this.toggleMode()}
+              tagOptions={this.state.persist.tagOptions}
+              removeTag={(tag: string) => this.removeTag(tag)}
+              addTag={(tag: string) => this.addTag(tag)}
             />
             <Header>{this.headerText}</Header>
             <NavBar
@@ -262,7 +265,7 @@ export default class App extends Component {
             addMood={(mood: Mood) => this.addMood(mood)}
             user={this.state.persist.user!}
             closeCapture={() => this.setState({ moodShowing: false })}
-            tabOptions={this.state.persist.tabOptions}
+            tagOptions={this.state.persist.tagOptions}
           />
         )}
       </StyledApp>
@@ -344,5 +347,22 @@ export default class App extends Component {
     if (this.state.persist.mode === Mode.Dark)
       this.setState({ persist: { ...this.state.persist, mode: Mode.Light } });
     else this.setState({ persist: { ...this.state.persist, mode: Mode.Dark } });
+  }
+
+  removeTag(tag: string) {
+    let tags: string[] = this.state.persist.tagOptions;
+    const index = tags.indexOf(tag);
+    if (index > -1) {
+      tags.splice(index, 1);
+    }
+    this.setState({ persist: { ...this.state.persist, tagOptions: tags } });
+    this.saveState();
+  }
+
+  addTag(tag: string) {
+    let tags: string[] = this.state.persist.tagOptions;
+    tags.push(tag);
+    this.setState({ persist: { ...this.state.persist, tagOptions: tags } });
+    this.saveState();
   }
 }

@@ -6,6 +6,9 @@ import { User } from "firebase";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
 import { Mode } from "../../models/state";
+import { SelectedTags, SelectedTag } from "../../styles/Shared";
+import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@material-ui/icons/Add";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -74,8 +77,54 @@ const Color = styled.div`
   background-color: ${(props: ColorProps) => props.color};
 `;
 
+const TagIcon = styled.div`
+  font-size: 14px;
+  margin-left: 2px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AddTag = styled.div`
+  height: 24px;
+  border-radius: 12px;
+  background-color: var(--sub-light);
+  color: var(--sub);
+  display: inline-block;
+  font-size: 14px;
+`;
+
+const AddTagContent = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+`;
+
+const AddTagText = styled.div`
+  font-size: 12px;
+  float: left;
+`;
+
+const TagInput = styled.input`
+  width: 100%;
+  border: solid 1px var(--border);
+  padding: 20px;
+  border-radius: 10px;
+  outline: none;
+  background-color: var(--bg-top);
+  color: var(--main);
+`;
+
 class State {
   themePopupOpen: boolean = false;
+  tagsPopupOpen: boolean = false;
+  newTag: string = "";
+  newTagPopupOpen: boolean = false;
 }
 
 type Props = {
@@ -86,6 +135,9 @@ type Props = {
   setColorPrimary: (colorPrimary: string) => void;
   mode: Mode;
   toggleMode: () => void;
+  tagOptions: string[];
+  removeTag: (tag: string) => void;
+  addTag: (tag: string) => void;
 };
 
 export default class Settings extends Component<Props> {
@@ -94,6 +146,13 @@ export default class Settings extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.state = new State();
+    this.handleTagChange = this.handleTagChange.bind(this);
+  }
+
+  handleTagChange(event: any): void {
+    this.setState({
+      newTag: event.target.value,
+    });
   }
 
   render() {
@@ -126,6 +185,10 @@ export default class Settings extends Component<Props> {
             <ChevronRight />
           </Line>
         )}
+        <Line onClick={() => this.setState({ tagsPopupOpen: true })}>
+          <Label>Tags</Label>
+          <ChevronRight />
+        </Line>
         <Header>Contact</Header>
         <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
           <Label>Suggest a Feature</Label>
@@ -192,7 +255,58 @@ export default class Settings extends Component<Props> {
             }
             showButton={true}
             closePopup={() => this.setState({ themePopupOpen: false })}
-          ></Popup>
+          />
+        )}
+        {this.state.tagsPopupOpen && (
+          <Popup
+            content={
+              <PopupContent>
+                <SelectedTags>
+                  {this.props.tagOptions.map((tagOption: string) => (
+                    <SelectedTag
+                      onClick={() => this.props.removeTag(tagOption)}
+                      includeMargin={true}
+                    >
+                      {tagOption}
+                      <TagIcon>
+                        <CloseIcon fontSize={"inherit"} />
+                      </TagIcon>
+                    </SelectedTag>
+                  ))}
+                  <AddTag>
+                    <AddTagContent
+                      onClick={() => this.setState({ newTagPopupOpen: true })}
+                    >
+                      <AddTagText>Add</AddTagText>
+                      <TagIcon>
+                        <AddIcon fontSize={"inherit"} />
+                      </TagIcon>
+                    </AddTagContent>
+                    {this.state.newTagPopupOpen && (
+                      <Popup
+                        content={
+                          <PopupContent>
+                            <TagInput
+                              value={this.state.newTag}
+                              placeholder="New Tag..."
+                              onChange={this.handleTagChange}
+                            />
+                          </PopupContent>
+                        }
+                        closePopup={() => {
+                          this.props.addTag(this.state.newTag);
+                          this.setState({ newTagPopupOpen: false, newTag: "" });
+                        }}
+                        showButton={true}
+                      />
+                    )}
+                  </AddTag>
+                </SelectedTags>
+              </PopupContent>
+            }
+            showButton={true}
+            closePopup={() => this.setState({ tagsPopupOpen: false })}
+          />
         )}
       </StyledSettings>
     );
