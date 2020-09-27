@@ -21,7 +21,7 @@ export class Persist {
   moods: Mood[] = [];
   stats: StatModel[] = [];
   achievements: AchievementModel[] = [];
-  tabOptions: string[] = [
+  tagOptions: string[] = [
     "With Friends",
     "With Family",
     "Tired",
