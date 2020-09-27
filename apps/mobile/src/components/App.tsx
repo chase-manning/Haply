@@ -150,8 +150,8 @@ export default class App extends Component {
   async componentDidMount() {
     await this.loadState();
 
-    firebaseApp.auth().onAuthStateChanged((user) => {
-      this.setState({ persist: { ...this.state.persist, user: user } });
+    firebaseApp.auth().onAuthStateChanged(async (user) => {
+      await this.setState({ persist: { ...this.state.persist, user: user } });
       this.hardUpdate();
     });
 
@@ -221,8 +221,8 @@ export default class App extends Component {
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
               colorPrimary={this.state.persist.colorPrimary}
-              setColorPrimary={(colorPrimary: string) => {
-                this.setState({
+              setColorPrimary={async (colorPrimary: string) => {
+                await this.setState({
                   persist: {
                     ...this.state.persist,
                     colorPrimary: colorPrimary,
@@ -284,14 +284,14 @@ export default class App extends Component {
 
   async softUpdate(): Promise<void> {
     const stats: StatModel[] = StatService.getStats(this.state.persist.moods);
-    this.setState({ persist: { ...this.state.persist, stats: stats } });
+    await this.setState({ persist: { ...this.state.persist, stats: stats } });
     const achievements: AchievementModel[] = AchievementService.getAchievements(
       this.state.persist.moods
     );
-    this.setState({
+    await this.setState({
       persist: { ...this.state.persist, achievements: achievements },
     });
-    this.saveState();
+    await this.saveState();
   }
 
   async updateMoods(): Promise<void> {
@@ -315,23 +315,23 @@ export default class App extends Component {
       );
     });
 
-    this.setState({ persist: { ...this.state.persist, moods: moods } });
+    await this.setState({ persist: { ...this.state.persist, moods: moods } });
   }
 
-  removeMood(mood: Mood): void {
+  async removeMood(mood: Mood): Promise<void> {
     let moods: Mood[] = this.state.persist.moods;
     const index = moods.indexOf(mood);
     if (index > -1) {
       moods.splice(index, 1);
     }
-    this.setState({ persist: { ...this.state.persist, moods: moods } });
+    await this.setState({ persist: { ...this.state.persist, moods: moods } });
     this.softUpdate();
   }
 
-  addMood(mood: Mood): void {
+  async addMood(mood: Mood): Promise<void> {
     let moods: Mood[] = this.state.persist.moods;
     moods.unshift(mood);
-    this.setState({ persist: { ...this.state.persist, moods: moods } });
+    await this.setState({ persist: { ...this.state.persist, moods: moods } });
     this.softUpdate();
   }
 
@@ -343,7 +343,7 @@ export default class App extends Component {
     let ret: { value: any } = await Storage.get({ key: "state" });
     if (ret.value) {
       let persist: Persist = JSON.parse(ret.value);
-      this.setState({ persist: { ...this.state.persist, ...persist } });
+      await this.setState({ persist: { ...this.state.persist, ...persist } });
     }
   }
 
@@ -353,20 +353,24 @@ export default class App extends Component {
     else this.setState({ persist: { ...this.state.persist, mode: Mode.Dark } });
   }
 
-  removeTag(tag: string) {
+  async removeTag(tag: string) {
     let tags: string[] = this.state.persist.tagOptions;
     const index = tags.indexOf(tag);
     if (index > -1) {
       tags.splice(index, 1);
     }
-    this.setState({ persist: { ...this.state.persist, tagOptions: tags } });
+    await this.setState({
+      persist: { ...this.state.persist, tagOptions: tags },
+    });
     this.saveState();
   }
 
-  addTag(tag: string) {
+  async addTag(tag: string) {
     let tags: string[] = this.state.persist.tagOptions;
     tags.push(tag);
-    this.setState({ persist: { ...this.state.persist, tagOptions: tags } });
+    await this.setState({
+      persist: { ...this.state.persist, tagOptions: tags },
+    });
     this.saveState();
   }
 }
