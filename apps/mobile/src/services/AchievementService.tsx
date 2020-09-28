@@ -9,6 +9,7 @@ import nightOwl from "../assets/svgs/undraw_working_late_pukg.svg";
 import feelingAmazing from "../assets/svgs/undraw_super_thank_you_obwk.svg";
 import merryChristmas from "../assets/svgs/undraw_christmas_tree_56sw.svg";
 import happyHalloween from "../assets/svgs/undraw_witch_7uk7.svg";
+import lookingStylish from "../assets/svgs/undraw_making_art_759c.svg";
 import slowDay from "../assets/svgs/undraw_book_reading_kx9s.svg";
 import activeDay from "../assets/svgs/undraw_hiking_d24r.svg";
 import meatyDay from "../assets/svgs/undraw_Hamburger_8ge6.svg";
@@ -20,7 +21,7 @@ import aRoutine from "../assets/svgs/undraw_my_universe_lxnl.svg";
 import aLifestyle from "../assets/svgs/undraw_snap_the_moment_oyn6.svg";
 
 const AchievementService = {
-  getAchievements(moods: Mood[]): AchievementModel[] {
+  getAchievements(moods: Mood[], colorPrimary: string): AchievementModel[] {
     // TODO Change this to only run once
     let achievements: AchievementModel[] = [];
 
@@ -118,6 +119,17 @@ const AchievementService = {
         "Happy Halloween",
         "Record a Feeling on Halloween",
         "#7CFC00"
+      )
+    );
+
+    // Looking Stylish
+    achievements.push(
+      new AchievementModel(
+        lookingStylish,
+        colorPrimary === "#4071fe" ? 0 : 1,
+        "Looking Stylish",
+        "Change the Theme to a new color",
+        "#8A2BE2"
       )
     );
 
@@ -245,7 +257,6 @@ const AchievementService = {
       )
     );
 
-    // #8A2BE2
     // #FFFAFA
     // #FA8072
     // #F0FFF0
