@@ -21,6 +21,7 @@ import {
 } from "@capacitor/core";
 import { createGlobalStyle } from "styled-components";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
+import PushNotificationService from "../services/PushNotificationService";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -154,6 +155,7 @@ export default class App extends Component {
     firebaseApp.auth().onAuthStateChanged(async (user) => {
       if (!user) return;
       await this.setState({ persist: { ...this.state.persist, user: user } });
+      await this.updatePushNotificationToken();
       this.hardUpdate();
     });
 
@@ -169,6 +171,7 @@ export default class App extends Component {
     PushNotifications.requestPermission().then((result) => {
       if (result.granted) {
         PushNotifications.register();
+        // alert(result);
       } else {
         console.log("Push Notification Permission Failed");
         // alert("Error");
@@ -177,8 +180,15 @@ export default class App extends Component {
 
     PushNotifications.addListener(
       "registration",
-      (token: PushNotificationToken) => {
+      async (token: PushNotificationToken) => {
         // alert("Push registration success, token: " + token.value);
+        await this.setState({
+          persist: {
+            ...this.state.persist,
+            pushNotificationToken: token.value,
+          },
+        });
+        await this.updatePushNotificationToken();
       }
     );
 
@@ -196,7 +206,7 @@ export default class App extends Component {
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification: PushNotificationActionPerformed) => {
-        // alert("Push action performed: " + JSON.stringify(notification));
+        //alert("Push action performed: " + JSON.stringify(notification));
       }
     );
   }
@@ -370,5 +380,15 @@ export default class App extends Component {
       persist: { ...this.state.persist, tagOptions: tags },
     });
     this.saveState();
+  }
+
+  async updatePushNotificationToken() {
+    if (this.state.persist.user && this.state.persist.pushNotificationToken) {
+      let response: any = await PushNotificationService.updateToken(
+        this.state.persist.user!,
+        this.state.persist.pushNotificationToken!
+      );
+      if (!response.ok) console.log("Error Creating Push Notification");
+    }
   }
 }
