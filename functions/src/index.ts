@@ -219,3 +219,45 @@ app.delete("/moods/:id", async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+app.post("/pushNotificationTokens/:token", async (request, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const token: string = request.params.token;
+    if (!token) response.status(400).send("Token Not Provided");
+
+    let pushNotificationToken: any = await db
+      .collection("pushNotificationTokens")
+      .where("token", "==", token)
+      .limit(1)
+      .get();
+
+    const data = {
+      token: token,
+      userId: userId,
+    };
+
+    if (pushNotificationToken.empty) {
+      const pushNotificationTokenRef: any = await db
+        .collection("pushNotificationTokens")
+        .add(data);
+      pushNotificationToken = await pushNotificationTokenRef.get();
+    } else {
+      await db
+        .collection("moods")
+        .doc(pushNotificationToken[0].id)
+        .set(data, { merge: true });
+      pushNotificationToken = await db
+        .collection("pushNotificationTokens")
+        .where("token", "==", token)
+        .limit(1)
+        .get();
+    }
+
+    response.json(pushNotificationToken);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
