@@ -37,6 +37,7 @@ export class Persist {
   ];
   colorPrimary: string = "#4071FE";
   mode: Mode = Mode.Default;
+  pushNotificationToken?: string;
 
   get isSignedIn(): boolean {
     return !!this.user;
