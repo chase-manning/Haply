@@ -261,3 +261,40 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
     response.status(500).send(error);
   }
 });
+
+export const notificationScheduler = functions.pubsub
+  .schedule("every 1 day")
+  .onRun(async () => {
+    // const tokens: any = await db.collection("pushNotificationTokens").get();
+    // tokens.forEach(async (token: any) => {
+    //   const latestMood: any = await db
+    //     .collection("moods")
+    //     .orderBy("date", "desc")
+    //     .limit(1)
+    //     .get();
+
+    //   if (!latestMood.empty) {
+    //     const mood: any = latestMood[0].data();
+    //     const date: number = Date.parse(mood.date);
+    //     const now: number = Date.now();
+    //     const yesterday: number = now - 23 * 60 * 60 * 1000;
+    //     if (date <= yesterday) {
+    //     }
+    //   }
+    // });
+
+    const payload = {
+      notification: {
+        title: "Test Title",
+        body: "Test Body",
+      },
+    };
+
+    await admin
+      .messaging()
+      .sendToDevice(
+        "fHEl0KDjQXS--KGX8oANjy:APA91bFRRFlDFXudB7pyIdJYrazpgx15PTgTPq5krY7H0i55l_zNJ0T_ZyBANSWu6mA4G2AbiGyu0MRzsTGAI0DQUWxbyYNmOPTEIm9JYNTEcZTMV11sSCgNBu33go1OhSHAJjPHpd_E",
+        payload
+      );
+    return null;
+  });
