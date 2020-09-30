@@ -282,11 +282,27 @@ export const notificationScheduler = functions.pubsub
     //     }
     //   }
     // });
+    const titles: string[] = [
+      "How Are You Feeling?",
+      "How is Your Day?",
+      "Hope You Are Having an Awesome Day!",
+      "Time to Record Your Mood!",
+      "Are You Feeling Great?",
+      "Hope You're Doing Well?",
+      "Don't Sweat The Small Stuff!",
+      "You Are a Superhero!",
+      "You Are Enough!",
+      "You Are Whole!",
+      "You Can Create Great Change!",
+      "You Can do Anything!",
+      "You Deserve The Best!",
+    ];
 
     const payload = {
       notification: {
-        title: "Test Title",
-        body: "Test Body",
+        title: titles[Math.round(Math.random() * titles.length)],
+        body:
+          "Reminder to record how you are feeling in Haply and what is happening in your day",
       },
     };
 
