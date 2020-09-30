@@ -263,7 +263,7 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
 });
 
 export const notificationScheduler = functions.pubsub
-  .schedule("every 24 hours")
+  .schedule("every 6 hours")
   .onRun(async () => {
     // const tokens: any = await db.collection("pushNotificationTokens").get();
     // tokens.forEach(async (token: any) => {
