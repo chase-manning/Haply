@@ -16,6 +16,15 @@ export enum Mode {
   Light,
 }
 
+export class SettingsModel {
+  remindersEnabled: boolean = true;
+  randomiseFrequency: boolean = false;
+  frequencySecondsMin: number = 3 * 60 * 60;
+  frequencySecondsMax: number = 3 * 60 * 60;
+  sleepStart: number = 22;
+  sleepEnd: number = 7;
+}
+
 export class Persist {
   user?: User;
   moods: Mood[] = [];
@@ -38,6 +47,7 @@ export class Persist {
   colorPrimary: string = "#4071FE";
   mode: Mode = Mode.Default;
   pushNotificationToken?: string;
+  settings: SettingsModel = new SettingsModel();
 
   get isSignedIn(): boolean {
     return !!this.user;
