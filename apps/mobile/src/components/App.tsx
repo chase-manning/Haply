@@ -163,7 +163,7 @@ export default class App extends Component {
       firebase
         .auth()
         .signInAnonymously()
-        .catch(function(error) {
+        .catch(function (error) {
           var errorMessage = error.message;
           console.log(errorMessage);
         });
@@ -236,7 +236,8 @@ export default class App extends Component {
                     colorPrimary: colorPrimary,
                   },
                 });
-                this.saveState();
+                await this.saveState();
+                await this.refreshAchievements();
               }}
               mode={this.state.persist.mode}
               toggleMode={() => this.toggleMode()}
@@ -293,10 +294,20 @@ export default class App extends Component {
   }
 
   async softUpdate(): Promise<void> {
+    await this.refreshStats();
+    await this.refreshAchievements();
+  }
+
+  async refreshStats(): Promise<void> {
     const stats: StatModel[] = StatService.getStats(this.state.persist.moods);
     await this.setState({ persist: { ...this.state.persist, stats: stats } });
+    await this.saveState();
+  }
+
+  async refreshAchievements(): Promise<void> {
     const achievements: AchievementModel[] = AchievementService.getAchievements(
-      this.state.persist.moods
+      this.state.persist.moods,
+      this.state.persist.colorPrimary
     );
     await this.setState({
       persist: { ...this.state.persist, achievements: achievements },

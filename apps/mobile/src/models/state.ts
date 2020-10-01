@@ -44,7 +44,7 @@ export class Persist {
     "Eating Poorly",
     "Exercising",
   ];
-  colorPrimary: string = "#4071FE";
+  colorPrimary: string = "#4071fe";
   mode: Mode = Mode.Default;
   pushNotificationToken?: string;
   settings: SettingsModel = new SettingsModel();
