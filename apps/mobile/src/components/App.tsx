@@ -243,6 +243,8 @@ export default class App extends Component {
               tagOptions={this.state.persist.tagOptions}
               removeTag={(tag: string) => this.removeTag(tag)}
               addTag={(tag: string) => this.addTag(tag)}
+              settings={this.state.persist.settings}
+              toggleRemindersEnabled={() => this.toggleRemindersEnabled()}
             />
             <Header>{this.headerText}</Header>
             <NavBar
@@ -390,5 +392,18 @@ export default class App extends Component {
       );
       if (!response.ok) console.log("Error Creating Push Notification");
     }
+  }
+
+  toggleRemindersEnabled(): void {
+    console.log(this.state);
+    this.setState({
+      persist: {
+        ...this.state.persist,
+        settings: {
+          ...this.state.persist.settings,
+          remindersEnabled: !this.state.persist.settings.remindersEnabled,
+        },
+      },
+    });
   }
 }

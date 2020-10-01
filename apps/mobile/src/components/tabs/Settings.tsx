@@ -5,7 +5,7 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import { User } from "firebase";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
-import { Mode } from "../../models/state";
+import { Mode, SettingsModel } from "../../models/state";
 import { SelectedTags, SelectedTag } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
@@ -138,6 +138,8 @@ type Props = {
   tagOptions: string[];
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
+  settings: SettingsModel;
+  toggleRemindersEnabled: () => void;
 };
 
 export default class Settings extends Component<Props> {
@@ -162,6 +164,14 @@ export default class Settings extends Component<Props> {
         <Line onClick={() => this.props.login()}>
           <Label>Cloud Sync</Label>
           <Value>{this.props.user.isAnonymous ? "Disabled" : "Enabled"}</Value>
+          <ChevronRight />
+        </Line>
+        <Header>Reminders</Header>
+        <Line onClick={() => this.props.toggleRemindersEnabled()}>
+          <Label>Reminders</Label>
+          <Value>
+            {this.props.settings.remindersEnabled ? "Enabled" : "Disabled"}
+          </Value>
           <ChevronRight />
         </Line>
         <Header>Settings</Header>

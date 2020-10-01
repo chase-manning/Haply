@@ -5,7 +5,7 @@ import Achievements from "./Achievements";
 import Entries from "./Entries";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
-import { Mode, Tab } from "../../models/state";
+import { Mode, Tab, SettingsModel } from "../../models/state";
 import { NOTFOUND } from "dns";
 import { User } from "firebase";
 import Mood from "../../models/mood";
@@ -33,6 +33,8 @@ type Props = {
   tagOptions: string[];
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
+  settings: SettingsModel;
+  toggleRemindersEnabled: () => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -76,6 +78,8 @@ export default class Tabs extends Component<Props> {
           tagOptions={this.props.tagOptions}
           removeTag={this.props.removeTag}
           addTag={this.props.addTag}
+          settings={this.props.settings}
+          toggleRemindersEnabled={this.props.toggleRemindersEnabled}
         />
       );
     else throw NOTFOUND;
