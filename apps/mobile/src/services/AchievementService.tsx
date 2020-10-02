@@ -10,6 +10,7 @@ import feelingAmazing from "../assets/svgs/undraw_super_thank_you_obwk.svg";
 import merryChristmas from "../assets/svgs/undraw_christmas_tree_56sw.svg";
 import happyHalloween from "../assets/svgs/undraw_witch_7uk7.svg";
 import lookingStylish from "../assets/svgs/undraw_making_art_759c.svg";
+import fullMoon from "../assets/svgs/undraw_moonlight_5ksn.svg";
 import slowDay from "../assets/svgs/undraw_book_reading_kx9s.svg";
 import activeDay from "../assets/svgs/undraw_hiking_d24r.svg";
 import meatyDay from "../assets/svgs/undraw_Hamburger_8ge6.svg";
@@ -19,9 +20,14 @@ import forBreakfast from "../assets/svgs/undraw_breakfast_psiw.svg";
 import aHabbit from "../assets/svgs/undraw_icon_design_qvdf.svg";
 import aRoutine from "../assets/svgs/undraw_my_universe_lxnl.svg";
 import aLifestyle from "../assets/svgs/undraw_snap_the_moment_oyn6.svg";
+import { Mode } from "../models/state";
 
 const AchievementService = {
-  getAchievements(moods: Mood[], colorPrimary: string): AchievementModel[] {
+  getAchievements(
+    moods: Mood[],
+    colorPrimary: string,
+    mode: Mode
+  ): AchievementModel[] {
     // TODO Change this to only run once
     let achievements: AchievementModel[] = [];
 
@@ -130,6 +136,17 @@ const AchievementService = {
         "Looking Stylish",
         "Change the Theme to a new color",
         "#8A2BE2"
+      )
+    );
+
+    // Full Moon
+    achievements.push(
+      new AchievementModel(
+        fullMoon,
+        mode === Mode.Default ? 0 : 1,
+        "Full Moon",
+        "Try out Dark Mode",
+        "#FFFAFA"
       )
     );
 
@@ -257,7 +274,6 @@ const AchievementService = {
       )
     );
 
-    // #FFFAFA
     // #FA8072
     // #F0FFF0
     // #8B008B

@@ -240,7 +240,7 @@ export default class App extends Component {
                 await this.refreshAchievements();
               }}
               mode={this.state.persist.mode}
-              toggleMode={() => this.toggleMode()}
+              toggleMode={async () => await this.toggleMode()}
               tagOptions={this.state.persist.tagOptions}
               removeTag={(tag: string) => this.removeTag(tag)}
               addTag={(tag: string) => this.addTag(tag)}
@@ -307,7 +307,8 @@ export default class App extends Component {
   async refreshAchievements(): Promise<void> {
     const achievements: AchievementModel[] = AchievementService.getAchievements(
       this.state.persist.moods,
-      this.state.persist.colorPrimary
+      this.state.persist.colorPrimary,
+      this.state.persist.mode
     );
     await this.setState({
       persist: { ...this.state.persist, achievements: achievements },
@@ -368,10 +369,17 @@ export default class App extends Component {
     }
   }
 
-  toggleMode(): void {
+  async toggleMode(): Promise<void> {
     if (this.state.persist.mode === Mode.Dark)
-      this.setState({ persist: { ...this.state.persist, mode: Mode.Light } });
-    else this.setState({ persist: { ...this.state.persist, mode: Mode.Dark } });
+      await this.setState({
+        persist: { ...this.state.persist, mode: Mode.Light },
+      });
+    else
+      await this.setState({
+        persist: { ...this.state.persist, mode: Mode.Dark },
+      });
+    await this.saveState();
+    await this.refreshAchievements();
   }
 
   async removeTag(tag: string) {
