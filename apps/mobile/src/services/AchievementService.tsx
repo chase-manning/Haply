@@ -11,6 +11,7 @@ import merryChristmas from "../assets/svgs/undraw_christmas_tree_56sw.svg";
 import happyHalloween from "../assets/svgs/undraw_witch_7uk7.svg";
 import lookingStylish from "../assets/svgs/undraw_making_art_759c.svg";
 import fullMoon from "../assets/svgs/undraw_moonlight_5ksn.svg";
+import masterTagger from "../assets/svgs/undraw_typewriter_i8xd.svg";
 import slowDay from "../assets/svgs/undraw_book_reading_kx9s.svg";
 import activeDay from "../assets/svgs/undraw_hiking_d24r.svg";
 import meatyDay from "../assets/svgs/undraw_Hamburger_8ge6.svg";
@@ -125,6 +126,20 @@ const AchievementService = {
         "Happy Halloween",
         "Record a Feeling on Halloween",
         "#7CFC00"
+      )
+    );
+
+    // Master Tagger
+    achievements.push(
+      new AchievementModel(
+        masterTagger,
+        Math.min(
+          moods.filter((mood: Mood) => mood.tags.length > 0).length / 100,
+          1
+        ),
+        "Master Tagger",
+        "Record 100 Feelings with a Tag",
+        "#FA8072"
       )
     );
 
@@ -274,7 +289,6 @@ const AchievementService = {
       )
     );
 
-    // #FA8072
     // #F0FFF0
     // #8B008B
     // #F5FFFA
