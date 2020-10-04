@@ -18,7 +18,7 @@ export enum Mode {
 
 export class SettingsModel {
   remindersEnabled: boolean = true;
-  randomiseFrequency: boolean = false;
+  randomReminders: boolean = false;
   frequencySecondsMin: number = 3 * 60 * 60;
   frequencySecondsMax: number = 3 * 60 * 60;
   sleepStart: number = 22;

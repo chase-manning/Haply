@@ -35,6 +35,7 @@ type Props = {
   addTag: (tag: string) => void;
   settings: SettingsModel;
   toggleRemindersEnabled: () => void;
+  toggleRandomReminders: () => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -80,6 +81,7 @@ export default class Tabs extends Component<Props> {
           addTag={this.props.addTag}
           settings={this.props.settings}
           toggleRemindersEnabled={this.props.toggleRemindersEnabled}
+          toggleRandomReminders={this.props.toggleRandomReminders}
         />
       );
     else throw NOTFOUND;

@@ -246,6 +246,7 @@ export default class App extends Component {
               addTag={(tag: string) => this.addTag(tag)}
               settings={this.state.persist.settings}
               toggleRemindersEnabled={() => this.toggleRemindersEnabled()}
+              toggleRandomReminders={() => this.toggleRandomReminders()}
             />
             <Header>{this.headerText}</Header>
             <NavBar
@@ -414,13 +415,24 @@ export default class App extends Component {
   }
 
   toggleRemindersEnabled(): void {
-    console.log(this.state);
     this.setState({
       persist: {
         ...this.state.persist,
         settings: {
           ...this.state.persist.settings,
           remindersEnabled: !this.state.persist.settings.remindersEnabled,
+        },
+      },
+    });
+  }
+
+  toggleRandomReminders(): void {
+    this.setState({
+      persist: {
+        ...this.state.persist,
+        settings: {
+          ...this.state.persist.settings,
+          randomReminders: !this.state.persist.settings.randomReminders,
         },
       },
     });

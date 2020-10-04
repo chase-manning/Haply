@@ -140,6 +140,7 @@ type Props = {
   addTag: (tag: string) => void;
   settings: SettingsModel;
   toggleRemindersEnabled: () => void;
+  toggleRandomReminders: () => void;
 };
 
 export default class Settings extends Component<Props> {
@@ -171,6 +172,13 @@ export default class Settings extends Component<Props> {
           <Label>Reminders</Label>
           <Value>
             {this.props.settings.remindersEnabled ? "Enabled" : "Disabled"}
+          </Value>
+          <ChevronRight />
+        </Line>
+        <Line onClick={() => this.props.toggleRandomReminders()}>
+          <Label>Random Range</Label>
+          <Value>
+            {this.props.settings.randomReminders ? "Enabled" : "Disabled"}
           </Value>
           <ChevronRight />
         </Line>
