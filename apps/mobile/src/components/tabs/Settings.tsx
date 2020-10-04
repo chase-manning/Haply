@@ -55,6 +55,40 @@ const PopupContent = styled.div`
   flex-direction: column;
 `;
 
+const PopupHeader = styled.div`
+  color: var(--sub);
+  font-size: 14px;
+  margin-bottom: 10px;
+`;
+
+const FrequencyItem = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FrequencyInput = styled.input`
+  width: 40%;
+  border: solid 1px var(--border);
+  padding: 20px;
+  border-radius: 10px;
+  outline: none;
+  background-color: var(--bg-top);
+  color: var(--main);
+`;
+const FrequencySelect = styled.select`
+  width: 50%;
+  border: solid 1px var(--border);
+  padding: 20px;
+  border-radius: 10px;
+  outline: none;
+  background-color: var(--bg-top);
+  color: var(--main);
+`;
+
+const FrequencyOption = styled.option``;
+
 const ColorOptions = styled.div`
   width: 100%;
   display: grid;
@@ -138,6 +172,7 @@ class State {
   tagsPopupOpen: boolean = false;
   newTag: string = "";
   newTagPopupOpen: boolean = false;
+  reminderFrequencyPopupOpen: boolean = false;
 }
 
 type Props = {
@@ -212,7 +247,9 @@ export default class Settings extends Component<Props> {
             </Toggle>
           </Value>
         </Line>
-        <Line onClick={() => this.props.toggleRandomReminders()}>
+        <Line
+          onClick={() => this.setState({ reminderFrequencyPopupOpen: true })}
+        >
           <Label>Reminder Frequency</Label>
           <Value></Value>
           <ChevronRight />
@@ -278,6 +315,31 @@ export default class Settings extends Component<Props> {
           <Label>License</Label>
           <ChevronRight />
         </Line>
+        {this.state.reminderFrequencyPopupOpen && (
+          <Popup
+            content={
+              <PopupContent>
+                <PopupHeader>
+                  {this.props.settings.randomReminders
+                    ? "At Minumum Remind me Every:"
+                    : "Remind me Every:"}
+                </PopupHeader>
+                <FrequencyItem>
+                  <FrequencyInput />
+                  <FrequencySelect>
+                    <FrequencyOption>Minutes</FrequencyOption>
+                    <FrequencyOption>Hours</FrequencyOption>
+                    <FrequencyOption>Days</FrequencyOption>
+                  </FrequencySelect>
+                </FrequencyItem>
+              </PopupContent>
+            }
+            showButton={true}
+            closePopup={() =>
+              this.setState({ reminderFrequencyPopupOpen: false })
+            }
+          />
+        )}
 
         {this.state.themePopupOpen && (
           <Popup
