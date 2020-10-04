@@ -9,6 +9,8 @@ import { Mode, SettingsModel } from "../../models/state";
 import { SelectedTags, SelectedTag } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
+import ToggleOnIcon from "@material-ui/icons/ToggleOn";
+import ToggleOffIcon from "@material-ui/icons/ToggleOff";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -28,12 +30,23 @@ const Header = styled.div`
 
 const Label = styled.div`
   color: var(--sub);
-  width: 50%;
+  width: 70%;
 `;
 
 const Value = styled.div`
   color: var(--main);
-  width: 50%;
+  width: 30%;
+`;
+
+type ToggleProps = {
+  on: boolean;
+};
+
+const Toggle = styled.div`
+  color: ${(props: ToggleProps) =>
+    props.on ? "var(--primary)" : "var(--sub)"};
+  display: flex;
+  align-items: center;
 `;
 
 const PopupContent = styled.div`
@@ -164,30 +177,49 @@ export default class Settings extends Component<Props> {
         <Header>Profile</Header>
         <Line onClick={() => this.props.login()}>
           <Label>Cloud Sync</Label>
-          <Value>{this.props.user.isAnonymous ? "Disabled" : "Enabled"}</Value>
-          <ChevronRight />
+          <Value>
+            <Toggle on={!this.props.user.isAnonymous}>
+              {!this.props.user.isAnonymous ? (
+                <ToggleOnIcon fontSize={"large"} />
+              ) : (
+                <ToggleOffIcon fontSize={"large"} />
+              )}
+            </Toggle>
+          </Value>
         </Line>
         <Header>Reminders</Header>
         <Line onClick={() => this.props.toggleRemindersEnabled()}>
           <Label>Reminders</Label>
           <Value>
-            {this.props.settings.remindersEnabled ? "Enabled" : "Disabled"}
+            <Toggle on={this.props.settings.remindersEnabled}>
+              {this.props.settings.remindersEnabled ? (
+                <ToggleOnIcon fontSize={"large"} />
+              ) : (
+                <ToggleOffIcon fontSize={"large"} />
+              )}
+            </Toggle>
           </Value>
-          <ChevronRight />
         </Line>
         <Line onClick={() => this.props.toggleRandomReminders()}>
           <Label>Random Range</Label>
           <Value>
-            {this.props.settings.randomReminders ? "Enabled" : "Disabled"}
+            <Toggle on={this.props.settings.randomReminders}>
+              {this.props.settings.randomReminders ? (
+                <ToggleOnIcon fontSize={"large"} />
+              ) : (
+                <ToggleOffIcon fontSize={"large"} />
+              )}
+            </Toggle>
           </Value>
+        </Line>
+        <Line onClick={() => this.props.toggleRandomReminders()}>
+          <Label>Reminder Frequency</Label>
+          <Value></Value>
           <ChevronRight />
         </Line>
         <Header>Settings</Header>
         <Line onClick={() => this.setState({ themePopupOpen: true })}>
           <Label>Theme</Label>
-          <Value>
-            <Color color={this.props.colorPrimary} />
-          </Value>
           <ChevronRight />
         </Line>
         {this.props.achievements.some(
@@ -198,9 +230,14 @@ export default class Settings extends Component<Props> {
           <Line onClick={() => this.props.toggleMode()}>
             <Label>Dark Mode</Label>
             <Value>
-              {this.props.mode === Mode.Dark ? "Enabled" : "Disabled"}
+              <Toggle on={this.props.mode === Mode.Dark}>
+                {this.props.mode === Mode.Dark ? (
+                  <ToggleOnIcon fontSize={"large"} />
+                ) : (
+                  <ToggleOffIcon fontSize={"large"} />
+                )}
+              </Toggle>
             </Value>
-            <ChevronRight />
           </Line>
         )}
         <Line onClick={() => this.setState({ tagsPopupOpen: true })}>
@@ -223,14 +260,12 @@ export default class Settings extends Component<Props> {
         <Header>About</Header>
         <Line onClick={() => window.open("https://chasemanning.co.nz/")}>
           <Label>Created By</Label>
-          <Value>Chase Manning</Value>
           <ChevronRight />
         </Line>
         <Line
           onClick={() => window.open("https://github.com/chase-manning/Haply/")}
         >
           <Label>Source Code</Label>
-          <Value>GitHub</Value>
           <ChevronRight />
         </Line>
         <Line
@@ -241,7 +276,6 @@ export default class Settings extends Component<Props> {
           }
         >
           <Label>License</Label>
-          <Value>MIT</Value>
           <ChevronRight />
         </Line>
 
