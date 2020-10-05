@@ -247,6 +247,9 @@ export default class App extends Component {
               settings={this.state.persist.settings}
               toggleRemindersEnabled={() => this.toggleRemindersEnabled()}
               toggleRandomReminders={() => this.toggleRandomReminders()}
+              setReminderFrequencies={(min: number, max: number) =>
+                this.setReminderFrequencies(min, max)
+              }
             />
             <Header>{this.headerText}</Header>
             <NavBar
@@ -433,6 +436,19 @@ export default class App extends Component {
         settings: {
           ...this.state.persist.settings,
           randomReminders: !this.state.persist.settings.randomReminders,
+        },
+      },
+    });
+  }
+
+  setReminderFrequencies(min: number, max: number): void {
+    this.setState({
+      persist: {
+        ...this.state.persist,
+        settings: {
+          ...this.state.persist.settings,
+          frequencyMinutesMin: min,
+          frequencyMinutesMax: max,
         },
       },
     });

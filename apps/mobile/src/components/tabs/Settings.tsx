@@ -89,6 +89,10 @@ const FrequencySelect = styled.select`
 
 const FrequencyOption = styled.option``;
 
+const FrequencySecondItem = styled.div`
+  margin-top: 20px;
+`;
+
 const ColorOptions = styled.div`
   width: 100%;
   display: grid;
@@ -173,6 +177,10 @@ class State {
   newTag: string = "";
   newTagPopupOpen: boolean = false;
   reminderFrequencyPopupOpen: boolean = false;
+  reminderFrequencyMinimumInput: number = 3;
+  reminderFrequencyMinimumDropdown: string = "Hours";
+  reminderFrequencyMaximumInput: number = 3;
+  reminderFrequencyMaximumDropdown: string = "Hours";
 }
 
 type Props = {
@@ -189,6 +197,7 @@ type Props = {
   settings: SettingsModel;
   toggleRemindersEnabled: () => void;
   toggleRandomReminders: () => void;
+  setReminderFrequencies: (min: number, max: number) => void;
 };
 
 export default class Settings extends Component<Props> {
@@ -198,12 +207,107 @@ export default class Settings extends Component<Props> {
     super(props);
     this.state = new State();
     this.handleTagChange = this.handleTagChange.bind(this);
+    this.handleMinInputChange = this.handleMinInputChange.bind(this);
+    this.handleMinDropdownChange = this.handleMinDropdownChange.bind(this);
+    this.handleMaxInputChange = this.handleMaxInputChange.bind(this);
+    this.handleMaxDropdownChange = this.handleMaxDropdownChange.bind(this);
+    this.setReminderFrequencies();
   }
 
   handleTagChange(event: any): void {
     this.setState({
       newTag: event.target.value,
     });
+  }
+
+  async handleMinInputChange(event: any): Promise<void> {
+    await this.setState({
+      reminderFrequencyMinimumInput: event.target.value,
+    });
+    this.updateFrequencyState();
+  }
+
+  async handleMinDropdownChange(event: any): Promise<void> {
+    await this.setState({
+      reminderFrequencyMinimumDropdown: event.target.value,
+    });
+    this.updateFrequencyState();
+  }
+
+  async handleMaxInputChange(event: any): Promise<void> {
+    await this.setState({
+      reminderFrequencyMaximumInput: event.target.value,
+    });
+    this.updateFrequencyState();
+  }
+
+  async handleMaxDropdownChange(event: any): Promise<void> {
+    await this.setState({
+      reminderFrequencyMaximumDropdown: event.target.value,
+    });
+    this.updateFrequencyState();
+  }
+
+  setReminderFrequencies(): void {
+    this.state.reminderFrequencyMinimumInput = this.getFrequencyInputFromMinutes(
+      this.props.settings.frequencyMinutesMin
+    );
+    this.state.reminderFrequencyMinimumDropdown = this.getFrequencyDropdownFromMinutes(
+      this.props.settings.frequencyMinutesMin
+    );
+    this.state.reminderFrequencyMaximumInput = this.getFrequencyInputFromMinutes(
+      this.props.settings.frequencyMinutesMax
+    );
+    this.state.reminderFrequencyMaximumDropdown = this.getFrequencyDropdownFromMinutes(
+      this.props.settings.frequencyMinutesMax
+    );
+  }
+
+  updateFrequencyState(): void {
+    this.props.setReminderFrequencies(
+      this.minFrequency,
+      this.props.settings.randomReminders
+        ? this.maxFrequency
+        : this.minFrequency
+    );
+  }
+
+  get minFrequency(): number {
+    console.log("State Min Input: " + this.state.reminderFrequencyMinimumInput);
+    console.log(
+      this.getFrequencyMultiplier(this.state.reminderFrequencyMinimumDropdown)
+    );
+    return (
+      this.state.reminderFrequencyMinimumInput *
+      this.getFrequencyMultiplier(this.state.reminderFrequencyMinimumDropdown)
+    );
+  }
+
+  get maxFrequency(): number {
+    return (
+      this.state.reminderFrequencyMaximumInput *
+      this.getFrequencyMultiplier(this.state.reminderFrequencyMaximumDropdown)
+    );
+  }
+
+  getFrequencyInputFromMinutes(minutes: number): number {
+    console.log(minutes);
+    if (minutes < 60) return minutes;
+    else if (minutes < 60 * 24) return minutes / 60;
+    else return minutes / (60 * 24);
+  }
+
+  getFrequencyDropdownFromMinutes(minutes: number): string {
+    console.log(minutes);
+    if (minutes < 60) return "Minutes";
+    else if (minutes < 60 * 24) return "Hours";
+    else return "Days";
+  }
+
+  getFrequencyMultiplier(frequencyDropdown: string): number {
+    if (frequencyDropdown === "Minutes") return 1;
+    else if (frequencyDropdown === "Hours") return 60;
+    else return 60 * 24;
   }
 
   render() {
@@ -325,13 +429,40 @@ export default class Settings extends Component<Props> {
                     : "Remind me Every:"}
                 </PopupHeader>
                 <FrequencyItem>
-                  <FrequencyInput />
-                  <FrequencySelect>
+                  <FrequencyInput
+                    value={this.state.reminderFrequencyMinimumInput}
+                    onChange={this.handleMinInputChange}
+                    type="number"
+                  />
+                  <FrequencySelect
+                    value={this.state.reminderFrequencyMinimumDropdown}
+                    onChange={this.handleMinDropdownChange}
+                  >
                     <FrequencyOption>Minutes</FrequencyOption>
                     <FrequencyOption>Hours</FrequencyOption>
                     <FrequencyOption>Days</FrequencyOption>
                   </FrequencySelect>
                 </FrequencyItem>
+                {this.props.settings.randomReminders && (
+                  <FrequencySecondItem>
+                    <PopupHeader>At Maximum Remind me Every:</PopupHeader>
+                    <FrequencyItem>
+                      <FrequencyInput
+                        value={this.state.reminderFrequencyMaximumInput}
+                        onChange={this.handleMaxInputChange}
+                        type="number"
+                      />
+                      <FrequencySelect
+                        value={this.state.reminderFrequencyMaximumDropdown}
+                        onChange={this.handleMaxDropdownChange}
+                      >
+                        <FrequencyOption>Minutes</FrequencyOption>
+                        <FrequencyOption>Hours</FrequencyOption>
+                        <FrequencyOption>Days</FrequencyOption>
+                      </FrequencySelect>
+                    </FrequencyItem>
+                  </FrequencySecondItem>
+                )}
               </PopupContent>
             }
             showButton={true}

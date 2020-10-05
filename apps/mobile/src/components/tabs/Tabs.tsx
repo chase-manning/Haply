@@ -36,6 +36,7 @@ type Props = {
   settings: SettingsModel;
   toggleRemindersEnabled: () => void;
   toggleRandomReminders: () => void;
+  setReminderFrequencies: (min: number, max: number) => void;
 };
 
 export default class Tabs extends Component<Props> {
@@ -82,6 +83,7 @@ export default class Tabs extends Component<Props> {
           settings={this.props.settings}
           toggleRemindersEnabled={this.props.toggleRemindersEnabled}
           toggleRandomReminders={this.props.toggleRandomReminders}
+          setReminderFrequencies={this.props.setReminderFrequencies}
         />
       );
     else throw NOTFOUND;
