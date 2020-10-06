@@ -3,6 +3,7 @@ import * as admin from "firebase-admin";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import { user } from "firebase-functions/lib/providers/auth";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -257,6 +258,53 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
     }
 
     response.json(pushNotificationToken);
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
+app.post("/settings", async (request, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+    } = request.body;
+    const data = {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      userId,
+    };
+
+    let setting: any = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .limit(1)
+      .get();
+
+    if (setting.empty) {
+      const settingRef: any = await db.collection("settings").add(data);
+      setting = await settingRef.get();
+    } else {
+      await db
+        .collection("settings")
+        .doc(setting[0].id)
+        .set(data, { merge: true });
+
+      setting = await db
+        .collection("settings")
+        .where("userId", "==", userId)
+        .limit(1)
+        .get();
+    }
+
+    response.json(setting);
   } catch (error) {
     response.status(500).send(error);
   }
