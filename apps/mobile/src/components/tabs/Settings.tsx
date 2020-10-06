@@ -11,6 +11,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
+import SettingService from "../../services/SettingService";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -466,9 +467,7 @@ export default class Settings extends Component<Props> {
               </PopupContent>
             }
             showButton={true}
-            closePopup={() =>
-              this.setState({ reminderFrequencyPopupOpen: false })
-            }
+            closePopup={() => this.closeRemindersPopup()}
           />
         )}
 
@@ -555,5 +554,14 @@ export default class Settings extends Component<Props> {
         )}
       </StyledSettings>
     );
+  }
+
+  async closeRemindersPopup(): Promise<void> {
+    await this.setState({ reminderFrequencyPopupOpen: false });
+    await this.saveSetting();
+  }
+
+  async saveSetting(): Promise<void> {
+    await SettingService.createSetting(this.props.user, this.props.settings);
   }
 }
