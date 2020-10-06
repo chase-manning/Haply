@@ -22,6 +22,7 @@ import {
 import { createGlobalStyle } from "styled-components";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import PushNotificationService from "../services/PushNotificationService";
+import SettingService from "../services/SettingService";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -427,7 +428,11 @@ export default class App extends Component {
         },
       },
     });
-    this.saveState();
+    await this.saveState();
+    await SettingService.createSetting(
+      this.state.persist.user!,
+      this.state.persist.settings
+    );
   }
 
   async toggleRandomReminders(): Promise<void> {
@@ -440,7 +445,11 @@ export default class App extends Component {
         },
       },
     });
-    this.saveState();
+    await this.saveState();
+    await SettingService.createSetting(
+      this.state.persist.user!,
+      this.state.persist.settings
+    );
   }
 
   async setReminderFrequencies(min: number, max: number): Promise<void> {
