@@ -292,10 +292,10 @@ app.post("/settings", async (request, response) => {
       setting = await settingRef.get();
     } else {
       console.log("updating settings");
-      console.log(setting);
-      console.log(setting[0]);
-      console.log(setting[0].id);
-      console.log(data);
+      console.log(JSON.stringify(setting));
+      console.log(JSON.stringify(setting[0]));
+      console.log(JSON.stringify(setting[0].id));
+      console.log(JSON.stringify(data));
       await db
         .collection("settings")
         .doc(setting[0].id)
