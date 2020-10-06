@@ -417,8 +417,8 @@ export default class App extends Component {
     }
   }
 
-  toggleRemindersEnabled(): void {
-    this.setState({
+  async toggleRemindersEnabled(): Promise<void> {
+    await this.setState({
       persist: {
         ...this.state.persist,
         settings: {
@@ -427,10 +427,11 @@ export default class App extends Component {
         },
       },
     });
+    this.saveState();
   }
 
-  toggleRandomReminders(): void {
-    this.setState({
+  async toggleRandomReminders(): Promise<void> {
+    await this.setState({
       persist: {
         ...this.state.persist,
         settings: {
@@ -439,10 +440,11 @@ export default class App extends Component {
         },
       },
     });
+    this.saveState();
   }
 
-  setReminderFrequencies(min: number, max: number): void {
-    this.setState({
+  async setReminderFrequencies(min: number, max: number): Promise<void> {
+    await this.setState({
       persist: {
         ...this.state.persist,
         settings: {
@@ -452,5 +454,6 @@ export default class App extends Component {
         },
       },
     });
+    this.saveState();
   }
 }
