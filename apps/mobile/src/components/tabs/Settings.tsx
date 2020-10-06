@@ -260,7 +260,6 @@ export default class Settings extends Component<Props> {
         this.props.settings.frequencyMinutesMin
       ),
     });
-
     this.setState({
       reminderFrequencyMaximumInput: this.getFrequencyInputFromMinutes(
         this.props.settings.frequencyMinutesMax
