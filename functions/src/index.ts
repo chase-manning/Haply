@@ -281,34 +281,22 @@ app.post("/settings", async (request, response) => {
       userId,
     };
 
-    let setting: any = await db
+    let setting;
+    setting = await db
       .collection("settings")
       .where("userId", "==", userId)
-      .limit(1)
       .get();
 
     if (setting.empty) {
       const settingRef: any = await db.collection("settings").add(data);
       setting = await settingRef.get();
     } else {
-      console.log("updating settings");
-      console.log(JSON.stringify(setting));
-      console.log(JSON.stringify(setting[0]));
-      console.log(JSON.stringify(setting[0].id));
-      console.log(JSON.stringify(data));
-      await db
-        .collection("settings")
-        .doc(setting[0].id)
-        .set(data, { merge: true });
-
-      setting = await db
-        .collection("settings")
-        .where("userId", "==", userId)
-        .limit(1)
-        .get();
+      setting.forEach(async (qwe) => {
+        await db.collection("settings").doc(qwe.id).set(data, { merge: true });
+      });
     }
 
-    response.json(setting);
+    response.json({ result: "All G" });
   } catch (error) {
     response.status(500).send(error);
   }
