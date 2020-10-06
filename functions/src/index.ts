@@ -3,7 +3,6 @@ import * as admin from "firebase-admin";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import { user } from "firebase-functions/lib/providers/auth";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
