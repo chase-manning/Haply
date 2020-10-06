@@ -272,6 +272,7 @@ app.post("/settings", async (request, response) => {
       randomReminders,
       frequencyMinutesMin,
       frequencyMinutesMax,
+      nextNotification,
     } = request.body;
     const data = {
       remindersEnabled,
@@ -279,6 +280,7 @@ app.post("/settings", async (request, response) => {
       frequencyMinutesMin,
       frequencyMinutesMax,
       userId,
+      nextNotification,
     };
 
     let setting;

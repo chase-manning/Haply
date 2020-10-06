@@ -23,6 +23,7 @@ export class SettingsModel {
   frequencyMinutesMax: number = 7 * 60;
   sleepStart: number = 22;
   sleepEnd: number = 7;
+  nextNotification: Date = new Date(2050, 1, 1);
 }
 
 export class Persist {
