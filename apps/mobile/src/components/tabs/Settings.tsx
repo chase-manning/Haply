@@ -250,18 +250,27 @@ export default class Settings extends Component<Props> {
   }
 
   setReminderFrequencies(): void {
-    this.state.reminderFrequencyMinimumInput = this.getFrequencyInputFromMinutes(
-      this.props.settings.frequencyMinutesMin
-    );
-    this.state.reminderFrequencyMinimumDropdown = this.getFrequencyDropdownFromMinutes(
-      this.props.settings.frequencyMinutesMin
-    );
-    this.state.reminderFrequencyMaximumInput = this.getFrequencyInputFromMinutes(
-      this.props.settings.frequencyMinutesMax
-    );
-    this.state.reminderFrequencyMaximumDropdown = this.getFrequencyDropdownFromMinutes(
-      this.props.settings.frequencyMinutesMax
-    );
+    this.setState({
+      reminderFrequencyMinimumInput: this.getFrequencyInputFromMinutes(
+        this.props.settings.frequencyMinutesMin
+      ),
+    });
+    this.setState({
+      reminderFrequencyMinimumDropdown: this.getFrequencyDropdownFromMinutes(
+        this.props.settings.frequencyMinutesMin
+      ),
+    });
+
+    this.setState({
+      reminderFrequencyMaximumInput: this.getFrequencyInputFromMinutes(
+        this.props.settings.frequencyMinutesMax
+      ),
+    });
+    this.setState({
+      reminderFrequencyMaximumDropdown: this.getFrequencyDropdownFromMinutes(
+        this.props.settings.frequencyMinutesMax
+      ),
+    });
   }
 
   updateFrequencyState(): void {
