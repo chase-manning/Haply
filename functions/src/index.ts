@@ -291,6 +291,11 @@ app.post("/settings", async (request, response) => {
       const settingRef: any = await db.collection("settings").add(data);
       setting = await settingRef.get();
     } else {
+      console.log("updating settings");
+      console.log(setting);
+      console.log(setting[0]);
+      console.log(setting[0].id);
+      console.log(data);
       await db
         .collection("settings")
         .doc(setting[0].id)
