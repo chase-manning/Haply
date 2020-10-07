@@ -378,6 +378,10 @@ export default class App extends Component {
           settings: { ...this.state.persist.settings, ...persist.settings },
         },
       });
+      SettingService.createSetting(
+        this.state.persist.user!,
+        this.state.persist.settings
+      );
     }
   }
 
