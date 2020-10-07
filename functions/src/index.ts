@@ -96,6 +96,59 @@ app.post("/v1/moods", async (request, response) => {
   }
 });
 
+app.post("/v2/moods", async (request, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const { value, date, note, tags } = request.body;
+    const data = {
+      value,
+      date,
+      note,
+      tags,
+      userId,
+    };
+
+    const moodRef = await db.collection("moods").add(data);
+    const mood = await moodRef.get();
+
+    let settingsRef = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .get();
+
+    let settings: any[] = [];
+    settingsRef.forEach((settingRef) =>
+      settings.push({ id: settingRef.id, data: settingRef.data() })
+    );
+
+    let newSetting = settings[0].data;
+
+    let randomNumber: number = Math.random();
+    let minutesAdded: number =
+      newSetting.frequencyMinutesMin * randomNumber +
+      newSetting.frequencyMinutesMax * (1 - randomNumber);
+
+    let now: Date = new Date();
+    newSetting.nextNotification = new Date(
+      now.getTime() + minutesAdded * 60000
+    );
+
+    await db
+      .collection("settings")
+      .doc(settings[0].id)
+      .set(newSetting, { merge: true });
+
+    response.json({
+      id: moodRef.id,
+      data: mood.data(),
+    });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 app.get("/moods/:id", async (request, response) => {
   try {
     const userId = await getUserId(request);
@@ -280,7 +333,7 @@ app.post("/settings", async (request, response) => {
       frequencyMinutesMin,
       frequencyMinutesMax,
       userId,
-      nextNotification,
+      nextNotification: new Date(nextNotification),
     };
 
     let setting;

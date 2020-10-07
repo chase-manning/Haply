@@ -8,7 +8,7 @@ const api: string =
 const MoodService = {
   async createMood(user: User, mood: Mood): Promise<any> {
     try {
-      const route: string = api + "v1/moods";
+      const route: string = api + "v2/moods";
       return user
         .getIdToken()
         .then(async (idToken) => {
@@ -23,7 +23,7 @@ const MoodService = {
 
           return await fetch(route, requestOptions);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           return null;
         });
@@ -53,7 +53,7 @@ const MoodService = {
 
           return await fetch(fullRoute, requestOptions);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           return null;
         });
@@ -78,7 +78,7 @@ const MoodService = {
 
           return await fetch(route + "/" + moodId, requestOptions);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           return null;
         });
