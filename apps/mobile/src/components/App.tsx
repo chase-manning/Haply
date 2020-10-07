@@ -161,7 +161,7 @@ export default class App extends Component {
     });
 
     if (!this.state.persist.user) {
-      firebase
+      await firebase
         .auth()
         .signInAnonymously()
         .catch(function (error) {
@@ -169,6 +169,12 @@ export default class App extends Component {
           console.log(errorMessage);
         });
     }
+
+    await SettingService.createSetting(
+      this.state.persist.user!,
+      this.state.persist.settings
+    );
+
     PushNotifications.requestPermission().then((result) => {
       if (result.granted) {
         PushNotifications.register();
@@ -378,10 +384,6 @@ export default class App extends Component {
           settings: { ...this.state.persist.settings, ...persist.settings },
         },
       });
-      SettingService.createSetting(
-        this.state.persist.user!,
-        this.state.persist.settings
-      );
     }
   }
 
