@@ -377,9 +377,9 @@ export const notificationScheduler = functions.pubsub
     console.log("==== Tokens Not Empty ====");
 
     console.log("==== Populating Tokens List ====");
-    let tokens: any[] = [];
+    let tokens: string[] = [];
     tokensRef.forEach((token) => {
-      tokens.push(token.data());
+      tokens.push(token.data().token);
     });
     console.log(JSON.stringify(tokens));
 
