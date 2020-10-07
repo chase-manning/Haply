@@ -305,8 +305,24 @@ app.post("/settings", async (request, response) => {
 });
 
 export const notificationScheduler = functions.pubsub
-  .schedule("every 1 hours")
+  .schedule("every 1 minutes")
   .onRun(async () => {
+    const titles: string[] = [
+      "How Are You Feeling?",
+      "How is Your Day?",
+      "Hope You Are Having an Awesome Day!",
+      "Time to Record Your Mood!",
+      "Are You Feeling Great?",
+      "Hope You're Doing Well?",
+      "Don't Sweat The Small Stuff!",
+      "You Are a Superhero!",
+      "You Are Enough!",
+      "You Are Whole!",
+      "You Can Create Great Change!",
+      "You Can do Anything!",
+      "You Deserve The Best!",
+    ];
+
     // const tokens: any = await db.collection("pushNotificationTokens").get();
     // tokens.forEach(async (token: any) => {
     //   const latestMood: any = await db
@@ -324,21 +340,33 @@ export const notificationScheduler = functions.pubsub
     //     }
     //   }
     // });
-    const titles: string[] = [
-      "How Are You Feeling?",
-      "How is Your Day?",
-      "Hope You Are Having an Awesome Day!",
-      "Time to Record Your Mood!",
-      "Are You Feeling Great?",
-      "Hope You're Doing Well?",
-      "Don't Sweat The Small Stuff!",
-      "You Are a Superhero!",
-      "You Are Enough!",
-      "You Are Whole!",
-      "You Can Create Great Change!",
-      "You Can do Anything!",
-      "You Deserve The Best!",
-    ];
+    const currentTime: Date = new Date();
+    let settingsRef = await db
+      .collection("settings")
+      .where("remindersEnabled", "==", "true")
+      .where("nextNotification", "<=", currentTime)
+      .get();
+
+    if (settingsRef.empty) return null;
+
+    let settings: any[] = [];
+    settingsRef.forEach((setting) => {
+      settings.push(setting.data());
+    });
+
+    const userIds: string[] = settings.map((setting: any) => setting.userId);
+
+    let tokensRef = await db
+      .collection("pushNotificationTokens")
+      .where("userId", "in", userIds)
+      .get();
+
+    if (tokensRef.empty) return null;
+
+    let tokens: any[] = [];
+    tokensRef.forEach((token) => {
+      tokens.push(token.data());
+    });
 
     const payload = {
       notification: {
@@ -348,11 +376,6 @@ export const notificationScheduler = functions.pubsub
       },
     };
 
-    await admin
-      .messaging()
-      .sendToDevice(
-        "fHEl0KDjQXS--KGX8oANjy:APA91bFRRFlDFXudB7pyIdJYrazpgx15PTgTPq5krY7H0i55l_zNJ0T_ZyBANSWu6mA4G2AbiGyu0MRzsTGAI0DQUWxbyYNmOPTEIm9JYNTEcZTMV11sSCgNBu33go1OhSHAJjPHpd_E",
-        payload
-      );
+    await admin.messaging().sendToDevice(tokens, payload);
     return null;
   });
