@@ -359,6 +359,7 @@ export default class App extends Component {
     let moods: Mood[] = this.state.persist.moods;
     moods.unshift(mood);
     await this.setState({ persist: { ...this.state.persist, moods: moods } });
+
     this.softUpdate();
   }
 
@@ -434,6 +435,7 @@ export default class App extends Component {
         },
       },
     });
+    await this.updateNextNotification();
     await this.saveState();
     await SettingService.createSetting(
       this.state.persist.user!,
@@ -451,6 +453,7 @@ export default class App extends Component {
         },
       },
     });
+    await this.updateNextNotification();
     await this.saveState();
     await SettingService.createSetting(
       this.state.persist.user!,
@@ -469,6 +472,26 @@ export default class App extends Component {
         },
       },
     });
-    this.saveState();
+    await this.updateNextNotification();
+    await this.saveState();
+  }
+
+  async updateNextNotification(): Promise<void> {
+    let randomNumber: number = Math.random();
+    let minutesAdded: number =
+      this.state.persist.settings.frequencyMinutesMin * randomNumber +
+      this.state.persist.settings.frequencyMinutesMax * (1 - randomNumber);
+
+    await this.setState({
+      persist: {
+        ...this.state.persist,
+        settings: {
+          ...this.state.persist.settings,
+          nextNotification: new Date(
+            this.state.persist.moods[0].date.getTime() + minutesAdded * 60000
+          ),
+        },
+      },
+    });
   }
 }
