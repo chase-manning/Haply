@@ -370,7 +370,13 @@ export default class App extends Component {
     let ret: { value: any } = await Storage.get({ key: "state" });
     if (ret.value) {
       let persist: Persist = JSON.parse(ret.value);
-      await this.setState({ persist: { ...this.state.persist, ...persist } });
+      await this.setState({
+        persist: {
+          ...this.state.persist,
+          ...persist,
+          settings: { ...this.state.persist.settings, ...persist.settings },
+        },
+      });
     }
   }
 
