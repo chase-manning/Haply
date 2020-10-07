@@ -358,12 +358,14 @@ export const notificationScheduler = functions.pubsub
     console.log("==== Added Settings to New List ====");
     let settings: any[] = [];
     settingsRef.forEach((setting) => {
-      settings.push(setting.data());
+      settings.push({ id: setting.id, data: setting.data() });
     });
     console.log(JSON.stringify(settings));
 
     console.log("==== Creating User ID List====");
-    const userIds: string[] = settings.map((setting: any) => setting.userId);
+    const userIds: string[] = settings.map(
+      (setting: any) => setting.data.userId
+    );
     console.log(JSON.stringify(userIds));
 
     console.log("==== Getting Tokens ====");
@@ -394,13 +396,10 @@ export const notificationScheduler = functions.pubsub
     console.log(JSON.stringify(payload));
 
     console.log("==== Sending Messages ====");
-    const response = await admin
-      .messaging()
-      .sendToDevice(
-        "duP3aUudSFqv8F8cIMbu5X:APA91bH7tHpMoI9dKIj5_rzOcQDB56z6ybIh1g0gOAQ66Ka44H0BLLnSJSXaTczjuRI3tncVoweuttbVA7_dWXbiHC6uXj2pz2sD3dATAw91ys1KoVV6FEm2sbLnyK3tYLUtAEpIEFnA",
-        payload
-      );
+    const response = await admin.messaging().sendToDevice(tokens, payload);
     console.log("==== Send Messages ====");
+    console.log(JSON.stringify(response));
+    console.log(JSON.stringify(response.results));
     response.results.forEach((result, index) => {
       console.log("==== Token Result ====");
       console.log(tokens[index]);
@@ -411,5 +410,25 @@ export const notificationScheduler = functions.pubsub
         console.log("==== SEnd fine ====");
       }
     });
+
+    settings.forEach(async (setting: any) => {
+      let newSetting: any = setting.data;
+
+      let randomNumber: number = Math.random();
+      let minutesAdded: number =
+        newSetting.frequencyMinutesMin * randomNumber +
+        newSetting.frequencyMinutesMax * (1 - randomNumber);
+
+      let now: Date = new Date();
+      newSetting.nextNotification = new Date(
+        now.getTime() + minutesAdded * 60000
+      );
+
+      await db
+        .collection("settings")
+        .doc(setting.id)
+        .set(newSetting, { merge: true });
+    });
+
     return null;
   });
