@@ -407,7 +407,7 @@ export const notificationScheduler = functions.pubsub
       if (error) {
         console.error("Failure sending notification to", tokens[index], error);
       } else {
-        console.log("==== SEnd fine ====");
+        console.log("==== Sent fine ====");
       }
     });
 
