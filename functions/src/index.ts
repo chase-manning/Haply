@@ -394,6 +394,22 @@ export const notificationScheduler = functions.pubsub
     console.log(JSON.stringify(payload));
 
     console.log("==== Sending Messages ====");
-    await admin.messaging().sendToDevice(tokens, payload);
+    const response = await admin
+      .messaging()
+      .sendToDevice(
+        "duP3aUudSFqv8F8cIMbu5X:APA91bH7tHpMoI9dKIj5_rzOcQDB56z6ybIh1g0gOAQ66Ka44H0BLLnSJSXaTczjuRI3tncVoweuttbVA7_dWXbiHC6uXj2pz2sD3dATAw91ys1KoVV6FEm2sbLnyK3tYLUtAEpIEFnA",
+        payload
+      );
+    console.log("==== Send Messages ====");
+    response.results.forEach((result, index) => {
+      console.log("==== Token Result ====");
+      console.log(tokens[index]);
+      const error = result.error;
+      if (error) {
+        console.error("Failure sending notification to", tokens[index], error);
+      } else {
+        console.log("==== SEnd fine ====");
+      }
+    });
     return null;
   });
