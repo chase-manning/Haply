@@ -340,34 +340,49 @@ export const notificationScheduler = functions.pubsub
     //     }
     //   }
     // });
+    console.log("==== Starting the Notifications ====");
     const currentTime: Date = new Date();
+    console.log("==== Getting the Settings ====");
     let settingsRef = await db
       .collection("settings")
       .where("remindersEnabled", "==", "true")
       .where("nextNotification", "<=", currentTime)
       .get();
+    console.log("==== Got Settings ====");
+    console.log(JSON.stringify(settingsRef));
 
     if (settingsRef.empty) return null;
+    console.log("==== There are some settings ====");
 
     let settings: any[] = [];
     settingsRef.forEach((setting) => {
       settings.push(setting.data());
     });
+    console.log("==== Added Settings to New List ====");
+    console.log(JSON.stringify(settings));
 
+    console.log("==== Creating User ID List====");
     const userIds: string[] = settings.map((setting: any) => setting.userId);
+    console.log(JSON.stringify(userIds));
 
+    console.log("==== Getting Tokens ====");
     let tokensRef = await db
       .collection("pushNotificationTokens")
       .where("userId", "in", userIds)
       .get();
+    console.log(JSON.stringify(tokensRef));
 
     if (tokensRef.empty) return null;
+    console.log("==== Tokens Not Empty ====");
 
+    console.log("==== Populating Tokens List ====");
     let tokens: any[] = [];
     tokensRef.forEach((token) => {
       tokens.push(token.data());
     });
+    console.log(JSON.stringify(tokens));
 
+    console.log("==== Creating Payload ====");
     const payload = {
       notification: {
         title: titles[Math.round(Math.random() * titles.length)],
@@ -375,7 +390,9 @@ export const notificationScheduler = functions.pubsub
           "Reminder to record how you are feeling in Haply and what is happening in your day",
       },
     };
+    console.log(JSON.stringify(payload));
 
+    console.log("==== Sending Messages ====");
     await admin.messaging().sendToDevice(tokens, payload);
     return null;
   });
