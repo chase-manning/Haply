@@ -341,11 +341,12 @@ export const notificationScheduler = functions.pubsub
     //   }
     // });
     console.log("==== Starting the Notifications ====");
-    const currentTime: Date = new Date();
+
     console.log("==== Getting the Settings ====");
+    const currentTime: Date = new Date();
     let settingsRef = await db
       .collection("settings")
-      .where("remindersEnabled", "==", "true")
+      .where("remindersEnabled", "==", true)
       .where("nextNotification", "<=", currentTime)
       .get();
     console.log("==== Got Settings ====");
@@ -354,11 +355,11 @@ export const notificationScheduler = functions.pubsub
     if (settingsRef.empty) return null;
     console.log("==== There are some settings ====");
 
+    console.log("==== Added Settings to New List ====");
     let settings: any[] = [];
     settingsRef.forEach((setting) => {
       settings.push(setting.data());
     });
-    console.log("==== Added Settings to New List ====");
     console.log(JSON.stringify(settings));
 
     console.log("==== Creating User ID List====");
