@@ -482,14 +482,13 @@ export default class App extends Component {
       this.state.persist.settings.frequencyMinutesMin * randomNumber +
       this.state.persist.settings.frequencyMinutesMax * (1 - randomNumber);
 
+    let now: Date = new Date();
     await this.setState({
       persist: {
         ...this.state.persist,
         settings: {
           ...this.state.persist.settings,
-          nextNotification: new Date(
-            this.state.persist.moods[0].date.getTime() + minutesAdded * 60000
-          ),
+          nextNotification: new Date(now.getTime() + minutesAdded * 60000),
         },
       },
     });
