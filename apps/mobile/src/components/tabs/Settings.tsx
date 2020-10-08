@@ -212,7 +212,10 @@ export default class Settings extends Component<Props> {
     this.handleMinDropdownChange = this.handleMinDropdownChange.bind(this);
     this.handleMaxInputChange = this.handleMaxInputChange.bind(this);
     this.handleMaxDropdownChange = this.handleMaxDropdownChange.bind(this);
-    this.setReminderFrequencies();
+  }
+
+  async componentDidMount() {
+    await this.setReminderFrequencies();
   }
 
   handleTagChange(event: any): void {
