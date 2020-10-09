@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { User } from "firebase";
-import Mood from "../../models/mood";
 import AchievementModel from "../../models/AchievementModel";
 import Acheivement from "../shared/Achievement";
 
