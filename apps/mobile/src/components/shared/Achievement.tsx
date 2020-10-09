@@ -4,7 +4,7 @@ import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
 import AcheivementReward from "./AchievementReward";
 
-const StyledAcheivement = styled.div`
+const StyledAcheivement = styled.button`
   display: flex;
   flex-direction: column;
   justify-self: center;
