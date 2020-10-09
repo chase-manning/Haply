@@ -8,12 +8,6 @@ import Acheivement from "../shared/Achievement";
 const StyledAchievements = styled.div`
   width: 100%;
   padding: 20px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Acheivements = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr;
@@ -29,11 +23,9 @@ export default class Achievements extends Component<Props> {
   render() {
     return (
       <StyledAchievements>
-        <Acheivements>
-          {this.props.achievements.map((achievment: AchievementModel) => (
-            <Acheivement achievement={achievment} />
-          ))}
-        </Acheivements>
+        {this.props.achievements.map((achievment: AchievementModel) => (
+          <Acheivement achievement={achievment} />
+        ))}
       </StyledAchievements>
     );
   }
