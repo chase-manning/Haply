@@ -4,7 +4,7 @@ import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
 import AcheivementReward from "./AchievementReward";
 
-const StyledAcheivement = styled.button`
+const StyledAcheivement = styled.div`
   display: flex;
   flex-direction: column;
   justify-self: center;
@@ -31,7 +31,8 @@ const Svg = styled.img`
   }};
 `;
 
-const Icon = styled.div`
+const Icon = styled.button`
+  display: flex;
   position: relative;
   width: 70px;
   height: 70px;
