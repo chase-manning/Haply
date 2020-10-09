@@ -55,7 +55,6 @@ const PopupButton = styled.button`
   font-weight: 400;
   border-radius: 10px;
   background-color: var(--bg-mid);
-  outline: none;
   margin-top: 20px;
 `;
 

@@ -79,13 +79,11 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   color: var(--bg);
-  border: none;
   padding: 17px;
   font-size: 16px;
   font-weight: 400;
   border-radius: 10px;
   background-color: var(--primary);
-  outline: none;
 `;
 
 const NoteContent = styled.div`
@@ -137,8 +135,6 @@ const TagOption = styled.button`
   color: var(--sub);
   display: inline-block;
   text-overflow: ellipsis;
-  border: none;
-  outline: none;
 `;
 
 const MoodSlider = withStyles({

@@ -25,9 +25,6 @@ type NavItemProps = {
 };
 
 const NavItem = styled.button`
-  background: none;
-  border: none;
-  outline: none;
   display: flex;
   width: 100%;
   height: 100%;
@@ -53,8 +50,6 @@ const Circle = styled.button`
   align-items: center;
   width: 50px;
   height: 50px;
-  border: none;
-  outline: none;
   display: flex;
   border-radius: 50%;
   background-color: var(--primary);

@@ -15,8 +15,6 @@ export const SelectedTag = styled.button`
   color: var(--primary);
   display: inline-block;
   text-overflow: ellipsis;
-  border: none;
-  outline: none;
   height: 24px;
 `;
 
