@@ -29,14 +29,12 @@ export default class Achievements extends Component<Props> {
   render() {
     return (
       <StyledAchievements data-testid="Profile">
-        <Acheivements>{this.achievements}</Acheivements>
+        <Acheivements>
+          {this.props.achievements.map((achievment: AchievementModel) => (
+            <Acheivement achievement={achievment} />
+          ))}
+        </Acheivements>
       </StyledAchievements>
     );
-  }
-
-  get achievements(): JSX.Element[] {
-    return this.props.achievements.map((achievment: AchievementModel) => (
-      <Acheivement achievement={achievment} />
-    ));
   }
 }
