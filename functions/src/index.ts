@@ -441,7 +441,7 @@ export const notificationScheduler = functions.pubsub
     console.log("==== Creating Payload ====");
     const payload = {
       notification: {
-        title: titles[Math.round(Math.random() * titles.length)],
+        title: titles[Math.round(Math.random() * (titles.length - 1))],
         body:
           "Reminder to record how you are feeling in Haply and what is happening in your day",
       },
