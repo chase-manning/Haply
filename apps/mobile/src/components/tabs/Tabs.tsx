@@ -43,13 +43,7 @@ export default class Tabs extends Component<Props> {
   render() {
     let activeTab;
     if (this.props.activeTab === Tab.Profile)
-      activeTab = (
-        <Achievements
-          achievements={this.props.achivements}
-          moods={this.props.moods}
-          user={this.props.user}
-        />
-      );
+      activeTab = <Achievements achievements={this.props.achivements} />;
     else if (this.props.activeTab === Tab.Entries)
       activeTab = (
         <Entries

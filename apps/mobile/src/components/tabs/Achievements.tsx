@@ -14,8 +14,6 @@ const StyledAchievements = styled.div`
 `;
 
 type Props = {
-  user: User;
-  moods: Mood[];
   achievements: AchievementModel[];
 };
 
