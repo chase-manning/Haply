@@ -2,26 +2,26 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
 
-const Shadow = styled.div`
+const StyledPopup = styled.div`
   position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const ExitEvent = styled.div`
+const Shadow = styled.button`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 2;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 const Details = styled.div`
@@ -73,8 +73,8 @@ type Props = {
 export default class Popup extends Component<Props> {
   render() {
     return (
-      <Shadow>
-        <ExitEvent onClick={() => this.props.closePopup()} />
+      <StyledPopup>
+        <Shadow onClick={() => this.props.closePopup()} />
         <Details>
           <Header>
             <ExitButton onClick={() => this.props.closePopup()}>
@@ -88,7 +88,7 @@ export default class Popup extends Component<Props> {
             </DoneButton>
           )}
         </Details>
-      </Shadow>
+      </StyledPopup>
     );
   }
 }
