@@ -28,7 +28,7 @@ type Props = {
 export default class Achievements extends Component<Props> {
   render() {
     return (
-      <StyledAchievements data-testid="Profile">
+      <StyledAchievements>
         <Acheivements>
           {this.props.achievements.map((achievment: AchievementModel) => (
             <Acheivement achievement={achievment} />
