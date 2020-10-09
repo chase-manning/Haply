@@ -136,7 +136,7 @@ export default class Acheivement extends Component<Props> {
 
   render() {
     return (
-      <StyledAcheivement data-testid="Achievement">
+      <StyledAcheivement>
         <Icon onClick={() => this.setState({ detailsOpen: true })}>
           <Svg
             src={this.props.achievement.svg}
