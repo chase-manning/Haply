@@ -43,7 +43,13 @@ const Header = styled.div`
   color: var(--main);
 `;
 
-const PopupButton = styled.button`
+const ExitButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DoneButton = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -71,13 +77,15 @@ export default class Popup extends Component<Props> {
         <ExitEvent onClick={() => this.props.closePopup()} />
         <Details>
           <Header>
-            <Close onClick={() => this.props.closePopup()} />
+            <ExitButton onClick={() => this.props.closePopup()}>
+              <Close />
+            </ExitButton>
           </Header>
           {this.props.content}
           {this.props.showButton && (
-            <PopupButton onClick={() => this.props.closePopup()}>
+            <DoneButton onClick={() => this.props.closePopup()}>
               Done
-            </PopupButton>
+            </DoneButton>
           )}
         </Details>
       </Shadow>
