@@ -94,6 +94,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: "Roboto", sans-serif;
   }
+
+  button {
+    background: none;
+    border: none;
+    outline: none;
+  }
 `;
 
 const StyledApp = styled.div`
