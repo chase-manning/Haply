@@ -147,7 +147,7 @@ const AddTag = styled.div`
   font-size: 14px;
 `;
 
-const AddTagContent = styled.div`
+const AddTagContent = styled.button`
   height: 100%;
   width: 100%;
   display: flex;
