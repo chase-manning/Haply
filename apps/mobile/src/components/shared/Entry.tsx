@@ -3,12 +3,11 @@ import styled from "styled-components";
 //import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
-import { Line } from "../../styles/Line";
 import Mood from "../../models/mood";
 import { User } from "firebase";
 import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
-import { SelectedTag, SelectedTags } from "../../styles/Shared";
+import { SelectedTag, SelectedTags, Line } from "../../styles/Shared";
 
 const StyledEntry = styled.div`
   width: 100%;

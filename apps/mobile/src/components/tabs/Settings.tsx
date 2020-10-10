@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Line } from "../../styles/Line";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import { User } from "firebase";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
 import { Mode, SettingsModel } from "../../models/state";
-import { SelectedTags, SelectedTag } from "../../styles/Shared";
+import { SelectedTags, SelectedTag, Line } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
