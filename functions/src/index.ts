@@ -432,9 +432,9 @@ export const notificationScheduler = functions.pubsub
     console.log("==== Tokens Not Empty ====");
 
     console.log("==== Populating Tokens List ====");
-    let tokens: string[] = [];
+    let tokens: any[] = [];
     tokensRef.forEach((token) => {
-      tokens.push(token.data().token);
+      tokens.push({ id: token.id, token: token.data().token });
     });
     console.log(JSON.stringify(tokens));
 
@@ -448,22 +448,42 @@ export const notificationScheduler = functions.pubsub
     };
     console.log(JSON.stringify(payload));
 
+    console.log("==== Getting Token Ids ====");
+    let tokenIds: string[] = tokens.map((token: any) => token.token);
+    console.log(JSON.stringify(tokenIds));
+
     console.log("==== Sending Messages ====");
-    const response = await admin.messaging().sendToDevice(tokens, payload);
+    const response = await admin.messaging().sendToDevice(tokenIds, payload);
     console.log("==== Send Messages ====");
     console.log(JSON.stringify(response));
     console.log(JSON.stringify(response.results));
+
+    const tokensToRemove: any[] = [];
     response.results.forEach((result, index) => {
       console.log("==== Token Result ====");
       console.log(tokens[index]);
       const error = result.error;
       if (error) {
-        console.error("Failure sending notification to", tokens[index], error);
+        console.error(
+          "Failure sending notification to",
+          tokens[index].token,
+          error
+        );
+        if (
+          error.code === "messaging/invalid-registration-token" ||
+          error.code === "messaging/registration-token-not-registered"
+        ) {
+          tokensToRemove.push(tokens[index]);
+        }
       } else {
         console.log("==== Sent fine ====");
       }
     });
 
+    console.log("==== Populated Token Removal List ====");
+    console.log(JSON.stringify(tokensToRemove));
+
+    console.log("==== Updating Settings with new Time ====");
     settings.forEach(async (setting: any) => {
       let newSetting: any = setting.data;
 
@@ -482,6 +502,25 @@ export const notificationScheduler = functions.pubsub
         .doc(setting.id)
         .set(newSetting, { merge: true });
     });
+
+    console.log("==== Removing Tokens ====");
+    let tokenRemovals: any[] = [];
+    tokens.forEach((token) => {
+      if (
+        tokensToRemove
+          .map((tokenToRemove: any) => tokenToRemove.token)
+          .indexOf(token.token) > -1
+      ) {
+        console.log("==== Removing token: " + token + " ====");
+        tokenRemovals.push(
+          db.collection("pushNotificationTokens").doc(token.id).delete()
+        );
+      }
+    });
+
+    console.log("==== Awating all token removals ====");
+    await Promise.all(tokenRemovals);
+    console.log("==== Finished awaiting token removals ====");
 
     return null;
   });
