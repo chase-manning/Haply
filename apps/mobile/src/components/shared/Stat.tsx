@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Card } from "../../styles/Card";
+import { Card } from "../../styles/Shared";
 import { StatModel, StatType } from "../../models/StatModel";
 import StatBar from "./StatBar";
 import StatChart from "./StatChart";

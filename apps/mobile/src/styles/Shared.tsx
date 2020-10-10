@@ -10,6 +10,18 @@ export const Line = styled.div`
   border-bottom: 1px solid var(--border);
 `;
 
+export const Card = styled.div`
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  border: solid 1px var(--border);
+  background-color: var(--bg-mid);
+`;
+
 type SeletedTagProps = {
   includeMargin: boolean;
 };
