@@ -4,7 +4,7 @@ import { Card } from "../../styles/Shared";
 import { StatModel, StatType } from "../../models/StatModel";
 import StatBar from "./StatBar";
 import StatChart from "./StatChart";
-import noData from "../../assets/svgs/undraw_no_data_qbuo.svg";
+import noData from "../../assets/svgs/NoData.svg";
 
 const Header = styled.div`
   width: 100%;

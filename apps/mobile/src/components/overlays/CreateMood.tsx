@@ -8,10 +8,10 @@ import LocalOfferOutlined from "@material-ui/icons/LocalOfferOutlined";
 import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
-import sadAsset from "../../assets/svgs/undraw_feeling_blue_4b7q.svg";
-import happyAsset from "../../assets/svgs/undraw_smiley_face_lmgm.svg";
-import okayAsset from "../../assets/svgs/undraw_young_and_happy_hfpe.svg";
-import mehAsset from "../../assets/svgs/undraw_windy_day_x63l.svg";
+import sadAsset from "../../assets/svgs/FeelingBlue.svg";
+import happyAsset from "../../assets/svgs/SmileyFace.svg";
+import okayAsset from "../../assets/svgs/YoungAndHappy.svg";
+import mehAsset from "../../assets/svgs/WindyDay.svg";
 import Popup from "../shared/Popup";
 import { SelectedTag, SelectedTags } from "../../styles/Shared";
 

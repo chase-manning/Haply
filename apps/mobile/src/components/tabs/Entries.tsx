@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
 import { User } from "firebase";
-import noData from "../../assets/svgs/undraw_empty_xct9.svg";
+import noData from "../../assets/svgs/Empty.svg";
 
 const StyledEntries = styled.div`
   width: 100%;
