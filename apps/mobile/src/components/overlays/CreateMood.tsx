@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import Mood, { moodDescriptions } from "../../models/mood";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
-import { withStyles } from "@material-ui/core/styles";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import LocalOfferOutlined from "@material-ui/icons/LocalOfferOutlined";
-import Slider from "@material-ui/core/Slider";
 import MoodService from "../../services/MoodService";
 import { User } from "firebase";
 import sadAsset from "../../assets/svgs/FeelingBlue.svg";
@@ -14,6 +12,7 @@ import okayAsset from "../../assets/svgs/YoungAndHappy.svg";
 import mehAsset from "../../assets/svgs/WindyDay.svg";
 import Popup from "../shared/Popup";
 import { SelectedTag, SelectedTags } from "../../styles/Shared";
+import MoodSlider from "../shared/MoodSlider";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -137,40 +136,6 @@ const TagOption = styled.button`
   text-overflow: ellipsis;
 `;
 
-const MoodSlider = withStyles({
-  root: {
-    color: "var(--primary)",
-    height: 8,
-  },
-  thumb: {
-    height: 24,
-    width: 24,
-    backgroundColor: "var(--bg)",
-    border: "2px solid currentColor",
-    marginTop: -8,
-    marginLeft: -12,
-    "&:focus, &:hover, &$active": {
-      boxShadow: "inherit",
-    },
-  },
-  active: {},
-  valueLabel: {
-    left: "calc(-50% + 4px)",
-    "& *": {
-      background: "var(--primary)",
-      color: "var(--bg)",
-    },
-  },
-  track: {
-    height: 8,
-    borderRadius: 4,
-  },
-  rail: {
-    height: 8,
-    borderRadius: 4,
-  },
-})(Slider);
-
 class createMoodState {
   mood: number = 5;
   description: string = moodDescriptions[this.mood];
@@ -193,15 +158,7 @@ export default class CreateMood extends Component<Props> {
   constructor(props: any) {
     super(props);
     this.state = new createMoodState();
-    this.handleChange = this.handleChange.bind(this);
     this.handleNoteChange = this.handleNoteChange.bind(this);
-  }
-
-  handleChange(event: any, newValue: any): void {
-    this.setState({
-      mood: newValue,
-      description: moodDescriptions[newValue],
-    });
   }
 
   handleNoteChange(event: any): void {
@@ -234,14 +191,13 @@ export default class CreateMood extends Component<Props> {
           <img src={this.moodAsset} alt="Mood Illustration" width="80%" />
         </Face>
         <MoodSlider
-          name="mood"
           value={this.state.mood}
-          aria-labelledby="discrete-slider"
-          valueLabelDisplay="auto"
-          step={1}
-          min={0}
-          max={10}
-          onChange={this.handleChange}
+          updateValue={(value: number) => {
+            this.setState({
+              mood: value,
+              description: moodDescriptions[value],
+            });
+          }}
         />
         <Additions>
           <Addition onClick={() => this.setState({ noteOpen: true })}>
