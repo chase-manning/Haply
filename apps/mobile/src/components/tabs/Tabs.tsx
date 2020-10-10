@@ -82,6 +82,6 @@ export default class Tabs extends Component<Props> {
       );
     else throw NOTFOUND;
 
-    return <StyledTabs data-testid="Tabs">{activeTab}</StyledTabs>;
+    return <StyledTabs>{activeTab}</StyledTabs>;
   }
 }
