@@ -60,13 +60,13 @@ const Additions = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  color: var(--sub);
   margin-bottom: 10px;
 `;
 
-const Addition = styled.div`
+const Addition = styled.button`
   display: flex;
   align-items: center;
+  color: var(--sub);
 `;
 
 const AdditionText = styled.p`
