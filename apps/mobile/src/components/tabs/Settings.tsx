@@ -31,6 +31,7 @@ const Header = styled.div`
 const Label = styled.div`
   color: var(--sub);
   width: 70%;
+  text-align: left;
 `;
 
 const Value = styled.div`

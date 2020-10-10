@@ -18,6 +18,7 @@ const EntryText = styled.div`
   flex-direction: column;
   justify-content: space-between;
   width: 50%;
+  text-align: left;
 `;
 
 const EntryHeader = styled.div`

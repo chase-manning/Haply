@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Line = styled.div`
+export const Line = styled.button`
   width: 100%;
   padding: 15px 0;
   display: flex;
