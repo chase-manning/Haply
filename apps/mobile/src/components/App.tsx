@@ -226,7 +226,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <StyledApp data-testid="App">
+      <StyledApp>
         <GlobalStyle
           colorPrimary={this.state.persist.colorPrimary}
           mode={this.state.persist.mode}
