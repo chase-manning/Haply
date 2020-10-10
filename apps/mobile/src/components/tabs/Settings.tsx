@@ -107,7 +107,7 @@ type ColorOptionProps = {
   selected: boolean;
 };
 
-const ColorOption = styled.div`
+const ColorOption = styled.button`
   width: 28px;
   height: 28px;
   border-radius: 50%;
