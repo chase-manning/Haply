@@ -22,6 +22,7 @@ import {
   toggleRandomReminders,
   updateNextNotification,
 } from "../../state/settingsSlice";
+import { selectColorPrimary } from "../../state/tempSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -197,7 +198,6 @@ class State {
 
 type Props = {
   login: () => void;
-  colorPrimary: string;
   achievements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
   mode: Mode;
@@ -237,6 +237,7 @@ const Settings = (props: Props) => {
   const frequencyMinutesMin = useSelector(selectFrequencyMinutesMin)!;
   const frequencyMinutesMax = useSelector(selectFrequencyMinutesMax)!;
   const nextNotification = useSelector(selectNextNotification)!;
+  const colorPrimary = useSelector(selectColorPrimary);
 
   useEffect(() => {
     setState({
@@ -514,7 +515,7 @@ const Settings = (props: Props) => {
                       onClick={() =>
                         props.setColorPrimary(achievement.colorPrimary)
                       }
-                      selected={achievement.colorPrimary === props.colorPrimary}
+                      selected={achievement.colorPrimary === colorPrimary}
                     >
                       <Color color={achievement.colorPrimary} />
                     </ColorOption>
