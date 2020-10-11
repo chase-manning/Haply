@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import LocalOfferOutlined from "@material-ui/icons/LocalOfferOutlined";
 import Popup from "../shared/Popup";
@@ -58,68 +58,59 @@ type Props = {
   setTags: (tags: string[]) => void;
 };
 
-export default class AddTags extends Component<Props> {
-  state: State;
+const AddTags = (props: Props) => {
+  const [state, setState] = useState(new State());
 
-  constructor(props: any) {
-    super(props);
-    this.state = new State();
-  }
-
-  render() {
-    return (
-      <StyledAddTags>
-        <Button onClick={() => this.setState({ popupOpen: true })}>
-          <Label>Tags</Label>
-          <LocalOfferOutlined />
-        </Button>
-        {this.state.popupOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <SelectedTags>
-                  {this.state.tags.map((tag: string) => (
-                    <SelectedTag
-                      includeMargin={true}
+  return (
+    <StyledAddTags>
+      <Button onClick={() => setState({ ...state, popupOpen: true })}>
+        <Label>Tags</Label>
+        <LocalOfferOutlined />
+      </Button>
+      {state.popupOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <SelectedTags>
+                {state.tags.map((tag: string) => (
+                  <SelectedTag
+                    includeMargin={true}
+                    onClick={() => {
+                      let tags: string[] = state.tags.filter(
+                        (selectedTag: string) => selectedTag !== tag
+                      );
+                      setState({ ...state, tags: tags });
+                    }}
+                  >
+                    {tag}
+                  </SelectedTag>
+                ))}
+                {state.tags.length === 0 && (
+                  <PlaceholderText>Select Tags Below...</PlaceholderText>
+                )}
+              </SelectedTags>
+              <Options>
+                {props.options
+                  .filter((tag: string) => state.tags.indexOf(tag) === -1)
+                  .map((tag: string) => (
+                    <Option
                       onClick={() => {
-                        let tags: string[] = this.state.tags.filter(
-                          (selectedTag: string) => selectedTag !== tag
-                        );
-                        this.setState({ tags: tags });
+                        let tags: string[] = state.tags;
+                        tags.push(tag);
+                        setState({ ...state, tags: tags });
                       }}
                     >
                       {tag}
-                    </SelectedTag>
+                    </Option>
                   ))}
-                  {this.state.tags.length === 0 && (
-                    <PlaceholderText>Select Tags Below...</PlaceholderText>
-                  )}
-                </SelectedTags>
-                <Options>
-                  {this.props.options
-                    .filter(
-                      (tag: string) => this.state.tags.indexOf(tag) === -1
-                    )
-                    .map((tag: string) => (
-                      <Option
-                        onClick={() => {
-                          let tags: string[] = this.state.tags;
-                          tags.push(tag);
-                          this.setState({ tags: tags });
-                        }}
-                      >
-                        {tag}
-                      </Option>
-                    ))}
-                </Options>
-              </PopupContent>
-            }
-            showButton={true}
-            closePopup={() => this.setState({ popupOpen: false })}
-            submitPopup={() => this.props.setTags(this.state.tags)}
-          ></Popup>
-        )}
-      </StyledAddTags>
-    );
-  }
-}
+              </Options>
+            </PopupContent>
+          }
+          showButton={true}
+          closePopup={() => setState({ ...state, popupOpen: false })}
+          submitPopup={() => props.setTags(state.tags)}
+        ></Popup>
+      )}
+    </StyledAddTags>
+  );
+};
