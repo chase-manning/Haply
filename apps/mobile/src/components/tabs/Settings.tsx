@@ -22,7 +22,7 @@ import {
   toggleRandomReminders,
   updateNextNotification,
 } from "../../state/settingsSlice";
-import { selectColorPrimary } from "../../state/tempSlice";
+import { selectColorPrimary, selectMode } from "../../state/tempSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -200,7 +200,6 @@ type Props = {
   login: () => void;
   achievements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
-  mode: Mode;
   toggleMode: () => void;
   tagOptions: string[];
   removeTag: (tag: string) => void;
@@ -238,6 +237,7 @@ const Settings = (props: Props) => {
   const frequencyMinutesMax = useSelector(selectFrequencyMinutesMax)!;
   const nextNotification = useSelector(selectNextNotification)!;
   const colorPrimary = useSelector(selectColorPrimary);
+  const mode = useSelector(selectMode);
 
   useEffect(() => {
     setState({
@@ -317,8 +317,8 @@ const Settings = (props: Props) => {
         <Line onClick={() => props.toggleMode()}>
           <Label>Dark Mode</Label>
           <Value>
-            <Toggle on={props.mode === Mode.Dark}>
-              {props.mode === Mode.Dark ? (
+            <Toggle on={mode === Mode.Dark}>
+              {mode === Mode.Dark ? (
                 <ToggleOnIcon fontSize={"large"} />
               ) : (
                 <ToggleOffIcon fontSize={"large"} />
