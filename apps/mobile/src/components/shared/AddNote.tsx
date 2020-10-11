@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Popup from "../shared/Popup";
@@ -34,54 +34,42 @@ const Input = styled.textarea`
   color: var(--main);
 `;
 
-class State {
-  note: string = "";
-  popupOpen: boolean = false;
-}
-
 type Props = {
   setNote: (note: string) => void;
 };
 
-export default class AddNote extends Component<Props> {
-  state: State;
+const AddNote = (props: Props) => {
+  const [state, setState] = useState({ note: "", popupOpen: false });
 
-  constructor(props: any) {
-    super(props);
-    this.state = new State();
-    this.handleChange = this.handleChange.bind(this);
-  }
+  return (
+    <StyledAddNote>
+      <Button onClick={() => setState({ ...state, popupOpen: true })}>
+        <ChatBubbleOutline />
+        <Label>Note</Label>
+      </Button>
+      {state.popupOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <Input
+                value={state.note}
+                placeholder="Write Note here..."
+                onChange={(event: any) =>
+                  setState({ ...state, note: event.target.value })
+                }
+              />
+            </PopupContent>
+          }
+          showButton={true}
+          closePopup={() => setState({ ...state, popupOpen: false })}
+          submitPopup={() => {
+            setState({ ...state, popupOpen: false });
+            props.setNote(state.note);
+          }}
+        ></Popup>
+      )}
+    </StyledAddNote>
+  );
+};
 
-  handleChange(event: any): void {
-    this.setState({
-      note: event.target.value,
-    });
-  }
-
-  render() {
-    return (
-      <StyledAddNote>
-        <Button onClick={() => this.setState({ popupOpen: true })}>
-          <ChatBubbleOutline />
-          <Label>Note</Label>
-        </Button>
-        {this.state.popupOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <Input
-                  value={this.state.note}
-                  placeholder="Write Note here..."
-                  onChange={this.handleChange}
-                />
-              </PopupContent>
-            }
-            showButton={true}
-            closePopup={() => this.setState({ popupOpen: false })}
-            submitPopup={() => this.props.setNote(this.state.note)}
-          ></Popup>
-        )}
-      </StyledAddNote>
-    );
-  }
-}
+export default AddNote;
