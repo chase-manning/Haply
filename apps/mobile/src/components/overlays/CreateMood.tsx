@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
 import { selectUser } from "../../state/userSlice";
 import { selectTagOptions } from "../../state/tempSlice";
+import { addMood } from "../../state/dataSlice";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -82,10 +83,6 @@ class State {
   tags: string[] = [];
 }
 
-type Props = {
-  addMood: (mood: Mood) => void;
-};
-
 const moodAsset = (mood: number): string => {
   if (mood <= 2) return sadAsset;
   if (mood <= 4) return mehAsset;
@@ -93,7 +90,7 @@ const moodAsset = (mood: number): string => {
   else return happyAsset;
 };
 
-const CreateMood = (props: Props) => {
+const CreateMood = () => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const moodShowing = useSelector(selectMoodShowing);
@@ -139,7 +136,7 @@ const CreateMood = (props: Props) => {
             state.tags
           );
           MoodService.createMood(user, mood);
-          props.addMood(mood);
+          dispatch(addMood);
           dispatch(hideMood());
         }}
       >

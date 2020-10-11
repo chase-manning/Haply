@@ -240,7 +240,7 @@ export default class App extends Component {
               />
             </OverlayContainer>
           )}
-        <CreateMood addMood={(mood: Mood) => this.addMood(mood)} />
+        <CreateMood />
       </StyledApp>
     );
   }
@@ -272,11 +272,7 @@ export default class App extends Component {
   }
 
   async addMood(mood: Mood): Promise<void> {
-    let moods: Mood[] = this.state.persist.moods;
-    moods.unshift(mood);
-    await this.setState({ persist: { ...this.state.persist, moods: moods } });
-
-    this.softUpdate();
+    // meow
   }
 
   async saveState(): Promise<void> {
