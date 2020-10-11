@@ -11,8 +11,8 @@ import mehAsset from "../../assets/svgs/WindyDay.svg";
 import MoodSlider from "../shared/MoodSlider";
 import AddNote from "../shared/AddNote";
 import AddTags from "../shared/AddTags";
-import { useSelector } from "react-redux";
-import { selectMoodShowing } from "../../state/navigationSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -83,7 +83,6 @@ class State {
 
 type Props = {
   user: User;
-  closeCapture: () => void;
   addMood: (mood: Mood) => void;
   tagOptions: string[];
 };
@@ -98,13 +97,14 @@ const moodAsset = (mood: number): string => {
 const CreateMood = (props: Props) => {
   const [state, setState] = useState(new State());
   const moodShowing = useSelector(selectMoodShowing);
+  const dispatch = useDispatch();
 
   if (!moodShowing) return null;
 
   return (
     <StyledCreateMood>
       <TopBar>
-        <Close onClick={() => props.closeCapture()} />
+        <Close onClick={() => dispatch(hideMood())} />
       </TopBar>
       <Header>How are you feeling?</Header>
       <Emotion>{moodDescriptions[state.mood]}</Emotion>
@@ -139,7 +139,7 @@ const CreateMood = (props: Props) => {
           );
           MoodService.createMood(props.user, mood);
           props.addMood(mood);
-          props.closeCapture();
+          dispatch(hideMood());
         }}
       >
         Done

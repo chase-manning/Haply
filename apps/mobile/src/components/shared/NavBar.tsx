@@ -5,7 +5,13 @@ import AddOutlined from "@material-ui/icons/AddOutlined";
 import BarChart from "@material-ui/icons/BarChart";
 import MenuOutlined from "@material-ui/icons/MenuOutlined";
 import styled from "styled-components";
-import { Tab } from "../../models/state";
+import {
+  Tab,
+  selectActiveTab,
+  setActiveTab,
+  showMood,
+} from "../../state/navigationSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const StyledNavBar = styled.div`
   position: fixed;
@@ -57,46 +63,43 @@ const Circle = styled.button`
   transform: translateY(-30px);
 `;
 
-type Props = {
-  activeTab: Tab;
-  setActiveTab: (tab: Tab) => void;
-  showCapture: () => void;
+const NavBar = () => {
+  const activeTab = useSelector(selectActiveTab);
+  const dispatch = useDispatch();
+
+  return (
+    <StyledNavBar data-testid="NavBar">
+      <NavItem
+        isActive={activeTab === Tab.Profile}
+        onClick={() => dispatch(setActiveTab(Tab.Profile))}
+      >
+        <EmojiEventsOutlined />
+      </NavItem>
+      <NavItem
+        isActive={activeTab === Tab.Entries}
+        onClick={() => dispatch(setActiveTab(Tab.Entries))}
+      >
+        <TimelineOutlined />
+      </NavItem>
+      <CircleContainer>
+        <Circle onClick={() => dispatch(showMood())}>
+          <AddOutlined />
+        </Circle>
+      </CircleContainer>
+      <NavItem
+        isActive={activeTab === Tab.Stats}
+        onClick={() => dispatch(setActiveTab(Tab.Stats))}
+      >
+        <BarChart />
+      </NavItem>
+      <NavItem
+        isActive={activeTab === Tab.Settings}
+        onClick={() => dispatch(setActiveTab(Tab.Settings))}
+      >
+        <MenuOutlined />
+      </NavItem>
+    </StyledNavBar>
+  );
 };
 
-export default class NavBar extends Component<Props> {
-  render() {
-    return (
-      <StyledNavBar data-testid="NavBar">
-        <NavItem
-          isActive={this.props.activeTab === Tab.Profile}
-          onClick={() => this.props.setActiveTab(Tab.Profile)}
-        >
-          <EmojiEventsOutlined />
-        </NavItem>
-        <NavItem
-          isActive={this.props.activeTab === Tab.Entries}
-          onClick={() => this.props.setActiveTab(Tab.Entries)}
-        >
-          <TimelineOutlined />
-        </NavItem>
-        <CircleContainer>
-          <Circle onClick={() => this.props.showCapture()}>
-            <AddOutlined />
-          </Circle>
-        </CircleContainer>
-        <NavItem
-          isActive={this.props.activeTab === Tab.Stats}
-          onClick={() => this.props.setActiveTab(Tab.Stats)}
-        >
-          <BarChart />
-        </NavItem>
-        <NavItem
-          isActive={this.props.activeTab === Tab.Settings}
-          onClick={() => this.props.setActiveTab(Tab.Settings)}
-        >
-          <MenuOutlined />
-        </NavItem>
-      </StyledNavBar>
-    );
-  }
-}
+export default NavBar;

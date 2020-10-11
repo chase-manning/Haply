@@ -5,12 +5,14 @@ import Achievements from "./Achievements";
 import Entries from "./Entries";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
-import { Mode, Tab, SettingsModel } from "../../models/state";
+import { Mode, SettingsModel } from "../../models/state";
+import { Tab, selectActiveTab } from "../../state/navigationSlice";
 import { NOTFOUND } from "dns";
 import { User } from "firebase";
 import Mood from "../../models/mood";
 import { StatModel } from "../../models/StatModel";
 import AchievementModel from "../../models/AchievementModel";
+import { useSelector, useDispatch } from "react-redux";
 
 const StyledTabs = styled.div`
   width: 100%;
@@ -20,7 +22,6 @@ const StyledTabs = styled.div`
 
 type Props = {
   user: User;
-  activeTab: Tab;
   login: () => void;
   moods: Mood[];
   removeMood: (mood: Mood) => void;
@@ -39,49 +40,51 @@ type Props = {
   setReminderFrequencies: (min: number, max: number) => void;
 };
 
-export default class Tabs extends Component<Props> {
-  render() {
-    let activeTab;
-    if (this.props.activeTab === Tab.Profile)
-      activeTab = <Achievements achievements={this.props.achivements} />;
-    else if (this.props.activeTab === Tab.Entries)
-      activeTab = (
-        <Entries
-          removeMood={(mood: Mood) => this.props.removeMood(mood)}
-          moods={this.props.moods}
-          user={this.props.user}
-        />
-      );
-    else if (this.props.activeTab === Tab.Stats)
-      activeTab = (
-        <Analytics
-          stats={this.props.stats}
-          moods={this.props.moods}
-          user={this.props.user}
-          colorPrimary={this.props.colorPrimary}
-        />
-      );
-    else if (this.props.activeTab === Tab.Settings)
-      activeTab = (
-        <Settings
-          user={this.props.user}
-          login={() => this.props.login()}
-          colorPrimary={this.props.colorPrimary}
-          achievements={this.props.achivements}
-          setColorPrimary={this.props.setColorPrimary}
-          mode={this.props.mode}
-          toggleMode={() => this.props.toggleMode()}
-          tagOptions={this.props.tagOptions}
-          removeTag={this.props.removeTag}
-          addTag={this.props.addTag}
-          settings={this.props.settings}
-          toggleRemindersEnabled={this.props.toggleRemindersEnabled}
-          toggleRandomReminders={this.props.toggleRandomReminders}
-          setReminderFrequencies={this.props.setReminderFrequencies}
-        />
-      );
-    else throw NOTFOUND;
+const Tabs = (props: Props) => {
+  const activeTab = useSelector(selectActiveTab); //TODO should this be outside of the render line in App?
 
-    return <StyledTabs>{activeTab}</StyledTabs>;
-  }
-}
+  let tabContents;
+  if (activeTab === Tab.Profile)
+    tabContents = <Achievements achievements={props.achivements} />;
+  else if (activeTab === Tab.Entries)
+    tabContents = (
+      <Entries
+        removeMood={(mood: Mood) => props.removeMood(mood)}
+        moods={props.moods}
+        user={props.user}
+      />
+    );
+  else if (activeTab === Tab.Stats)
+    tabContents = (
+      <Analytics
+        stats={props.stats}
+        moods={props.moods}
+        user={props.user}
+        colorPrimary={props.colorPrimary}
+      />
+    );
+  else if (activeTab === Tab.Settings)
+    tabContents = (
+      <Settings
+        user={props.user}
+        login={() => props.login()}
+        colorPrimary={props.colorPrimary}
+        achievements={props.achivements}
+        setColorPrimary={props.setColorPrimary}
+        mode={props.mode}
+        toggleMode={() => props.toggleMode()}
+        tagOptions={props.tagOptions}
+        removeTag={props.removeTag}
+        addTag={props.addTag}
+        settings={props.settings}
+        toggleRemindersEnabled={props.toggleRemindersEnabled}
+        toggleRandomReminders={props.toggleRandomReminders}
+        setReminderFrequencies={props.setReminderFrequencies}
+      />
+    );
+  else throw NOTFOUND;
+
+  return <StyledTabs>{tabContents}</StyledTabs>;
+};
+
+export default Tabs;

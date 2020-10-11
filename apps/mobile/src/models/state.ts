@@ -3,13 +3,6 @@ import Mood from "./mood";
 import { StatModel } from "../models/StatModel";
 import AchievementModel from "./AchievementModel";
 
-export enum Tab {
-  Profile,
-  Entries,
-  Stats,
-  Settings,
-}
-
 export enum Mode {
   Default,
   Dark,
@@ -56,8 +49,5 @@ export class Persist {
 }
 
 export default class State {
-  activeTab: Tab = Tab.Profile;
-  moodShowing: boolean = false;
-  loggingIn: boolean = false;
   persist: Persist = new Persist();
 }

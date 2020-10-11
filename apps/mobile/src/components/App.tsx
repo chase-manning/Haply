@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
-import State, { Mode, Tab, Persist } from "../models/state";
+import State, { Mode, Persist } from "../models/state";
+import {
+  Tab,
+  selectActiveTab,
+  selectActiveTabText,
+} from "../state/navigationSlice";
 import CreateMood from "./overlays/CreateMood";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -13,6 +18,7 @@ import { StatModel } from "../models/StatModel";
 import StatService from "../services/StatService";
 import AchievementService from "../services/AchievementService";
 import AchievementModel from "../models/AchievementModel";
+import Header from "../components/shared/Header";
 import {
   Plugins,
   PushNotification,
@@ -22,6 +28,7 @@ import {
 import { createGlobalStyle } from "styled-components";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import PushNotificationService from "../services/PushNotificationService";
+import { useSelector, useDispatch } from "react-redux";
 import SettingService from "../services/SettingService";
 const { Storage } = CapacitorPlugins;
 
@@ -108,21 +115,6 @@ const StyledApp = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-`;
-
-const Header = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
-  padding-top: 20px;
-  background-color: var(--bg-top);
-  color: var(--main);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: solid 1px var(--border);
 `;
 
 const ContentContainer = styled.div`
@@ -238,7 +230,6 @@ export default class App extends Component {
               stats={this.state.persist.stats}
               moods={this.state.persist.moods}
               user={this.state.persist.user!}
-              activeTab={this.state.activeTab}
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
               colorPrimary={this.state.persist.colorPrimary}
@@ -264,17 +255,11 @@ export default class App extends Component {
                 this.setReminderFrequencies(min, max)
               }
             />
-            <Header>{this.headerText}</Header>
-            <NavBar
-              activeTab={this.state.activeTab}
-              setActiveTab={(tab: Tab) => this.setState({ activeTab: tab })}
-              showCapture={() => {
-                this.setState({ moodShowing: true });
-              }}
-            />
+            <Header />
+            <NavBar />
           </ContentContainer>
         )}
-        {this.state.loggingIn &&
+        {false &&
           (this.state.persist.user?.isAnonymous ||
             !this.state.persist.user) && (
             <OverlayContainer>
@@ -284,25 +269,13 @@ export default class App extends Component {
               />
             </OverlayContainer>
           )}
-        {this.state.moodShowing && (
-          <CreateMood
-            addMood={(mood: Mood) => this.addMood(mood)}
-            user={this.state.persist.user!}
-            closeCapture={() => this.setState({ moodShowing: false })}
-            tagOptions={this.state.persist.tagOptions}
-          />
-        )}
+        <CreateMood
+          addMood={(mood: Mood) => this.addMood(mood)}
+          user={this.state.persist.user!}
+          tagOptions={this.state.persist.tagOptions}
+        />
       </StyledApp>
     );
-  }
-
-  get headerText(): string {
-    const activeTab: Tab = this.state.activeTab;
-    if (activeTab === Tab.Profile) return "Achievements";
-    else if (activeTab === Tab.Entries) return "Entries";
-    else if (activeTab === Tab.Stats) return "Analytics";
-    else if (activeTab === Tab.Settings) return "More";
-    else return "Error";
   }
 
   async hardUpdate(): Promise<void> {
