@@ -22,7 +22,11 @@ import {
   toggleRandomReminders,
   updateNextNotification,
 } from "../../state/settingsSlice";
-import { selectColorPrimary, selectMode } from "../../state/tempSlice";
+import {
+  selectColorPrimary,
+  selectMode,
+  selectTagOptions,
+} from "../../state/tempSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -201,7 +205,6 @@ type Props = {
   achievements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
-  tagOptions: string[];
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
 };
@@ -238,6 +241,7 @@ const Settings = (props: Props) => {
   const nextNotification = useSelector(selectNextNotification)!;
   const colorPrimary = useSelector(selectColorPrimary);
   const mode = useSelector(selectMode);
+  const tagOptions = useSelector(selectTagOptions);
 
   useEffect(() => {
     setState({
@@ -532,7 +536,7 @@ const Settings = (props: Props) => {
           content={
             <PopupContent>
               <SelectedTags>
-                {props.tagOptions.map((tagOption: string) => (
+                {tagOptions.map((tagOption: string) => (
                   <SelectedTag
                     onClick={() => props.removeTag(tagOption)}
                     includeMargin={true}
