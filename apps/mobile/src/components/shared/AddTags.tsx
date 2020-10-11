@@ -107,8 +107,8 @@ const AddTags = (props: Props) => {
             </PopupContent>
           }
           showButton={true}
-          closePopup={() => setState({ ...state, popupOpen: false })}
-          submitPopup={() => props.setTags(state.tags)}
+          close={() => setState({ ...state, popupOpen: false })}
+          submit={() => props.setTags(state.tags)}
         ></Popup>
       )}
     </StyledAddTags>

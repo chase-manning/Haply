@@ -67,24 +67,29 @@ const DoneButton = styled.button`
 type Props = {
   content: JSX.Element;
   showButton: boolean;
-  closePopup: () => void;
-  submitPopup: () => void;
+  close: () => void;
+  submit?: () => void;
 };
 
 export default class Popup extends Component<Props> {
   render() {
     return (
       <StyledPopup>
-        <Shadow onClick={() => this.props.closePopup()} />
+        <Shadow onClick={() => this.props.close()} />
         <Details>
           <Header>
-            <ExitButton onClick={() => this.props.closePopup()}>
+            <ExitButton onClick={() => this.props.close()}>
               <Close />
             </ExitButton>
           </Header>
           {this.props.content}
           {this.props.showButton && (
-            <DoneButton onClick={() => this.props.submitPopup()}>
+            <DoneButton
+              onClick={() => {
+                if (this.props.submit) this.props.submit!();
+                this.props.close();
+              }}
+            >
               Done
             </DoneButton>
           )}

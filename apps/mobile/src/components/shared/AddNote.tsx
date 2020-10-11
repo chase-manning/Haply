@@ -66,11 +66,8 @@ const AddNote = (props: Props) => {
             </PopupContent>
           }
           showButton={true}
-          closePopup={() => setState({ ...state, popupOpen: false })}
-          submitPopup={() => {
-            setState({ ...state, popupOpen: false });
-            props.setNote(state.note);
-          }}
+          close={() => setState({ ...state, popupOpen: false })}
+          submit={() => props.setNote(state.note)}
         ></Popup>
       )}
     </StyledAddNote>
