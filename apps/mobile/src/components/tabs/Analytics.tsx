@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
-import { User } from "firebase";
 import Mood from "../../models/mood";
 import { StatModel } from "../../models/StatModel";
 import Stat from "../shared/Stat";
+import { useSelector } from "react-redux";
+import { selectColorPrimary } from "../../state/tempSlice";
 
 const StyledAnalytics = styled.div`
   width: 100%;
@@ -16,17 +17,18 @@ const StyledAnalytics = styled.div`
 type Props = {
   moods: Mood[];
   stats: StatModel[];
-  colorPrimary: string;
 };
 
-export default class Analytics extends Component<Props> {
-  render() {
-    return <StyledAnalytics data-testid="Stats">{this.stats}</StyledAnalytics>;
-  }
+const Analytics = (props: Props) => {
+  const colorPrimary = useSelector(selectColorPrimary);
 
-  get stats(): JSX.Element[] {
-    return this.props.stats.map((stat: StatModel) => (
-      <Stat stat={stat} colorPrimary={this.props.colorPrimary} />
-    ));
-  }
-}
+  return (
+    <StyledAnalytics data-testid="Stats">
+      {props.stats.map((stat: StatModel) => (
+        <Stat stat={stat} colorPrimary={colorPrimary} />
+      ))}
+    </StyledAnalytics>
+  );
+};
+
+export default Analytics;
