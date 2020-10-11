@@ -229,7 +229,6 @@ export default class App extends Component {
               achivements={this.state.persist.achievements}
               stats={this.state.persist.stats}
               moods={this.state.persist.moods}
-              user={this.state.persist.user!}
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
               colorPrimary={this.state.persist.colorPrimary}
@@ -271,7 +270,6 @@ export default class App extends Component {
           )}
         <CreateMood
           addMood={(mood: Mood) => this.addMood(mood)}
-          user={this.state.persist.user!}
           tagOptions={this.state.persist.tagOptions}
         />
       </StyledApp>
