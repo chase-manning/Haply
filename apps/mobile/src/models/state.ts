@@ -12,22 +12,6 @@ export class Persist {
   moods: Mood[] = [];
   stats: StatModel[] = [];
   achievements: AchievementModel[] = [];
-  tagOptions: string[] = [
-    "With Friends",
-    "With Family",
-    "Tired",
-    "Well Rested",
-    "In Pain",
-    "Sick",
-    "Working",
-    "At Home",
-    "On Holiday",
-    "Eating Well",
-    "Eating Poorly",
-    "Exercising",
-  ];
-  colorPrimary: string = "#4071fe";
-  mode: Mode = Mode.Default;
   pushNotificationToken?: string;
 }
 
