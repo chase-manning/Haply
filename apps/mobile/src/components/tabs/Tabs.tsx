@@ -17,7 +17,6 @@ const StyledTabs = styled.div`
 `;
 
 type Props = {
-  setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
@@ -33,7 +32,6 @@ const Tabs = (props: Props) => {
   else if (activeTab === Tab.Settings)
     tabContents = (
       <Settings
-        setColorPrimary={props.setColorPrimary}
         toggleMode={() => props.toggleMode()}
         removeTag={props.removeTag}
         addTag={props.addTag}

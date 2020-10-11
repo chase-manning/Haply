@@ -226,16 +226,6 @@ export default class App extends Component {
         {!!this.state.persist.user && (
           <ContentContainer>
             <Tabs
-              setColorPrimary={async (colorPrimary: string) => {
-                await this.setState({
-                  persist: {
-                    ...this.state.persist,
-                    colorPrimary: colorPrimary,
-                  },
-                });
-                await this.saveState();
-                await this.refreshAchievements();
-              }}
               toggleMode={async () => await this.toggleMode()}
               removeTag={(tag: string) => this.removeTag(tag)}
               addTag={(tag: string) => this.addTag(tag)}

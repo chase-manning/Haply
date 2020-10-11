@@ -26,6 +26,7 @@ import {
   selectColorPrimary,
   selectMode,
   selectTagOptions,
+  setColorPrimary,
 } from "../../state/tempSlice";
 import { selectAchievements } from "../../state/dataSlice";
 import { showLogin } from "../../state/navigationSlice";
@@ -203,7 +204,6 @@ class State {
 }
 
 type Props = {
-  setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
@@ -518,7 +518,7 @@ const Settings = (props: Props) => {
                   .map((achievement: AchievementModel) => (
                     <ColorOption
                       onClick={() =>
-                        props.setColorPrimary(achievement.colorPrimary)
+                        dispatch(setColorPrimary(achievement.colorPrimary))
                       }
                       selected={achievement.colorPrimary === colorPrimary}
                     >
