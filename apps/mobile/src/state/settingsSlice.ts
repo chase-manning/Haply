@@ -56,6 +56,7 @@ export const {
 } = settingsSlice.actions;
 
 /* SELECTS */
+export const selectSettings = (state: RootState) => state.settings;
 export const selectRemindersEnabled = (state: RootState) =>
   state.settings.remindersEnabled;
 export const selectRandomReminders = (state: RootState) =>
