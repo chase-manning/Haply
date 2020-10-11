@@ -1,18 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import Achievements from "./Achievements";
 import Entries from "./Entries";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
-import { Mode, SettingsModel } from "../../models/state";
 import { Tab, selectActiveTab } from "../../state/navigationSlice";
 import { NOTFOUND } from "dns";
-import { User } from "firebase";
 import Mood from "../../models/mood";
-import { StatModel } from "../../models/StatModel";
-import AchievementModel from "../../models/AchievementModel";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const StyledTabs = styled.div`
   width: 100%;
@@ -22,10 +18,7 @@ const StyledTabs = styled.div`
 
 type Props = {
   login: () => void;
-  moods: Mood[];
   removeMood: (mood: Mood) => void;
-  stats: StatModel[];
-  achivements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
   removeTag: (tag: string) => void;
@@ -33,25 +26,19 @@ type Props = {
 };
 
 const Tabs = (props: Props) => {
-  const activeTab = useSelector(selectActiveTab); //TODO should this be outside of the render line in App?
+  const activeTab = useSelector(selectActiveTab);
 
   let tabContents;
-  if (activeTab === Tab.Profile)
-    tabContents = <Achievements achievements={props.achivements} />;
+  if (activeTab === Tab.Profile) tabContents = <Achievements />;
   else if (activeTab === Tab.Entries)
     tabContents = (
-      <Entries
-        removeMood={(mood: Mood) => props.removeMood(mood)}
-        moods={props.moods}
-      />
+      <Entries removeMood={(mood: Mood) => props.removeMood(mood)} />
     );
-  else if (activeTab === Tab.Stats)
-    tabContents = <Analytics stats={props.stats} moods={props.moods} />;
+  else if (activeTab === Tab.Stats) tabContents = <Analytics />;
   else if (activeTab === Tab.Settings)
     tabContents = (
       <Settings
         login={() => props.login()}
-        achievements={props.achivements}
         setColorPrimary={props.setColorPrimary}
         toggleMode={() => props.toggleMode()}
         removeTag={props.removeTag}
