@@ -27,7 +27,6 @@ type Props = {
   stats: StatModel[];
   achivements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
-  mode: Mode;
   toggleMode: () => void;
   tagOptions: string[];
   removeTag: (tag: string) => void;
@@ -55,7 +54,6 @@ const Tabs = (props: Props) => {
         login={() => props.login()}
         achievements={props.achivements}
         setColorPrimary={props.setColorPrimary}
-        mode={props.mode}
         toggleMode={() => props.toggleMode()}
         tagOptions={props.tagOptions}
         removeTag={props.removeTag}
