@@ -26,7 +26,7 @@ import {
   selectColorPrimary,
   toggleMode,
   selectTagOptions,
-  setColorPrimary,
+  setColorPrimary,, selectMode, removeTagOption, addTagOption
 } from "../../state/tempSlice";
 import { selectAchievements } from "../../state/dataSlice";
 import { showLogin } from "../../state/navigationSlice";
@@ -203,11 +203,6 @@ class State {
   reminderFrequencyMaximumDropdown: string = "Hours";
 }
 
-type Props = {
-  removeTag: (tag: string) => void;
-  addTag: (tag: string) => void;
-};
-
 const getFrequencyInputFromMinutes = (minutes: number): number => {
   if (minutes < 60) return minutes;
   else if (minutes < 60 * 24) return minutes / 60;
@@ -229,7 +224,7 @@ const getFrequencyMultiplier = (frequencyDropdown: string): number => {
 const frequency = (input: number, period: string) =>
   input * getFrequencyMultiplier(period);
 
-const Settings = (props: Props) => {
+const Settings = () => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const user = useSelector(selectUser)!;
@@ -538,7 +533,7 @@ const Settings = (props: Props) => {
               <SelectedTags>
                 {tagOptions.map((tagOption: string) => (
                   <SelectedTag
-                    onClick={() => props.removeTag(tagOption)}
+                    onClick={() => dispatch(removeTagOption(tagOption))}
                     includeMargin={true}
                   >
                     {tagOption}
@@ -582,7 +577,7 @@ const Settings = (props: Props) => {
                           newTag: "",
                         })
                       }
-                      submit={() => props.addTag(state.newTag)}
+                      submit={() => dispatch(addTagOption(state.newTag))}
                     />
                   )}
                 </AddTag>

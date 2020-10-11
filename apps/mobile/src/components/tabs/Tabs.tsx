@@ -16,22 +16,14 @@ const StyledTabs = styled.div`
   overflow: auto;
 `;
 
-type Props = {
-  removeTag: (tag: string) => void;
-  addTag: (tag: string) => void;
-};
-
-const Tabs = (props: Props) => {
+const Tabs = () => {
   const activeTab = useSelector(selectActiveTab);
 
   let tabContents;
   if (activeTab === Tab.Profile) tabContents = <Achievements />;
   else if (activeTab === Tab.Entries) tabContents = <Entries />;
   else if (activeTab === Tab.Stats) tabContents = <Analytics />;
-  else if (activeTab === Tab.Settings)
-    tabContents = (
-      <Settings removeTag={props.removeTag} addTag={props.addTag} />
-    );
+  else if (activeTab === Tab.Settings) tabContents = <Settings />;
   else throw NOTFOUND;
 
   return <StyledTabs>{tabContents}</StyledTabs>;

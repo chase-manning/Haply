@@ -225,10 +225,7 @@ export default class App extends Component {
         />
         {!!this.state.persist.user && (
           <ContentContainer>
-            <Tabs
-              removeTag={(tag: string) => this.removeTag(tag)}
-              addTag={(tag: string) => this.addTag(tag)}
-            />
+            <Tabs />
             <Header />
             <NavBar />
           </ContentContainer>
