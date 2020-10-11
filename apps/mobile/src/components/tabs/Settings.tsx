@@ -24,7 +24,7 @@ import {
 import {
   Mode,
   selectColorPrimary,
-  selectMode,
+  toggleMode,
   selectTagOptions,
   setColorPrimary,
 } from "../../state/tempSlice";
@@ -204,7 +204,6 @@ class State {
 }
 
 type Props = {
-  toggleMode: () => void;
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
 };
@@ -319,7 +318,7 @@ const Settings = (props: Props) => {
           achievement.unlocks.indexOf("Dark Mode") >= 0 &&
           achievement.percentComplete === 1
       ) && (
-        <Line onClick={() => props.toggleMode()}>
+        <Line onClick={() => dispatch(toggleMode)}>
           <Label>Dark Mode</Label>
           <Value>
             <Toggle on={mode === Mode.Dark}>

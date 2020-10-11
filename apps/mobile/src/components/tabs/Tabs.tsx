@@ -17,7 +17,6 @@ const StyledTabs = styled.div`
 `;
 
 type Props = {
-  toggleMode: () => void;
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
 };
@@ -31,11 +30,7 @@ const Tabs = (props: Props) => {
   else if (activeTab === Tab.Stats) tabContents = <Analytics />;
   else if (activeTab === Tab.Settings)
     tabContents = (
-      <Settings
-        toggleMode={() => props.toggleMode()}
-        removeTag={props.removeTag}
-        addTag={props.addTag}
-      />
+      <Settings removeTag={props.removeTag} addTag={props.addTag} />
     );
   else throw NOTFOUND;
 

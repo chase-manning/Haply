@@ -226,7 +226,6 @@ export default class App extends Component {
         {!!this.state.persist.user && (
           <ContentContainer>
             <Tabs
-              toggleMode={async () => await this.toggleMode()}
               removeTag={(tag: string) => this.removeTag(tag)}
               addTag={(tag: string) => this.addTag(tag)}
             />
@@ -299,19 +298,6 @@ export default class App extends Component {
         },
       });
     }
-  }
-
-  async toggleMode(): Promise<void> {
-    if (this.state.persist.mode === Mode.Dark)
-      await this.setState({
-        persist: { ...this.state.persist, mode: Mode.Light },
-      });
-    else
-      await this.setState({
-        persist: { ...this.state.persist, mode: Mode.Dark },
-      });
-    await this.saveState();
-    await this.refreshAchievements();
   }
 
   async removeTag(tag: string) {
