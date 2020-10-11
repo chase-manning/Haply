@@ -33,9 +33,6 @@ type Props = {
   tagOptions: string[];
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
-  toggleRemindersEnabled: () => void;
-  toggleRandomReminders: () => void;
-  setReminderFrequencies: (min: number, max: number) => void;
 };
 
 const Tabs = (props: Props) => {
@@ -71,9 +68,6 @@ const Tabs = (props: Props) => {
         tagOptions={props.tagOptions}
         removeTag={props.removeTag}
         addTag={props.addTag}
-        toggleRemindersEnabled={props.toggleRemindersEnabled}
-        toggleRandomReminders={props.toggleRandomReminders}
-        setReminderFrequencies={props.setReminderFrequencies}
       />
     );
   else throw NOTFOUND;
