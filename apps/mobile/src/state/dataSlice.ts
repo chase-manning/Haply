@@ -39,9 +39,7 @@ export const dataSlice = createSlice({
     },
     removeMood: (state, action: PayloadAction<Mood>) => {
       const index = state.moods.indexOf(action.payload);
-      if (index > -1) {
-        state.moods.splice(index, 1);
-      }
+      if (index > -1) state.moods.splice(index, 1);
     },
   },
 });
