@@ -17,7 +17,6 @@ const StyledTabs = styled.div`
 `;
 
 type Props = {
-  removeMood: (mood: Mood) => void;
   setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
   removeTag: (tag: string) => void;
@@ -29,10 +28,7 @@ const Tabs = (props: Props) => {
 
   let tabContents;
   if (activeTab === Tab.Profile) tabContents = <Achievements />;
-  else if (activeTab === Tab.Entries)
-    tabContents = (
-      <Entries removeMood={(mood: Mood) => props.removeMood(mood)} />
-    );
+  else if (activeTab === Tab.Entries) tabContents = <Entries />;
   else if (activeTab === Tab.Stats) tabContents = <Analytics />;
   else if (activeTab === Tab.Settings)
     tabContents = (
