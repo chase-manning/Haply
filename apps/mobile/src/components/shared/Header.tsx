@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { selectActiveTabText } from "../../state/navigationSlice";
 
-const Header = styled.div`
+const StyledHeader = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -18,9 +18,9 @@ const Header = styled.div`
   border-bottom: solid 1px var(--border);
 `;
 
-function App() {
+function Header() {
   const headerText: string = useSelector(selectActiveTabText);
-  return <Header>{headerText}</Header>;
+  return <StyledHeader>{headerText}</StyledHeader>;
 }
 
-export default App;
+export default Header;
