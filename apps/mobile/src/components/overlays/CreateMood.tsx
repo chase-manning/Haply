@@ -13,6 +13,7 @@ import AddNote from "../shared/AddNote";
 import AddTags from "../shared/AddTags";
 import { useSelector, useDispatch } from "react-redux";
 import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
+import { selectUser } from "../../state/userSlice";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -82,7 +83,6 @@ class State {
 }
 
 type Props = {
-  user: User;
   addMood: (mood: Mood) => void;
   tagOptions: string[];
 };
@@ -97,6 +97,7 @@ const moodAsset = (mood: number): string => {
 const CreateMood = (props: Props) => {
   const [state, setState] = useState(new State());
   const moodShowing = useSelector(selectMoodShowing);
+  const user = useSelector(selectUser)!;
   const dispatch = useDispatch();
 
   if (!moodShowing) return null;
@@ -133,11 +134,11 @@ const CreateMood = (props: Props) => {
         onClick={() => {
           const mood: Mood = new Mood(
             state.mood,
-            props.user.uid,
+            user.uid,
             state.note,
             state.tags
           );
-          MoodService.createMood(props.user, mood);
+          MoodService.createMood(user, mood);
           props.addMood(mood);
           dispatch(hideMood());
         }}
