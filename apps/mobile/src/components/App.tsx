@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
@@ -29,7 +29,13 @@ import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import PushNotificationService from "../services/PushNotificationService";
 import { useSelector, useDispatch } from "react-redux";
 import SettingService from "../services/SettingService";
-import { Mode } from "../state/tempSlice";
+import { Mode, selectColorPrimary, selectMode } from "../state/tempSlice";
+import {
+  selectUser,
+  setPushNotificationToken,
+  setUser,
+} from "../state/userSlice";
+import { selectSettings } from "../state/settingsSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -139,26 +145,24 @@ const OverlayContainer = styled.div`
   height: 100%;
 `;
 
-export default class App extends Component {
-  state: State;
-  unregisterAuthObserver: any;
+const App = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const settings = useSelector(selectSettings);
+  const colorPrimary = useSelector(selectColorPrimary);
+  const mode = useSelector(selectMode);
 
-  constructor(props: any) {
-    super(props);
-    this.state = new State();
-  }
-
-  async componentDidMount() {
+  useEffect(async () => {
     await this.loadState();
 
     firebaseApp.auth().onAuthStateChanged(async (user) => {
       if (!user) return;
-      await this.setState({ persist: { ...this.state.persist, user: user } });
+      dispatch(setUser(user));
       await this.updatePushNotificationToken();
       this.hardUpdate();
     });
 
-    if (!this.state.persist.user) {
+    if (!user) {
       await firebase
         .auth()
         .signInAnonymously()
@@ -168,10 +172,7 @@ export default class App extends Component {
         });
     }
 
-    await SettingService.createSetting(
-      this.state.persist.user!,
-      this.state.persist.settings
-    );
+    await SettingService.createSetting(user!, settings);
 
     PushNotifications.requestPermission().then((result) => {
       if (result.granted) {
@@ -187,13 +188,7 @@ export default class App extends Component {
       "registration",
       async (token: PushNotificationToken) => {
         // alert("Push registration success, token: " + token.value);
-        await this.setState({
-          persist: {
-            ...this.state.persist,
-            pushNotificationToken: token.value,
-          },
-        });
-        await this.updatePushNotificationToken();
+        dispatch(setPushNotificationToken(token.value));
       }
     );
 
@@ -214,182 +209,29 @@ export default class App extends Component {
         //alert("Push action performed: " + JSON.stringify(notification));
       }
     );
-  }
+  });
 
-  render() {
-    return (
-      <StyledApp>
-        <GlobalStyle
-          colorPrimary={this.state.persist.colorPrimary}
-          mode={this.state.persist.mode}
-        />
-        {!!this.state.persist.user && (
-          <ContentContainer>
-            <Tabs />
-            <Header />
-            <NavBar />
-          </ContentContainer>
-        )}
-        {false &&
-          (this.state.persist.user?.isAnonymous ||
-            !this.state.persist.user) && (
-            <OverlayContainer>
-              <StyledFirebaseAuth
-                uiConfig={uiConfig}
-                firebaseAuth={firebaseApp.auth()}
-              />
-            </OverlayContainer>
-          )}
-        <CreateMood />
-      </StyledApp>
-    );
-  }
+  return (
+    <StyledApp>
+      <GlobalStyle colorPrimary={colorPrimary} mode={mode} />
+      {!!user && (
+        <ContentContainer>
+          <Tabs />
+          <Header />
+          <NavBar />
+        </ContentContainer>
+      )}
+      {false && (user?.isAnonymous || !user) && (
+        <OverlayContainer>
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebaseApp.auth()}
+          />
+        </OverlayContainer>
+      )}
+      <CreateMood />
+    </StyledApp>
+  );
+};
 
-  async hardUpdate(): Promise<void> {
-    await this.updateMoods();
-    await this.softUpdate();
-  }
-
-  async softUpdate(): Promise<void> {
-    await this.refreshStats();
-    await this.refreshAchievements();
-  }
-
-  async refreshStats(): Promise<void> {
-    // use think
-  }
-
-  async refreshAchievements(): Promise<void> {
-    // think
-  }
-
-  async updateMoods(): Promise<void> {
-    // call the thunk for it
-  }
-
-  async removeMood(mood: Mood): Promise<void> {
-    // action
-  }
-
-  async addMood(mood: Mood): Promise<void> {
-    // meow
-  }
-
-  async saveState(): Promise<void> {
-    Storage.set({ key: "state", value: JSON.stringify(this.state.persist) });
-  }
-
-  async loadState(): Promise<void> {
-    let ret: { value: any } = await Storage.get({ key: "state" });
-    if (ret.value) {
-      let persist: Persist = JSON.parse(ret.value);
-      await this.setState({
-        persist: {
-          ...this.state.persist,
-          ...persist,
-          settings: { ...this.state.persist.settings, ...persist.settings },
-        },
-      });
-    }
-  }
-
-  async removeTag(tag: string) {
-    let tags: string[] = this.state.persist.tagOptions;
-    const index = tags.indexOf(tag);
-    if (index > -1) {
-      tags.splice(index, 1);
-    }
-    await this.setState({
-      persist: { ...this.state.persist, tagOptions: tags },
-    });
-    this.saveState();
-  }
-
-  async addTag(tag: string) {
-    let tags: string[] = this.state.persist.tagOptions;
-    tags.push(tag);
-    await this.setState({
-      persist: { ...this.state.persist, tagOptions: tags },
-    });
-    this.saveState();
-  }
-
-  async updatePushNotificationToken() {
-    if (this.state.persist.user && this.state.persist.pushNotificationToken) {
-      let response: any = await PushNotificationService.updateToken(
-        this.state.persist.user!,
-        this.state.persist.pushNotificationToken!
-      );
-      if (!response.ok) console.log("Error Creating Push Notification");
-    }
-  }
-
-  async toggleRemindersEnabled(): Promise<void> {
-    await this.setState({
-      persist: {
-        ...this.state.persist,
-        settings: {
-          ...this.state.persist.settings,
-          remindersEnabled: !this.state.persist.settings.remindersEnabled,
-        },
-      },
-    });
-    await this.updateNextNotification();
-    await this.saveState();
-    await SettingService.createSetting(
-      this.state.persist.user!,
-      this.state.persist.settings
-    );
-  }
-
-  async toggleRandomReminders(): Promise<void> {
-    await this.setState({
-      persist: {
-        ...this.state.persist,
-        settings: {
-          ...this.state.persist.settings,
-          randomReminders: !this.state.persist.settings.randomReminders,
-        },
-      },
-    });
-    await this.updateNextNotification();
-    await this.saveState();
-    await SettingService.createSetting(
-      this.state.persist.user!,
-      this.state.persist.settings
-    );
-  }
-
-  async setReminderFrequencies(min: number, max: number): Promise<void> {
-    await this.setState({
-      persist: {
-        ...this.state.persist,
-        settings: {
-          ...this.state.persist.settings,
-          frequencyMinutesMin: min,
-          frequencyMinutesMax: max,
-        },
-      },
-    });
-    await this.updateNextNotification();
-    await this.saveState();
-  }
-
-  async updateNextNotification(): Promise<void> {
-    let randomNumber: number = Math.random();
-    let minutesAdded: number =
-      this.state.persist.settings.frequencyMinutesMin * randomNumber +
-      this.state.persist.settings.frequencyMinutesMax * (1 - randomNumber);
-
-    let now: Date = new Date();
-    await this.setState({
-      persist: {
-        ...this.state.persist,
-        settings: {
-          ...this.state.persist.settings,
-          nextNotification: new Date(now.getTime() + minutesAdded * 60000),
-        },
-      },
-    });
-  }
-}
+export default App;
