@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "./store";
 
+/* TYPES */
 export enum Tab {
   Profile,
   Entries,
@@ -20,6 +21,7 @@ const initialState: NavigationState = {
   loggingIn: false,
 };
 
+/* SLICE */
 export const navigationSlice = createSlice({
   name: "navigation",
   initialState,
@@ -50,12 +52,14 @@ export const {
   setActiveTab,
 } = navigationSlice.actions;
 
+/* THUNKS */
 export const setActiveTabAsync = (tab: Tab): AppThunk => (dispatch) => {
   setTimeout(() => {
     dispatch(setActiveTab(tab));
   }, 1000);
 };
 
+/* SELECTS */
 export const selectMoodShowing = (state: RootState) =>
   state.navigation.moodShowing;
 
