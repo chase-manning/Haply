@@ -3,14 +3,14 @@ import styled from "styled-components";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
-import { Mode, SettingsModel } from "../../models/state";
+import { Mode } from "../../models/state";
 import { SelectedTags, SelectedTag, Line } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
 import SettingService from "../../services/SettingService";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../state/userSlice";
 import {
   selectFrequencyMinutesMax,
@@ -18,6 +18,9 @@ import {
   selectNextNotification,
   selectRandomReminders,
   selectRemindersEnabled,
+  toggleRemindersEnabled,
+  toggleRandomReminders,
+  updateNextNotification,
 } from "../../state/settingsSlice";
 
 const StyledSettings = styled.div`
@@ -202,9 +205,6 @@ type Props = {
   tagOptions: string[];
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
-  toggleRemindersEnabled: () => void;
-  toggleRandomReminders: () => void;
-  setReminderFrequencies: (min: number, max: number) => void;
 };
 
 const getFrequencyInputFromMinutes = (minutes: number): number => {
@@ -230,6 +230,7 @@ const frequency = (input: number, period: string) =>
 
 const Settings = (props: Props) => {
   const [state, setState] = useState(new State());
+  const dispatch = useDispatch();
   const user = useSelector(selectUser)!;
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
@@ -271,7 +272,7 @@ const Settings = (props: Props) => {
         </Value>
       </Line>
       <Header>Reminders</Header>
-      <Line onClick={() => props.toggleRemindersEnabled()}>
+      <Line onClick={() => dispatch(toggleRemindersEnabled)}>
         <Label>Reminders</Label>
         <Value>
           <Toggle on={remindersEnabled}>
@@ -283,7 +284,7 @@ const Settings = (props: Props) => {
           </Toggle>
         </Value>
       </Line>
-      <Line onClick={() => props.toggleRandomReminders()}>
+      <Line onClick={() => dispatch(toggleRandomReminders)}>
         <Label>Random Range</Label>
         <Value>
           <Toggle on={randomReminders}>
