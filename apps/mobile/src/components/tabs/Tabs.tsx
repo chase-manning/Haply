@@ -21,7 +21,6 @@ const StyledTabs = styled.div`
 `;
 
 type Props = {
-  user: User;
   login: () => void;
   moods: Mood[];
   removeMood: (mood: Mood) => void;
@@ -51,7 +50,6 @@ const Tabs = (props: Props) => {
       <Entries
         removeMood={(mood: Mood) => props.removeMood(mood)}
         moods={props.moods}
-        user={props.user}
       />
     );
   else if (activeTab === Tab.Stats)
@@ -59,14 +57,12 @@ const Tabs = (props: Props) => {
       <Analytics
         stats={props.stats}
         moods={props.moods}
-        user={props.user}
         colorPrimary={props.colorPrimary}
       />
     );
   else if (activeTab === Tab.Settings)
     tabContents = (
       <Settings
-        user={props.user}
         login={() => props.login()}
         colorPrimary={props.colorPrimary}
         achievements={props.achivements}
