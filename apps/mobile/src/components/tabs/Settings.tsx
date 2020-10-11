@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ChevronRight from "@material-ui/icons/ChevronRight";
-import { User } from "firebase";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
 import { Mode, SettingsModel } from "../../models/state";
@@ -11,6 +10,8 @@ import AddIcon from "@material-ui/icons/Add";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
 import SettingService from "../../services/SettingService";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../state/userSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -185,7 +186,6 @@ class State {
 }
 
 type Props = {
-  user: User;
   login: () => void;
   colorPrimary: string;
   achievements: AchievementModel[];
@@ -201,136 +201,111 @@ type Props = {
   setReminderFrequencies: (min: number, max: number) => void;
 };
 
-export default class Settings extends Component<Props> {
-  state: State;
+const getFrequencyInputFromMinutes = (minutes: number): number => {
+  if (minutes < 60) return minutes;
+  else if (minutes < 60 * 24) return minutes / 60;
+  else return minutes / (60 * 24);
+};
 
-  constructor(props: Props) {
-    super(props);
-    this.state = new State();
-    this.handleTagChange = this.handleTagChange.bind(this);
-    this.handleMinInputChange = this.handleMinInputChange.bind(this);
-    this.handleMinDropdownChange = this.handleMinDropdownChange.bind(this);
-    this.handleMaxInputChange = this.handleMaxInputChange.bind(this);
-    this.handleMaxDropdownChange = this.handleMaxDropdownChange.bind(this);
-  }
+const getFrequencyDropdownFromMinutes = (minutes: number): string => {
+  if (minutes < 60) return "Minutes";
+  else if (minutes < 60 * 24) return "Hours";
+  else return "Days";
+};
 
-  async componentDidMount() {
-    await this.setReminderFrequencies();
-  }
+const getFrequencyMultiplier = (frequencyDropdown: string): number => {
+  if (frequencyDropdown === "Minutes") return 1;
+  else if (frequencyDropdown === "Hours") return 60;
+  else return 60 * 24;
+};
 
-  handleTagChange(event: any): void {
-    this.setState({
-      newTag: event.target.value,
-    });
-  }
+const frequency = (input: number, period: string) =>
+  input * getFrequencyMultiplier(period);
 
-  async handleMinInputChange(event: any): Promise<void> {
-    await this.setState({
-      reminderFrequencyMinimumInput: event.target.value,
-    });
-    this.updateFrequencyState();
-  }
+const Settings = (props: Props) => {
+  const [state, setState] = useState(new State());
+  const user = useSelector(selectUser)!;
 
-  async handleMinDropdownChange(event: any): Promise<void> {
-    await this.setState({
-      reminderFrequencyMinimumDropdown: event.target.value,
-    });
-    this.updateFrequencyState();
-  }
-
-  async handleMaxInputChange(event: any): Promise<void> {
-    await this.setState({
-      reminderFrequencyMaximumInput: event.target.value,
-    });
-    this.updateFrequencyState();
-  }
-
-  async handleMaxDropdownChange(event: any): Promise<void> {
-    await this.setState({
-      reminderFrequencyMaximumDropdown: event.target.value,
-    });
-    this.updateFrequencyState();
-  }
-
-  setReminderFrequencies(): void {
-    this.setState({
-      reminderFrequencyMinimumInput: this.getFrequencyInputFromMinutes(
-        this.props.settings.frequencyMinutesMin
+  useEffect(() => {
+    setState({
+      ...state,
+      reminderFrequencyMinimumInput: getFrequencyInputFromMinutes(
+        props.settings.frequencyMinutesMin
+      ),
+      reminderFrequencyMinimumDropdown: getFrequencyDropdownFromMinutes(
+        props.settings.frequencyMinutesMin
+      ),
+      reminderFrequencyMaximumInput: getFrequencyInputFromMinutes(
+        props.settings.frequencyMinutesMax
+      ),
+      reminderFrequencyMaximumDropdown: getFrequencyDropdownFromMinutes(
+        props.settings.frequencyMinutesMax
       ),
     });
-    this.setState({
-      reminderFrequencyMinimumDropdown: this.getFrequencyDropdownFromMinutes(
-        this.props.settings.frequencyMinutesMin
-      ),
-    });
-    this.setState({
-      reminderFrequencyMaximumInput: this.getFrequencyInputFromMinutes(
-        this.props.settings.frequencyMinutesMax
-      ),
-    });
-    this.setState({
-      reminderFrequencyMaximumDropdown: this.getFrequencyDropdownFromMinutes(
-        this.props.settings.frequencyMinutesMax
-      ),
-    });
-  }
+  });
 
-  updateFrequencyState(): void {
-    this.props.setReminderFrequencies(
-      this.minFrequency,
-      this.props.settings.randomReminders
-        ? this.maxFrequency
-        : this.minFrequency
-    );
-  }
-
-  get minFrequency(): number {
-    console.log("State Min Input: " + this.state.reminderFrequencyMinimumInput);
-    console.log(
-      this.getFrequencyMultiplier(this.state.reminderFrequencyMinimumDropdown)
-    );
-    return (
-      this.state.reminderFrequencyMinimumInput *
-      this.getFrequencyMultiplier(this.state.reminderFrequencyMinimumDropdown)
-    );
-  }
-
-  get maxFrequency(): number {
-    return (
-      this.state.reminderFrequencyMaximumInput *
-      this.getFrequencyMultiplier(this.state.reminderFrequencyMaximumDropdown)
-    );
-  }
-
-  getFrequencyInputFromMinutes(minutes: number): number {
-    console.log(minutes);
-    if (minutes < 60) return minutes;
-    else if (minutes < 60 * 24) return minutes / 60;
-    else return minutes / (60 * 24);
-  }
-
-  getFrequencyDropdownFromMinutes(minutes: number): string {
-    console.log(minutes);
-    if (minutes < 60) return "Minutes";
-    else if (minutes < 60 * 24) return "Hours";
-    else return "Days";
-  }
-
-  getFrequencyMultiplier(frequencyDropdown: string): number {
-    if (frequencyDropdown === "Minutes") return 1;
-    else if (frequencyDropdown === "Hours") return 60;
-    else return 60 * 24;
-  }
-
-  render() {
-    return (
-      <StyledSettings data-testid="Settings">
-        <Header>Profile</Header>
-        <Line onClick={() => this.props.login()}>
-          <Label>Cloud Sync</Label>
+  return (
+    <StyledSettings data-testid="Settings">
+      <Header>Profile</Header>
+      <Line onClick={() => props.login()}>
+        <Label>Cloud Sync</Label>
+        <Value>
+          <Toggle on={!user.isAnonymous}>
+            {!user.isAnonymous ? (
+              <ToggleOnIcon fontSize={"large"} />
+            ) : (
+              <ToggleOffIcon fontSize={"large"} />
+            )}
+          </Toggle>
+        </Value>
+      </Line>
+      <Header>Reminders</Header>
+      <Line onClick={() => props.toggleRemindersEnabled()}>
+        <Label>Reminders</Label>
+        <Value>
+          <Toggle on={props.settings.remindersEnabled}>
+            {props.settings.remindersEnabled ? (
+              <ToggleOnIcon fontSize={"large"} />
+            ) : (
+              <ToggleOffIcon fontSize={"large"} />
+            )}
+          </Toggle>
+        </Value>
+      </Line>
+      <Line onClick={() => props.toggleRandomReminders()}>
+        <Label>Random Range</Label>
+        <Value>
+          <Toggle on={props.settings.randomReminders}>
+            {props.settings.randomReminders ? (
+              <ToggleOnIcon fontSize={"large"} />
+            ) : (
+              <ToggleOffIcon fontSize={"large"} />
+            )}
+          </Toggle>
+        </Value>
+      </Line>
+      <Line
+        onClick={() => setState({ ...state, reminderFrequencyPopupOpen: true })}
+      >
+        <Label>Reminder Frequency</Label>
+        <Value></Value>
+        <ChevronRight />
+      </Line>
+      <Header>Settings</Header>
+      <Line onClick={() => setState({ ...state, themePopupOpen: true })}>
+        <Label>Theme</Label>
+        <ChevronRight />
+      </Line>
+      {props.achievements.some(
+        (achievement: AchievementModel) =>
+          achievement.unlocks.indexOf("Dark Mode") >= 0 &&
+          achievement.percentComplete === 1
+      ) && (
+        <Line onClick={() => props.toggleMode()}>
+          <Label>Dark Mode</Label>
           <Value>
-            <Toggle on={!this.props.user.isAnonymous}>
-              {!this.props.user.isAnonymous ? (
+            <Toggle on={props.mode === Mode.Dark}>
+              {props.mode === Mode.Dark ? (
                 <ToggleOnIcon fontSize={"large"} />
               ) : (
                 <ToggleOffIcon fontSize={"large"} />
@@ -338,241 +313,271 @@ export default class Settings extends Component<Props> {
             </Toggle>
           </Value>
         </Line>
-        <Header>Reminders</Header>
-        <Line onClick={() => this.props.toggleRemindersEnabled()}>
-          <Label>Reminders</Label>
-          <Value>
-            <Toggle on={this.props.settings.remindersEnabled}>
-              {this.props.settings.remindersEnabled ? (
-                <ToggleOnIcon fontSize={"large"} />
-              ) : (
-                <ToggleOffIcon fontSize={"large"} />
+      )}
+      <Line onClick={() => setState({ ...state, tagsPopupOpen: true })}>
+        <Label>Tags</Label>
+        <ChevronRight />
+      </Line>
+      <Header>Contact</Header>
+      <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
+        <Label>Suggest a Feature</Label>
+        <ChevronRight />
+      </Line>
+      <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
+        <Label>Report an Issue</Label>
+        <ChevronRight />
+      </Line>
+      <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
+        <Label>Say Hi</Label>
+        <ChevronRight />
+      </Line>
+      <Header>About</Header>
+      <Line onClick={() => window.open("https://chasemanning.co.nz/")}>
+        <Label>Created By</Label>
+        <ChevronRight />
+      </Line>
+      <Line
+        onClick={() => window.open("https://github.com/chase-manning/Haply/")}
+      >
+        <Label>Source Code</Label>
+        <ChevronRight />
+      </Line>
+      <Line
+        onClick={() =>
+          window.open(
+            "https://github.com/chase-manning/Haply/blob/master/LICENSE"
+          )
+        }
+      >
+        <Label>License</Label>
+        <ChevronRight />
+      </Line>
+      {state.reminderFrequencyPopupOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <PopupHeader>
+                {props.settings.randomReminders
+                  ? "At Minumum Remind me Every:"
+                  : "Remind me Every:"}
+              </PopupHeader>
+              <FrequencyItem>
+                <FrequencyInput
+                  value={state.reminderFrequencyMinimumInput}
+                  onChange={(event: any) => {
+                    setState({
+                      ...state,
+                      reminderFrequencyMinimumInput: event.target.value,
+                    });
+                    props.setReminderFrequencies(
+                      frequency(
+                        state.reminderFrequencyMinimumInput,
+                        state.reminderFrequencyMinimumDropdown
+                      ),
+                      props.settings.randomReminders
+                        ? frequency(
+                            state.reminderFrequencyMaximumInput,
+                            state.reminderFrequencyMaximumDropdown
+                          )
+                        : frequency(
+                            state.reminderFrequencyMinimumInput,
+                            state.reminderFrequencyMinimumDropdown
+                          )
+                    );
+                  }}
+                  type="number"
+                />
+                <FrequencySelect
+                  value={state.reminderFrequencyMinimumDropdown}
+                  onChange={(event: any) => {
+                    setState({
+                      ...state,
+                      reminderFrequencyMinimumDropdown: event.target.value,
+                    });
+                    props.setReminderFrequencies(
+                      frequency(
+                        state.reminderFrequencyMinimumInput,
+                        state.reminderFrequencyMinimumDropdown
+                      ),
+                      props.settings.randomReminders
+                        ? frequency(
+                            state.reminderFrequencyMaximumInput,
+                            state.reminderFrequencyMaximumDropdown
+                          )
+                        : frequency(
+                            state.reminderFrequencyMinimumInput,
+                            state.reminderFrequencyMinimumDropdown
+                          )
+                    );
+                  }}
+                >
+                  <FrequencyOption>Minutes</FrequencyOption>
+                  <FrequencyOption>Hours</FrequencyOption>
+                  <FrequencyOption>Days</FrequencyOption>
+                </FrequencySelect>
+              </FrequencyItem>
+              {props.settings.randomReminders && (
+                <FrequencySecondItem>
+                  <PopupHeader>At Maximum Remind me Every:</PopupHeader>
+                  <FrequencyItem>
+                    <FrequencyInput
+                      value={state.reminderFrequencyMaximumInput}
+                      onChange={(event: any) => {
+                        setState({
+                          ...state,
+                          reminderFrequencyMaximumInput: event.target.value,
+                        });
+                        props.setReminderFrequencies(
+                          frequency(
+                            state.reminderFrequencyMinimumInput,
+                            state.reminderFrequencyMinimumDropdown
+                          ),
+                          props.settings.randomReminders
+                            ? frequency(
+                                state.reminderFrequencyMaximumInput,
+                                state.reminderFrequencyMaximumDropdown
+                              )
+                            : frequency(
+                                state.reminderFrequencyMinimumInput,
+                                state.reminderFrequencyMinimumDropdown
+                              )
+                        );
+                      }}
+                      type="number"
+                    />
+                    <FrequencySelect
+                      value={state.reminderFrequencyMaximumDropdown}
+                      onChange={(event: any) => {
+                        setState({
+                          ...state,
+                          reminderFrequencyMaximumDropdown: event.target.value,
+                        });
+                        props.setReminderFrequencies(
+                          frequency(
+                            state.reminderFrequencyMinimumInput,
+                            state.reminderFrequencyMinimumDropdown
+                          ),
+                          props.settings.randomReminders
+                            ? frequency(
+                                state.reminderFrequencyMaximumInput,
+                                state.reminderFrequencyMaximumDropdown
+                              )
+                            : frequency(
+                                state.reminderFrequencyMinimumInput,
+                                state.reminderFrequencyMinimumDropdown
+                              )
+                        );
+                      }}
+                    >
+                      <FrequencyOption>Minutes</FrequencyOption>
+                      <FrequencyOption>Hours</FrequencyOption>
+                      <FrequencyOption>Days</FrequencyOption>
+                    </FrequencySelect>
+                  </FrequencyItem>
+                </FrequencySecondItem>
               )}
-            </Toggle>
-          </Value>
-        </Line>
-        <Line onClick={() => this.props.toggleRandomReminders()}>
-          <Label>Random Range</Label>
-          <Value>
-            <Toggle on={this.props.settings.randomReminders}>
-              {this.props.settings.randomReminders ? (
-                <ToggleOnIcon fontSize={"large"} />
-              ) : (
-                <ToggleOffIcon fontSize={"large"} />
-              )}
-            </Toggle>
-          </Value>
-        </Line>
-        <Line
-          onClick={() => this.setState({ reminderFrequencyPopupOpen: true })}
-        >
-          <Label>Reminder Frequency</Label>
-          <Value></Value>
-          <ChevronRight />
-        </Line>
-        <Header>Settings</Header>
-        <Line onClick={() => this.setState({ themePopupOpen: true })}>
-          <Label>Theme</Label>
-          <ChevronRight />
-        </Line>
-        {this.props.achievements.some(
-          (achievement: AchievementModel) =>
-            achievement.unlocks.indexOf("Dark Mode") >= 0 &&
-            achievement.percentComplete === 1
-        ) && (
-          <Line onClick={() => this.props.toggleMode()}>
-            <Label>Dark Mode</Label>
-            <Value>
-              <Toggle on={this.props.mode === Mode.Dark}>
-                {this.props.mode === Mode.Dark ? (
-                  <ToggleOnIcon fontSize={"large"} />
-                ) : (
-                  <ToggleOffIcon fontSize={"large"} />
-                )}
-              </Toggle>
-            </Value>
-          </Line>
-        )}
-        <Line onClick={() => this.setState({ tagsPopupOpen: true })}>
-          <Label>Tags</Label>
-          <ChevronRight />
-        </Line>
-        <Header>Contact</Header>
-        <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
-          <Label>Suggest a Feature</Label>
-          <ChevronRight />
-        </Line>
-        <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
-          <Label>Report an Issue</Label>
-          <ChevronRight />
-        </Line>
-        <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
-          <Label>Say Hi</Label>
-          <ChevronRight />
-        </Line>
-        <Header>About</Header>
-        <Line onClick={() => window.open("https://chasemanning.co.nz/")}>
-          <Label>Created By</Label>
-          <ChevronRight />
-        </Line>
-        <Line
-          onClick={() => window.open("https://github.com/chase-manning/Haply/")}
-        >
-          <Label>Source Code</Label>
-          <ChevronRight />
-        </Line>
-        <Line
-          onClick={() =>
-            window.open(
-              "https://github.com/chase-manning/Haply/blob/master/LICENSE"
-            )
+            </PopupContent>
           }
-        >
-          <Label>License</Label>
-          <ChevronRight />
-        </Line>
-        {this.state.reminderFrequencyPopupOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <PopupHeader>
-                  {this.props.settings.randomReminders
-                    ? "At Minumum Remind me Every:"
-                    : "Remind me Every:"}
-                </PopupHeader>
-                <FrequencyItem>
-                  <FrequencyInput
-                    value={this.state.reminderFrequencyMinimumInput}
-                    onChange={this.handleMinInputChange}
-                    type="number"
-                  />
-                  <FrequencySelect
-                    value={this.state.reminderFrequencyMinimumDropdown}
-                    onChange={this.handleMinDropdownChange}
-                  >
-                    <FrequencyOption>Minutes</FrequencyOption>
-                    <FrequencyOption>Hours</FrequencyOption>
-                    <FrequencyOption>Days</FrequencyOption>
-                  </FrequencySelect>
-                </FrequencyItem>
-                {this.props.settings.randomReminders && (
-                  <FrequencySecondItem>
-                    <PopupHeader>At Maximum Remind me Every:</PopupHeader>
-                    <FrequencyItem>
-                      <FrequencyInput
-                        value={this.state.reminderFrequencyMaximumInput}
-                        onChange={this.handleMaxInputChange}
-                        type="number"
-                      />
-                      <FrequencySelect
-                        value={this.state.reminderFrequencyMaximumDropdown}
-                        onChange={this.handleMaxDropdownChange}
-                      >
-                        <FrequencyOption>Minutes</FrequencyOption>
-                        <FrequencyOption>Hours</FrequencyOption>
-                        <FrequencyOption>Days</FrequencyOption>
-                      </FrequencySelect>
-                    </FrequencyItem>
-                  </FrequencySecondItem>
-                )}
-              </PopupContent>
-            }
-            showButton={true}
-            close={() => this.closeRemindersPopup()}
-          />
-        )}
+          showButton={true}
+          close={async () => {
+            await setState({ ...state, reminderFrequencyPopupOpen: false });
+            await SettingService.createSetting(user, props.settings);
+          }}
+        />
+      )}
 
-        {this.state.themePopupOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <ColorOptions>
-                  {this.props.achievements
-                    .filter(
-                      (achievement: AchievementModel) =>
-                        achievement.colorPrimary !== "" &&
-                        achievement.percentComplete === 1
-                    )
-                    .map((achievement: AchievementModel) => (
-                      <ColorOption
-                        onClick={() =>
-                          this.props.setColorPrimary(achievement.colorPrimary)
-                        }
-                        selected={
-                          achievement.colorPrimary === this.props.colorPrimary
-                        }
-                      >
-                        <Color color={achievement.colorPrimary} />
-                      </ColorOption>
-                    ))}
-                </ColorOptions>
-              </PopupContent>
-            }
-            showButton={true}
-            close={() => this.setState({ themePopupOpen: false })}
-          />
-        )}
-        {this.state.tagsPopupOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <SelectedTags>
-                  {this.props.tagOptions.map((tagOption: string) => (
-                    <SelectedTag
-                      onClick={() => this.props.removeTag(tagOption)}
-                      includeMargin={true}
+      {state.themePopupOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <ColorOptions>
+                {props.achievements
+                  .filter(
+                    (achievement: AchievementModel) =>
+                      achievement.colorPrimary !== "" &&
+                      achievement.percentComplete === 1
+                  )
+                  .map((achievement: AchievementModel) => (
+                    <ColorOption
+                      onClick={() =>
+                        props.setColorPrimary(achievement.colorPrimary)
+                      }
+                      selected={achievement.colorPrimary === props.colorPrimary}
                     >
-                      {tagOption}
-                      <TagIcon>
-                        <CloseIcon fontSize={"inherit"} />
-                      </TagIcon>
-                    </SelectedTag>
+                      <Color color={achievement.colorPrimary} />
+                    </ColorOption>
                   ))}
-                  <AddTag>
-                    <AddTagContent
-                      onClick={() => this.setState({ newTagPopupOpen: true })}
-                    >
-                      <AddTagText>Add</AddTagText>
-                      <TagIcon>
-                        <AddIcon fontSize={"inherit"} />
-                      </TagIcon>
-                    </AddTagContent>
-                    {this.state.newTagPopupOpen && (
-                      <Popup
-                        content={
-                          <PopupContent>
-                            <TagInput
-                              value={this.state.newTag}
-                              placeholder="New Tag..."
-                              onChange={this.handleTagChange}
-                            />
-                          </PopupContent>
-                        }
-                        showButton={true}
-                        close={() =>
-                          this.setState({ newTagPopupOpen: false, newTag: "" })
-                        }
-                        submit={() => this.props.addTag(this.state.newTag)}
-                      />
-                    )}
-                  </AddTag>
-                </SelectedTags>
-              </PopupContent>
-            }
-            showButton={true}
-            close={() => this.setState({ tagsPopupOpen: false })}
-          />
-        )}
-      </StyledSettings>
-    );
-  }
+              </ColorOptions>
+            </PopupContent>
+          }
+          showButton={true}
+          close={() => setState({ ...state, themePopupOpen: false })}
+        />
+      )}
+      {state.tagsPopupOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <SelectedTags>
+                {props.tagOptions.map((tagOption: string) => (
+                  <SelectedTag
+                    onClick={() => props.removeTag(tagOption)}
+                    includeMargin={true}
+                  >
+                    {tagOption}
+                    <TagIcon>
+                      <CloseIcon fontSize={"inherit"} />
+                    </TagIcon>
+                  </SelectedTag>
+                ))}
+                <AddTag>
+                  <AddTagContent
+                    onClick={() =>
+                      setState({ ...state, newTagPopupOpen: true })
+                    }
+                  >
+                    <AddTagText>Add</AddTagText>
+                    <TagIcon>
+                      <AddIcon fontSize={"inherit"} />
+                    </TagIcon>
+                  </AddTagContent>
+                  {state.newTagPopupOpen && (
+                    <Popup
+                      content={
+                        <PopupContent>
+                          <TagInput
+                            value={state.newTag}
+                            placeholder="New Tag..."
+                            onChange={(event: any) =>
+                              setState({
+                                ...state,
+                                newTag: event.target.value,
+                              })
+                            }
+                          />
+                        </PopupContent>
+                      }
+                      showButton={true}
+                      close={() =>
+                        setState({
+                          ...state,
+                          newTagPopupOpen: false,
+                          newTag: "",
+                        })
+                      }
+                      submit={() => props.addTag(state.newTag)}
+                    />
+                  )}
+                </AddTag>
+              </SelectedTags>
+            </PopupContent>
+          }
+          showButton={true}
+          close={() => setState({ ...state, tagsPopupOpen: false })}
+        />
+      )}
+    </StyledSettings>
+  );
+};
 
-  async closeRemindersPopup(): Promise<void> {
-    await this.setState({ reminderFrequencyPopupOpen: false });
-    await this.saveSetting();
-  }
-
-  async saveSetting(): Promise<void> {
-    await SettingService.createSetting(this.props.user, this.props.settings);
-  }
-}
+export default Settings;
