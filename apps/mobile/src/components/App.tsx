@@ -231,7 +231,6 @@ export default class App extends Component {
               moods={this.state.persist.moods}
               login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
-              colorPrimary={this.state.persist.colorPrimary}
               setColorPrimary={async (colorPrimary: string) => {
                 await this.setState({
                   persist: {
@@ -242,9 +241,7 @@ export default class App extends Component {
                 await this.saveState();
                 await this.refreshAchievements();
               }}
-              mode={this.state.persist.mode}
               toggleMode={async () => await this.toggleMode()}
-              tagOptions={this.state.persist.tagOptions}
               removeTag={(tag: string) => this.removeTag(tag)}
               addTag={(tag: string) => this.addTag(tag)}
             />
@@ -262,10 +259,7 @@ export default class App extends Component {
               />
             </OverlayContainer>
           )}
-        <CreateMood
-          addMood={(mood: Mood) => this.addMood(mood)}
-          tagOptions={this.state.persist.tagOptions}
-        />
+        <CreateMood addMood={(mood: Mood) => this.addMood(mood)} />
       </StyledApp>
     );
   }
