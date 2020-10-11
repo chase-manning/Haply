@@ -1,8 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Mode } from "../models/state";
 import { AppThunk, RootState } from "./store";
 
 /* TYPES */
+export enum Mode {
+  Default,
+  Dark,
+  Light,
+}
+
 interface TempState {
   tagOptions: string[];
   colorPrimary: string;

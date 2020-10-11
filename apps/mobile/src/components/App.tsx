@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
-import State, { Mode, Persist } from "../models/state";
+import State, { Persist } from "../models/state";
 import {
   Tab,
   selectActiveTab,
@@ -30,6 +30,7 @@ import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import PushNotificationService from "../services/PushNotificationService";
 import { useSelector, useDispatch } from "react-redux";
 import SettingService from "../services/SettingService";
+import { Mode } from "../state/tempSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {

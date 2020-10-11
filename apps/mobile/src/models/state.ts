@@ -2,12 +2,6 @@ import Mood from "./mood";
 import { StatModel } from "../models/StatModel";
 import AchievementModel from "./AchievementModel";
 
-export enum Mode {
-  Default,
-  Dark,
-  Light,
-}
-
 export class Persist {
   moods: Mood[] = [];
   stats: StatModel[] = [];

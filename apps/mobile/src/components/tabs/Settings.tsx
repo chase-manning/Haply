@@ -3,7 +3,6 @@ import styled from "styled-components";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
-import { Mode } from "../../models/state";
 import { SelectedTags, SelectedTag, Line } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
@@ -23,6 +22,7 @@ import {
   updateNextNotification,
 } from "../../state/settingsSlice";
 import {
+  Mode,
   selectColorPrimary,
   selectMode,
   selectTagOptions,
