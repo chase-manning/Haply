@@ -27,6 +27,7 @@ import {
   selectMode,
   selectTagOptions,
 } from "../../state/tempSlice";
+import { selectAchievements } from "../../state/dataSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -202,7 +203,6 @@ class State {
 
 type Props = {
   login: () => void;
-  achievements: AchievementModel[];
   setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
   removeTag: (tag: string) => void;
@@ -242,6 +242,7 @@ const Settings = (props: Props) => {
   const colorPrimary = useSelector(selectColorPrimary);
   const mode = useSelector(selectMode);
   const tagOptions = useSelector(selectTagOptions);
+  const achievements = useSelector(selectAchievements);
 
   useEffect(() => {
     setState({
@@ -313,7 +314,7 @@ const Settings = (props: Props) => {
         <Label>Theme</Label>
         <ChevronRight />
       </Line>
-      {props.achievements.some(
+      {achievements.some(
         (achievement: AchievementModel) =>
           achievement.unlocks.indexOf("Dark Mode") >= 0 &&
           achievement.percentComplete === 1
@@ -508,7 +509,7 @@ const Settings = (props: Props) => {
           content={
             <PopupContent>
               <ColorOptions>
-                {props.achievements
+                {achievements
                   .filter(
                     (achievement: AchievementModel) =>
                       achievement.colorPrimary !== "" &&
