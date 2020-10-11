@@ -247,11 +247,6 @@ export default class App extends Component {
               tagOptions={this.state.persist.tagOptions}
               removeTag={(tag: string) => this.removeTag(tag)}
               addTag={(tag: string) => this.addTag(tag)}
-              toggleRemindersEnabled={() => this.toggleRemindersEnabled()}
-              toggleRandomReminders={() => this.toggleRandomReminders()}
-              setReminderFrequencies={(min: number, max: number) =>
-                this.setReminderFrequencies(min, max)
-              }
             />
             <Header />
             <NavBar />
