@@ -3,9 +3,6 @@ import { StatModel } from "../models/StatModel";
 import AchievementModel from "./AchievementModel";
 
 export class Persist {
-  moods: Mood[] = [];
-  stats: StatModel[] = [];
-  achievements: AchievementModel[] = [];
   pushNotificationToken?: string;
 }
 
