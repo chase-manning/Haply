@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
 import noData from "../../assets/svgs/Empty.svg";
+import { selectMoods } from "../../state/dataSlice";
+import { useSelector } from "react-redux";
 
 const StyledEntries = styled.div`
   width: 100%;
@@ -46,14 +48,24 @@ const NoDataSub = styled.div`
 `;
 
 type Props = {
-  moods: Mood[];
   removeMood: (mood: Mood) => void;
 };
 
-export default class Entries extends Component<Props> {
-  render() {
-    const content =
-      this.props.moods.length === 0 ? (
+const Entries = (props: Props) => {
+  const moods = useSelector(selectMoods);
+
+  return (
+    <StyledEntries data-testid="Entries">
+      {moods.length > 0 &&
+        moods
+          .slice(0, 30)
+          .map((mood: Mood) => (
+            <Entry
+              removeMood={(mood: Mood) => props.removeMood(mood)}
+              mood={mood}
+            />
+          ))}
+      {moods.length === 0 && (
         <NoDataContainer>
           <NoData>
             <img src={noData} alt="No Data Found Illustration" width="60%" />
@@ -63,21 +75,9 @@ export default class Entries extends Component<Props> {
             </NoDataSub>
           </NoData>
         </NoDataContainer>
-      ) : (
-        this.entries
-      );
+      )}
+    </StyledEntries>
+  );
+};
 
-    return <StyledEntries data-testid="Entries">{content}</StyledEntries>;
-  }
-
-  get entries(): JSX.Element[] {
-    return this.props.moods
-      .slice(0, 30)
-      .map((mood: Mood) => (
-        <Entry
-          removeMood={(mood: Mood) => this.props.removeMood(mood)}
-          mood={mood}
-        />
-      ));
-  }
-}
+export default Entries;
