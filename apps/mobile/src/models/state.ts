@@ -1,4 +1,3 @@
-import { User } from "firebase";
 import Mood from "./mood";
 import { StatModel } from "../models/StatModel";
 import AchievementModel from "./AchievementModel";
@@ -20,7 +19,6 @@ export class SettingsModel {
 }
 
 export class Persist {
-  user?: User;
   moods: Mood[] = [];
   stats: StatModel[] = [];
   achievements: AchievementModel[] = [];
@@ -42,10 +40,6 @@ export class Persist {
   mode: Mode = Mode.Default;
   pushNotificationToken?: string;
   settings: SettingsModel = new SettingsModel();
-
-  get isSignedIn(): boolean {
-    return !!this.user;
-  }
 }
 
 export default class State {
