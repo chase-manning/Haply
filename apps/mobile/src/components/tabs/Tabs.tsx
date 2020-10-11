@@ -17,7 +17,6 @@ const StyledTabs = styled.div`
 `;
 
 type Props = {
-  login: () => void;
   removeMood: (mood: Mood) => void;
   setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
@@ -38,7 +37,6 @@ const Tabs = (props: Props) => {
   else if (activeTab === Tab.Settings)
     tabContents = (
       <Settings
-        login={() => props.login()}
         setColorPrimary={props.setColorPrimary}
         toggleMode={() => props.toggleMode()}
         removeTag={props.removeTag}

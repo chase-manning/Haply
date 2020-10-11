@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
-import State, { Persist } from "../models/state";
 import {
   Tab,
   selectActiveTab,
@@ -227,10 +226,6 @@ export default class App extends Component {
         {!!this.state.persist.user && (
           <ContentContainer>
             <Tabs
-              achivements={this.state.persist.achievements}
-              stats={this.state.persist.stats}
-              moods={this.state.persist.moods}
-              login={() => this.setState({ loggingIn: true })}
               removeMood={(mood: Mood) => this.removeMood(mood)}
               setColorPrimary={async (colorPrimary: string) => {
                 await this.setState({
@@ -276,45 +271,15 @@ export default class App extends Component {
   }
 
   async refreshStats(): Promise<void> {
-    const stats: StatModel[] = StatService.getStats(this.state.persist.moods);
-    await this.setState({ persist: { ...this.state.persist, stats: stats } });
-    await this.saveState();
+    // use think
   }
 
   async refreshAchievements(): Promise<void> {
-    const achievements: AchievementModel[] = AchievementService.getAchievements(
-      this.state.persist.moods,
-      this.state.persist.colorPrimary,
-      this.state.persist.mode
-    );
-    await this.setState({
-      persist: { ...this.state.persist, achievements: achievements },
-    });
-    await this.saveState();
+    // think
   }
 
   async updateMoods(): Promise<void> {
-    const response: any = await MoodService.getMoods(
-      this.state.persist.user!,
-      "date"
-    );
-    const moodResponses: MoodResponse[] = await response.json();
-
-    let moods: Mood[] = [];
-    moodResponses.forEach((moodResponse: MoodResponse) => {
-      moods.push(
-        new Mood(
-          moodResponse.data.value,
-          moodResponse.data.userId,
-          moodResponse.data.note,
-          moodResponse.data.tags,
-          moodResponse.data.date,
-          moodResponse.id
-        )
-      );
-    });
-
-    await this.setState({ persist: { ...this.state.persist, moods: moods } });
+    // call the thunk for it
   }
 
   async removeMood(mood: Mood): Promise<void> {

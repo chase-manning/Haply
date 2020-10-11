@@ -28,6 +28,7 @@ import {
   selectTagOptions,
 } from "../../state/tempSlice";
 import { selectAchievements } from "../../state/dataSlice";
+import { showLogin } from "../../state/navigationSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -202,7 +203,6 @@ class State {
 }
 
 type Props = {
-  login: () => void;
   setColorPrimary: (colorPrimary: string) => void;
   toggleMode: () => void;
   removeTag: (tag: string) => void;
@@ -265,7 +265,7 @@ const Settings = (props: Props) => {
   return (
     <StyledSettings data-testid="Settings">
       <Header>Profile</Header>
-      <Line onClick={() => props.login()}>
+      <Line onClick={() => dispatch(showLogin)}>
         <Label>Cloud Sync</Label>
         <Value>
           <Toggle on={!user.isAnonymous}>
