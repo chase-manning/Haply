@@ -89,3 +89,5 @@ const Stat = (props: Props) => {
     </Card>
   );
 };
+
+export default Stat;
