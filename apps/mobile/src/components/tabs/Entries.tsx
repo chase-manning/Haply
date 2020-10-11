@@ -4,7 +4,7 @@ import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
 import noData from "../../assets/svgs/Empty.svg";
 import { selectMoods } from "../../state/dataSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const StyledEntries = styled.div`
   width: 100%;
@@ -47,24 +47,13 @@ const NoDataSub = styled.div`
   line-height: 1.5;
 `;
 
-type Props = {
-  removeMood: (mood: Mood) => void;
-};
-
-const Entries = (props: Props) => {
+const Entries = () => {
   const moods = useSelector(selectMoods);
 
   return (
     <StyledEntries data-testid="Entries">
       {moods.length > 0 &&
-        moods
-          .slice(0, 30)
-          .map((mood: Mood) => (
-            <Entry
-              removeMood={(mood: Mood) => props.removeMood(mood)}
-              mood={mood}
-            />
-          ))}
+        moods.slice(0, 30).map((mood: Mood) => <Entry mood={mood} />)}
       {moods.length === 0 && (
         <NoDataContainer>
           <NoData>
