@@ -2,12 +2,14 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import navigationReducer from "./navigationSlice";
 import userReducer from "./userSlice";
 import settingsReducer from "./settingsSlice";
+import tempReducer from "./tempSlice";
 
 export const store = configureStore({
   reducer: {
     navigation: navigationReducer,
     user: userReducer,
     settings: settingsReducer,
+    temp: tempReducer,
   },
 });
 
