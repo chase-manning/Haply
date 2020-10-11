@@ -23,7 +23,7 @@ const Analytics = (props: Props) => {
   const colorPrimary = useSelector(selectColorPrimary);
 
   return (
-    <StyledAnalytics data-testid="Stats">
+    <StyledAnalytics>
       {props.stats.map((stat: StatModel) => (
         <Stat stat={stat} colorPrimary={colorPrimary} />
       ))}
