@@ -37,10 +37,21 @@ export const dataSlice = createSlice({
     setAchievements: (state, action: PayloadAction<AchievementModel[]>) => {
       state.achievements = action.payload;
     },
+    removeMood: (state, action: PayloadAction<Mood>) => {
+      const index = state.moods.indexOf(action.payload);
+      if (index > -1) {
+        state.moods.splice(index, 1);
+      }
+    },
   },
 });
 
-export const { setMoods, setStats, setAchievements } = dataSlice.actions;
+export const {
+  setMoods,
+  setStats,
+  setAchievements,
+  removeMood,
+} = dataSlice.actions;
 
 /* THUNKS */
 export const updateMoods = (): AppThunk => async (dispatch) => {
