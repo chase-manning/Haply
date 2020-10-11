@@ -181,7 +181,7 @@ export default class CreateMood extends Component<Props> {
 
   render() {
     return (
-      <StyledCreateMood data-testid="Capture">
+      <StyledCreateMood>
         <TopBar>
           <Close onClick={() => this.props.closeCapture()} />
         </TopBar>
