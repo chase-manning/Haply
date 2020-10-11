@@ -44,13 +44,14 @@ export const tempSlice = createSlice({
     setColorPrimary: (state, action: PayloadAction<string>) => {
       state.colorPrimary = action.payload;
     },
-    setMode: (state, action: PayloadAction<Mode>) => {
-      state.mode = action.payload;
+    toggleMode: (state) => {
+      if (state.mode === Mode.Dark) state.mode = Mode.Light;
+      else state.mode = Mode.Dark;
     },
   },
 });
 
-export const { setTagOptions, setColorPrimary, setMode } = tempSlice.actions;
+export const { setTagOptions, setColorPrimary, toggleMode } = tempSlice.actions;
 
 /* SELECTS */
 export const selectTagOptions = (state: RootState) => state.temp.tagOptions;
