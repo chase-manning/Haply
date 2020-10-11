@@ -14,7 +14,6 @@ const StyledAnalytics = styled.div`
 `;
 
 type Props = {
-  user: User;
   moods: Mood[];
   stats: StatModel[];
   colorPrimary: string;
