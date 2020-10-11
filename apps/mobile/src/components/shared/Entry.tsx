@@ -177,6 +177,7 @@ export default class Entry extends Component<Props> {
             }
             showButton={false}
             closePopup={() => this.setState({ popupOpen: false })}
+            submitPopup={() => this.setState({ popupOpen: false })}
           ></Popup>
         )}
       </StyledEntry>

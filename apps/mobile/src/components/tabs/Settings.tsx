@@ -479,6 +479,7 @@ export default class Settings extends Component<Props> {
             }
             showButton={true}
             closePopup={() => this.closeRemindersPopup()}
+            submitPopup={() => this.closeRemindersPopup()}
           />
         )}
 
@@ -510,6 +511,7 @@ export default class Settings extends Component<Props> {
             }
             showButton={true}
             closePopup={() => this.setState({ themePopupOpen: false })}
+            submitPopup={() => this.setState({ themePopupOpen: false })}
           />
         )}
         {this.state.tagsPopupOpen && (
@@ -552,6 +554,10 @@ export default class Settings extends Component<Props> {
                           this.props.addTag(this.state.newTag);
                           this.setState({ newTagPopupOpen: false, newTag: "" });
                         }}
+                        submitPopup={() => {
+                          this.props.addTag(this.state.newTag);
+                          this.setState({ newTagPopupOpen: false, newTag: "" });
+                        }}
                         showButton={true}
                       />
                     )}
@@ -561,6 +567,7 @@ export default class Settings extends Component<Props> {
             }
             showButton={true}
             closePopup={() => this.setState({ tagsPopupOpen: false })}
+            submitPopup={() => this.setState({ tagsPopupOpen: false })}
           />
         )}
       </StyledSettings>

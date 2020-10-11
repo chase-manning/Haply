@@ -68,6 +68,7 @@ type Props = {
   content: JSX.Element;
   showButton: boolean;
   closePopup: () => void;
+  submitPopup: () => void;
 };
 
 export default class Popup extends Component<Props> {
@@ -83,7 +84,7 @@ export default class Popup extends Component<Props> {
           </Header>
           {this.props.content}
           {this.props.showButton && (
-            <DoneButton onClick={() => this.props.closePopup()}>
+            <DoneButton onClick={() => this.props.submitPopup()}>
               Done
             </DoneButton>
           )}

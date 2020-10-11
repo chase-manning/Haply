@@ -178,6 +178,7 @@ export default class Acheivement extends Component<Props> {
             }
             showButton={false}
             closePopup={() => this.setState({ detailsOpen: false })}
+            submitPopup={() => this.setState({ detailsOpen: false })}
           ></Popup>
         )}
       </StyledAcheivement>
