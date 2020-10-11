@@ -52,13 +52,6 @@ export const {
   setActiveTab,
 } = navigationSlice.actions;
 
-/* THUNKS */
-export const setActiveTabAsync = (tab: Tab): AppThunk => (dispatch) => {
-  setTimeout(() => {
-    dispatch(setActiveTab(tab));
-  }, 1000);
-};
-
 /* SELECTS */
 export const selectMoodShowing = (state: RootState) =>
   state.navigation.moodShowing;
