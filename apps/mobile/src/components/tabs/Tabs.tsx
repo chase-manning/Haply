@@ -53,7 +53,6 @@ const Tabs = (props: Props) => {
     tabContents = (
       <Settings
         login={() => props.login()}
-        colorPrimary={props.colorPrimary}
         achievements={props.achivements}
         setColorPrimary={props.setColorPrimary}
         mode={props.mode}
