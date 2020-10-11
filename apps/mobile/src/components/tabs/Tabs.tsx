@@ -26,7 +26,6 @@ type Props = {
   removeMood: (mood: Mood) => void;
   stats: StatModel[];
   achivements: AchievementModel[];
-  colorPrimary: string;
   setColorPrimary: (colorPrimary: string) => void;
   mode: Mode;
   toggleMode: () => void;
@@ -49,13 +48,7 @@ const Tabs = (props: Props) => {
       />
     );
   else if (activeTab === Tab.Stats)
-    tabContents = (
-      <Analytics
-        stats={props.stats}
-        moods={props.moods}
-        colorPrimary={props.colorPrimary}
-      />
-    );
+    tabContents = <Analytics stats={props.stats} moods={props.moods} />;
   else if (activeTab === Tab.Settings)
     tabContents = (
       <Settings
