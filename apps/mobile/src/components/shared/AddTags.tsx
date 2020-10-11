@@ -114,3 +114,5 @@ const AddTags = (props: Props) => {
     </StyledAddTags>
   );
 };
+
+export default AddTags;
