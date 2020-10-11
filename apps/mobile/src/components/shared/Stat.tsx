@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Card } from "../../styles/Shared";
 import { StatModel, StatType } from "../../models/StatModel";
 import StatBar from "./StatBar";
 import StatChart from "./StatChart";
 import noData from "../../assets/svgs/NoData.svg";
+import { useSelector } from "react-redux";
+import { selectColorPrimary } from "../../state/tempSlice";
 
 const Header = styled.div`
   width: 100%;
@@ -58,33 +60,32 @@ const Complete = styled.div`
 
 type Props = {
   stat: StatModel;
-  colorPrimary: string;
 };
 
-export default class Stat extends Component<Props> {
-  render() {
-    return (
-      <Card data-testid="Stat">
-        <Header>{this.props.stat.title}</Header>
-        {this.props.stat.locked && (
-          <LockedStat>
-            <Svg src={noData} />
-            <Description>{this.props.stat.lockedMessage}</Description>
-            <ProgressBar>
-              <Complete percentComplete={this.props.stat.percentComplete} />
-            </ProgressBar>
-          </LockedStat>
-        )}
-        {!this.props.stat.locked && this.props.stat.type === StatType.Bar && (
-          <StatBar dataPoints={this.props.stat.dataPoints}></StatBar>
-        )}
-        {!this.props.stat.locked && this.props.stat.type === StatType.Chart && (
-          <StatChart
-            dataPoints={this.props.stat.dataPoints}
-            colorPrimary={this.props.colorPrimary}
-          ></StatChart>
-        )}
-      </Card>
-    );
-  }
-}
+const Stat = (props: Props) => {
+  const colorPrimary = useSelector(selectColorPrimary);
+
+  return (
+    <Card>
+      <Header>{props.stat.title}</Header>
+      {props.stat.locked && (
+        <LockedStat>
+          <Svg src={noData} />
+          <Description>{props.stat.lockedMessage}</Description>
+          <ProgressBar>
+            <Complete percentComplete={props.stat.percentComplete} />
+          </ProgressBar>
+        </LockedStat>
+      )}
+      {!props.stat.locked && props.stat.type === StatType.Bar && (
+        <StatBar dataPoints={props.stat.dataPoints}></StatBar>
+      )}
+      {!props.stat.locked && props.stat.type === StatType.Chart && (
+        <StatChart
+          dataPoints={props.stat.dataPoints}
+          colorPrimary={colorPrimary}
+        ></StatChart>
+      )}
+    </Card>
+  );
+};
