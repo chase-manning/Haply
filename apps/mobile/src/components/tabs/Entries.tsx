@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
-import { User } from "firebase";
 import noData from "../../assets/svgs/Empty.svg";
 
 const StyledEntries = styled.div`
@@ -47,7 +46,6 @@ const NoDataSub = styled.div`
 `;
 
 type Props = {
-  user: User;
   moods: Mood[];
   removeMood: (mood: Mood) => void;
 };
@@ -77,7 +75,6 @@ export default class Entries extends Component<Props> {
       .slice(0, 30)
       .map((mood: Mood) => (
         <Entry
-          user={this.props.user}
           removeMood={(mood: Mood) => this.props.removeMood(mood)}
           mood={mood}
         />
