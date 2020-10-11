@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
+import { selectAchievements } from "../../state/dataSlice";
 import Acheivement from "../shared/Achievement";
 
 const StyledAchievements = styled.div`
@@ -11,18 +13,16 @@ const StyledAchievements = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
 `;
 
-type Props = {
-  achievements: AchievementModel[];
+const Achievements = () => {
+  const achievements = useSelector(selectAchievements);
+
+  return (
+    <StyledAchievements>
+      {achievements.map((achievment: AchievementModel) => (
+        <Acheivement achievement={achievment} />
+      ))}
+    </StyledAchievements>
+  );
 };
 
-export default class Achievements extends Component<Props> {
-  render() {
-    return (
-      <StyledAchievements>
-        {this.props.achievements.map((achievment: AchievementModel) => (
-          <Acheivement achievement={achievment} />
-        ))}
-      </StyledAchievements>
-    );
-  }
-}
+export default Achievements;
