@@ -34,12 +34,17 @@ const Input = styled.textarea`
   color: var(--main);
 `;
 
+class State {
+  note: string = "";
+  popupOpen: boolean = false;
+}
+
 type Props = {
   setNote: (note: string) => void;
 };
 
 const AddNote = (props: Props) => {
-  const [state, setState] = useState({ note: "", popupOpen: false });
+  const [state, setState] = useState(new State());
 
   return (
     <StyledAddNote>
