@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-//import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
 import Mood from "../../models/mood";
-import { User } from "firebase";
 import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import { SelectedTag, SelectedTags, Line } from "../../styles/Shared";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../state/userSlice";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -96,90 +96,85 @@ class State {
 }
 
 type Props = {
-  user: User;
   mood: Mood;
   removeMood: (mood: Mood) => void;
 };
 
-export default class Entry extends Component<Props> {
-  state: State;
+const Entry = (props: Props) => {
+  const [state, setState] = useState(new State());
+  const user = useSelector(selectUser);
 
-  constructor(props: any) {
-    super(props);
-    this.state = new State();
-  }
+  return (
+    <StyledEntry data-testid="Entry">
+      <Line onClick={() => setState({ popupOpen: true })}>
+        <EntryText>
+          <EntryHeader>{props.mood.description}</EntryHeader>
+          <EntrySubHeader>
+            {dateFormat(props.mood.date, " dddd h:MM tt")}
+          </EntrySubHeader>
+        </EntryText>
+        <EntryText>
+          <EntryNote>
+            {props.mood.note.substring(0, 20) +
+              (props.mood.note.length > 20 ? "..." : "")}
+          </EntryNote>
+          <EntryTags>
+            {props.mood.tags.slice(0, 1).map((tag: string) => (
+              <SelectedTag includeMargin={false}>{tag}</SelectedTag>
+            ))}
+            {props.mood.tags.length > 1 && (
+              <EntryTagMoreText>+{props.mood.tags.length - 1}</EntryTagMoreText>
+            )}
+          </EntryTags>
+        </EntryText>
+        <ChevronRight />
+      </Line>
+      {state.popupOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <PopupHeader>{props.mood.description}</PopupHeader>
+              <PopupDetails>
+                <HighlightedWord>Mood: </HighlightedWord>
+                {props.mood.value}
+              </PopupDetails>
+              <PopupDetails>
+                <HighlightedWord>Recorded: </HighlightedWord>
+                {dateFormat(props.mood.date, "h:MM tt d/m/yy")}
+              </PopupDetails>
+              {props.mood.note.length > 0 && (
+                <PopupDetails>
+                  <HighlightedWord>Note: </HighlightedWord>
 
-  async deleteMood(): Promise<void> {
-    this.setState({ popupOpen: false });
-    MoodService.deleteMood(this.props.user, this.props.mood.moodId!);
-    this.props.removeMood(this.props.mood);
-  }
-
-  render() {
-    return (
-      <StyledEntry data-testid="Entry">
-        <Line onClick={() => this.setState({ popupOpen: true })}>
-          <EntryText>
-            <EntryHeader>{this.props.mood.description}</EntryHeader>
-            <EntrySubHeader>
-              {dateFormat(this.props.mood.date, " dddd h:MM tt")}
-            </EntrySubHeader>
-          </EntryText>
-          <EntryText>
-            <EntryNote>
-              {this.props.mood.note.substring(0, 20) +
-                (this.props.mood.note.length > 20 ? "..." : "")}
-            </EntryNote>
-            <EntryTags>
-              {this.props.mood.tags.slice(0, 1).map((tag: string) => (
-                <SelectedTag includeMargin={false}>{tag}</SelectedTag>
-              ))}
-              {this.props.mood.tags.length > 1 && (
-                <EntryTagMoreText>
-                  +{this.props.mood.tags.length - 1}
-                </EntryTagMoreText>
+                  {props.mood.note}
+                </PopupDetails>
               )}
-            </EntryTags>
-          </EntryText>
-          <ChevronRight />
-        </Line>
-        {this.state.popupOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <PopupHeader>{this.props.mood.description}</PopupHeader>
+              {props.mood.tags.length > 0 && (
                 <PopupDetails>
-                  <HighlightedWord>Mood: </HighlightedWord>
-                  {this.props.mood.value}
+                  <SelectedTags>
+                    {props.mood.tags.map((tag: string) => (
+                      <SelectedTag includeMargin={true}>{tag}</SelectedTag>
+                    ))}
+                  </SelectedTags>
                 </PopupDetails>
-                <PopupDetails>
-                  <HighlightedWord>Recorded: </HighlightedWord>
-                  {dateFormat(this.props.mood.date, "h:MM tt d/m/yy")}
-                </PopupDetails>
-                {this.props.mood.note.length > 0 && (
-                  <PopupDetails>
-                    <HighlightedWord>Note: </HighlightedWord>
+              )}
+              <Button
+                onClick={async () => {
+                  setState({ popupOpen: false });
+                  MoodService.deleteMood(user!, props.mood.moodId!);
+                  props.removeMood(props.mood);
+                }}
+              >
+                Delete
+              </Button>
+            </PopupContent>
+          }
+          showButton={false}
+          close={() => setState({ popupOpen: false })}
+        ></Popup>
+      )}
+    </StyledEntry>
+  );
+};
 
-                    {this.props.mood.note}
-                  </PopupDetails>
-                )}
-                {this.props.mood.tags.length > 0 && (
-                  <PopupDetails>
-                    <SelectedTags>
-                      {this.props.mood.tags.map((tag: string) => (
-                        <SelectedTag includeMargin={true}>{tag}</SelectedTag>
-                      ))}
-                    </SelectedTags>
-                  </PopupDetails>
-                )}
-                <Button onClick={() => this.deleteMood()}>Delete</Button>
-              </PopupContent>
-            }
-            showButton={false}
-            close={() => this.setState({ popupOpen: false })}
-          ></Popup>
-        )}
-      </StyledEntry>
-    );
-  }
-}
+export default Entry;
