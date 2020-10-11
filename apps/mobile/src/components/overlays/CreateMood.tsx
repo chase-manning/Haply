@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Mood, { moodDescriptions } from "../../models/mood";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
@@ -11,6 +11,8 @@ import mehAsset from "../../assets/svgs/WindyDay.svg";
 import MoodSlider from "../shared/MoodSlider";
 import AddNote from "../shared/AddNote";
 import AddTags from "../shared/AddTags";
+import { useSelector } from "react-redux";
+import { selectMoodShowing } from "../../state/navigationSlice";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -73,7 +75,7 @@ const Button = styled.button`
   background-color: var(--primary);
 `;
 
-class createMoodState {
+class State {
   mood: number = 5;
   note: string = "";
   tags: string[] = [];
@@ -86,61 +88,64 @@ type Props = {
   tagOptions: string[];
 };
 
-export default class CreateMood extends Component<Props> {
-  state: createMoodState;
+const moodAsset = (mood: number): string => {
+  if (mood <= 2) return sadAsset;
+  if (mood <= 4) return mehAsset;
+  else if (mood <= 7) return okayAsset;
+  else return happyAsset;
+};
 
-  constructor(props: any) {
-    super(props);
-    this.state = new createMoodState();
-  }
+const CreateMood = (props: Props) => {
+  const [state, setState] = useState(new State());
+  const moodShowing = useSelector(selectMoodShowing);
 
-  createMood(): void {
-    const mood: Mood = new Mood(
-      this.state.mood,
-      this.props.user.uid,
-      this.state.note,
-      this.state.tags
-    );
-    MoodService.createMood(this.props.user, mood);
-    this.props.addMood(mood);
-    this.props.closeCapture();
-  }
+  if (!moodShowing) return null;
 
-  render() {
-    return (
-      <StyledCreateMood>
-        <TopBar>
-          <Close onClick={() => this.props.closeCapture()} />
-        </TopBar>
-        <Header>How are you feeling?</Header>
-        <Emotion>{moodDescriptions[this.state.mood]}</Emotion>
-        <Face>
-          <img src={this.moodAsset} alt="Mood Illustration" width="80%" />
-        </Face>
-        <MoodSlider
-          value={this.state.mood}
-          updateValue={(value: number) => {
-            this.setState({
-              mood: value,
-            });
-          }}
+  return (
+    <StyledCreateMood>
+      <TopBar>
+        <Close onClick={() => props.closeCapture()} />
+      </TopBar>
+      <Header>How are you feeling?</Header>
+      <Emotion>{moodDescriptions[state.mood]}</Emotion>
+      <Face>
+        <img src={moodAsset(state.mood)} alt="Mood Illustration" width="80%" />
+      </Face>
+      <MoodSlider
+        value={state.mood}
+        updateValue={(value: number) => {
+          setState({
+            ...state,
+            mood: value,
+          });
+        }}
+      />
+      <Additions>
+        <AddNote
+          setNote={(note: string) => setState({ ...state, note: note })}
         />
-        <Additions>
-          <AddNote setNote={(note: string) => this.setState({ note: note })} />
-          <AddTags
-            options={this.props.tagOptions}
-            setTags={(tags: string[]) => this.setState({ tags: tags })}
-          />
-        </Additions>
-        <Button onClick={async () => await this.createMood()}>Done</Button>
-      </StyledCreateMood>
-    );
-  }
+        <AddTags
+          options={props.tagOptions}
+          setTags={(tags: string[]) => setState({ ...state, tags: tags })}
+        />
+      </Additions>
+      <Button
+        onClick={() => {
+          const mood: Mood = new Mood(
+            state.mood,
+            props.user.uid,
+            state.note,
+            state.tags
+          );
+          MoodService.createMood(props.user, mood);
+          props.addMood(mood);
+          props.closeCapture();
+        }}
+      >
+        Done
+      </Button>
+    </StyledCreateMood>
+  );
+};
 
-  get moodAsset(): string {
-    if (this.state.mood <= 2) return sadAsset;
-    if (this.state.mood <= 4) return mehAsset;
-    else if (this.state.mood <= 7) return okayAsset;
-    else return happyAsset;
-  }
-}
+export default CreateMood;
