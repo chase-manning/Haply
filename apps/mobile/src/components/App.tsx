@@ -226,7 +226,6 @@ export default class App extends Component {
         {!!this.state.persist.user && (
           <ContentContainer>
             <Tabs
-              removeMood={(mood: Mood) => this.removeMood(mood)}
               setColorPrimary={async (colorPrimary: string) => {
                 await this.setState({
                   persist: {
@@ -283,13 +282,7 @@ export default class App extends Component {
   }
 
   async removeMood(mood: Mood): Promise<void> {
-    let moods: Mood[] = this.state.persist.moods;
-    const index = moods.indexOf(mood);
-    if (index > -1) {
-      moods.splice(index, 1);
-    }
-    await this.setState({ persist: { ...this.state.persist, moods: moods } });
-    this.softUpdate();
+    // action
   }
 
   async addMood(mood: Mood): Promise<void> {
