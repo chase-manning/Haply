@@ -12,6 +12,13 @@ import ToggleOffIcon from "@material-ui/icons/ToggleOff";
 import SettingService from "../../services/SettingService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../state/userSlice";
+import {
+  selectFrequencyMinutesMax,
+  selectFrequencyMinutesMin,
+  selectNextNotification,
+  selectRandomReminders,
+  selectRemindersEnabled,
+} from "../../state/settingsSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -195,7 +202,6 @@ type Props = {
   tagOptions: string[];
   removeTag: (tag: string) => void;
   addTag: (tag: string) => void;
-  settings: SettingsModel;
   toggleRemindersEnabled: () => void;
   toggleRandomReminders: () => void;
   setReminderFrequencies: (min: number, max: number) => void;
@@ -225,21 +231,26 @@ const frequency = (input: number, period: string) =>
 const Settings = (props: Props) => {
   const [state, setState] = useState(new State());
   const user = useSelector(selectUser)!;
+  const remindersEnabled = useSelector(selectRemindersEnabled)!;
+  const randomReminders = useSelector(selectRandomReminders)!;
+  const frequencyMinutesMin = useSelector(selectFrequencyMinutesMin)!;
+  const frequencyMinutesMax = useSelector(selectFrequencyMinutesMax)!;
+  const nextNotification = useSelector(selectNextNotification)!;
 
   useEffect(() => {
     setState({
       ...state,
       reminderFrequencyMinimumInput: getFrequencyInputFromMinutes(
-        props.settings.frequencyMinutesMin
+        frequencyMinutesMin
       ),
       reminderFrequencyMinimumDropdown: getFrequencyDropdownFromMinutes(
-        props.settings.frequencyMinutesMin
+        frequencyMinutesMin
       ),
       reminderFrequencyMaximumInput: getFrequencyInputFromMinutes(
-        props.settings.frequencyMinutesMax
+        frequencyMinutesMax
       ),
       reminderFrequencyMaximumDropdown: getFrequencyDropdownFromMinutes(
-        props.settings.frequencyMinutesMax
+        frequencyMinutesMax
       ),
     });
   });
@@ -263,8 +274,8 @@ const Settings = (props: Props) => {
       <Line onClick={() => props.toggleRemindersEnabled()}>
         <Label>Reminders</Label>
         <Value>
-          <Toggle on={props.settings.remindersEnabled}>
-            {props.settings.remindersEnabled ? (
+          <Toggle on={remindersEnabled}>
+            {remindersEnabled ? (
               <ToggleOnIcon fontSize={"large"} />
             ) : (
               <ToggleOffIcon fontSize={"large"} />
@@ -275,8 +286,8 @@ const Settings = (props: Props) => {
       <Line onClick={() => props.toggleRandomReminders()}>
         <Label>Random Range</Label>
         <Value>
-          <Toggle on={props.settings.randomReminders}>
-            {props.settings.randomReminders ? (
+          <Toggle on={randomReminders}>
+            {randomReminders ? (
               <ToggleOnIcon fontSize={"large"} />
             ) : (
               <ToggleOffIcon fontSize={"large"} />
@@ -357,7 +368,7 @@ const Settings = (props: Props) => {
           content={
             <PopupContent>
               <PopupHeader>
-                {props.settings.randomReminders
+                {randomReminders
                   ? "At Minumum Remind me Every:"
                   : "Remind me Every:"}
               </PopupHeader>
@@ -374,7 +385,7 @@ const Settings = (props: Props) => {
                         state.reminderFrequencyMinimumInput,
                         state.reminderFrequencyMinimumDropdown
                       ),
-                      props.settings.randomReminders
+                      randomReminders
                         ? frequency(
                             state.reminderFrequencyMaximumInput,
                             state.reminderFrequencyMaximumDropdown
@@ -399,7 +410,7 @@ const Settings = (props: Props) => {
                         state.reminderFrequencyMinimumInput,
                         state.reminderFrequencyMinimumDropdown
                       ),
-                      props.settings.randomReminders
+                      randomReminders
                         ? frequency(
                             state.reminderFrequencyMaximumInput,
                             state.reminderFrequencyMaximumDropdown
@@ -416,7 +427,7 @@ const Settings = (props: Props) => {
                   <FrequencyOption>Days</FrequencyOption>
                 </FrequencySelect>
               </FrequencyItem>
-              {props.settings.randomReminders && (
+              {randomReminders && (
                 <FrequencySecondItem>
                   <PopupHeader>At Maximum Remind me Every:</PopupHeader>
                   <FrequencyItem>
@@ -432,7 +443,7 @@ const Settings = (props: Props) => {
                             state.reminderFrequencyMinimumInput,
                             state.reminderFrequencyMinimumDropdown
                           ),
-                          props.settings.randomReminders
+                          randomReminders
                             ? frequency(
                                 state.reminderFrequencyMaximumInput,
                                 state.reminderFrequencyMaximumDropdown
@@ -457,7 +468,7 @@ const Settings = (props: Props) => {
                             state.reminderFrequencyMinimumInput,
                             state.reminderFrequencyMinimumDropdown
                           ),
-                          props.settings.randomReminders
+                          randomReminders
                             ? frequency(
                                 state.reminderFrequencyMaximumInput,
                                 state.reminderFrequencyMaximumDropdown
