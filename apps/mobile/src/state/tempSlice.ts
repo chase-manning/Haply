@@ -41,6 +41,13 @@ export const tempSlice = createSlice({
     setTagOptions: (state, action: PayloadAction<string[]>) => {
       state.tagOptions = action.payload;
     },
+    addTagOption: (state, action: PayloadAction<string>) => {
+      state.tagOptions.push(action.payload);
+    },
+    removeTagOption: (state, action: PayloadAction<string>) => {
+      const index = state.tagOptions.indexOf(action.payload);
+      if (index > -1) state.tagOptions.splice(index, 1);
+    },
     setColorPrimary: (state, action: PayloadAction<string>) => {
       state.colorPrimary = action.payload;
     },
@@ -51,7 +58,13 @@ export const tempSlice = createSlice({
   },
 });
 
-export const { setTagOptions, setColorPrimary, toggleMode } = tempSlice.actions;
+export const {
+  setTagOptions,
+  addTagOption,
+  removeTagOption,
+  setColorPrimary,
+  toggleMode,
+} = tempSlice.actions;
 
 /* SELECTS */
 export const selectTagOptions = (state: RootState) => state.temp.tagOptions;
