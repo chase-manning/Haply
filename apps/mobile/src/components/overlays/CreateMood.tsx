@@ -3,7 +3,6 @@ import Mood, { moodDescriptions } from "../../models/mood";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
 import MoodService from "../../services/MoodService";
-import { User } from "firebase";
 import sadAsset from "../../assets/svgs/FeelingBlue.svg";
 import happyAsset from "../../assets/svgs/SmileyFace.svg";
 import okayAsset from "../../assets/svgs/YoungAndHappy.svg";
