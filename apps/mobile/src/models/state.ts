@@ -8,16 +8,6 @@ export enum Mode {
   Light,
 }
 
-export class SettingsModel {
-  remindersEnabled: boolean = true;
-  randomReminders: boolean = false;
-  frequencyMinutesMin: number = 7 * 60;
-  frequencyMinutesMax: number = 7 * 60;
-  sleepStart: number = 22;
-  sleepEnd: number = 7;
-  nextNotification: Date = new Date(2050, 1, 1);
-}
-
 export class Persist {
   moods: Mood[] = [];
   stats: StatModel[] = [];
@@ -39,7 +29,6 @@ export class Persist {
   colorPrimary: string = "#4071fe";
   mode: Mode = Mode.Default;
   pushNotificationToken?: string;
-  settings: SettingsModel = new SettingsModel();
 }
 
 export default class State {
