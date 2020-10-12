@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "./store";
 
 /* TYPES */
-interface SettingsState {
+export interface SettingsState {
   remindersEnabled: boolean;
   randomReminders: boolean;
   frequencyMinutesMin: number;
