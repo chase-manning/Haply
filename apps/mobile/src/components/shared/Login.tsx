@@ -78,7 +78,7 @@ const Login = (props: Props) => {
     });
   }, [dispatch]);
 
-  if (!loggingIn && (!props.user || props.user?.isAnonymous)) return null;
+  if (!loggingIn || (props.user && !props.user.isAnonymous)) return null;
 
   return (
     <OverlayContainer>
