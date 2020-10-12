@@ -53,11 +53,6 @@ const FrequencySecondItem = styled.div`
 `;
 
 class State {
-  themePopupOpen: boolean = false;
-  tagsPopupOpen: boolean = false;
-  newTag: string = "";
-  newTagPopupOpen: boolean = false;
-  reminderFrequencyPopupOpen: boolean = false;
   reminderFrequencyMinimumInput: number = 3;
   reminderFrequencyMinimumDropdown: string = "Hours";
   reminderFrequencyMaximumInput: number = 3;
@@ -176,7 +171,7 @@ const ReminderPopup = () => {
         </PopupContent>
       }
       showButton={true}
-      close={() => setState({ ...state, reminderFrequencyPopupOpen: false })}
+      close={() => console.log("meow")}
     />
   );
 };
