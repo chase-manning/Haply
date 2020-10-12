@@ -21,7 +21,7 @@ import forBreakfast from "../assets/svgs/Breakfast.svg";
 import aHabbit from "../assets/svgs/IconDesign.svg";
 import aRoutine from "../assets/svgs/MyUniverse.svg";
 import aLifestyle from "../assets/svgs/SnapTheMoment.svg";
-import { Mode } from "../models/state";
+import { Mode } from "../state/tempSlice";
 
 const AchievementService = {
   getAchievements(
