@@ -7,7 +7,7 @@ import AchievementService from "../services/AchievementService";
 import MoodService from "../services/MoodService";
 import StatService from "../services/StatService";
 import { AppThunk, RootState } from "./store";
-import { selectColorPrimary, selectMode } from "./tempSlice";
+import { Mode, selectColorPrimary, selectMode } from "./tempSlice";
 import { User } from "firebase";
 
 /* TYPES */
@@ -78,18 +78,17 @@ export const updateMoods = (user: User): AppThunk => async (dispatch) => {
   dispatch(setMoods(moods));
 };
 
-export const updateStats = (): AppThunk => (dispatch) => {
-  const moods = useSelector(selectMoods);
+export const updateStats = (moods: Mood[]): AppThunk => (dispatch) => {
   const stats = StatService.getStats(moods);
 
   dispatch(setStats(stats));
 };
 
-export const updateAchievements = (): AppThunk => (dispatch) => {
-  const moods = useSelector(selectMoods);
-  const colorPrimary = useSelector(selectColorPrimary);
-  const mode = useSelector(selectMode);
-
+export const updateAchievements = (
+  moods: Mood[],
+  colorPrimary: string,
+  mode: Mode
+): AppThunk => (dispatch) => {
   const achievements = AchievementService.getAchievements(
     moods,
     colorPrimary,
