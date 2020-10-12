@@ -43,7 +43,7 @@ type Props = {
   label: string;
   isToggle: boolean;
   toggleOn?: boolean;
-  clickFunction?: () => void;
+  clickFunction: () => void;
   popup?: JSX.Element;
 };
 
@@ -54,7 +54,7 @@ const Setting = (props: Props) => {
     <StyledSettings data-testid="Settings">
       <Line
         onClick={() => {
-          //if (!!props.clickFunction) props.clickFunction();
+          props.clickFunction();
           if (!!props.popup) setState({ popupOpen: true });
         }}
       >
