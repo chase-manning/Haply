@@ -4,8 +4,6 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
 import { Line } from "../../styles/Shared";
-import { useSelector } from "react-redux";
-import { selectDarkModeUnlocked } from "../../state/dataSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
