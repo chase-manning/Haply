@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk, RootState } from "./store";
+import { RootState } from "./store";
 
 /* TYPES */
 export enum Mode {
