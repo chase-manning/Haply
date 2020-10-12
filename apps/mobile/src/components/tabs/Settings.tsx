@@ -14,6 +14,7 @@ import { showLogin } from "../../state/navigationSlice";
 import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
+import TagPopup from "../shared/TagPopup";
 
 const StyledSettings = styled.div`
   width: 100%;
