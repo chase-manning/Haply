@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import EmojiEventsOutlined from "@material-ui/icons/EmojiEventsOutlined";
 import TimelineOutlined from "@material-ui/icons/TimelineOutlined";
 import AddOutlined from "@material-ui/icons/AddOutlined";
