@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Mood from "../../models/mood";
 import { StatModel } from "../../models/StatModel";
 import Stat from "../shared/Stat";
 import { useSelector } from "react-redux";
-import { selectColorPrimary } from "../../state/tempSlice";
-import { selectMoods, selectStats } from "../../state/dataSlice";
+import { selectStats } from "../../state/dataSlice";
 
 const StyledAnalytics = styled.div`
   width: 100%;
