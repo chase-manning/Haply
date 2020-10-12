@@ -6,10 +6,12 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase, { User } from "firebase/app";
 import "firebase/auth";
 import {
+  selectMoods,
   updateAchievements,
   updateMoods,
   updateStats,
 } from "../../state/dataSlice";
+import { selectColorPrimary, selectMode } from "../../state/tempSlice";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -52,6 +54,9 @@ type Props = {
 const Login = (props: Props) => {
   const dispatch = useDispatch();
   const loggingIn = useSelector(selectLoggingIn);
+  const moods = useSelector(selectMoods);
+  const colorPrimary = useSelector(selectColorPrimary);
+  const mode = useSelector(selectMode);
 
   useEffect(() => {
     if (!props.user) {
@@ -65,12 +70,11 @@ const Login = (props: Props) => {
     }
 
     firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
-      console.log("mdow");
       if (!changedUser) return;
       props.setUser(changedUser);
       dispatch(updateMoods(changedUser));
-      dispatch(updateAchievements);
-      dispatch(updateStats);
+      dispatch(updateAchievements(moods, colorPrimary, mode));
+      dispatch(updateStats(moods));
     });
   }, [dispatch]);
 
