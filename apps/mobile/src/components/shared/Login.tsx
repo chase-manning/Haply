@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLoginShowing } from "../../state/navigationSlice";
+import { selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { selectUser, setUser } from "../../state/userSlice";
-import { User } from "firebase";
-import firebase from "firebase/app";
+import firebase, { User } from "firebase/app";
 import "firebase/auth";
+import {
+  updateAchievements,
+  updateMoods,
+  updateStats,
+} from "../../state/dataSlice";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -41,18 +44,17 @@ const OverlayContainer = styled.div`
   height: 100%;
 `;
 
-function Login() {
+type Props = {
+  user?: User;
+  setUser: (user: User) => void;
+};
+
+const Login = (props: Props) => {
   const dispatch = useDispatch();
-  const loginShowing = useSelector(selectLoginShowing);
-  const user = useSelector(selectUser);
+  const loggingIn = useSelector(selectLoggingIn);
 
   useEffect(() => {
-    firebaseApp.auth().onAuthStateChanged((changedUser) => {
-      if (!changedUser) return;
-      dispatch(setUser(changedUser));
-    });
-
-    if (!user) {
+    if (!props.user) {
       firebase
         .auth()
         .signInAnonymously()
@@ -61,9 +63,18 @@ function Login() {
           console.log(errorMessage);
         });
     }
-  });
 
-  if (!loginShowing) return null;
+    firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
+      console.log("mdow");
+      if (!changedUser) return;
+      props.setUser(changedUser);
+      dispatch(updateMoods(changedUser));
+      dispatch(updateAchievements);
+      dispatch(updateStats);
+    });
+  }, [dispatch]);
+
+  if (!loggingIn && (!props.user || props.user?.isAnonymous)) return null;
 
   return (
     <OverlayContainer>
@@ -73,6 +84,6 @@ function Login() {
       />
     </OverlayContainer>
   );
-}
+};
 
 export default Login;

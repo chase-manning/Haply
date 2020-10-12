@@ -7,8 +7,8 @@ import Analytics from "./Analytics";
 import Settings from "./Settings";
 import { Tab, selectActiveTab } from "../../state/navigationSlice";
 import { NOTFOUND } from "dns";
-import Mood from "../../models/mood";
 import { useSelector } from "react-redux";
+import { User } from "firebase";
 
 const StyledTabs = styled.div`
   width: 100%;
@@ -16,14 +16,20 @@ const StyledTabs = styled.div`
   overflow: auto;
 `;
 
-const Tabs = () => {
+type Props = {
+  user: User;
+};
+
+const Tabs = (props: Props) => {
   const activeTab = useSelector(selectActiveTab);
 
   let tabContents;
   if (activeTab === Tab.Profile) tabContents = <Achievements />;
-  else if (activeTab === Tab.Entries) tabContents = <Entries />;
+  else if (activeTab === Tab.Entries)
+    tabContents = <Entries user={props.user} />;
   else if (activeTab === Tab.Stats) tabContents = <Analytics />;
-  else if (activeTab === Tab.Settings) tabContents = <Settings />;
+  else if (activeTab === Tab.Settings)
+    tabContents = <Settings user={props.user} />;
   else throw NOTFOUND;
 
   return <StyledTabs>{tabContents}</StyledTabs>;

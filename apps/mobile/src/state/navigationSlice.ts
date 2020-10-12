@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Route } from "react-router-dom";
-import { AppThunk, RootState } from "./store";
+import { RootState } from "./store";
 
 /* TYPES */
 export enum Tab {
@@ -56,9 +55,7 @@ export const {
 /* SELECTS */
 export const selectMoodShowing = (state: RootState) =>
   state.navigation.moodShowing;
-export const selectLoginShowing = (state: RootState) =>
-  state.navigation.loggingIn &&
-  (state.user.value?.isAnonymous || !state.user.value);
+export const selectLoggingIn = (state: RootState) => state.navigation.loggingIn;
 
 export const selectActiveTab = (state: RootState) => state.navigation.activeTab;
 

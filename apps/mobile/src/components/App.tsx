@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React, { Component } from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
 import CreateMood from "./overlays/CreateMood";
 import Header from "../components/shared/Header";
-import { Plugins, PushNotificationToken } from "@capacitor/core";
-import { useSelector, useDispatch } from "react-redux";
-import { selectUser, setPushNotificationToken } from "../state/userSlice";
 import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
-
-const { PushNotifications } = Plugins;
+import { User } from "firebase";
+import PushNotifications from "./shared/PushNotifications";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -30,37 +27,37 @@ const ContentContainer = styled.div`
   background-color: var(--bg);
 `;
 
-const App = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+class State {
+  user?: User;
+}
 
-  useEffect(() => {
-    PushNotifications.requestPermission().then((result) => {
-      if (result.granted) PushNotifications.register();
-    });
+export default class App extends Component {
+  state: State;
+  unregisterAuthObserver: any;
 
-    PushNotifications.addListener(
-      "registration",
-      (token: PushNotificationToken) => {
-        dispatch(setPushNotificationToken(token.value));
-      }
+  constructor(props: any) {
+    super(props);
+    this.state = new State();
+  }
+
+  render() {
+    return (
+      <StyledApp>
+        <PushNotifications />
+        <GlobalStyles />
+        {!!this.state.user && (
+          <ContentContainer>
+            <Tabs user={this.state.user!} />
+            <Header />
+            <NavBar />
+          </ContentContainer>
+        )}
+        <Login
+          user={this.state.user}
+          setUser={(user: User) => this.setState({ user: user })}
+        />
+        <CreateMood user={this.state.user!} />
+      </StyledApp>
     );
-  });
-
-  return (
-    <StyledApp>
-      <GlobalStyles />
-      {!!user && (
-        <ContentContainer>
-          <Tabs />
-          <Header />
-          <NavBar />
-        </ContentContainer>
-      )}
-      <Login />
-      <CreateMood />
-    </StyledApp>
-  );
-};
-
-export default App;
+  }
+}

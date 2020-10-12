@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../state/userSlice";
 import {
   selectRandomReminders,
   selectRemindersEnabled,
@@ -15,6 +14,7 @@ import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
+import { User } from "firebase";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -32,9 +32,12 @@ const Header = styled.div`
   color: var(--main);
 `;
 
-const Settings = () => {
+type Props = {
+  user: User;
+};
+
+const Settings = (props: Props) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser)!;
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
   const mode = useSelector(selectMode);
@@ -46,8 +49,8 @@ const Settings = () => {
       <Setting
         label={"Cloud Sync"}
         isToggle={true}
-        toggleOn={!user.isAnonymous}
-        clickFunction={dispatch(showLogin)}
+        toggleOn={!props.user.isAnonymous}
+        clickFunction={() => dispatch(showLogin())}
       />
 
       <Header>Reminders</Header>
@@ -55,31 +58,42 @@ const Settings = () => {
         label={"Reminders"}
         isToggle={true}
         toggleOn={remindersEnabled}
-        clickFunction={dispatch(toggleRemindersEnabled)}
+        clickFunction={() => dispatch(toggleRemindersEnabled())}
       />
       <Setting
         label={"Random Range"}
         isToggle={true}
         toggleOn={randomReminders}
-        clickFunction={dispatch(toggleRandomReminders)}
+        clickFunction={() => dispatch(toggleRandomReminders())}
       />
       <Setting
         label={"Reminder Frequency"}
         isToggle={false}
+        clickFunction={() => console.log("TODO")}
         popup={<ReminderPopup />}
       />
 
       <Header>Settings</Header>
-      <Setting label={"Theme"} isToggle={false} popup={<ThemePopup />} />
+      <Setting
+        label={"Theme"}
+        isToggle={false}
+        popup={<ThemePopup />}
+        clickFunction={() => console.log("TODO")}
+      />
       {darkModeUnlocked && (
         <Setting
           label={"Dark Mode"}
           isToggle={true}
           toggleOn={mode === Mode.Dark}
-          clickFunction={dispatch(toggleMode)}
+          clickFunction={() => dispatch(toggleMode())}
         />
       )}
-      <Setting label={"Tags"} isToggle={false} popup={<TagPopup />} />
+      <Setting
+        label={"Tags"}
+        isToggle={false}
+        popup={<TagPopup />}
+        clickFunction={() => console.log("TODO")}
+      />
 
       <Header>Contact</Header>
       <Setting

@@ -8,7 +8,7 @@ import MoodService from "../services/MoodService";
 import StatService from "../services/StatService";
 import { AppThunk, RootState } from "./store";
 import { selectColorPrimary, selectMode } from "./tempSlice";
-import { selectUser } from "./userSlice";
+import { User } from "firebase";
 
 /* TYPES */
 interface DataState {
@@ -56,8 +56,8 @@ export const {
 } = dataSlice.actions;
 
 /* THUNKS */
-export const updateMoods = (): AppThunk => async (dispatch) => {
-  const user = useSelector(selectUser)!;
+export const updateMoods = (user: User): AppThunk => async (dispatch) => {
+  console.log("updaing moods");
   const response: any = await MoodService.getMoods(user, "date");
   const moodResponses: MoodResponse[] = await response.json();
 
