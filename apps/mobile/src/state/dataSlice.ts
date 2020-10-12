@@ -103,5 +103,11 @@ export const updateAchievements = (): AppThunk => (dispatch) => {
 export const selectMoods = (state: RootState) => state.data.moods;
 export const selectStats = (state: RootState) => state.data.stats;
 export const selectAchievements = (state: RootState) => state.data.achievements;
+export const selectDarkModeUnlocked = (state: RootState) =>
+  state.data.achievements.some(
+    (achievement: AchievementModel) =>
+      achievement.unlocks.indexOf("Dark Mode") >= 0 &&
+      achievement.percentComplete === 1
+  );
 
 export default dataSlice.reducer;
