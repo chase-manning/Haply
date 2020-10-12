@@ -1,12 +1,12 @@
 import { User } from "firebase";
-import { SettingsModel } from "../models/state";
+import { SettingsState } from "../state/settingsSlice";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
 //const api: string = "http://localhost:5001/happiness-software/us-central1/webApi/api/";
 
 const SettingService = {
-  async createSetting(user: User, setting: SettingsModel): Promise<any> {
+  async createSetting(user: User, setting: SettingsState): Promise<any> {
     try {
       const route: string = api + "settings";
       return user
