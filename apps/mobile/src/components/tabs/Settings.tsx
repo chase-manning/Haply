@@ -41,7 +41,7 @@ const Settings = () => {
   const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
 
   return (
-    <StyledSettings data-testid="Settings">
+    <StyledSettings>
       <Header>Profile</Header>
       <Setting
         label={"Cloud Sync"}
