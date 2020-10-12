@@ -56,7 +56,7 @@ const Setting = (props: Props) => {
     <StyledSettings data-testid="Settings">
       <Line
         onClick={() => {
-          if (!!props.clickFunction) props.clickFunction()!;
+          //if (!!props.clickFunction) props.clickFunction();
           if (!!props.popup) setState({ popupOpen: true });
         }}
       >
