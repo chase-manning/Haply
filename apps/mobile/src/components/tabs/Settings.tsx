@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import ChevronRight from "@material-ui/icons/ChevronRight";
 import Popup from "../shared/Popup";
-import AchievementModel from "../../models/AchievementModel";
 import { SelectedTags, SelectedTag, Line } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
@@ -19,12 +17,18 @@ import {
   selectColorPrimary,
   toggleMode,
   selectTagOptions,
-  setColorPrimary,, selectMode, removeTagOption, addTagOption
+  selectMode,
+  removeTagOption,
+  addTagOption,
 } from "../../state/tempSlice";
-import { selectAchievements, selectDarkModeUnlocked } from "../../state/dataSlice";
+import {
+  selectAchievements,
+  selectDarkModeUnlocked,
+} from "../../state/dataSlice";
 import { showLogin } from "../../state/navigationSlice";
-import Setting from "../shared/Setting"
+import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
+import ThemePopup from "../shared/ThemePopup";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -42,47 +46,10 @@ const Header = styled.div`
   color: var(--main);
 `;
 
-
 const PopupContent = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-
-const ColorOptions = styled.div`
-  width: 100%;
-  display: grid;
-  grid-row-gap: 10px;
-  align-items: center;
-  justify-items: center;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-`;
-
-type ColorOptionProps = {
-  selected: boolean;
-};
-
-const ColorOption = styled.button`
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: ${(props: ColorOptionProps) =>
-    props.selected ? "solid 2px var(--primary)" : "none"};
-`;
-
-type ColorProps = {
-  color: string;
-};
-
-const Color = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props: ColorProps) => props.color};
 `;
 
 const TagIcon = styled.div`
@@ -129,7 +96,6 @@ const TagInput = styled.input`
 `;
 
 class State {
-  themePopupOpen: boolean = false;
   tagsPopupOpen: boolean = false;
   newTag: string = "";
   newTagPopupOpen: boolean = false;
@@ -141,67 +107,91 @@ const Settings = () => {
   const user = useSelector(selectUser)!;
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
-  const colorPrimary = useSelector(selectColorPrimary);
   const mode = useSelector(selectMode);
   const tagOptions = useSelector(selectTagOptions);
-  const achievements = useSelector(selectAchievements);
   const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
 
   return (
     <StyledSettings data-testid="Settings">
       <Header>Profile</Header>
-      <Setting label={"Cloud Sync"} isToggle={true} toggleOn={!user.isAnonymous} clickFunction={dispatch(showLogin)}/>
+      <Setting
+        label={"Cloud Sync"}
+        isToggle={true}
+        toggleOn={!user.isAnonymous}
+        clickFunction={dispatch(showLogin)}
+      />
 
       <Header>Reminders</Header>
-      <Setting label={"Reminders"} isToggle={true} toggleOn={remindersEnabled} clickFunction={dispatch(toggleRemindersEnabled)}/>
-      <Setting label={"Random Range"} isToggle={true} toggleOn={randomReminders} clickFunction={dispatch(toggleRandomReminders)}/>
-      <Setting label={"Reminder Frequency"} isToggle={false} popup={<ReminderPopup />}/>
+      <Setting
+        label={"Reminders"}
+        isToggle={true}
+        toggleOn={remindersEnabled}
+        clickFunction={dispatch(toggleRemindersEnabled)}
+      />
+      <Setting
+        label={"Random Range"}
+        isToggle={true}
+        toggleOn={randomReminders}
+        clickFunction={dispatch(toggleRandomReminders)}
+      />
+      <Setting
+        label={"Reminder Frequency"}
+        isToggle={false}
+        popup={<ReminderPopup />}
+      />
 
       <Header>Settings</Header>
-      <Setting label={"Theme"} isToggle={false} popup={<div>TODO</div>}/>
-      { darkModeUnlocked && (
-      <Setting label={"Dark Mode"} isToggle={true} toggleOn={mode === Mode.Dark} clickFunction={dispatch(toggleMode)}/>
-      )}
-      <Setting label={"Tags"} isToggle={false} popup={<div>TODO</div>}/>
-
-      <Header>Contact</Header>
-      <Setting label={"Suggest a Feature"} isToggle={false} clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}/>
-      <Setting label={"Report an Issue"} isToggle={false} clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}/>
-      <Setting label={"Say Hi"} isToggle={false} clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}/>
-
-      <Header>About</Header>
-      <Setting label={"Created By"} isToggle={false} clickFunction={() => window.open("https://chasemanning.co.nz/")}/>
-      <Setting label={"Source Code"} isToggle={false} clickFunction={() => window.open("https://github.com/chase-manning/Haply/")}/>
-      <Setting label={"License"} isToggle={false} clickFunction={() => window.open("https://github.com/chase-manning/Haply/blob/master/LICENSE")}/>
-
-      {state.themePopupOpen && (
-        <Popup
-          content={
-            <PopupContent>
-              <ColorOptions>
-                {achievements
-                  .filter(
-                    (achievement: AchievementModel) =>
-                      achievement.colorPrimary !== "" &&
-                      achievement.percentComplete === 1
-                  )
-                  .map((achievement: AchievementModel) => (
-                    <ColorOption
-                      onClick={() =>
-                        dispatch(setColorPrimary(achievement.colorPrimary))
-                      }
-                      selected={achievement.colorPrimary === colorPrimary}
-                    >
-                      <Color color={achievement.colorPrimary} />
-                    </ColorOption>
-                  ))}
-              </ColorOptions>
-            </PopupContent>
-          }
-          showButton={true}
-          close={() => setState({ ...state, themePopupOpen: false })}
+      <Setting label={"Theme"} isToggle={false} popup={<ThemePopup />} />
+      {darkModeUnlocked && (
+        <Setting
+          label={"Dark Mode"}
+          isToggle={true}
+          toggleOn={mode === Mode.Dark}
+          clickFunction={dispatch(toggleMode)}
         />
       )}
+      <Setting label={"Tags"} isToggle={false} popup={<div>TODO</div>} />
+
+      <Header>Contact</Header>
+      <Setting
+        label={"Suggest a Feature"}
+        isToggle={false}
+        clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}
+      />
+      <Setting
+        label={"Report an Issue"}
+        isToggle={false}
+        clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}
+      />
+      <Setting
+        label={"Say Hi"}
+        isToggle={false}
+        clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}
+      />
+
+      <Header>About</Header>
+      <Setting
+        label={"Created By"}
+        isToggle={false}
+        clickFunction={() => window.open("https://chasemanning.co.nz/")}
+      />
+      <Setting
+        label={"Source Code"}
+        isToggle={false}
+        clickFunction={() =>
+          window.open("https://github.com/chase-manning/Haply/")
+        }
+      />
+      <Setting
+        label={"License"}
+        isToggle={false}
+        clickFunction={() =>
+          window.open(
+            "https://github.com/chase-manning/Haply/blob/master/LICENSE"
+          )
+        }
+      />
+
       {state.tagsPopupOpen && (
         <Popup
           content={
