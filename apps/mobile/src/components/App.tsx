@@ -31,18 +31,17 @@ const ContentContainer = styled.div`
 `;
 
 const App = () => {
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    const dispatch = useDispatch();
-
     PushNotifications.requestPermission().then((result) => {
       if (result.granted) PushNotifications.register();
     });
 
     PushNotifications.addListener(
       "registration",
-      async (token: PushNotificationToken) => {
+      (token: PushNotificationToken) => {
         dispatch(setPushNotificationToken(token.value));
       }
     );
