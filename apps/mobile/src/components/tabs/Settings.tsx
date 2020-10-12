@@ -6,20 +6,13 @@ import AchievementModel from "../../models/AchievementModel";
 import { SelectedTags, SelectedTag, Line } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
-import ToggleOnIcon from "@material-ui/icons/ToggleOn";
-import ToggleOffIcon from "@material-ui/icons/ToggleOff";
-import SettingService from "../../services/SettingService";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../state/userSlice";
 import {
-  selectFrequencyMinutesMax,
-  selectFrequencyMinutesMin,
-  selectNextNotification,
   selectRandomReminders,
   selectRemindersEnabled,
   toggleRemindersEnabled,
   toggleRandomReminders,
-  updateNextNotification,
 } from "../../state/settingsSlice";
 import {
   Mode,
@@ -28,8 +21,10 @@ import {
   selectTagOptions,
   setColorPrimary,, selectMode, removeTagOption, addTagOption
 } from "../../state/tempSlice";
-import { selectAchievements } from "../../state/dataSlice";
+import { selectAchievements, selectDarkModeUnlocked } from "../../state/dataSlice";
 import { showLogin } from "../../state/navigationSlice";
+import Setting from "../shared/Setting"
+import ReminderPopup from "../shared/ReminderPopup";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -47,27 +42,6 @@ const Header = styled.div`
   color: var(--main);
 `;
 
-const Label = styled.div`
-  color: var(--sub);
-  width: 70%;
-  text-align: left;
-`;
-
-const Value = styled.div`
-  color: var(--main);
-  width: 30%;
-`;
-
-type ToggleProps = {
-  on: boolean;
-};
-
-const Toggle = styled.div`
-  color: ${(props: ToggleProps) =>
-    props.on ? "var(--primary)" : "var(--sub)"};
-  display: flex;
-  align-items: center;
-`;
 
 const PopupContent = styled.div`
   width: 100%;
@@ -75,43 +49,6 @@ const PopupContent = styled.div`
   flex-direction: column;
 `;
 
-const PopupHeader = styled.div`
-  color: var(--sub);
-  font-size: 14px;
-  margin-bottom: 10px;
-`;
-
-const FrequencyItem = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const FrequencyInput = styled.input`
-  width: 40%;
-  border: solid 1px var(--border);
-  padding: 20px;
-  border-radius: 10px;
-  outline: none;
-  background-color: var(--bg-top);
-  color: var(--main);
-`;
-const FrequencySelect = styled.select`
-  width: 50%;
-  border: solid 1px var(--border);
-  padding: 20px;
-  border-radius: 10px;
-  outline: none;
-  background-color: var(--bg-top);
-  color: var(--main);
-`;
-
-const FrequencyOption = styled.option``;
-
-const FrequencySecondItem = styled.div`
-  margin-top: 20px;
-`;
 
 const ColorOptions = styled.div`
   width: 100%;
@@ -196,33 +133,7 @@ class State {
   tagsPopupOpen: boolean = false;
   newTag: string = "";
   newTagPopupOpen: boolean = false;
-  reminderFrequencyPopupOpen: boolean = false;
-  reminderFrequencyMinimumInput: number = 3;
-  reminderFrequencyMinimumDropdown: string = "Hours";
-  reminderFrequencyMaximumInput: number = 3;
-  reminderFrequencyMaximumDropdown: string = "Hours";
 }
-
-const getFrequencyInputFromMinutes = (minutes: number): number => {
-  if (minutes < 60) return minutes;
-  else if (minutes < 60 * 24) return minutes / 60;
-  else return minutes / (60 * 24);
-};
-
-const getFrequencyDropdownFromMinutes = (minutes: number): string => {
-  if (minutes < 60) return "Minutes";
-  else if (minutes < 60 * 24) return "Hours";
-  else return "Days";
-};
-
-const getFrequencyMultiplier = (frequencyDropdown: string): number => {
-  if (frequencyDropdown === "Minutes") return 1;
-  else if (frequencyDropdown === "Hours") return 60;
-  else return 60 * 24;
-};
-
-const frequency = (input: number, period: string) =>
-  input * getFrequencyMultiplier(period);
 
 const Settings = () => {
   const [state, setState] = useState(new State());
@@ -230,273 +141,38 @@ const Settings = () => {
   const user = useSelector(selectUser)!;
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
-  const frequencyMinutesMin = useSelector(selectFrequencyMinutesMin)!;
-  const frequencyMinutesMax = useSelector(selectFrequencyMinutesMax)!;
-  const nextNotification = useSelector(selectNextNotification)!;
   const colorPrimary = useSelector(selectColorPrimary);
   const mode = useSelector(selectMode);
   const tagOptions = useSelector(selectTagOptions);
   const achievements = useSelector(selectAchievements);
-
-  useEffect(() => {
-    setState({
-      ...state,
-      reminderFrequencyMinimumInput: getFrequencyInputFromMinutes(
-        frequencyMinutesMin
-      ),
-      reminderFrequencyMinimumDropdown: getFrequencyDropdownFromMinutes(
-        frequencyMinutesMin
-      ),
-      reminderFrequencyMaximumInput: getFrequencyInputFromMinutes(
-        frequencyMinutesMax
-      ),
-      reminderFrequencyMaximumDropdown: getFrequencyDropdownFromMinutes(
-        frequencyMinutesMax
-      ),
-    });
-  });
+  const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
 
   return (
     <StyledSettings data-testid="Settings">
       <Header>Profile</Header>
-      <Line onClick={() => dispatch(showLogin)}>
-        <Label>Cloud Sync</Label>
-        <Value>
-          <Toggle on={!user.isAnonymous}>
-            {!user.isAnonymous ? (
-              <ToggleOnIcon fontSize={"large"} />
-            ) : (
-              <ToggleOffIcon fontSize={"large"} />
-            )}
-          </Toggle>
-        </Value>
-      </Line>
+      <Setting label={"Cloud Sync"} isToggle={true} toggleOn={!user.isAnonymous} clickFunction={dispatch(showLogin)}/>
+
       <Header>Reminders</Header>
-      <Line onClick={() => dispatch(toggleRemindersEnabled)}>
-        <Label>Reminders</Label>
-        <Value>
-          <Toggle on={remindersEnabled}>
-            {remindersEnabled ? (
-              <ToggleOnIcon fontSize={"large"} />
-            ) : (
-              <ToggleOffIcon fontSize={"large"} />
-            )}
-          </Toggle>
-        </Value>
-      </Line>
-      <Line onClick={() => dispatch(toggleRandomReminders)}>
-        <Label>Random Range</Label>
-        <Value>
-          <Toggle on={randomReminders}>
-            {randomReminders ? (
-              <ToggleOnIcon fontSize={"large"} />
-            ) : (
-              <ToggleOffIcon fontSize={"large"} />
-            )}
-          </Toggle>
-        </Value>
-      </Line>
-      <Line
-        onClick={() => setState({ ...state, reminderFrequencyPopupOpen: true })}
-      >
-        <Label>Reminder Frequency</Label>
-        <Value></Value>
-        <ChevronRight />
-      </Line>
+      <Setting label={"Reminders"} isToggle={true} toggleOn={remindersEnabled} clickFunction={dispatch(toggleRemindersEnabled)}/>
+      <Setting label={"Random Range"} isToggle={true} toggleOn={randomReminders} clickFunction={dispatch(toggleRandomReminders)}/>
+      <Setting label={"Reminder Frequency"} isToggle={false} popup={<ReminderPopup />}/>
+
       <Header>Settings</Header>
-      <Line onClick={() => setState({ ...state, themePopupOpen: true })}>
-        <Label>Theme</Label>
-        <ChevronRight />
-      </Line>
-      {achievements.some(
-        (achievement: AchievementModel) =>
-          achievement.unlocks.indexOf("Dark Mode") >= 0 &&
-          achievement.percentComplete === 1
-      ) && (
-        <Line onClick={() => dispatch(toggleMode)}>
-          <Label>Dark Mode</Label>
-          <Value>
-            <Toggle on={mode === Mode.Dark}>
-              {mode === Mode.Dark ? (
-                <ToggleOnIcon fontSize={"large"} />
-              ) : (
-                <ToggleOffIcon fontSize={"large"} />
-              )}
-            </Toggle>
-          </Value>
-        </Line>
+      <Setting label={"Theme"} isToggle={false} popup={<div>TODO</div>}/>
+      { darkModeUnlocked && (
+      <Setting label={"Dark Mode"} isToggle={true} toggleOn={mode === Mode.Dark} clickFunction={dispatch(toggleMode)}/>
       )}
-      <Line onClick={() => setState({ ...state, tagsPopupOpen: true })}>
-        <Label>Tags</Label>
-        <ChevronRight />
-      </Line>
+      <Setting label={"Tags"} isToggle={false} popup={<div>TODO</div>}/>
+
       <Header>Contact</Header>
-      <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
-        <Label>Suggest a Feature</Label>
-        <ChevronRight />
-      </Line>
-      <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
-        <Label>Report an Issue</Label>
-        <ChevronRight />
-      </Line>
-      <Line onClick={() => window.open("mailto:me@chasemanning.co.nz")}>
-        <Label>Say Hi</Label>
-        <ChevronRight />
-      </Line>
+      <Setting label={"Suggest a Feature"} isToggle={false} clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}/>
+      <Setting label={"Report an Issue"} isToggle={false} clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}/>
+      <Setting label={"Say Hi"} isToggle={false} clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}/>
+
       <Header>About</Header>
-      <Line onClick={() => window.open("https://chasemanning.co.nz/")}>
-        <Label>Created By</Label>
-        <ChevronRight />
-      </Line>
-      <Line
-        onClick={() => window.open("https://github.com/chase-manning/Haply/")}
-      >
-        <Label>Source Code</Label>
-        <ChevronRight />
-      </Line>
-      <Line
-        onClick={() =>
-          window.open(
-            "https://github.com/chase-manning/Haply/blob/master/LICENSE"
-          )
-        }
-      >
-        <Label>License</Label>
-        <ChevronRight />
-      </Line>
-      {state.reminderFrequencyPopupOpen && (
-        <Popup
-          content={
-            <PopupContent>
-              <PopupHeader>
-                {randomReminders
-                  ? "At Minumum Remind me Every:"
-                  : "Remind me Every:"}
-              </PopupHeader>
-              <FrequencyItem>
-                <FrequencyInput
-                  value={state.reminderFrequencyMinimumInput}
-                  onChange={(event: any) => {
-                    setState({
-                      ...state,
-                      reminderFrequencyMinimumInput: event.target.value,
-                    });
-                    props.setReminderFrequencies(
-                      frequency(
-                        state.reminderFrequencyMinimumInput,
-                        state.reminderFrequencyMinimumDropdown
-                      ),
-                      randomReminders
-                        ? frequency(
-                            state.reminderFrequencyMaximumInput,
-                            state.reminderFrequencyMaximumDropdown
-                          )
-                        : frequency(
-                            state.reminderFrequencyMinimumInput,
-                            state.reminderFrequencyMinimumDropdown
-                          )
-                    );
-                  }}
-                  type="number"
-                />
-                <FrequencySelect
-                  value={state.reminderFrequencyMinimumDropdown}
-                  onChange={(event: any) => {
-                    setState({
-                      ...state,
-                      reminderFrequencyMinimumDropdown: event.target.value,
-                    });
-                    props.setReminderFrequencies(
-                      frequency(
-                        state.reminderFrequencyMinimumInput,
-                        state.reminderFrequencyMinimumDropdown
-                      ),
-                      randomReminders
-                        ? frequency(
-                            state.reminderFrequencyMaximumInput,
-                            state.reminderFrequencyMaximumDropdown
-                          )
-                        : frequency(
-                            state.reminderFrequencyMinimumInput,
-                            state.reminderFrequencyMinimumDropdown
-                          )
-                    );
-                  }}
-                >
-                  <FrequencyOption>Minutes</FrequencyOption>
-                  <FrequencyOption>Hours</FrequencyOption>
-                  <FrequencyOption>Days</FrequencyOption>
-                </FrequencySelect>
-              </FrequencyItem>
-              {randomReminders && (
-                <FrequencySecondItem>
-                  <PopupHeader>At Maximum Remind me Every:</PopupHeader>
-                  <FrequencyItem>
-                    <FrequencyInput
-                      value={state.reminderFrequencyMaximumInput}
-                      onChange={(event: any) => {
-                        setState({
-                          ...state,
-                          reminderFrequencyMaximumInput: event.target.value,
-                        });
-                        props.setReminderFrequencies(
-                          frequency(
-                            state.reminderFrequencyMinimumInput,
-                            state.reminderFrequencyMinimumDropdown
-                          ),
-                          randomReminders
-                            ? frequency(
-                                state.reminderFrequencyMaximumInput,
-                                state.reminderFrequencyMaximumDropdown
-                              )
-                            : frequency(
-                                state.reminderFrequencyMinimumInput,
-                                state.reminderFrequencyMinimumDropdown
-                              )
-                        );
-                      }}
-                      type="number"
-                    />
-                    <FrequencySelect
-                      value={state.reminderFrequencyMaximumDropdown}
-                      onChange={(event: any) => {
-                        setState({
-                          ...state,
-                          reminderFrequencyMaximumDropdown: event.target.value,
-                        });
-                        props.setReminderFrequencies(
-                          frequency(
-                            state.reminderFrequencyMinimumInput,
-                            state.reminderFrequencyMinimumDropdown
-                          ),
-                          randomReminders
-                            ? frequency(
-                                state.reminderFrequencyMaximumInput,
-                                state.reminderFrequencyMaximumDropdown
-                              )
-                            : frequency(
-                                state.reminderFrequencyMinimumInput,
-                                state.reminderFrequencyMinimumDropdown
-                              )
-                        );
-                      }}
-                    >
-                      <FrequencyOption>Minutes</FrequencyOption>
-                      <FrequencyOption>Hours</FrequencyOption>
-                      <FrequencyOption>Days</FrequencyOption>
-                    </FrequencySelect>
-                  </FrequencyItem>
-                </FrequencySecondItem>
-              )}
-            </PopupContent>
-          }
-          showButton={true}
-          close={async () => {
-            await setState({ ...state, reminderFrequencyPopupOpen: false });
-            await SettingService.createSetting(user, props.settings);
-          }}
-        />
-      )}
+      <Setting label={"Created By"} isToggle={false} clickFunction={() => window.open("https://chasemanning.co.nz/")}/>
+      <Setting label={"Source Code"} isToggle={false} clickFunction={() => window.open("https://github.com/chase-manning/Haply/")}/>
+      <Setting label={"License"} isToggle={false} clickFunction={() => window.open("https://github.com/chase-manning/Haply/blob/master/LICENSE")}/>
 
       {state.themePopupOpen && (
         <Popup
