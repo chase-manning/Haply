@@ -78,28 +78,6 @@ export const updateMoods = (user: User): AppThunk => async (dispatch) => {
   dispatch(setMoods(moods));
 };
 
-export const updateStats = (): AppThunk<void> => (dispatch) => {
-  console.log("updating stats");
-  const moods = useSelector(selectMoods);
-  const stats = StatService.getStats(moods);
-
-  dispatch(setStats(stats));
-};
-
-export const updateAchievements = (
-  moods: Mood[],
-  colorPrimary: string,
-  mode: Mode
-): AppThunk => (dispatch) => {
-  const achievements = AchievementService.getAchievements(
-    moods,
-    colorPrimary,
-    mode
-  );
-
-  dispatch(setAchievements(achievements));
-};
-
 /* SELECTS */
 export const selectMoods = (state: RootState) => state.data.moods;
 export const selectStats = (state: RootState) => state.data.stats;
