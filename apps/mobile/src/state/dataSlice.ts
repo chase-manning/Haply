@@ -78,7 +78,9 @@ export const updateMoods = (user: User): AppThunk => async (dispatch) => {
   dispatch(setMoods(moods));
 };
 
-export const updateStats = (moods: Mood[]): AppThunk => (dispatch) => {
+export const updateStats = (): AppThunk<void> => (dispatch) => {
+  console.log("updating stats");
+  const moods = useSelector(selectMoods);
   const stats = StatService.getStats(moods);
 
   dispatch(setStats(stats));
