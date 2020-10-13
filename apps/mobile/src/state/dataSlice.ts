@@ -57,7 +57,6 @@ export const {
 
 /* THUNKS */
 export const updateMoods = (user: User): AppThunk => async (dispatch) => {
-  console.log("updaing moods");
   const response: any = await MoodService.getMoods(user, "date");
   const moodResponses: MoodResponse[] = await response.json();
 
