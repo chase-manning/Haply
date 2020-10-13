@@ -1,10 +1,15 @@
-import { useSelector } from "react-redux";
 import { put, takeEvery, all, select } from "redux-saga/effects";
 import AchievementService from "../services/AchievementService";
 import StatService from "../services/StatService";
 import { selectMoods, setAchievements, setMoods, setStats } from "./dataSlice";
 import { selectColorPrimary, selectMode } from "./tempSlice";
 
+/* WATCHERS */
+function* watchSetMoods() {
+  yield takeEvery(setMoods, softUpdate);
+}
+
+/* ACTIONS */
 function* softUpdate() {
   const moods = yield select(selectMoods);
   const stats = StatService.getStats(moods);
@@ -19,10 +24,6 @@ function* softUpdate() {
   );
 
   yield put(setAchievements(achievements));
-}
-
-function* watchSetMoods() {
-  yield takeEvery(setMoods, softUpdate);
 }
 
 export default function* rootSaga() {
