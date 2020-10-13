@@ -139,7 +139,7 @@ const CreateMood = (props: Props) => {
             state.tags
           );
           MoodService.createMood(props.user, mood);
-          dispatch(addMood);
+          dispatch(addMood(mood));
           dispatch(hideMood());
         }}
       >
