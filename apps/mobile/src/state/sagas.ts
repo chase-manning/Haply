@@ -12,7 +12,6 @@ import {
   setStats,
 } from "./dataSlice";
 import { selectColorPrimary, selectMode } from "./tempSlice";
-
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import {
   SettingsState,
