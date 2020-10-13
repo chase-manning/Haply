@@ -5,12 +5,7 @@ import { selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase, { User } from "firebase/app";
 import "firebase/auth";
-import {
-  selectMoods,
-  updateAchievements,
-  updateMoods,
-  updateStats,
-} from "../../state/dataSlice";
+import { selectMoods, updateMoods } from "../../state/dataSlice";
 import { selectColorPrimary, selectMode } from "../../state/tempSlice";
 
 const firebaseConfig = {
