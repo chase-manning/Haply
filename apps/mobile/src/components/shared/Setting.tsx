@@ -35,29 +35,17 @@ const Toggle = styled.div`
   align-items: center;
 `;
 
-class State {
-  popupOpen: boolean = false;
-}
-
 type Props = {
   label: string;
   isToggle: boolean;
   toggleOn?: boolean;
   clickFunction: () => void;
-  popup?: JSX.Element;
 };
 
 const Setting = (props: Props) => {
-  const [state, setState] = useState(new State());
-
   return (
     <StyledSettings data-testid="Settings">
-      <Line
-        onClick={() => {
-          props.clickFunction();
-          if (!!props.popup) setState({ popupOpen: true });
-        }}
-      >
+      <Line onClick={() => props.clickFunction()}>
         <Label>{props.label}</Label>
         {props.isToggle ? (
           <Value>
@@ -73,7 +61,6 @@ const Setting = (props: Props) => {
           <ChevronRight />
         )}
       </Line>
-      {state.popupOpen && !!props.popup && props.popup}
     </StyledSettings>
   );
 };

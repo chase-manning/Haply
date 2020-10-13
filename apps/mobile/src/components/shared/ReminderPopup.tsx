@@ -76,7 +76,11 @@ class State {
 // const frequency = (input: number, period: string) =>
 //   input * getFrequencyMultiplier(period);
 
-const ReminderPopup = () => {
+type Props = {
+  closePopup: () => void;
+};
+
+const ReminderPopup = (props: Props) => {
   const [state, setState] = useState(new State());
   const randomReminders = useSelector(selectRandomReminders)!;
   //   const frequencyMinutesMin = useSelector(selectFrequencyMinutesMin)!;
@@ -167,7 +171,7 @@ const ReminderPopup = () => {
         </PopupContent>
       }
       showButton={true}
-      close={() => console.log("meow")}
+      close={() => props.closePopup()}
     />
   );
 };

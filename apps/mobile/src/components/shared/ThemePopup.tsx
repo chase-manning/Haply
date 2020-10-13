@@ -47,7 +47,11 @@ const Color = styled.div`
   background-color: ${(props: ColorProps) => props.color};
 `;
 
-const ThemePopup = () => {
+type Props = {
+  closePopup: () => void;
+};
+
+const ThemePopup = (props: Props) => {
   const dispatch = useDispatch();
   const colorPrimary = useSelector(selectColorPrimary);
   const achievements = useSelector(selectAchievements);
@@ -77,7 +81,7 @@ const ThemePopup = () => {
         </PopupContent>
       }
       showButton={true}
-      close={() => console.log("meow")}
+      close={() => props.closePopup()}
     />
   );
 };

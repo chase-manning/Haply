@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -32,11 +32,18 @@ const Header = styled.div`
   color: var(--main);
 `;
 
+class State {
+  reminderPopupOpen: boolean = false;
+  tagPopupOpen: boolean = false;
+  themePopupOpen: boolean = false;
+}
+
 type Props = {
   user: User;
 };
 
 const Settings = (props: Props) => {
+  const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
@@ -69,16 +76,14 @@ const Settings = (props: Props) => {
       <Setting
         label={"Reminder Frequency"}
         isToggle={false}
-        clickFunction={() => console.log("TODO")}
-        popup={<ReminderPopup />}
+        clickFunction={() => setState({ ...state, reminderPopupOpen: true })}
       />
 
       <Header>Settings</Header>
       <Setting
         label={"Theme"}
         isToggle={false}
-        popup={<ThemePopup />}
-        clickFunction={() => console.log("TODO")}
+        clickFunction={() => setState({ ...state, themePopupOpen: true })}
       />
       {darkModeUnlocked && (
         <Setting
@@ -91,8 +96,7 @@ const Settings = (props: Props) => {
       <Setting
         label={"Tags"}
         isToggle={false}
-        popup={<TagPopup />}
-        clickFunction={() => console.log("TODO")}
+        clickFunction={() => setState({ ...state, tagPopupOpen: true })}
       />
 
       <Header>Contact</Header>
@@ -134,6 +138,21 @@ const Settings = (props: Props) => {
           )
         }
       />
+      {state.reminderPopupOpen && (
+        <ReminderPopup
+          closePopup={() => setState({ ...state, reminderPopupOpen: false })}
+        />
+      )}
+      {state.tagPopupOpen && (
+        <TagPopup
+          closePopup={() => setState({ ...state, tagPopupOpen: false })}
+        />
+      )}
+      {state.themePopupOpen && (
+        <ThemePopup
+          closePopup={() => setState({ ...state, themePopupOpen: false })}
+        />
+      )}
     </StyledSettings>
   );
 };

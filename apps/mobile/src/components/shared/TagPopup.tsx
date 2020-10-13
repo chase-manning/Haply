@@ -65,7 +65,11 @@ class State {
   newTagPopupOpen: boolean = false;
 }
 
-const TagPopup = () => {
+type Props = {
+  closePopup: () => void;
+};
+
+const TagPopup = (props: Props) => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const tagOptions = useSelector(selectTagOptions);
@@ -127,7 +131,7 @@ const TagPopup = () => {
         </PopupContent>
       }
       showButton={true}
-      close={() => console.log("meow")}
+      close={() => props.closePopup()}
     />
   );
 };
