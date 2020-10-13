@@ -5,8 +5,7 @@ import { selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase, { User } from "firebase/app";
 import "firebase/auth";
-import { selectMoods, updateMoods } from "../../state/dataSlice";
-import { selectColorPrimary, selectMode } from "../../state/tempSlice";
+import { updateMoods } from "../../state/dataSlice";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -49,9 +48,6 @@ type Props = {
 const Login = (props: Props) => {
   const dispatch = useDispatch();
   const loggingIn = useSelector(selectLoggingIn);
-  const moods = useSelector(selectMoods);
-  const colorPrimary = useSelector(selectColorPrimary);
-  const mode = useSelector(selectMode);
 
   useEffect(() => {
     if (!props.user) {
