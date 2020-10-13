@@ -6,6 +6,8 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase, { User } from "firebase/app";
 import "firebase/auth";
 import { updateMoods } from "../../state/dataSlice";
+import { Plugins as CapacitorPlugins } from "@capacitor/core";
+const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
   apiKey: "AIzaSyAHtDNHcNnaty3hDN9DKkRVCTLRDVeGC0w",
@@ -52,19 +54,26 @@ const Login = (props: Props) => {
   useEffect(() => {
     dispatch(initApp);
 
-    if (!props.user) {
-      firebase
-        .auth()
-        .signInAnonymously()
-        .catch(function (error) {
-          var errorMessage = error.message;
-          console.log(errorMessage);
-        });
-    }
+    Storage.get({ key: "user" }).then((result: any) => {
+      let ret: { value: any } = result;
+      if (ret.value) {
+        let user: User = JSON.parse(ret.value);
+        props.setUser(user);
+      } else {
+        firebase
+          .auth()
+          .signInAnonymously()
+          .catch(function (error) {
+            var errorMessage = error.message;
+            console.log(errorMessage);
+          });
+      }
+    });
 
     firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
       if (!changedUser) return;
       props.setUser(changedUser);
+      await Storage.set({ key: "user", value: JSON.stringify(changedUser) });
       dispatch(updateMoods(changedUser));
     });
   }, [dispatch]);
