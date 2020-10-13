@@ -6,7 +6,6 @@ const { PushNotifs } = Plugins;
 
 const PushNotifications = () => {
   const dispatch = useDispatch();
-  console.log("woof");
 
   PushNotifs.requestPermission().then((result: any) => {
     if (result.granted) PushNotifs.register();
