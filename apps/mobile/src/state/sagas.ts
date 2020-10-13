@@ -20,7 +20,6 @@ const { Storage } = CapacitorPlugins;
 
 /* WATCHERS */
 function* watchAppInit() {
-  console.log("wer");
   yield takeEvery(initApp, initialiseApp);
 }
 
@@ -50,7 +49,6 @@ function* watchUpdateNextNotification() {
 
 /* ACTIONS */
 function* initialiseApp() {
-  console.log("wer21");
   yield call(loadSettings);
   yield put(completeAppInit());
 }
@@ -72,21 +70,15 @@ function* softUpdate() {
 }
 
 function* loadSettings() {
-  console.log("loading settings");
   let ret: { value: any } = yield Storage.get({ key: "settings" });
-  console.log(ret);
   if (ret.value) {
-    console.log(ret.value);
     let settings: SettingsState = JSON.parse(ret.value);
-    console.log(settings);
     yield put(setSettings(settings));
   }
 }
 
 function* saveSettings() {
-  console.log("saving settings");
   let settings: SettingsState = yield select(selectSettings);
-  console.log(settings);
   Storage.set({ key: "settings", value: JSON.stringify(settings) });
 }
 
