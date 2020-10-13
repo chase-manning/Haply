@@ -1,21 +1,30 @@
-import { put, takeEvery, all } from "redux-saga/effects";
-import { toggleRandomReminders, toggleRemindersEnabled } from "./settingsSlice";
+import { useSelector } from "react-redux";
+import { put, takeEvery, all, select } from "redux-saga/effects";
+import AchievementService from "../services/AchievementService";
+import StatService from "../services/StatService";
+import { selectMoods, setAchievements, setMoods, setStats } from "./dataSlice";
+import { selectColorPrimary, selectMode } from "./tempSlice";
 
-function* helloSaga() {
-  console.log("Hello Sagas!");
+function* softUpdate() {
+  const moods = yield select(selectMoods);
+  const stats = StatService.getStats(moods);
+  yield put(setStats(stats));
+
+  const colorPrimary = yield select(selectColorPrimary);
+  const mode = yield select(selectMode);
+  const achievements = AchievementService.getAchievements(
+    moods,
+    colorPrimary,
+    mode
+  );
+
+  yield put(setAchievements(achievements));
 }
 
-function* incrementAsync() {
-  yield put(toggleRandomReminders());
-  console.log("test");
+function* watchSetMoods() {
+  yield takeEvery(setMoods, softUpdate);
 }
 
-function* watchIncrementAsync() {
-  yield takeEvery(toggleRemindersEnabled, incrementAsync);
-}
-
-// notice how we now only export the rootSaga
-// single entry point to start all Sagas at once
 export default function* rootSaga() {
-  yield all([helloSaga(), watchIncrementAsync()]);
+  yield all([watchSetMoods()]);
 }
