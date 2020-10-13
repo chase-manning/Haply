@@ -1,5 +1,4 @@
 import {
-  configureStore,
   ThunkAction,
   Action,
   createStore,
