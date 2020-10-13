@@ -2,6 +2,8 @@ import { put, takeEvery, all, select, call } from "redux-saga/effects";
 import AchievementService from "../services/AchievementService";
 import StatService from "../services/StatService";
 import {
+  addMood,
+  removeMood,
   selectAchievements,
   selectMoods,
   selectStats,
@@ -66,6 +68,14 @@ function* watchSetFrequencyMinutesMax() {
 
 function* watchUpdateNextNotification() {
   yield takeEvery(updateNextNotification, saveSettings);
+}
+
+function* watchAddMood() {
+  yield takeEvery(addMood, softUpdate);
+}
+
+function* watchRemoveMood() {
+  yield takeEvery(removeMood, softUpdate);
 }
 
 /* ACTIONS */
@@ -156,5 +166,7 @@ export default function* rootSaga() {
     watchSetFrequencyMinutesMin(),
     watchSetFrequencyMinutesMax(),
     watchUpdateNextNotification(),
+    watchAddMood(),
+    watchRemoveMood(),
   ]);
 }
