@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLoggingIn } from "../../state/navigationSlice";
+import { initApp, selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase, { User } from "firebase/app";
 import "firebase/auth";
@@ -50,6 +50,8 @@ const Login = (props: Props) => {
   const loggingIn = useSelector(selectLoggingIn);
 
   useEffect(() => {
+    dispatch(initApp);
+
     if (!props.user) {
       firebase
         .auth()
