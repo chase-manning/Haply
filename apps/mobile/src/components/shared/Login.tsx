@@ -73,8 +73,6 @@ const Login = (props: Props) => {
       if (!changedUser) return;
       props.setUser(changedUser);
       dispatch(updateMoods(changedUser));
-      dispatch(updateAchievements(moods, colorPrimary, mode));
-      dispatch(updateStats(moods));
     });
   }, [dispatch]);
 
