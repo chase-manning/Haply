@@ -163,7 +163,7 @@ const Entry = (props: Props) => {
                 onClick={() => {
                   setState({ popupOpen: false });
                   MoodService.deleteMood(props.user!, props.mood.moodId!);
-                  dispatch(removeMood);
+                  dispatch(removeMood(props.mood));
                 }}
               >
                 Delete
