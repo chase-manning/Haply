@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Popup from "../shared/Popup";
-import { useSelector } from "react-redux";
-import { selectRandomReminders } from "../../state/settingsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectFrequencyMinutesMax,
+  selectFrequencyMinutesMin,
+  selectRandomReminders,
+  setFrequencyMinutesMax,
+  setFrequencyMinutesMin,
+} from "../../state/settingsSlice";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -55,54 +61,55 @@ class State {
   reminderFrequencyMaximumDropdown: string = "Hours";
 }
 
-// const getFrequencyInputFromMinutes = (minutes: number): number => {
-//   if (minutes < 60) return minutes;
-//   else if (minutes < 60 * 24) return minutes / 60;
-//   else return minutes / (60 * 24);
-// };
+const getFrequencyInputFromMinutes = (minutes: number): number => {
+  if (minutes < 60) return minutes;
+  else if (minutes < 60 * 24) return minutes / 60;
+  else return minutes / (60 * 24);
+};
 
-// const getFrequencyDropdownFromMinutes = (minutes: number): string => {
-//   if (minutes < 60) return "Minutes";
-//   else if (minutes < 60 * 24) return "Hours";
-//   else return "Days";
-// };
+const getFrequencyDropdownFromMinutes = (minutes: number): string => {
+  if (minutes < 60) return "Minutes";
+  else if (minutes < 60 * 24) return "Hours";
+  else return "Days";
+};
 
-// const getFrequencyMultiplier = (frequencyDropdown: string): number => {
-//   if (frequencyDropdown === "Minutes") return 1;
-//   else if (frequencyDropdown === "Hours") return 60;
-//   else return 60 * 24;
-// };
+const getFrequencyMultiplier = (frequencyDropdown: string): number => {
+  if (frequencyDropdown === "Minutes") return 1;
+  else if (frequencyDropdown === "Hours") return 60;
+  else return 60 * 24;
+};
 
-// const frequency = (input: number, period: string) =>
-//   input * getFrequencyMultiplier(period);
+const frequency = (input: number, period: string) =>
+  input * getFrequencyMultiplier(period);
 
 type Props = {
   closePopup: () => void;
 };
 
 const ReminderPopup = (props: Props) => {
+  const dispatch = useDispatch();
   const [state, setState] = useState(new State());
   const randomReminders = useSelector(selectRandomReminders)!;
-  //   const frequencyMinutesMin = useSelector(selectFrequencyMinutesMin)!;
-  //   const frequencyMinutesMax = useSelector(selectFrequencyMinutesMax)!;
+  const frequencyMinutesMin = useSelector(selectFrequencyMinutesMin);
+  const frequencyMinutesMax = useSelector(selectFrequencyMinutesMax);
 
   useEffect(() => {
-    // setState({
-    //   ...state,
-    //   reminderFrequencyMinimumInput: getFrequencyInputFromMinutes(
-    //     frequencyMinutesMin
-    //   ),
-    //   reminderFrequencyMinimumDropdown: getFrequencyDropdownFromMinutes(
-    //     frequencyMinutesMin
-    //   ),
-    //   reminderFrequencyMaximumInput: getFrequencyInputFromMinutes(
-    //     frequencyMinutesMax
-    //   ),
-    //   reminderFrequencyMaximumDropdown: getFrequencyDropdownFromMinutes(
-    //     frequencyMinutesMax
-    //   ),
-    // });
-  });
+    setState({
+      ...state,
+      reminderFrequencyMinimumInput: getFrequencyInputFromMinutes(
+        frequencyMinutesMin
+      ),
+      reminderFrequencyMinimumDropdown: getFrequencyDropdownFromMinutes(
+        frequencyMinutesMin
+      ),
+      reminderFrequencyMaximumInput: getFrequencyInputFromMinutes(
+        frequencyMinutesMax
+      ),
+      reminderFrequencyMaximumDropdown: getFrequencyDropdownFromMinutes(
+        frequencyMinutesMax
+      ),
+    });
+  }, []);
 
   return (
     <Popup
@@ -172,6 +179,24 @@ const ReminderPopup = (props: Props) => {
       }
       showButton={true}
       close={() => props.closePopup()}
+      submit={() => {
+        dispatch(
+          setFrequencyMinutesMin(
+            frequency(
+              state.reminderFrequencyMinimumInput,
+              state.reminderFrequencyMinimumDropdown
+            )
+          )
+        );
+        dispatch(
+          setFrequencyMinutesMax(
+            frequency(
+              state.reminderFrequencyMaximumInput,
+              state.reminderFrequencyMaximumDropdown
+            )
+          )
+        );
+      }}
     />
   );
 };
