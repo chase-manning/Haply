@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import AchievementModel from "../models/AchievementModel";
 import Mood, { MoodResponse } from "../models/mood";
 import { StatModel } from "../models/StatModel";
-import AchievementService from "../services/AchievementService";
 import MoodService from "../services/MoodService";
-import StatService from "../services/StatService";
 import { AppThunk, RootState } from "./store";
-import { Mode, selectColorPrimary, selectMode } from "./tempSlice";
 import { User } from "firebase";
 
 /* TYPES */
