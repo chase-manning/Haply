@@ -46,6 +46,7 @@ import {
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
 import { User } from "firebase";
+import SettingService from "../services/SettingService";
 const { Storage } = CapacitorPlugins;
 
 /* WATCHERS */
@@ -164,6 +165,8 @@ function* savePushNotificationToken() {
 function* saveSettings() {
   let settings: SettingsState = yield select(selectSettings);
   Storage.set({ key: "settings", value: JSON.stringify(settings) });
+  const user = yield select(selectUser);
+  SettingService.createSetting(user, settings);
 }
 
 function* saveTemp() {
