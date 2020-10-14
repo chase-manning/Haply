@@ -37,6 +37,12 @@ import { completeAppInit, initApp } from "./navigationSlice";
 import Mood from "../models/mood";
 import { StatModel } from "../models/StatModel";
 import AchievementModel from "../models/AchievementModel";
+import {
+  selectPushNotificationToken,
+  setPushNotificationToken,
+  userSlice,
+} from "./userSlice";
+import PushNotificationService from "../services/PushNotificationService";
 const { Storage } = CapacitorPlugins;
 
 /* WATCHERS */
@@ -103,6 +109,10 @@ function* watchToggleMode() {
   yield takeEvery(toggleMode, saveTemp);
 }
 
+function* watchSetPushNotificationToken() {
+  yield takeEvery(setPushNotificationToken, savePushNotificationToken);
+}
+
 /* ACTIONS */
 function* initialiseApp() {
   yield call(loadTemp);
@@ -127,6 +137,11 @@ function* softUpdate() {
   );
 
   yield put(setAchievements(achievements));
+}
+
+function* savePushNotificationToken() {
+  let pushNotificationToken: string = yield select(selectPushNotificationToken);
+  //   PushNotificationService.updateToken(, pushNotificationToken);
 }
 
 function* saveSettings() {
@@ -211,5 +226,6 @@ export default function* rootSaga() {
     watchRemoveTag(),
     watchSetColorPrimary(),
     watchToggleMode(),
+    watchSetPushNotificationToken(),
   ]);
 }
