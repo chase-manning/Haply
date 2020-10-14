@@ -54,7 +54,10 @@ function* watchAppInit() {
 }
 
 function* watchSetUser() {
-  yield takeEvery(setUser, saveUser);
+  yield takeEvery(setUser, function* processSetUser() {
+    yield call(saveUser);
+    yield call(savePushNotificationToken);
+  });
 }
 
 function* watchSetMoods() {
@@ -152,8 +155,10 @@ function* saveUser() {
 }
 
 function* savePushNotificationToken() {
-  let pushNotificationToken: string = yield select(selectPushNotificationToken);
-  //   PushNotificationService.updateToken(, pushNotificationToken);
+  const user = yield select(selectUser);
+  const pushNotificationToken = yield select(selectPushNotificationToken);
+  if (user && pushNotificationToken)
+    PushNotificationService.updateToken(user, pushNotificationToken);
 }
 
 function* saveSettings() {
