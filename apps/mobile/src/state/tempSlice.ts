@@ -8,7 +8,7 @@ export enum Mode {
   Light,
 }
 
-interface TempState {
+export interface TempState {
   tagOptions: string[];
   colorPrimary: string;
   mode: Mode;
@@ -38,6 +38,11 @@ export const tempSlice = createSlice({
   name: "temp",
   initialState,
   reducers: {
+    setTemp: (state, action: PayloadAction<TempState>) => {
+      state.tagOptions = action.payload.tagOptions;
+      state.colorPrimary = action.payload.colorPrimary;
+      state.mode = action.payload.mode;
+    },
     setTagOptions: (state, action: PayloadAction<string[]>) => {
       state.tagOptions = action.payload;
     },
@@ -59,6 +64,7 @@ export const tempSlice = createSlice({
 });
 
 export const {
+  setTemp,
   setTagOptions,
   addTagOption,
   removeTagOption,
@@ -67,6 +73,7 @@ export const {
 } = tempSlice.actions;
 
 /* SELECTS */
+export const selectTemp = (state: RootState) => state.temp;
 export const selectTagOptions = (state: RootState) => state.temp.tagOptions;
 export const selectColorPrimary = (state: RootState) => state.temp.colorPrimary;
 export const selectMode = (state: RootState) => state.temp.mode;
