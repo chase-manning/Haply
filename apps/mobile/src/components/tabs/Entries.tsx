@@ -48,19 +48,13 @@ const NoDataSub = styled.div`
   line-height: 1.5;
 `;
 
-type Props = {
-  user: User;
-};
-
-const Entries = (props: Props) => {
+const Entries = () => {
   const moods = useSelector(selectMoods);
 
   return (
-    <StyledEntries data-testid="Entries">
+    <StyledEntries>
       {moods.length > 0 &&
-        moods
-          .slice(0, 30)
-          .map((mood: Mood) => <Entry mood={mood} user={props.user} />)}
+        moods.slice(0, 30).map((mood: Mood) => <Entry mood={mood} />)}
       {moods.length === 0 && (
         <NoDataContainer>
           <NoData>
