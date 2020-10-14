@@ -53,24 +53,9 @@ export const {
 
 /* THUNKS */
 export const updateMoods = (user: User): AppThunk => async (dispatch) => {
-  const response: any = await MoodService.getMoods(user, "date");
-  const moodResponses: MoodResponse[] = await response.json();
-
-  let moods: Mood[] = [];
-  moodResponses.forEach((moodResponse: MoodResponse) => {
-    moods.push(
-      new Mood(
-        moodResponse.data.value,
-        moodResponse.data.userId,
-        moodResponse.data.note,
-        moodResponse.data.tags,
-        moodResponse.data.date,
-        moodResponse.id
-      )
-    );
-  });
-
-  dispatch(setMoods(moods));
+  const moods: Mood[] | null = await MoodService.getMoods(user, "date");
+  if (moods) dispatch(setMoods(moods));
+  if (!moods) console.log("error retrieving moods");
 };
 
 /* SELECTS */
