@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
@@ -127,60 +127,53 @@ class State {
   detailsOpen: boolean = false;
 }
 
-export default class Acheivement extends Component<Props> {
-  state: State;
+const Acheivement = (props: Props) => {
+  const [state, setState] = useState(new State());
 
-  constructor(props: any) {
-    super(props);
-    this.state = new State();
-  }
-
-  render() {
-    return (
-      <StyledAcheivement>
-        <Icon onClick={() => this.setState({ detailsOpen: true })}>
-          <Svg
-            src={this.props.achievement.svg}
-            isComplete={this.props.achievement.percentComplete === 1}
-          />
-          <Overlay />
-        </Icon>
-        {this.props.achievement.percentComplete < 1 && (
-          <Progress>
-            <Complete
-              percentComplete={this.props.achievement.percentComplete}
-            />
-          </Progress>
-        )}
-        {this.state.detailsOpen && (
-          <Popup
-            content={
-              <PopupContent>
-                <SvgDetails
-                  src={this.props.achievement.svg}
-                  isComplete={this.props.achievement.percentComplete === 1}
-                />
-                <Title>{this.props.achievement.title}</Title>
-                <Description>{this.props.achievement.description}</Description>
-                <RewardsHeader>Rewards</RewardsHeader>
+  return (
+    <StyledAcheivement>
+      <Icon onClick={() => setState({ detailsOpen: true })}>
+        <Svg
+          src={props.achievement.svg}
+          isComplete={props.achievement.percentComplete === 1}
+        />
+        <Overlay />
+      </Icon>
+      {props.achievement.percentComplete < 1 && (
+        <Progress>
+          <Complete percentComplete={props.achievement.percentComplete} />
+        </Progress>
+      )}
+      {state.detailsOpen && (
+        <Popup
+          content={
+            <PopupContent>
+              <SvgDetails
+                src={props.achievement.svg}
+                isComplete={props.achievement.percentComplete === 1}
+              />
+              <Title>{props.achievement.title}</Title>
+              <Description>{props.achievement.description}</Description>
+              <RewardsHeader>Rewards</RewardsHeader>
+              <AcheivementReward
+                unlocked={props.achievement.percentComplete === 1}
+                description={"Theme Color"}
+                color={props.achievement.colorPrimary}
+              />
+              {props.achievement.unlocks.map((unlock: string) => (
                 <AcheivementReward
-                  unlocked={this.props.achievement.percentComplete === 1}
-                  description={"Theme Color"}
-                  color={this.props.achievement.colorPrimary}
+                  unlocked={props.achievement.percentComplete === 1}
+                  description={unlock}
                 />
-                {this.props.achievement.unlocks.map((unlock: string) => (
-                  <AcheivementReward
-                    unlocked={this.props.achievement.percentComplete === 1}
-                    description={unlock}
-                  />
-                ))}
-              </PopupContent>
-            }
-            showButton={false}
-            close={() => this.setState({ detailsOpen: false })}
-          ></Popup>
-        )}
-      </StyledAcheivement>
-    );
-  }
-}
+              ))}
+            </PopupContent>
+          }
+          showButton={false}
+          close={() => setState({ detailsOpen: false })}
+        ></Popup>
+      )}
+    </StyledAcheivement>
+  );
+};
+
+export default Acheivement;
