@@ -45,23 +45,23 @@ type Props = {
   color?: string;
 };
 
-export default class AcheivementReward extends Component<Props> {
-  render() {
-    return (
-      <Reward>
-        {!this.props.unlocked && (
-          <RewardIcon color={"var(--sub)"}>
-            <LockOutlinedIcon fontSize={"inherit"} />
-          </RewardIcon>
-        )}
-        {this.props.unlocked && (
-          <RewardIcon color={"var(--primary)"}>
-            <DoneOutlinedIcon fontSize={"inherit"} />
-          </RewardIcon>
-        )}
-        <RewardDescription>{this.props.description}</RewardDescription>
-        {this.props.color && <Color color={this.props.color!} />}
-      </Reward>
-    );
-  }
-}
+const AcheivementReward = (props: Props) => {
+  return (
+    <Reward>
+      {!props.unlocked && (
+        <RewardIcon color={"var(--sub)"}>
+          <LockOutlinedIcon fontSize={"inherit"} />
+        </RewardIcon>
+      )}
+      {props.unlocked && (
+        <RewardIcon color={"var(--primary)"}>
+          <DoneOutlinedIcon fontSize={"inherit"} />
+        </RewardIcon>
+      )}
+      <RewardDescription>{props.description}</RewardDescription>
+      {props.color && <Color color={props.color!} />}
+    </Reward>
+  );
+};
+
+export default AcheivementReward;
