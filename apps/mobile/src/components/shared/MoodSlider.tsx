@@ -41,28 +41,19 @@ type Props = {
   updateValue: (value: number) => void;
 };
 
-export default class MoodSlider extends Component<Props> {
-  constructor(props: any) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const MoodSlider = (props: Props) => {
+  return (
+    <MoodSliderValues
+      name="mood"
+      value={props.value}
+      aria-labelledby="discrete-slider"
+      valueLabelDisplay="auto"
+      step={1}
+      min={0}
+      max={10}
+      onChange={(event: any, newValue: any) => props.updateValue(newValue)}
+    />
+  );
+};
 
-  render() {
-    return (
-      <MoodSliderValues
-        name="mood"
-        value={this.props.value}
-        aria-labelledby="discrete-slider"
-        valueLabelDisplay="auto"
-        step={1}
-        min={0}
-        max={10}
-        onChange={this.handleChange}
-      />
-    );
-  }
-
-  handleChange(event: any, newValue: any): void {
-    this.props.updateValue(newValue);
-  }
-}
+export default MoodSlider;
