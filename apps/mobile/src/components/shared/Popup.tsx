@@ -71,30 +71,30 @@ type Props = {
   submit?: () => void;
 };
 
-export default class Popup extends Component<Props> {
-  render() {
-    return (
-      <StyledPopup>
-        <Shadow onClick={() => this.props.close()} />
-        <Details>
-          <Header>
-            <ExitButton onClick={() => this.props.close()}>
-              <Close />
-            </ExitButton>
-          </Header>
-          {this.props.content}
-          {this.props.showButton && (
-            <DoneButton
-              onClick={() => {
-                if (this.props.submit) this.props.submit!();
-                this.props.close();
-              }}
-            >
-              Done
-            </DoneButton>
-          )}
-        </Details>
-      </StyledPopup>
-    );
-  }
-}
+const Popup = (props: Props) => {
+  return (
+    <StyledPopup>
+      <Shadow onClick={() => props.close()} />
+      <Details>
+        <Header>
+          <ExitButton onClick={() => props.close()}>
+            <Close />
+          </ExitButton>
+        </Header>
+        {props.content}
+        {props.showButton && (
+          <DoneButton
+            onClick={() => {
+              if (props.submit) props.submit!();
+              props.close();
+            }}
+          >
+            Done
+          </DoneButton>
+        )}
+      </Details>
+    </StyledPopup>
+  );
+};
+
+export default Popup;
