@@ -51,21 +51,21 @@ type Props = {
   dataPoints: DataPoint[];
 };
 
-export default class StatBar extends Component<Props> {
-  render() {
-    return (
-      <Chart>
-        {this.props.dataPoints.map((dataPoint: DataPoint) => {
-          return (
-            <ChartRow>
-              <StyledColumn>
-                <Filled value={dataPoint.value / 10}></Filled>
-              </StyledColumn>
-              <Label>{dataPoint.label}</Label>
-            </ChartRow>
-          );
-        })}
-      </Chart>
-    );
-  }
-}
+const StatBar = (props: Props) => {
+  return (
+    <Chart>
+      {props.dataPoints.map((dataPoint: DataPoint) => {
+        return (
+          <ChartRow>
+            <StyledColumn>
+              <Filled value={dataPoint.value / 10}></Filled>
+            </StyledColumn>
+            <Label>{dataPoint.label}</Label>
+          </ChartRow>
+        );
+      })}
+    </Chart>
+  );
+};
+
+export default StatBar;
