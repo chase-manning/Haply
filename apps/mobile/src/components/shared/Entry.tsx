@@ -106,7 +106,7 @@ const Entry = (props: Props) => {
   const user = useSelector(selectUser)!;
 
   return (
-    <StyledEntry data-testid="Entry">
+    <StyledEntry>
       <Line onClick={() => setState({ popupOpen: true })}>
         <EntryText>
           <EntryHeader>{props.mood.description}</EntryHeader>

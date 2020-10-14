@@ -66,7 +66,7 @@ export default class StatChart extends Component<Props> {
     };
 
     return (
-      <Chart data-testid="StatChart">
+      <Chart>
         <Line data={data} options={options} />
       </Chart>
     );

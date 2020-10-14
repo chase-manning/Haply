@@ -54,7 +54,7 @@ type Props = {
 export default class StatBar extends Component<Props> {
   render() {
     return (
-      <Chart data-testid="StatBar">
+      <Chart>
         {this.props.dataPoints.map((dataPoint: DataPoint) => {
           return (
             <ChartRow>

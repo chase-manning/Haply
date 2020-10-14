@@ -68,7 +68,7 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   return (
-    <StyledNavBar data-testid="NavBar">
+    <StyledNavBar>
       <NavItem
         isActive={activeTab === Tab.Profile}
         onClick={() => dispatch(setActiveTab(Tab.Profile))}

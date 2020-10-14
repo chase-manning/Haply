@@ -44,7 +44,7 @@ type Props = {
 
 const Setting = (props: Props) => {
   return (
-    <StyledSettings data-testid="Settings">
+    <StyledSettings>
       <Line onClick={() => props.clickFunction()}>
         <Label>{props.label}</Label>
         {props.isToggle ? (
