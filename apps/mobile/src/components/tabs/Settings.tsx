@@ -15,6 +15,7 @@ import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
 import { User } from "firebase";
+import { selectUser } from "../../state/userSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -38,17 +39,14 @@ class State {
   themePopupOpen: boolean = false;
 }
 
-type Props = {
-  user: User;
-};
-
-const Settings = (props: Props) => {
+const Settings = () => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
   const mode = useSelector(selectMode);
   const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
+  const user = useSelector(selectUser)!;
 
   return (
     <StyledSettings>
@@ -56,7 +54,7 @@ const Settings = (props: Props) => {
       <Setting
         label={"Cloud Sync"}
         isToggle={true}
-        toggleOn={!props.user.isAnonymous}
+        toggleOn={!user.isAnonymous}
         clickFunction={() => dispatch(showLogin())}
       />
 
