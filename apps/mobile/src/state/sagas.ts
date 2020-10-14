@@ -39,15 +39,22 @@ import { StatModel } from "../models/StatModel";
 import AchievementModel from "../models/AchievementModel";
 import {
   selectPushNotificationToken,
+  selectUser,
   setPushNotificationToken,
+  setUser,
   userSlice,
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
+import { User } from "firebase";
 const { Storage } = CapacitorPlugins;
 
 /* WATCHERS */
 function* watchAppInit() {
   yield takeEvery(initApp, initialiseApp);
+}
+
+function* watchSetUser() {
+  yield takeEvery(setUser, saveUser);
 }
 
 function* watchSetMoods() {
@@ -139,6 +146,11 @@ function* softUpdate() {
   yield put(setAchievements(achievements));
 }
 
+function* saveUser() {
+  let user: User = yield select(selectUser);
+  Storage.set({ key: "user", value: JSON.stringify(user) });
+}
+
 function* savePushNotificationToken() {
   let pushNotificationToken: string = yield select(selectPushNotificationToken);
   //   PushNotificationService.updateToken(, pushNotificationToken);
@@ -212,6 +224,7 @@ function* loadAchievements() {
 export default function* rootSaga() {
   yield all([
     watchAppInit(),
+    watchSetUser(),
     watchSetMoods(),
     watchSetStats(),
     watchSetAchievements(),
