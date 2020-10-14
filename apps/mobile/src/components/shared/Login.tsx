@@ -7,6 +7,7 @@ import firebase, { User } from "firebase/app";
 import "firebase/auth";
 import { updateMoods } from "../../state/dataSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
+import { selectUser, setUser } from "../../state/userSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -42,23 +43,25 @@ const OverlayContainer = styled.div`
   height: 100%;
 `;
 
-type Props = {
-  user?: User;
-  setUser: (user: User) => void;
-};
-
-const Login = (props: Props) => {
+const Login = () => {
   const dispatch = useDispatch();
   const loggingIn = useSelector(selectLoggingIn);
+  const user: User | undefined = useSelector(selectUser);
 
   useEffect(() => {
     dispatch(initApp);
+
+    firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
+      if (!changedUser) return;
+      dispatch(setUser(changedUser));
+      dispatch(updateMoods(changedUser));
+    });
 
     Storage.get({ key: "user" }).then((result: any) => {
       let ret: { value: any } = result;
       if (ret.value) {
         let user: User = JSON.parse(ret.value);
-        props.setUser(user);
+        dispatch(setUser(user));
       } else {
         firebase
           .auth()
@@ -69,16 +72,9 @@ const Login = (props: Props) => {
           });
       }
     });
-
-    firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
-      if (!changedUser) return;
-      props.setUser(changedUser);
-      await Storage.set({ key: "user", value: JSON.stringify(changedUser) });
-      dispatch(updateMoods(changedUser));
-    });
   }, [dispatch]);
 
-  if (!loggingIn || (props.user && !props.user.isAnonymous)) return null;
+  if (!loggingIn || (user && !user.isAnonymous)) return null;
 
   return (
     <OverlayContainer>

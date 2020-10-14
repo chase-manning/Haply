@@ -8,6 +8,8 @@ import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
 import { User } from "firebase";
 import PushNotifications from "./shared/PushNotifications";
+import { useSelector } from "react-redux";
+import { selectUser } from "../state/userSlice";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -27,37 +29,23 @@ const ContentContainer = styled.div`
   background-color: var(--bg);
 `;
 
-class State {
-  user?: User;
-}
+const App = () => {
+  const user = useSelector(selectUser);
+  return (
+    <StyledApp>
+      <PushNotifications />
+      <GlobalStyles />
+      {user && (
+        <ContentContainer>
+          <Tabs />
+          <Header />
+          <NavBar />
+        </ContentContainer>
+      )}
+      <Login />
+      <CreateMood />
+    </StyledApp>
+  );
+};
 
-export default class App extends Component {
-  state: State;
-  unregisterAuthObserver: any;
-
-  constructor(props: any) {
-    super(props);
-    this.state = new State();
-  }
-
-  render() {
-    return (
-      <StyledApp>
-        <PushNotifications />
-        <GlobalStyles />
-        {!!this.state.user && (
-          <ContentContainer>
-            <Tabs user={this.state.user!} />
-            <Header />
-            <NavBar />
-          </ContentContainer>
-        )}
-        <Login
-          user={this.state.user}
-          setUser={(user: User) => this.setState({ user: user })}
-        />
-        <CreateMood user={this.state.user!} />
-      </StyledApp>
-    );
-  }
-}
+export default App;

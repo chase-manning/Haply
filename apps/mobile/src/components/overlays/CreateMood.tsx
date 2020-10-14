@@ -15,6 +15,7 @@ import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
 import { selectTagOptions } from "../../state/tempSlice";
 import { addMood } from "../../state/dataSlice";
 import { User } from "firebase";
+import { selectUser } from "../../state/userSlice";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -77,10 +78,6 @@ const Button = styled.button`
   background-color: var(--primary);
 `;
 
-type Props = {
-  user: User;
-};
-
 class State {
   mood: number = 5;
   note: string = "";
@@ -94,11 +91,12 @@ const moodAsset = (mood: number): string => {
   else return happyAsset;
 };
 
-const CreateMood = (props: Props) => {
+const CreateMood = () => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const moodShowing = useSelector(selectMoodShowing);
   const tagOptions = useSelector(selectTagOptions);
+  const user = useSelector(selectUser)!;
 
   if (!moodShowing) return null;
 
@@ -134,11 +132,11 @@ const CreateMood = (props: Props) => {
         onClick={() => {
           const mood: Mood = new Mood(
             state.mood,
-            props.user.uid,
+            user.uid,
             state.note,
             state.tags
           );
-          MoodService.createMood(props.user, mood);
+          MoodService.createMood(user, mood);
           dispatch(addMood(mood));
           dispatch(hideMood());
         }}
