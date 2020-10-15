@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
