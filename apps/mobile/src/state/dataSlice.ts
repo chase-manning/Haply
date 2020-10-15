@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AchievementModel from "../models/AchievementModel";
-import Mood, { MoodResponse } from "../models/mood";
+import Mood from "../models/mood";
 import { StatModel } from "../models/StatModel";
 import MoodService from "../services/MoodService";
 import { AppThunk, RootState } from "./store";
