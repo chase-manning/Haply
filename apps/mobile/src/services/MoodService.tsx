@@ -1,5 +1,5 @@
 import { User } from "firebase";
-import Mood from "../models/mood";
+import Mood, { MoodResponse } from "../models/mood";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
@@ -33,7 +33,11 @@ const MoodService = {
     }
   },
 
-  async getMoods(user: User, order?: string, limit?: number): Promise<any> {
+  async getMoods(
+    user: User,
+    order?: string,
+    limit?: number
+  ): Promise<Mood[] | null> {
     try {
       const route: string = api + "moods";
       return user
@@ -51,7 +55,24 @@ const MoodService = {
           if (!!order && !!limit) fullRoute += "&";
           if (!!limit) fullRoute += "limit=" + limit;
 
-          return await fetch(fullRoute, requestOptions);
+          const response = await fetch(fullRoute, requestOptions);
+
+          const moodResponses: MoodResponse[] = await response.json();
+
+          let moods: Mood[] = [];
+          moodResponses.forEach((moodResponse: MoodResponse) => {
+            moods.push(
+              new Mood(
+                moodResponse.data.value,
+                moodResponse.data.userId,
+                moodResponse.data.note,
+                moodResponse.data.tags,
+                moodResponse.data.date,
+                moodResponse.id
+              )
+            );
+          });
+          return moods;
         })
         .catch(function (error) {
           console.log(error);
