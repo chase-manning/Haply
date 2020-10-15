@@ -42,7 +42,6 @@ import {
   selectUser,
   setPushNotificationToken,
   setUser,
-  userSlice,
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
 import { User } from "firebase";
