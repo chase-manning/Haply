@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
 import { selectTagOptions } from "../../state/tempSlice";
 import { addMood } from "../../state/dataSlice";
-import { User } from "firebase";
 import { selectUser } from "../../state/userSlice";
 
 const StyledCreateMood = styled.div`
