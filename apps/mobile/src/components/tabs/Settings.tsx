@@ -14,7 +14,6 @@ import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
-import { User } from "firebase";
 import { selectUser } from "../../state/userSlice";
 
 const StyledSettings = styled.div`
