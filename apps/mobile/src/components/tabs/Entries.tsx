@@ -5,7 +5,6 @@ import Mood from "../../models/mood";
 import noData from "../../assets/svgs/Empty.svg";
 import { selectMoods } from "../../state/dataSlice";
 import { useSelector } from "react-redux";
-import { User } from "firebase";
 
 const StyledEntries = styled.div`
   width: 100%;
