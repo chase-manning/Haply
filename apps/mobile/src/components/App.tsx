@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import NavBar from "./shared/NavBar";
 import Tabs from "./tabs/Tabs";
@@ -6,7 +6,6 @@ import CreateMood from "./overlays/CreateMood";
 import Header from "../components/shared/Header";
 import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
-import { User } from "firebase";
 import PushNotifications from "./shared/PushNotifications";
 import { useSelector } from "react-redux";
 import { selectUser } from "../state/userSlice";
