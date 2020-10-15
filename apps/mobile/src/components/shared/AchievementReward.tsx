@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import DoneOutlinedIcon from "@material-ui/icons/DoneOutlined";
