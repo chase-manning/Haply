@@ -73,7 +73,7 @@ export const selectActiveTab = (state: RootState) => state.navigation.activeTab;
 export const selectActiveTabText = (state: RootState) => {
   switch (state.navigation.activeTab) {
     case Tab.Profile:
-      return "Profile";
+      return "Achievements";
     case Tab.Entries:
       return "Entries";
     case Tab.Stats:
