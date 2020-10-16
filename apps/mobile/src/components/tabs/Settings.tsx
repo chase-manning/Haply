@@ -6,8 +6,10 @@ import {
   selectRemindersEnabled,
   toggleRemindersEnabled,
   toggleRandomReminders,
+  selectMode,
+  toggleMode,
+  Mode,
 } from "../../state/settingsSlice";
-import { Mode, toggleMode, selectMode } from "../../state/tempSlice";
 import { selectDarkModeUnlocked } from "../../state/dataSlice";
 import { showLogin } from "../../state/navigationSlice";
 import Setting from "../shared/Setting";

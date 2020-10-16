@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
 import { useDispatch, useSelector } from "react-redux";
-import { selectColorPrimary, setColorPrimary } from "../../state/tempSlice";
+import { selectColorPrimary, setColorPrimary } from "../../state/settingsSlice";
 import { selectAchievements } from "../../state/dataSlice";
 
 const PopupContent = styled.div`

@@ -11,17 +11,6 @@ import {
   setMoods,
   setStats,
 } from "./dataSlice";
-import {
-  addTagOption,
-  removeTagOption,
-  selectColorPrimary,
-  selectMode,
-  selectTemp,
-  setColorPrimary,
-  setTemp,
-  TempState,
-  toggleMode,
-} from "./tempSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import {
   SettingsState,
@@ -32,6 +21,12 @@ import {
   setFrequencyMinutesMin,
   setFrequencyMinutesMax,
   updateNextNotification,
+  addTagOption,
+  removeTagOption,
+  selectColorPrimary,
+  selectMode,
+  setColorPrimary,
+  toggleMode,
 } from "./settingsSlice";
 import { completeAppInit, initApp } from "./navigationSlice";
 import Mood from "../models/mood";
@@ -104,19 +99,19 @@ function* watchRemoveMood() {
 }
 
 function* watchAddTag() {
-  yield takeEvery(addTagOption, saveTemp);
+  yield takeEvery(addTagOption, saveSettings);
 }
 
 function* watchRemoveTag() {
-  yield takeEvery(removeTagOption, saveTemp);
+  yield takeEvery(removeTagOption, saveSettings);
 }
 
 function* watchSetColorPrimary() {
-  yield takeEvery(setColorPrimary, saveTemp);
+  yield takeEvery(setColorPrimary, saveSettings);
 }
 
 function* watchToggleMode() {
-  yield takeEvery(toggleMode, saveTemp);
+  yield takeEvery(toggleMode, saveSettings);
 }
 
 function* watchSetPushNotificationToken() {
@@ -125,7 +120,6 @@ function* watchSetPushNotificationToken() {
 
 /* ACTIONS */
 function* initialiseApp() {
-  yield call(loadTemp);
   yield call(loadSettings);
   yield call(loadMoods);
   yield call(loadStats);
@@ -168,11 +162,6 @@ function* saveSettings() {
   SettingService.createSetting(user, settings);
 }
 
-function* saveTemp() {
-  let temp: TempState = yield select(selectTemp);
-  Storage.set({ key: "temp", value: JSON.stringify(temp) });
-}
-
 function* saveMoods() {
   let moods: Mood[] = yield select(selectMoods);
   Storage.set({ key: "moods", value: JSON.stringify(moods) });
@@ -193,14 +182,6 @@ function* loadSettings() {
   if (ret.value) {
     let settings: SettingsState = JSON.parse(ret.value);
     yield put(setSettings(settings));
-  }
-}
-
-function* loadTemp() {
-  let ret: { value: any } = yield Storage.get({ key: "temp" });
-  if (ret.value) {
-    let temp: TempState = JSON.parse(ret.value);
-    yield put(setTemp(temp));
   }
 }
 

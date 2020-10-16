@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Mode, selectColorPrimary, selectMode } from "../state/tempSlice";
+import { Mode, selectColorPrimary, selectMode } from "../state/settingsSlice";
 import { createGlobalStyle } from "styled-components";
 
 type GlobalSyleProps = {

@@ -9,7 +9,7 @@ import {
   selectTagOptions,
   removeTagOption,
   addTagOption,
-} from "../../state/tempSlice";
+} from "../../state/settingsSlice";
 
 const PopupContent = styled.div`
   width: 100%;

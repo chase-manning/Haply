@@ -6,7 +6,7 @@ import StatBar from "./StatBar";
 import StatChart from "./StatChart";
 import noData from "../../assets/svgs/NoData.svg";
 import { useSelector } from "react-redux";
-import { selectColorPrimary } from "../../state/tempSlice";
+import { selectColorPrimary } from "../../state/settingsSlice";
 
 const Header = styled.div`
   width: 100%;
