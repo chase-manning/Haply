@@ -109,6 +109,7 @@ const ReminderPopup = (props: Props) => {
         frequencyMinutesMax
       ),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

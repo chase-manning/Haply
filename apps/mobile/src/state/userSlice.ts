@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "firebase";
 import { RootState } from "./store";
 
 /* TYPES */
 interface UserState {
-  user?: string;
+  token: string;
+  isAnonymous: boolean;
+  id: string;
   pushNotificationToken?: string;
 }
 
 const initialState: UserState = {
-  user: undefined,
+  token: "",
+  isAnonymous: true,
+  id: "",
   pushNotificationToken: undefined,
 };
 
@@ -18,8 +21,14 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
-      state.user = JSON.stringify(action.payload);
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+    },
+    setIsAnonymous: (state, action: PayloadAction<boolean>) => {
+      state.isAnonymous = action.payload;
+    },
+    setId: (state, action: PayloadAction<string>) => {
+      state.id = action.payload;
     },
     setPushNotificationToken: (state, action: PayloadAction<string>) => {
       state.pushNotificationToken = action.payload;
@@ -27,15 +36,19 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setPushNotificationToken, setUser } = userSlice.actions;
+export const {
+  setPushNotificationToken,
+  setToken,
+  setIsAnonymous,
+  setId,
+} = userSlice.actions;
 
 /* SELECTS */
+export const selectUser = (state: RootState) => state.user;
 export const selectPushNotificationToken = (state: RootState) =>
   state.user.pushNotificationToken;
-export const selectUser = (state: RootState) => {
-  if (!state.user.user) return undefined;
-  let user: User = JSON.parse(state.user.user!);
-  return user;
-};
+export const selectToken = (state: RootState) => state.user.token;
+export const selectIsAnonymous = (state: RootState) => state.user.isAnonymous;
+export const selectId = (state: RootState) => state.user.id;
 
 export default userSlice.reducer;

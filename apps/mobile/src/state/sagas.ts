@@ -36,10 +36,9 @@ import {
   selectPushNotificationToken,
   selectUser,
   setPushNotificationToken,
-  setUser,
+  setToken,
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
-import { User } from "firebase";
 import SettingService from "../services/SettingService";
 const { Storage } = CapacitorPlugins;
 
@@ -48,8 +47,8 @@ function* watchAppInit() {
   yield takeEvery(initApp, initialiseApp);
 }
 
-function* watchSetUser() {
-  yield takeEvery(setUser, function* processSetUser() {
+function* watchSetToken() {
+  yield takeEvery(setToken, function* processSetUser() {
     yield call(saveUser);
     yield call(savePushNotificationToken);
   });
@@ -143,9 +142,9 @@ function* softUpdate() {
   yield put(setAchievements(achievements));
 }
 
-function* saveUser() {
-  let user: User = yield select(selectUser);
-  Storage.set({ key: "user", value: JSON.stringify(user) });
+function saveUser() {
+  let logged: boolean = true;
+  Storage.set({ key: "logged", value: JSON.stringify(logged) });
 }
 
 function* savePushNotificationToken() {
@@ -212,7 +211,7 @@ function* loadAchievements() {
 export default function* rootSaga() {
   yield all([
     watchAppInit(),
-    watchSetUser(),
+    watchSetToken(),
     watchSetMoods(),
     watchSetStats(),
     watchSetAchievements(),

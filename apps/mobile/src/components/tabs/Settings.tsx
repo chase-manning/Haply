@@ -47,7 +47,7 @@ const Settings = () => {
   const randomReminders = useSelector(selectRandomReminders)!;
   const mode = useSelector(selectMode);
   const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
-  const user = useSelector(selectUser)!;
+  const user = useSelector(selectUser);
 
   return (
     <StyledSettings>

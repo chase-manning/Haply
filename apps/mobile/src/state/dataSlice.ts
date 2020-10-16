@@ -4,7 +4,6 @@ import Mood from "../models/mood";
 import { StatModel } from "../models/StatModel";
 import MoodService from "../services/MoodService";
 import { AppThunk, RootState } from "./store";
-import { User } from "firebase";
 
 /* TYPES */
 interface DataState {
@@ -52,8 +51,10 @@ export const {
 } = dataSlice.actions;
 
 /* THUNKS */
-export const updateMoods = (user: User): AppThunk => async (dispatch) => {
-  const moods: Mood[] | null = await MoodService.getMoods(user, "date");
+export const updateMoods = (userToken: string): AppThunk => async (
+  dispatch
+) => {
+  const moods: Mood[] | null = await MoodService.getMoods(userToken, "date");
   if (moods) dispatch(setMoods(moods));
   if (!moods) console.log("error retrieving moods");
 };

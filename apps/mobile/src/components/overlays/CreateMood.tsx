@@ -95,7 +95,7 @@ const CreateMood = () => {
   const dispatch = useDispatch();
   const moodShowing = useSelector(selectMoodShowing);
   const tagOptions = useSelector(selectTagOptions);
-  const user = useSelector(selectUser)!;
+  const user = useSelector(selectUser);
 
   if (!moodShowing) return null;
 
@@ -131,11 +131,11 @@ const CreateMood = () => {
         onClick={() => {
           const mood: Mood = new Mood(
             state.mood,
-            user.uid,
+            user.id,
             state.note,
             state.tags
           );
-          MoodService.createMood(user, mood);
+          MoodService.createMood(user.token, mood);
           dispatch(addMood(mood));
           dispatch(hideMood());
         }}

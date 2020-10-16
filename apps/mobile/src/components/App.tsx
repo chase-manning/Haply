@@ -34,7 +34,7 @@ const App = () => {
     <StyledApp>
       <PushNotifications />
       <GlobalStyles />
-      {user && (
+      {user.token !== "" && (
         <ContentContainer>
           <Tabs />
           <Header />

@@ -1,4 +1,3 @@
-import { User } from "firebase";
 import { SettingsState } from "../state/settingsSlice";
 
 const api: string =
@@ -6,27 +5,20 @@ const api: string =
 //const api: string = "http://localhost:5001/happiness-software/us-central1/webApi/api/";
 
 const SettingService = {
-  async createSetting(user: User, setting: SettingsState): Promise<any> {
+  async createSetting(userToken: string, setting: SettingsState): Promise<any> {
     try {
       const route: string = api + "v2/settings";
-      return user
-        .getIdToken()
-        .then(async (idToken) => {
-          const requestOptions = {
-            method: "POST",
-            body: JSON.stringify(setting),
-            headers: {
-              Authorization: "Bearer " + idToken,
-              "Content-Type": "application/json",
-            },
-          };
 
-          return await fetch(route, requestOptions);
-        })
-        .catch(function (error) {
-          console.log(error);
-          return null;
-        });
+      const requestOptions = {
+        method: "POST",
+        body: JSON.stringify(setting),
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      };
+
+      return await fetch(route, requestOptions);
     } catch (error) {
       console.log(error);
       return null;

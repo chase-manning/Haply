@@ -3,11 +3,16 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { initApp, selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import firebase, { User } from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 import { updateMoods } from "../../state/dataSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
-import { selectUser, setUser } from "../../state/userSlice";
+import {
+  selectUser,
+  setId,
+  setIsAnonymous,
+  setToken,
+} from "../../state/userSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -46,23 +51,23 @@ const OverlayContainer = styled.div`
 const Login = () => {
   const dispatch = useDispatch();
   const loggingIn = useSelector(selectLoggingIn);
-  const user: User | undefined = useSelector(selectUser);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     dispatch(initApp);
 
     firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
       if (!changedUser) return;
-      dispatch(setUser(changedUser));
-      dispatch(updateMoods(changedUser));
+      const userToken = await changedUser.getIdToken();
+      dispatch(setId(changedUser.uid));
+      dispatch(setIsAnonymous(changedUser.isAnonymous));
+      dispatch(setToken(userToken));
+      dispatch(updateMoods(userToken));
     });
 
-    Storage.get({ key: "user" }).then((result: any) => {
+    Storage.get({ key: "logged" }).then((result: any) => {
       let ret: { value: any } = result;
-      if (ret.value) {
-        let user: User = JSON.parse(ret.value);
-        dispatch(setUser(user));
-      } else {
+      if (!ret.value) {
         firebase
           .auth()
           .signInAnonymously()
@@ -72,7 +77,8 @@ const Login = () => {
           });
       }
     });
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!loggingIn || (user && !user.isAnonymous)) return null;
 

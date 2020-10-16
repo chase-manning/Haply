@@ -8,7 +8,7 @@ import ChevronRight from "@material-ui/icons/ChevronRight";
 import { SelectedTag, SelectedTags, Line } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
-import { selectUser } from "../../state/userSlice";
+import { selectToken } from "../../state/userSlice";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -103,7 +103,7 @@ type Props = {
 const Entry = (props: Props) => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
-  const user = useSelector(selectUser)!;
+  const userToken = useSelector(selectToken);
 
   return (
     <StyledEntry>
@@ -162,7 +162,7 @@ const Entry = (props: Props) => {
               <Button
                 onClick={() => {
                   setState({ popupOpen: false });
-                  MoodService.deleteMood(user!, props.mood.moodId!);
+                  MoodService.deleteMood(userToken, props.mood.moodId!);
                   dispatch(removeMood(props.mood));
                 }}
               >
