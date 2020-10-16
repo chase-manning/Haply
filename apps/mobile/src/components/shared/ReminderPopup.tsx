@@ -109,7 +109,7 @@ const ReminderPopup = (props: Props) => {
         frequencyMinutesMax
       ),
     });
-  }, []);
+  }, [frequencyMinutesMin, frequencyMinutesMax, state]);
 
   return (
     <Popup
