@@ -34,7 +34,7 @@ import { StatModel } from "../models/StatModel";
 import AchievementModel from "../models/AchievementModel";
 import {
   selectPushNotificationToken,
-  selectUser,
+  selectToken,
   setPushNotificationToken,
   setToken,
 } from "./userSlice";
@@ -148,17 +148,17 @@ function saveUser() {
 }
 
 function* savePushNotificationToken() {
-  const user = yield select(selectUser);
+  const userToken = yield select(selectToken);
   const pushNotificationToken = yield select(selectPushNotificationToken);
-  if (user && pushNotificationToken)
-    PushNotificationService.updateToken(user, pushNotificationToken);
+  if (userToken !== "" && pushNotificationToken)
+    PushNotificationService.updateToken(userToken, pushNotificationToken);
 }
 
 function* saveSettings() {
   let settings: SettingsState = yield select(selectSettings);
   Storage.set({ key: "settings", value: JSON.stringify(settings) });
-  const user = yield select(selectUser);
-  SettingService.createSetting(user, settings);
+  const userToken = yield select(selectToken);
+  SettingService.createSetting(userToken, settings);
 }
 
 function* saveMoods() {
