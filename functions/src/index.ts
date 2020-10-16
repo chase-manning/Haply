@@ -357,6 +357,54 @@ app.post("/settings", async (request, response) => {
   }
 });
 
+app.post("/v2/settings", async (request, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      nextNotification,
+      tagOptions,
+      colorPrimary,
+      mode,
+    } = request.body;
+    const data = {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      userId,
+      tagOptions,
+      colorPrimary,
+      mode,
+      nextNotification: new Date(nextNotification),
+    };
+
+    let setting;
+    setting = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .get();
+
+    if (setting.empty) {
+      const settingRef: any = await db.collection("settings").add(data);
+      setting = await settingRef.get();
+    } else {
+      setting.forEach(async (qwe) => {
+        await db.collection("settings").doc(qwe.id).set(data, { merge: true });
+      });
+    }
+
+    response.json({ result: "All G" });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 export const notificationScheduler = functions.pubsub
   .schedule("every 1 minutes")
   .onRun(async () => {
