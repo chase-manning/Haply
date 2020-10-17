@@ -424,23 +424,6 @@ export const notificationScheduler = functions.pubsub
       "You Deserve The Best!",
     ];
 
-    // const tokens: any = await db.collection("pushNotificationTokens").get();
-    // tokens.forEach(async (token: any) => {
-    //   const latestMood: any = await db
-    //     .collection("moods")
-    //     .orderBy("date", "desc")
-    //     .limit(1)
-    //     .get();
-
-    //   if (!latestMood.empty) {
-    //     const mood: any = latestMood[0].data();
-    //     const date: number = Date.parse(mood.date);
-    //     const now: number = Date.now();
-    //     const yesterday: number = now - 23 * 60 * 60 * 1000;
-    //     if (date <= yesterday) {
-    //     }
-    //   }
-    // });
     console.log("==== Starting the Notifications ====");
 
     console.log("==== Getting the Settings ====");
@@ -449,6 +432,7 @@ export const notificationScheduler = functions.pubsub
       .collection("settings")
       .where("remindersEnabled", "==", true)
       .where("nextNotification", "<=", currentTime)
+      // .where("userId", "==", "maUx4vfwNxg7IgKW3CiEWdS1c9w2")
       .get();
     console.log("==== Got Settings ====");
     console.log(JSON.stringify(settingsRef));
@@ -470,21 +454,46 @@ export const notificationScheduler = functions.pubsub
     console.log(JSON.stringify(userIds));
 
     console.log("==== Getting Tokens ====");
-    let tokensRef = await db
-      .collection("pushNotificationTokens")
-      .where("userId", "in", userIds)
-      .get();
-    console.log(JSON.stringify(tokensRef));
-
-    if (tokensRef.empty) return null;
-    console.log("==== Tokens Not Empty ====");
-
-    console.log("==== Populating Tokens List ====");
     let tokens: any[] = [];
-    tokensRef.forEach((token) => {
-      tokens.push({ id: token.id, token: token.data().token });
-    });
-    console.log(JSON.stringify(tokens));
+    let userIndex: number = 0;
+    console.log("User Index: " + userIndex);
+    console.log("User Ids: " + userIds.length)
+    while (userIndex < userIds.length) {
+
+      console.log("User Index: " + userIndex);
+      console.log("User Ids: " + userIds.length)
+
+      console.log("==== Processing Batch " + userIndex + " ====");
+      let userBatch: string[] = userIds.slice(userIndex, Math.min(userIndex + 10, userIds.length - userIndex));
+      console.log(userBatch);
+
+      if (userBatch.length === 0) {
+        console.log("==== No Ids in Batch Skipping Step ====");
+        userIndex = userIndex + 10;
+        continue;
+      }
+
+      console.log("==== Batch is Not Empty ====")
+
+      let tokensRef = await db
+        .collection("pushNotificationTokens")
+        .where("userId", "in", userBatch)
+        .get();
+      console.log(JSON.stringify(tokensRef));
+
+      if (tokensRef.empty) {
+        console.log("==== No Tokens Skipping Step ====");
+        userIndex = userIndex + 10;
+        continue;
+      }
+      console.log("==== Tokens Not Empty ====");
+
+      console.log("==== Populating Tokens List ====");
+      tokensRef.forEach((token) => {
+        tokens.push({ id: token.id, token: token.data().token });
+      });
+      userIndex = userIndex + 10;
+    } 
 
     console.log("==== Creating Payload ====");
     const payload = {
@@ -536,9 +545,9 @@ export const notificationScheduler = functions.pubsub
       let newSetting: any = setting.data;
 
       let randomNumber: number = Math.random();
-      let minutesAdded: number =
+      let minutesAdded: number = Math.round(
         newSetting.frequencyMinutesMin * randomNumber +
-        newSetting.frequencyMinutesMax * (1 - randomNumber);
+        newSetting.frequencyMinutesMax * (1 - randomNumber));
 
       let now: Date = new Date();
       newSetting.nextNotification = new Date(
