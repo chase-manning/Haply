@@ -39,7 +39,7 @@ const AchievementService = {
         moods.length >= 1 ? 1 : 0,
         "First Steps",
         "Record your first feeling",
-        "#4071FE"
+        "#8B008B"
       )
     );
 
