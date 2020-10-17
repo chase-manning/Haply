@@ -106,11 +106,17 @@ function* watchRemoveTag() {
 }
 
 function* watchSetColorPrimary() {
-  yield takeEvery(setColorPrimary, saveSettings);
+  yield takeEvery(setColorPrimary, function* processSetColorPrimary() {
+    yield call(saveSettings);
+    yield call(updateAchievements);
+  });
 }
 
 function* watchToggleMode() {
-  yield takeEvery(toggleMode, saveSettings);
+  yield takeEvery(toggleMode, function* processSetColorPrimary() {
+    yield call(saveSettings);
+    yield call(updateAchievements);
+  });
 }
 
 function* watchSetPushNotificationToken() {
@@ -127,10 +133,19 @@ function* initialiseApp() {
 }
 
 function* softUpdate() {
+  yield call(updateStats);
+  yield call(updateAchievements);
+
+}
+
+function* updateStats() {
   const moods = yield select(selectMoods);
   const stats = StatService.getStats(moods);
   yield put(setStats(stats));
+}
 
+function* updateAchievements() {
+  const moods = yield select(selectMoods);
   const colorPrimary = yield select(selectColorPrimary);
   const mode = yield select(selectMode);
   const achievements = AchievementService.getAchievements(
