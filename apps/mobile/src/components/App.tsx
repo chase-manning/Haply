@@ -6,9 +6,9 @@ import CreateMood from "./overlays/CreateMood";
 import Header from "../components/shared/Header";
 import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
-import PushNotifications from "./shared/PushNotifications";
 import { useSelector } from "react-redux";
 import { selectUser } from "../state/userSlice";
+import PushNotificationSetup from "./shared/PushNotifications";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -32,7 +32,7 @@ const App = () => {
   const user = useSelector(selectUser);
   return (
     <StyledApp>
-      <PushNotifications />
+    <PushNotificationSetup />
       <GlobalStyles />
       {user.token !== "" && (
         <ContentContainer>

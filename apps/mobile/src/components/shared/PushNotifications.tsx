@@ -3,18 +3,18 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setPushNotificationToken } from "../../state/userSlice";
 
-const { PushNotifs } = Plugins;
 
-const PushNotifications = () => {
+const PushNotificationSetup = () => {
   const dispatch = useDispatch();
+  const { PushNotifications } = Plugins;
 
   useEffect(() => {
-    PushNotifs.addListener("registration", (token: PushNotificationToken) => {
+    PushNotifications.addListener("registration", (token: PushNotificationToken) => {
       dispatch(setPushNotificationToken(token.value));
     });
 
-    PushNotifs.requestPermission().then((result: any) => {
-      if (result.granted) PushNotifs.register();
+    PushNotifications.requestPermission().then((result: any) => {
+      if (result.granted) PushNotifications.register();
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -22,4 +22,4 @@ const PushNotifications = () => {
   return null;
 };
 
-export default PushNotifications;
+export default PushNotificationSetup;
