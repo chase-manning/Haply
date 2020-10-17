@@ -47,6 +47,14 @@ const Color = styled.div`
   background-color: ${(props: ColorProps) => props.color};
 `;
 
+const UnlockText = styled.div`
+  width: 100%;
+  text-align: center;
+  color: var(--sub);
+  font-size: 14px;
+  margin-top: 20px;
+`;
+
 type Props = {
   closePopup: () => void;
 };
@@ -55,19 +63,28 @@ const ThemePopup = (props: Props) => {
   const dispatch = useDispatch();
   const colorPrimary = useSelector(selectColorPrimary);
   const achievements = useSelector(selectAchievements);
+  const unlockedAchievements = achievements
+  .filter(
+    (achievement: AchievementModel) =>
+      achievement.colorPrimary !== "" &&
+      achievement.percentComplete === 1
+  );
 
   return (
     <Popup
       content={
         <PopupContent>
           <ColorOptions>
-            {achievements
-              .filter(
-                (achievement: AchievementModel) =>
-                  achievement.colorPrimary !== "" &&
-                  achievement.percentComplete === 1
-              )
-              .map((achievement: AchievementModel) => (
+          <ColorOption
+            onClick={() =>
+              dispatch(setColorPrimary("#4071FE"))
+            }
+            selected={"#4071FE" === colorPrimary}
+          >
+            <Color color={"#4071FE"} />
+          </ColorOption>
+            {
+              unlockedAchievements.map((achievement: AchievementModel) => (
                 <ColorOption
                   onClick={() =>
                     dispatch(setColorPrimary(achievement.colorPrimary))
@@ -78,6 +95,9 @@ const ThemePopup = (props: Props) => {
                 </ColorOption>
               ))}
           </ColorOptions>
+          {unlockedAchievements.length < 4 &&
+            <UnlockText>Complete Achievements for more</UnlockText>
+          }
         </PopupContent>
       }
       showButton={true}
