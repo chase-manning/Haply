@@ -290,7 +290,6 @@ const AchievementService = {
     );
 
     // #F0FFF0
-    // #8B008B
     // #F5FFFA
     // #FF69B4
     // #FFFFFF
