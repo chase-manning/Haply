@@ -299,7 +299,7 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
       pushNotificationToken = await pushNotificationTokenRef.get();
     } else {
       await db
-        .collection("moods")
+        .collection("pushNotificationTokens")
         .doc(pushNotificationToken.docs[0].id)
         .set(data, { merge: true });
     }
