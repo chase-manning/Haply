@@ -300,13 +300,8 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
     } else {
       await db
         .collection("moods")
-        .doc(pushNotificationToken[0].id)
+        .doc(pushNotificationToken.docs[0].id)
         .set(data, { merge: true });
-      pushNotificationToken = await db
-        .collection("pushNotificationTokens")
-        .where("token", "==", token)
-        .limit(1)
-        .get();
     }
 
     response.json(pushNotificationToken);
