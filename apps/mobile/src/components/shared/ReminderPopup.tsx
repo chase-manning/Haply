@@ -181,22 +181,19 @@ const ReminderPopup = (props: Props) => {
       showButton={true}
       close={() => props.closePopup()}
       submit={() => {
-        dispatch(
-          setFrequencyMinutesMin(
-            frequency(
-              state.reminderFrequencyMinimumInput,
-              state.reminderFrequencyMinimumDropdown
-            )
-          )
+        let minFrequency = frequency(
+          state.reminderFrequencyMinimumInput,
+          state.reminderFrequencyMinimumDropdown
         );
-        dispatch(
-          setFrequencyMinutesMax(
-            frequency(
-              state.reminderFrequencyMaximumInput,
-              state.reminderFrequencyMaximumDropdown
-            )
-          )
+        let maxFrequncy = frequency(
+          state.reminderFrequencyMaximumInput,
+          state.reminderFrequencyMaximumDropdown
         );
+
+        maxFrequncy = randomReminders ? maxFrequncy : minFrequency;
+
+        dispatch(setFrequencyMinutesMin(minFrequency));
+        dispatch(setFrequencyMinutesMax(maxFrequncy));
       }}
     />
   );
