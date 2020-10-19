@@ -24,6 +24,27 @@ const SettingService = {
       return null;
     }
   },
+
+  async getSetting(userToken: string): Promise<SettingsState | null> {
+    try {
+      const route: string = api + "settings";
+
+      const requestOptions = {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + userToken,
+          "Content-Type": "application/json",
+        },
+      };
+
+      const response = await fetch(route, requestOptions);
+      const setting: SettingsState = await response.json();
+      return setting;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  },
 };
 
 export default SettingService;
