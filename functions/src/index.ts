@@ -452,14 +452,16 @@ export const notificationScheduler = functions.pubsub
     let tokens: any[] = [];
     let userIndex: number = 0;
     console.log("User Index: " + userIndex);
-    console.log("User Ids: " + userIds.length)
+    console.log("User Ids: " + userIds.length);
     while (userIndex < userIds.length) {
-
       console.log("User Index: " + userIndex);
-      console.log("User Ids: " + userIds.length)
+      console.log("User Ids: " + userIds.length);
 
       console.log("==== Processing Batch " + userIndex + " ====");
-      let userBatch: string[] = userIds.slice(userIndex, Math.min(userIndex + 10, userIds.length - userIndex));
+      let userBatch: string[] = userIds.slice(
+        userIndex,
+        Math.min(userIndex + 10, userIds.length - userIndex)
+      );
       console.log(userBatch);
 
       if (userBatch.length === 0) {
@@ -468,7 +470,7 @@ export const notificationScheduler = functions.pubsub
         continue;
       }
 
-      console.log("==== Batch is Not Empty ====")
+      console.log("==== Batch is Not Empty ====");
 
       let tokensRef = await db
         .collection("pushNotificationTokens")
@@ -488,7 +490,7 @@ export const notificationScheduler = functions.pubsub
         tokens.push({ id: token.id, token: token.data().token });
       });
       userIndex = userIndex + 10;
-    } 
+    }
 
     console.log("==== Creating Payload ====");
     const payload = {
@@ -498,7 +500,7 @@ export const notificationScheduler = functions.pubsub
           "Reminder to record how you are feeling in Haply and what is happening in your day",
       },
     };
-    console.log(JSON.stringify(payload));
+    console.log(payload);
 
     console.log("==== Getting Token Ids ====");
     let tokenIds: string[] = tokens.map((token: any) => token.token);
@@ -542,7 +544,8 @@ export const notificationScheduler = functions.pubsub
       let randomNumber: number = Math.random();
       let minutesAdded: number = Math.round(
         newSetting.frequencyMinutesMin * randomNumber +
-        newSetting.frequencyMinutesMax * (1 - randomNumber));
+          newSetting.frequencyMinutesMax * (1 - randomNumber)
+      );
 
       let now: Date = new Date();
       newSetting.nextNotification = new Date(
