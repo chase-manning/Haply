@@ -379,19 +379,18 @@ app.post("/v2/settings", async (request, response) => {
       nextNotification: new Date(nextNotification),
     };
 
-    let setting;
-    setting = await db
+    const querySnapshot = await db
       .collection("settings")
       .where("userId", "==", userId)
       .get();
 
-    if (setting.empty) {
-      const settingRef: any = await db.collection("settings").add(data);
-      setting = await settingRef.get();
+    if (querySnapshot.empty) {
+      await db.collection("settings").add(data);
     } else {
-      setting.forEach(async (qwe) => {
-        await db.collection("settings").doc(qwe.id).set(data, { merge: true });
-      });
+      await db
+        .collection("settings")
+        .doc(querySnapshot.docs[0].id)
+        .set(data, { merge: true });
     }
 
     response.json({ result: "All G" });
