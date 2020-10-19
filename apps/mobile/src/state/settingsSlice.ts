@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./store";
+import SettingService from "../services/SettingService";
+import { AppThunk, RootState } from "./store";
 
 /* TYPES */
 export enum Mode {
@@ -13,7 +14,7 @@ export interface SettingsState {
   randomReminders: boolean;
   frequencyMinutesMin: number;
   frequencyMinutesMax: number;
-  nextNotification: Date;
+  nextNotification: string;
   tagOptions: string[];
   colorPrimary: string;
   mode: Mode;
@@ -24,7 +25,7 @@ const initialState: SettingsState = {
   randomReminders: false,
   frequencyMinutesMin: 7 * 60,
   frequencyMinutesMax: 7 * 60,
-  nextNotification: new Date(2050, 1, 1),
+  nextNotification: new Date(2040, 1, 1).toString(),
   tagOptions: [
     "With Friends",
     "With Family",
@@ -77,7 +78,13 @@ export const settingsSlice = createSlice({
         state.frequencyMinutesMax * (1 - randomNumber);
 
       let now: Date = new Date();
-      state.nextNotification = new Date(now.getTime() + minutesAdded * 60000);
+      console.log("updating date");
+      console.log(state.nextNotification);
+      let newDate: string = new Date(
+        now.getTime() + minutesAdded * 60000
+      ).toString();
+      console.log(newDate);
+      state.nextNotification = newDate;
     },
     setTagOptions: (state, action: PayloadAction<string[]>) => {
       state.tagOptions = action.payload;
@@ -112,6 +119,22 @@ export const {
   setColorPrimary,
   toggleMode,
 } = settingsSlice.actions;
+
+/* THUNKS */
+export const updateSettings = (userToken: string): AppThunk => async (
+  dispatch
+) => {
+  const setting: SettingsState | null = await SettingService.getSetting(
+    userToken
+  );
+  if (setting) {
+    console.log("found setting and updaing");
+    console.log(setting);
+    dispatch(setSettings(setting));
+  } else {
+    console.log("coudln't fnd setting");
+  }
+};
 
 /* SELECTS */
 export const selectSettings = (state: RootState) => state.settings;
