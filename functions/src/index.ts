@@ -406,7 +406,7 @@ app.get("/settings", async (request: any, response) => {
     if (userId === "") response.status(403).send("Unauthorized");
 
     let querySnapshot = await db
-      .collection("moods")
+      .collection("settings")
       .where("userId", "==", userId)
       .limit(1)
       .get();
