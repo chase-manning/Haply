@@ -13,6 +13,7 @@ import {
   setIsAnonymous,
   setToken,
 } from "../../state/userSlice";
+import { updateSettings } from "../../state/settingsSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -63,6 +64,7 @@ const Login = () => {
       dispatch(setIsAnonymous(changedUser.isAnonymous));
       dispatch(setToken(userToken));
       dispatch(updateMoods(userToken));
+      dispatch(updateSettings(userToken));
     });
 
     Storage.get({ key: "logged" }).then((result: any) => {
