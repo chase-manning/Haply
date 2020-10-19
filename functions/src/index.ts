@@ -502,6 +502,13 @@ export const notificationScheduler = functions.pubsub
     };
     console.log(payload);
 
+    if (tokens.length > 0)
+      console.log("==== There are some Tokens to Process ====");
+    else {
+      console.log("==== There are no tokens to process ===");
+      return null;
+    }
+
     console.log("==== Getting Token Ids ====");
     let tokenIds: string[] = tokens.map((token: any) => token.token);
     console.log(JSON.stringify(tokenIds));
