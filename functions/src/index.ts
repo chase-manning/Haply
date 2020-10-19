@@ -400,6 +400,28 @@ app.post("/v2/settings", async (request, response) => {
   }
 });
 
+app.get("/settings", async (request: any, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    let querySnapshot = await db
+      .collection("moods")
+      .where("userId", "==", userId)
+      .limit(1)
+      .get();
+
+    if (querySnapshot.empty) response.status(404).send("Not Found");
+
+    const setting = querySnapshot.docs[0].data();
+
+    response.json(setting);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+});
+
 export const notificationScheduler = functions.pubsub
   .schedule("every 1 minutes")
   .onRun(async () => {
