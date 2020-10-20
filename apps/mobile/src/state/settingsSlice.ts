@@ -50,14 +50,21 @@ export const settingsSlice = createSlice({
   initialState,
   reducers: {
     setSettings: (state, action: PayloadAction<SettingsState>) => {
-      state.remindersEnabled = action.payload.remindersEnabled;
-      state.randomReminders = action.payload.randomReminders;
-      state.frequencyMinutesMin = action.payload.frequencyMinutesMin;
-      state.frequencyMinutesMax = action.payload.frequencyMinutesMax;
-      state.nextNotification = action.payload.nextNotification;
-      state.tagOptions = action.payload.tagOptions;
-      state.colorPrimary = action.payload.colorPrimary;
-      state.mode = action.payload.mode;
+      if (action.payload.remindersEnabled)
+        state.remindersEnabled = action.payload.remindersEnabled;
+      if (action.payload.randomReminders)
+        state.randomReminders = action.payload.randomReminders;
+      if (action.payload.frequencyMinutesMin)
+        state.frequencyMinutesMin = action.payload.frequencyMinutesMin;
+      if (action.payload.frequencyMinutesMax)
+        state.frequencyMinutesMax = action.payload.frequencyMinutesMax;
+      if (action.payload.nextNotification)
+        state.nextNotification = action.payload.nextNotification;
+      if (action.payload.tagOptions)
+        state.tagOptions = action.payload.tagOptions;
+      if (action.payload.colorPrimary)
+        state.colorPrimary = action.payload.colorPrimary;
+      if (action.payload.mode) state.mode = action.payload.mode;
     },
     toggleRemindersEnabled: (state) => {
       state.remindersEnabled = !state.remindersEnabled;
