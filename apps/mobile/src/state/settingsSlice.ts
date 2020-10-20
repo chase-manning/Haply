@@ -78,13 +78,9 @@ export const settingsSlice = createSlice({
         state.frequencyMinutesMax * (1 - randomNumber);
 
       let now: Date = new Date();
-      console.log("updating date");
-      console.log(state.nextNotification);
-      let newDate: string = new Date(
+      state.nextNotification = new Date(
         now.getTime() + minutesAdded * 60000
       ).toString();
-      console.log(newDate);
-      state.nextNotification = newDate;
     },
     setTagOptions: (state, action: PayloadAction<string[]>) => {
       state.tagOptions = action.payload;
