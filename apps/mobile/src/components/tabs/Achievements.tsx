@@ -9,7 +9,6 @@ const StyledAchievements = styled.div`
   width: 100%;
   padding: 20px;
   display: grid;
-  width: 100%;
   grid-template-columns: 1fr 1fr 1fr;
 `;
 
