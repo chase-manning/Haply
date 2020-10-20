@@ -124,9 +124,7 @@ export const {
 export const updateSettings = (userToken: string): AppThunk => async (
   dispatch
 ) => {
-  const setting: SettingsState | null = await SettingService.getSetting(
-    userToken
-  );
+  const setting = await SettingService.getSetting(userToken);
   if (setting) dispatch(setSettings(setting));
 };
 
