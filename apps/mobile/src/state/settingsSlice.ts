@@ -127,13 +127,7 @@ export const updateSettings = (userToken: string): AppThunk => async (
   const setting: SettingsState | null = await SettingService.getSetting(
     userToken
   );
-  if (setting) {
-    console.log("found setting and updaing");
-    console.log(setting);
-    dispatch(setSettings(setting));
-  } else {
-    console.log("coudln't fnd setting");
-  }
+  if (setting) dispatch(setSettings(setting));
 };
 
 /* SELECTS */
