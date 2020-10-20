@@ -38,7 +38,11 @@ const SettingService = {
       };
 
       const response = await fetch(route, requestOptions);
-      const setting: SettingsState = await response.json();
+      const settingResponse: any = await response.json();
+      let nextSeconds = settingResponse.nextNotification._seconds;
+      let nextDate = new Date(nextSeconds * 1000);
+      settingResponse.nextNotification = nextDate.toString();
+      const setting: SettingsState = settingResponse;
       return setting;
     } catch (error) {
       console.log(error);
