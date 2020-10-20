@@ -11,7 +11,7 @@ import settingsReducer from "./settingsSlice";
 import dataReducer from "./dataSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
-
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -25,7 +25,7 @@ export const reducer = combineReducers({
 
 export const store = createStore(
   reducer,
-  applyMiddleware(sagaMiddleware, thunk)
+  composeWithDevTools(applyMiddleware(sagaMiddleware, thunk))
 );
 
 sagaMiddleware.run(rootSaga);
