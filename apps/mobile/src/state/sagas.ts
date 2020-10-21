@@ -11,7 +11,7 @@ import {
   setMoods,
   setStats,
 } from "./dataSlice";
-import { Plugins as CapacitorPlugins } from "@capacitor/core";
+import { Plugins as CapacitorPlugins, StatusBarStyle } from "@capacitor/core";
 import {
   SettingsState,
   setSettings,
@@ -27,6 +27,7 @@ import {
   selectMode,
   setColorPrimary,
   toggleMode,
+  Mode,
 } from "./settingsSlice";
 import { completeAppInit, initApp } from "./navigationSlice";
 import Mood from "../models/mood";
@@ -40,7 +41,10 @@ import {
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
+import { CastSharp } from "@material-ui/icons";
+
 const { Storage } = CapacitorPlugins;
+const { StatusBar } = CapacitorPlugins;
 
 /* WATCHERS */
 function* watchAppInit() {
@@ -97,6 +101,10 @@ function* watchRemoveMood() {
   yield takeEvery(removeMood, softUpdate);
 }
 
+function* watchSetSettings() {
+  yield takeEvery(setSettings, setStatusBar);
+}
+
 function* watchAddTag() {
   yield takeEvery(addTagOption, saveSettings);
 }
@@ -116,6 +124,7 @@ function* watchToggleMode() {
   yield takeEvery(toggleMode, function* processSetColorPrimary() {
     yield call(saveSettings);
     yield call(updateAchievements);
+    yield call(setStatusBar);
   });
 }
 
@@ -135,7 +144,6 @@ function* initialiseApp() {
 function* softUpdate() {
   yield call(updateStats);
   yield call(updateAchievements);
-
 }
 
 function* updateStats() {
@@ -155,6 +163,13 @@ function* updateAchievements() {
   );
 
   yield put(setAchievements(achievements));
+}
+
+function* setStatusBar() {
+  const mode = yield select(selectMode);
+  StatusBar.setStyle({
+    style: mode === Mode.Dark ? StatusBarStyle.Dark : StatusBarStyle.Light,
+  });
 }
 
 function saveUser() {
@@ -237,6 +252,7 @@ export default function* rootSaga() {
     watchUpdateNextNotification(),
     watchAddMood(),
     watchRemoveMood(),
+    watchSetSettings(),
     watchAddTag(),
     watchRemoveTag(),
     watchSetColorPrimary(),
