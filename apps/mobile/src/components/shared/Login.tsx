@@ -27,7 +27,7 @@ const firebaseConfig = {
   measurementId: "G-0KC720H0FM",
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 const uiConfig = {
   signInFlow: "popup",

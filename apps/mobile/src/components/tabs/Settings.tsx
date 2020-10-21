@@ -17,6 +17,7 @@ import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
 import { selectUser } from "../../state/userSlice";
+import { firebaseApp } from "../../components/shared/Login";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -55,7 +56,14 @@ const Settings = () => {
         label={"Cloud Sync"}
         isToggle={true}
         toggleOn={!user.isAnonymous}
-        clickFunction={() => dispatch(showLogin())}
+        clickFunction={async () => {
+          if (user.isAnonymous) {
+            dispatch(showLogin());
+          } else {
+            await firebaseApp.auth().signOut();
+            await firebaseApp.auth().signInAnonymously();
+          }
+        }}
       />
 
       <Header>Reminders</Header>
