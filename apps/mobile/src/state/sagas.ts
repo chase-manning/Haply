@@ -41,7 +41,6 @@ import {
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
-import { CastSharp } from "@material-ui/icons";
 
 const { Storage } = CapacitorPlugins;
 const { StatusBar } = CapacitorPlugins;
