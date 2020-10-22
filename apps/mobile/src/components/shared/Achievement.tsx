@@ -20,7 +20,7 @@ type SvgProps = {
 const Svg = styled.img`
   width: 220%;
   transform: translate(-50%, -50%);
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
   filter: ${(props: SvgProps) => {
