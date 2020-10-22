@@ -49,7 +49,7 @@ const Icon = styled.button`
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
-  background-color: var(--bg);
+  background-color: white;
 `;
 
 const Overlay = styled.div`
