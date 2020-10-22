@@ -19,6 +19,7 @@ export default class Mood {
   moodId?: string;
   note: string;
   tags: string[];
+  description: string;
 
   constructor(
     value: number,
@@ -34,6 +35,7 @@ export default class Mood {
     if (moodId !== "") this.moodId = moodId;
     this.note = note;
     this.tags = tags;
+    this.description = moodDescriptions[this.value];
   }
 
   get string(): string {
@@ -42,10 +44,6 @@ export default class Mood {
 
   get json(): JSON {
     return JSON.parse(this.string);
-  }
-
-  get description(): string {
-    return moodDescriptions[this.value];
   }
 }
 
