@@ -47,6 +47,7 @@ const ExitButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--main);
 `;
 
 const DoneButton = styled.button`
