@@ -43,6 +43,7 @@ const AddTagContent = styled.button`
   align-items: center;
   justify-content: space-between;
   padding: 0 8px;
+  color: var(--main);
 `;
 
 const AddTagText = styled.div`
