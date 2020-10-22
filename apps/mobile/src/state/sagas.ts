@@ -11,7 +11,11 @@ import {
   setMoods,
   setStats,
 } from "./dataSlice";
-import { Plugins as CapacitorPlugins, StatusBarStyle } from "@capacitor/core";
+import {
+  Plugins as CapacitorPlugins,
+  StatusBarStyle,
+  Capacitor,
+} from "@capacitor/core";
 import {
   SettingsState,
   setSettings,
@@ -44,6 +48,8 @@ import SettingService from "../services/SettingService";
 
 const { Storage } = CapacitorPlugins;
 const { StatusBar } = CapacitorPlugins;
+
+const isStatusBarAvailable = Capacitor.isPluginAvailable("StatusBar");
 
 /* WATCHERS */
 function* watchAppInit() {
@@ -165,6 +171,7 @@ function* updateAchievements() {
 }
 
 function* setStatusBar() {
+  if (!isStatusBarAvailable) return;
   const mode = yield select(selectMode);
   StatusBar.setStyle({
     style: mode === Mode.Dark ? StatusBarStyle.Dark : StatusBarStyle.Light,
