@@ -31,15 +31,24 @@ const Svg = styled.img`
   }};
 `;
 
-const Icon = styled.button`
+const Shadow = styled.div`
   display: flex;
-  position: relative;
+  justify-content: center;
+  align-items: center;
   width: 70px;
   height: 70px;
   border-radius: 50%;
   margin-bottom: 5px;
-  overflow: hidden;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+`;
+
+const Icon = styled.button`
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
   background-color: var(--bg);
 `;
 
@@ -132,13 +141,15 @@ const Acheivement = (props: Props) => {
 
   return (
     <StyledAcheivement>
-      <Icon onClick={() => setState({ detailsOpen: true })}>
-        <Svg
-          src={props.achievement.svg}
-          isComplete={props.achievement.percentComplete === 1}
-        />
-        <Overlay />
-      </Icon>
+      <Shadow>
+        <Icon onClick={() => setState({ detailsOpen: true })}>
+          <Svg
+            src={props.achievement.svg}
+            isComplete={props.achievement.percentComplete === 1}
+          />
+          <Overlay />
+        </Icon>
+      </Shadow>
       {props.achievement.percentComplete < 1 && (
         <Progress>
           <Complete percentComplete={props.achievement.percentComplete} />
