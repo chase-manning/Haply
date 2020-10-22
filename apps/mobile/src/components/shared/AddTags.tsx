@@ -35,6 +35,8 @@ const Options = styled.div`
   border-radius: 15px;
   padding: 5px;
   background-color: var(--bg-top);
+  max-height: 200px;
+  overflow: auto;
 `;
 
 const Option = styled.button`
