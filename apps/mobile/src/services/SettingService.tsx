@@ -1,4 +1,5 @@
 import { SettingsState } from "../state/settingsSlice";
+import ApiService from "./ApiService";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
@@ -18,7 +19,7 @@ const SettingService = {
         },
       };
 
-      return await fetch(route, requestOptions);
+      return await ApiService(route, requestOptions);
     } catch (error) {
       console.log(error);
       return null;
@@ -37,8 +38,8 @@ const SettingService = {
         },
       };
 
-      const response = await fetch(route, requestOptions);
-      const settingResponse: any = await response.json();
+      const response = await ApiService(route, requestOptions);
+      const settingResponse: any = await response!.json();
       let nextSeconds = settingResponse.nextNotification._seconds;
       let nextDate = new Date(nextSeconds * 1000);
       settingResponse.nextNotification = nextDate.toString();

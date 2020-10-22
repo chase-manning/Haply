@@ -1,3 +1,5 @@
+import ApiService from "./ApiService";
+
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
 //const api: string = "http://localhost:5001/happiness-software/us-central1/webApi/api/";
@@ -19,7 +21,7 @@ const PushNotificationService = {
         },
       };
 
-      return await fetch(route, requestOptions);
+      return await ApiService(route, requestOptions);
     } catch (error) {
       console.log(error);
       return null;

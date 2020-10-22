@@ -1,4 +1,5 @@
 import Mood, { MoodResponse } from "../models/mood";
+import ApiService from "./ApiService";
 
 const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
@@ -17,8 +18,7 @@ const MoodService = {
           "Content-Type": "application/json",
         },
       };
-
-      return await fetch(route, requestOptions);
+      return ApiService(route, requestOptions);
     } catch (error) {
       console.log(error);
       return null;
@@ -45,9 +45,9 @@ const MoodService = {
       if (!!order && !!limit) fullRoute += "&";
       if (!!limit) fullRoute += "limit=" + limit;
 
-      const response = await fetch(fullRoute, requestOptions);
+      const response = await ApiService(fullRoute, requestOptions);
 
-      const moodResponses: MoodResponse[] = await response.json();
+      const moodResponses: MoodResponse[] = await response!.json();
 
       let moods: Mood[] = [];
       moodResponses.forEach((moodResponse: MoodResponse) => {
@@ -80,7 +80,7 @@ const MoodService = {
         },
       };
 
-      return await fetch(route + "/" + moodId, requestOptions);
+      return await ApiService(route + "/" + moodId, requestOptions);
     } catch (error) {
       console.log(error);
       return null;
