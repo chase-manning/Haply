@@ -48,4 +48,6 @@ export const SelectedTags = styled.div`
   margin-bottom: 10px;
   min-height: 41px;
   background-color: var(--bg-top);
+  max-height: 200px;
+  overflow: auto;
 `;
