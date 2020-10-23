@@ -30,13 +30,13 @@ interface Achievement {
   unlocks: string[];
 }
 
-export enum Mode {
+enum Mode {
   Default,
   Dark,
   Light,
 }
 
-export interface Settings {
+interface Settings {
   remindersEnabled: boolean;
   randomReminders: boolean;
   frequencyMinutesMin: number;
@@ -46,6 +46,25 @@ export interface Settings {
   colorPrimary: string;
   mode: Mode;
 }
+
+enum StatType {
+  Bar,
+  Chart,
+}
+
+type DataPoint = {
+  value: number;
+  label: string;
+};
+
+type Stat = {
+  title: string;
+  type: StatType;
+  locked: boolean;
+  lockedMessage: string;
+  percentComplete: number;
+  dataPoints: DataPoint[];
+};
 
 async function getUserId(req: any): Promise<string> {
   if (
@@ -795,6 +814,188 @@ app.get("/achievements", async (request: any, response) => {
     response.status(500).send(error);
   }
 });
+
+app.get("/stats", async (request: any, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    let moodQuerySnapshot = await db
+      .collection("moods")
+      .where("userId", "==", userId)
+      .get();
+
+    const moods: Mood[] = [];
+    moodQuerySnapshot.forEach((doc) => {
+      let mood = doc.data();
+      moods.push({
+        id: doc.id,
+        value: mood.value,
+        date: mood.date,
+        userId: mood.userId,
+        note: mood.note,
+        tags: mood.tags,
+        description: mood.description,
+      });
+    });
+
+    let stats: Stat[] = [];
+
+    stats.push(createStatLine(moods, "d/m/yyyy", 1, "Day"));
+    stats.push(createStatLine(moods, "m/yyyy", 365 / 12, "Month"));
+    stats.push(createStatLine(moods, "yyyy", 365, "Year"));
+
+    stats.push(
+      createStatBar(
+        moods,
+        "ddd",
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        "Day",
+        true
+      )
+    );
+
+    stats.push(
+      createStatBar(
+        moods,
+        "mmm",
+        [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        "Month",
+        true
+      )
+    );
+
+    stats.push(
+      createStatBar(
+        moods,
+        "H",
+        [
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+        ],
+        "Hour",
+        false
+      )
+    );
+
+    stats.sort(function (a, b) {
+      return b.percentComplete - a.percentComplete;
+    });
+
+    stats.sort(function (a: any, b: any) {
+      return b.locked + a.locked;
+    });
+
+    response.json(stats);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+});
+
+function createStatLine(
+  moods: Mood[],
+  format: string,
+  daysIncrement: number,
+  periodName: string
+): Stat {
+  let periods: string[] = [];
+
+  for (let i: number = 0; i < 20; i++) {
+    periods.push(
+      dateFormat(
+        new Date().setDate(new Date().getDate() - i * daysIncrement),
+        format
+      )
+    );
+  }
+
+  const dataPoints: DataPoint[] = periods
+    .map((period: string) => {
+      return {
+        label: "",
+        value: dateAverage(moods, format, period),
+      };
+    })
+    .filter((dataPoint: DataPoint) => dataPoint.value >= 0)
+    .reverse();
+
+  return {
+    title: "Feeling by " + periodName,
+    type: StatType.Chart,
+    locked: dataPoints.length < 3,
+    lockedMessage:
+      "Record your Feeling three " + periodName + "s in a row to unlock",
+    percentComplete: dataPoints.length / 3,
+    dataPoints: dataPoints,
+  };
+}
+
+function createStatBar(
+  moods: Mood[],
+  format: string,
+  periods: string[],
+  periodName: string,
+  truncateLabel: boolean
+): Stat {
+  let dataPoints: DataPoint[] = periods
+    .map((period: string) => {
+      return {
+        label: truncateLabel ? period.substring(0, 1) : period,
+        value: dateAverage(moods, format, period),
+      };
+    })
+    .filter((dataPoint: DataPoint) => dataPoint.value >= 0);
+
+  return {
+    title: "Average Feeling by " + periodName,
+    type: StatType.Bar,
+    locked: dataPoints.length < periods.length,
+    lockedMessage: "Record a feeling for every " + periodName + " to unlock",
+    percentComplete: dataPoints.length / periods.length,
+    dataPoints: dataPoints,
+  };
+}
+
+function dateAverage(moods: Mood[], format: string, value: string): number {
+  let dayList: Mood[] = moods.filter(
+    (mood: Mood) => dateFormat(mood.date, format) === value
+  );
+  return dayList.length === 0
+    ? -1
+    : Math.round(
+        (dayList.map((day: Mood) => day.value).reduce((a, b) => a + b) /
+          dayList.length) *
+          10
+      ) / 10;
+}
 
 export const notificationScheduler = functions.pubsub
   .schedule("every 1 minutes")
