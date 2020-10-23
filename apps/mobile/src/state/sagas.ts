@@ -27,7 +27,6 @@ import {
   updateNextNotification,
   addTagOption,
   removeTagOption,
-  selectColorPrimary,
   selectMode,
   setColorPrimary,
   toggleMode,
