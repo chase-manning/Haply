@@ -455,6 +455,55 @@ app.post("/v2/settings", async (request, response) => {
   }
 });
 
+app.post("/v3/settings", async (request, response) => {
+  try {
+    const userId = await getUserId(request);
+    if (userId === "") response.status(403).send("Unauthorized");
+
+    const {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      nextNotification,
+      tagOptions,
+      colorPrimary,
+      mode,
+      timezone,
+    } = request.body;
+    const data = {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      userId,
+      tagOptions,
+      colorPrimary,
+      mode,
+      nextNotification: new Date(nextNotification),
+      timezone,
+    };
+
+    const querySnapshot = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .get();
+
+    if (querySnapshot.empty) {
+      await db.collection("settings").add(data);
+    } else {
+      await db
+        .collection("settings")
+        .doc(querySnapshot.docs[0].id)
+        .set(data, { merge: true });
+    }
+
+    response.json({ result: "All G" });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 app.get("/settings", async (request: any, response) => {
   try {
     const userId = await getUserId(request);
@@ -817,6 +866,32 @@ app.get("/achievements", async (request: any, response) => {
 
 app.get("/stats", async (request: any, response) => {
   try {
+    console.log("test 1");
+
+    let dateString = "2020-10-22T22:10:59.736Z";
+    console.log("== Date String");
+    console.log(dateString);
+
+    let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log("== Timezone");
+    console.log(timezone);
+
+    let basicDate = new Date(dateString);
+    console.log("== Basic Date");
+    console.log(basicDate);
+
+    var aucklandTime = basicDate.toLocaleString("en-US", {
+      timeZone: "Pacific/Auckland",
+    });
+    console.log("== Auckland Date");
+    console.log(aucklandTime);
+
+    var dateFormatted = dateFormat(aucklandTime, "d/m/yyyy hh:MM:ss");
+    console.log("== Formatted Date");
+    console.log(dateFormatted);
+
+    // console.log("AEST time: " + new Date(aestTime).toISOString());
+
     const userId = await getUserId(request);
     if (userId === "") response.status(403).send("Unauthorized");
 
