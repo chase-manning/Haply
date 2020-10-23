@@ -8,7 +8,7 @@ const api: string =
 const SettingService = {
   async createSetting(userToken: string, setting: SettingsState): Promise<any> {
     try {
-      const route: string = api + "v2/settings";
+      const route: string = api + "v3/settings";
 
       const requestOptions = {
         method: "POST",
