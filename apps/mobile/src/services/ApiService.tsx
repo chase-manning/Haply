@@ -4,7 +4,7 @@ const ApiService = async (route: string, requestOptions: any) => {
   try {
     const response = await fetch(route, requestOptions);
     if (!response.ok) {
-      const newToken = await firebaseApp.auth().currentUser!.getIdToken();
+      const newToken = await firebaseApp.auth().currentUser!.getIdToken(true);
       requestOptions.headers.Authorization = "Bearer " + newToken;
       return await fetch(route, requestOptions);
     }
