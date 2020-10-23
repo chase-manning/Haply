@@ -152,8 +152,8 @@ function* softUpdate() {
 }
 
 function* updateStats() {
-  const moods = yield select(selectMoods);
-  const stats = StatService.getStats(moods);
+  const userToken = yield select(selectToken);
+  const stats = yield StatService.getStats(userToken);
   yield put(setStats(stats));
 }
 
