@@ -13,7 +13,7 @@ import {
   setIsAnonymous,
   setToken,
 } from "../../state/userSlice";
-import { updateSettings } from "../../state/settingsSlice";
+import { updateSettings, setTimezone } from "../../state/settingsSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -64,6 +64,7 @@ const Login = () => {
       dispatch(setIsAnonymous(changedUser.isAnonymous));
       dispatch(updateMoods(userToken));
       dispatch(updateSettings(userToken));
+      dispatch(setTimezone());
     });
 
     firebaseApp.auth().onIdTokenChanged(async (changedUser) => {
