@@ -18,6 +18,7 @@ export interface SettingsState {
   tagOptions: string[];
   colorPrimary: string;
   mode: Mode;
+  timezone: string;
 }
 
 const initialState: SettingsState = {
@@ -42,6 +43,7 @@ const initialState: SettingsState = {
   ],
   colorPrimary: "#4071fe",
   mode: Mode.Default,
+  timezone: "Asia/Shanghai",
 };
 
 /* SLICE */
@@ -65,6 +67,7 @@ export const settingsSlice = createSlice({
       if (action.payload.colorPrimary)
         state.colorPrimary = action.payload.colorPrimary;
       if (action.payload.mode) state.mode = action.payload.mode;
+      if (action.payload.timezone) state.timezone = action.payload.timezone;
     },
     toggleRemindersEnabled: (state) => {
       state.remindersEnabled = !state.remindersEnabled;
@@ -106,6 +109,10 @@ export const settingsSlice = createSlice({
       if (state.mode === Mode.Dark) state.mode = Mode.Light;
       else state.mode = Mode.Dark;
     },
+    setTimezone: (state) => {
+      let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (timezone && timezone.length > 1) state.timezone = timezone;
+    },
   },
 });
 
@@ -121,6 +128,7 @@ export const {
   removeTagOption,
   setColorPrimary,
   toggleMode,
+  setTimezone,
 } = settingsSlice.actions;
 
 /* THUNKS */
