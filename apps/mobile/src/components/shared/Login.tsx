@@ -59,12 +59,16 @@ const Login = () => {
 
     firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
       if (!changedUser) return;
-      const userToken = await changedUser.getIdToken();
+      const userToken = await changedUser.getIdToken(true);
       dispatch(setId(changedUser.uid));
       dispatch(setIsAnonymous(changedUser.isAnonymous));
-      dispatch(setToken(userToken));
       dispatch(updateMoods(userToken));
       dispatch(updateSettings(userToken));
+    });
+
+    firebaseApp.auth().onIdTokenChanged(async (changedUser) => {
+      if (!changedUser) return;
+      dispatch(setToken(await changedUser!.getIdToken()));
     });
 
     Storage.get({ key: "logged" }).then((result: any) => {
