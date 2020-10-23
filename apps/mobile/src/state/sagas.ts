@@ -31,6 +31,7 @@ import {
   setColorPrimary,
   toggleMode,
   Mode,
+  setTimezone,
 } from "./settingsSlice";
 import { completeAppInit, initApp } from "./navigationSlice";
 import Mood from "../models/mood";
@@ -130,6 +131,10 @@ function* watchToggleMode() {
     yield call(updateAchievements);
     yield call(setStatusBar);
   });
+}
+
+function* watchSetTimezone() {
+  yield takeEvery(setTimezone, saveSettings);
 }
 
 function* watchSetPushNotificationToken() {
@@ -256,5 +261,6 @@ export default function* rootSaga() {
     watchSetColorPrimary(),
     watchToggleMode(),
     watchSetPushNotificationToken(),
+    watchSetTimezone(),
   ]);
 }
