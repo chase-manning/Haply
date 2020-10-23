@@ -158,16 +158,9 @@ function* updateStats() {
 }
 
 function* updateAchievements() {
-  const moods = yield select(selectMoods);
-  const colorPrimary = yield select(selectColorPrimary);
-  const mode = yield select(selectMode);
-  const achievements = AchievementService.getAchievements(
-    moods,
-    colorPrimary,
-    mode
-  );
-
-  yield put(setAchievements(achievements));
+  const userToken = yield select(selectToken);
+  const achievements = yield AchievementService.getAchievements(userToken);
+  if (achievements) yield put(setAchievements(achievements!));
 }
 
 function* setStatusBar() {
