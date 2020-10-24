@@ -158,7 +158,7 @@ function* softUpdate() {
 function* updateStats() {
   const userToken = yield select(selectToken);
   const stats = yield StatService.getStats(userToken);
-  yield put(setStats(stats));
+  if (stats) yield put(setStats(stats));
 }
 
 function* updateAchievements() {
