@@ -2,8 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AchievementModel from "../models/AchievementModel";
 import Mood from "../models/mood";
 import { StatModel } from "../models/StatModel";
-import MoodService from "../services/MoodService";
-import { AppThunk, RootState } from "./store";
+import { RootState } from "./store";
 
 /* TYPES */
 interface DataState {
