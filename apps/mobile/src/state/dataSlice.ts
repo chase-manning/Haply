@@ -10,12 +10,18 @@ interface DataState {
   moods: Mood[];
   stats: StatModel[];
   achievements: AchievementModel[];
+  updatingMoods: boolean;
+  updatingStats: boolean;
+  updatingAchievements: boolean;
 }
 
 const initialState: DataState = {
   moods: [],
   stats: [],
   achievements: [],
+  updatingMoods: false,
+  updatingStats: false,
+  updatingAchievements: false,
 };
 
 /* SLICE */
@@ -23,6 +29,29 @@ export const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
+    updateData: (state) => {
+      state.updatingMoods = true;
+      state.updatingStats = true;
+      state.updatingAchievements = true;
+    },
+    updateMoods: (state) => {
+      state.updatingMoods = true;
+    },
+    completeMoods: (state) => {
+      state.updatingMoods = false;
+    },
+    updateStats: (state) => {
+      state.updatingStats = true;
+    },
+    completeStats: (state) => {
+      state.updatingStats = false;
+    },
+    updateAchievements: (state) => {
+      state.updatingMoods = true;
+    },
+    completeAchievements: (state) => {
+      state.updatingMoods = false;
+    },
     setMoods: (state, action: PayloadAction<Mood[]>) => {
       state.moods = action.payload;
     },
@@ -48,16 +77,14 @@ export const {
   setAchievements,
   addMood,
   removeMood,
+  updateData,
+  updateMoods,
+  completeMoods,
+  updateStats,
+  completeStats,
+  updateAchievements,
+  completeAchievements,
 } = dataSlice.actions;
-
-/* THUNKS */
-export const updateMoods = (userToken: string): AppThunk => async (
-  dispatch
-) => {
-  const moods: Mood[] | null = await MoodService.getMoods(userToken, "date");
-  if (moods) dispatch(setMoods(moods));
-  if (!moods) console.log("error retrieving moods");
-};
 
 /* SELECTS */
 export const selectMoods = (state: RootState) => state.data.moods;

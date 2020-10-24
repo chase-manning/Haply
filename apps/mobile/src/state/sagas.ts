@@ -3,6 +3,9 @@ import AchievementService from "../services/AchievementService";
 import StatService from "../services/StatService";
 import {
   addMood,
+  completeAchievements,
+  completeMoods,
+  completeStats,
   removeMood,
   selectAchievements,
   selectMoods,
@@ -10,6 +13,10 @@ import {
   setAchievements,
   setMoods,
   setStats,
+  updateAchievements,
+  updateData,
+  updateMoods,
+  updateStats,
 } from "./dataSlice";
 import {
   Plugins as CapacitorPlugins,
@@ -45,6 +52,7 @@ import {
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
+import MoodService from "../services/MoodService";
 
 const { Storage } = CapacitorPlugins;
 const { StatusBar } = CapacitorPlugins;
@@ -56,6 +64,20 @@ function* watchAppInit() {
   yield takeEvery(initApp, initialiseApp);
 }
 
+function* watchUpdateData() {
+  yield takeEvery(updateData, runUpdateData);
+}
+
+function* watchUpdateMoods() {
+  yield takeEvery(updateMoods, runUpdateMoods);
+}
+function* watchUpdateStats() {
+  yield takeEvery(updateStats, runUpdateStats);
+}
+function* watchUpdateAchievements() {
+  yield takeEvery(updateAchievements, runUpdateAchievements);
+}
+
 function* watchSetToken() {
   yield takeEvery(setToken, function* processSetUser() {
     yield call(saveUser);
@@ -65,7 +87,6 @@ function* watchSetToken() {
 
 function* watchSetMoods() {
   yield takeEvery(setMoods, function* processSetMood() {
-    yield call(softUpdate);
     yield call(saveMoods);
   });
 }
@@ -99,11 +120,11 @@ function* watchUpdateNextNotification() {
 }
 
 function* watchAddMood() {
-  yield takeEvery(addMood, softUpdate);
+  yield takeEvery(addMood, updateData);
 }
 
 function* watchRemoveMood() {
-  yield takeEvery(removeMood, softUpdate);
+  yield takeEvery(removeMood, updateData);
 }
 
 function* watchSetSettings() {
@@ -121,14 +142,14 @@ function* watchRemoveTag() {
 function* watchSetColorPrimary() {
   yield takeEvery(setColorPrimary, function* processSetColorPrimary() {
     yield call(saveSettings);
-    yield call(updateAchievements);
+    yield call(runUpdateAchievements);
   });
 }
 
 function* watchToggleMode() {
   yield takeEvery(toggleMode, function* processSetColorPrimary() {
     yield call(saveSettings);
-    yield call(updateAchievements);
+    yield call(runUpdateAchievements);
     yield call(setStatusBar);
   });
 }
@@ -143,28 +164,42 @@ function* watchSetPushNotificationToken() {
 
 /* ACTIONS */
 function* initialiseApp() {
-  yield call(loadSettings);
-  yield call(loadMoods);
-  yield call(loadStats);
-  yield call(loadAchievements);
+  yield all([
+    call(loadSettings),
+    call(loadMoods),
+    call(loadStats),
+    call(loadAchievements),
+  ]);
   yield put(completeAppInit());
 }
 
-function* softUpdate() {
-  yield call(updateStats);
-  yield call(updateAchievements);
+function* runUpdateData() {
+  yield all([
+    call(runUpdateMoods),
+    call(runUpdateStats),
+    call(runUpdateAchievements),
+  ]);
 }
 
-function* updateStats() {
+function* runUpdateMoods() {
+  const userToken = yield select(selectToken);
+  const moods = yield MoodService.getMoods(userToken, "date");
+  if (moods) yield put(setMoods(moods));
+  yield put(completeMoods);
+}
+
+function* runUpdateStats() {
   const userToken = yield select(selectToken);
   const stats = yield StatService.getStats(userToken);
   if (stats) yield put(setStats(stats));
+  yield put(completeStats);
 }
 
-function* updateAchievements() {
+function* runUpdateAchievements() {
   const userToken = yield select(selectToken);
   const achievements = yield AchievementService.getAchievements(userToken);
   if (achievements) yield put(setAchievements(achievements!));
+  yield put(completeAchievements);
 }
 
 function* setStatusBar() {
@@ -244,6 +279,10 @@ function* loadAchievements() {
 export default function* rootSaga() {
   yield all([
     watchAppInit(),
+    watchUpdateData(),
+    watchUpdateMoods(),
+    watchUpdateStats(),
+    watchUpdateAchievements(),
     watchSetToken(),
     watchSetMoods(),
     watchSetStats(),
