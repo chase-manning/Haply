@@ -16,6 +16,7 @@ const StatService = {
       };
 
       const response = await ApiService(route, requestOptions);
+      if (!response) return null;
 
       const stats: StatModel[] = await response!.json();
 
