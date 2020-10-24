@@ -5,6 +5,7 @@ export default class AchievementModel {
   description: string;
   colorPrimary: string;
   unlocks: string[];
+  isNew: boolean;
 
   constructor(
     svg: string,
@@ -12,7 +13,8 @@ export default class AchievementModel {
     title: string,
     description: string,
     colorPrimary: string,
-    unlocks: string[] = []
+    unlocks: string[] = [],
+    isNew: boolean = false
   ) {
     this.svg = svg;
     this.percentComplete = percentComplete;
@@ -20,5 +22,6 @@ export default class AchievementModel {
     this.description = description;
     this.colorPrimary = colorPrimary;
     this.unlocks = unlocks;
+    this.isNew = isNew;
   }
 }
