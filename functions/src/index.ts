@@ -1000,10 +1000,6 @@ app.get("/stats", async (request: any, response) => {
       return b.percentComplete - a.percentComplete;
     });
 
-    stats.sort(function (a: any, b: any) {
-      return b.locked + a.locked;
-    });
-
     response.json(stats);
   } catch (error) {
     console.log(error);
