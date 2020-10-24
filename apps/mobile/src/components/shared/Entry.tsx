@@ -7,7 +7,7 @@ import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import { SelectedTag, SelectedTags, Line } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
-import { removeMood } from "../../state/dataSlice";
+import { removeMood, updateData } from "../../state/dataSlice";
 import { selectToken } from "../../state/userSlice";
 
 const StyledEntry = styled.div`
@@ -162,8 +162,12 @@ const Entry = (props: Props) => {
               <Button
                 onClick={() => {
                   setState({ popupOpen: false });
-                  MoodService.deleteMood(userToken, props.mood.moodId!);
                   dispatch(removeMood(props.mood));
+                  MoodService.deleteMood(userToken, props.mood.moodId!).then(
+                    () => {
+                      dispatch(updateData());
+                    }
+                  );
                 }}
               >
                 Delete
