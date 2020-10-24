@@ -575,10 +575,11 @@ app.get("/achievements", async (request: any, response) => {
     const moods: Mood[] = [];
     moodQuerySnapshot.forEach((doc) => {
       let mood = doc.data();
+      let moodDate = new Date(mood.date).toISOString();
       moods.push({
         id: doc.id,
         value: mood.value,
-        date: mood.date,
+        date: getTimezoneDate(moodDate, setting.timezone),
         userId: mood.userId,
         note: mood.note,
         tags: mood.tags,
