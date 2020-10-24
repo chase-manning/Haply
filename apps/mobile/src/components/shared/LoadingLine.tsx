@@ -9,7 +9,12 @@ const StyledLoadingLine = styled.div`
   width: 100%;
 `;
 
-const LoadingLine = () => {
+type Props = {
+  loading: boolean;
+};
+
+const LoadingLine = (props: Props) => {
+  if (!props.loading) return null;
   return (
     <StyledLoadingLine>
       <LinearProgress />
