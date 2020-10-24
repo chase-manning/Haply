@@ -101,5 +101,19 @@ export const selectStatsLoading = (state: RootState) =>
   state.data.updatingStats;
 export const selectAchievementsLoading = (state: RootState) =>
   state.data.updatingAchievements;
+export const selectDataLoading = (state: RootState) => {
+  return state.data.achievements.length === 0 || state.data.stats.length === 0;
+};
+
+export const selectLoadingPercent = (state: RootState) => {
+  if (state.data.achievements.length === 0 && state.data.stats.length === 0)
+    return 0;
+  let updates = [
+    state.data.updatingMoods,
+    state.data.updatingStats,
+    state.data.updatingAchievements,
+  ];
+  return updates.filter((update: boolean) => !update).length / updates.length;
+};
 
 export default dataSlice.reducer;
