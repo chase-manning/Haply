@@ -13,7 +13,7 @@ const main = express();
 
 interface Mood {
   value: number;
-  date: Date;
+  date: string;
   userId: string;
   id: string;
   note: string;
@@ -45,6 +45,7 @@ interface Settings {
   tagOptions: string[];
   colorPrimary: string;
   mode: Mode;
+  timezone: string;
 }
 
 enum StatType {
@@ -549,6 +550,7 @@ app.get("/achievements", async (request: any, response) => {
         tagOptions: [],
         colorPrimary: "#4071fe",
         mode: Mode.Default,
+        timezone: "Asia/Kolkata",
       };
     } else {
       const settingData = querySnapshot.docs[0].data();
@@ -561,6 +563,7 @@ app.get("/achievements", async (request: any, response) => {
         tagOptions: settingData.tagOptions,
         colorPrimary: settingData.colorPrimary,
         mode: settingData.mode,
+        timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
       };
     }
 
@@ -866,34 +869,43 @@ app.get("/achievements", async (request: any, response) => {
 
 app.get("/stats", async (request: any, response) => {
   try {
-    console.log("test 1");
-
-    let dateString = "2020-10-22T22:10:59.736Z";
-    console.log("== Date String");
-    console.log(dateString);
-
-    let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    console.log("== Timezone");
-    console.log(timezone);
-
-    let basicDate = new Date(dateString);
-    console.log("== Basic Date");
-    console.log(basicDate);
-
-    var aucklandTime = basicDate.toLocaleString("en-US", {
-      timeZone: "Pacific/Auckland",
-    });
-    console.log("== Auckland Date");
-    console.log(aucklandTime);
-
-    var dateFormatted = dateFormat(aucklandTime, "d/m/yyyy hh:MM:ss");
-    console.log("== Formatted Date");
-    console.log(dateFormatted);
-
-    // console.log("AEST time: " + new Date(aestTime).toISOString());
-
     const userId = await getUserId(request);
     if (userId === "") response.status(403).send("Unauthorized");
+
+    let querySnapshot = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .limit(1)
+      .get();
+
+    let setting: Settings;
+
+    if (querySnapshot.empty) {
+      setting = {
+        remindersEnabled: true,
+        randomReminders: false,
+        frequencyMinutesMin: 420,
+        frequencyMinutesMax: 420,
+        nextNotification: new Date().toString(),
+        tagOptions: [],
+        colorPrimary: "#4071fe",
+        mode: Mode.Default,
+        timezone: "Asia/Kolkata",
+      };
+    } else {
+      const settingData = querySnapshot.docs[0].data();
+      setting = {
+        remindersEnabled: settingData.remindersEnabled,
+        randomReminders: settingData.randomReminders,
+        frequencyMinutesMin: settingData.frequencyMinutesMin,
+        frequencyMinutesMax: settingData.frequencyMinutesMax,
+        nextNotification: settingData.nextNotification,
+        tagOptions: settingData.tagOptions,
+        colorPrimary: settingData.colorPrimary,
+        mode: settingData.mode,
+        timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
+      };
+    }
 
     let moodQuerySnapshot = await db
       .collection("moods")
@@ -903,10 +915,11 @@ app.get("/stats", async (request: any, response) => {
     const moods: Mood[] = [];
     moodQuerySnapshot.forEach((doc) => {
       let mood = doc.data();
+      let moodDate = new Date(mood.date).toISOString();
       moods.push({
         id: doc.id,
         value: mood.value,
-        date: mood.date,
+        date: getTimezoneDate(moodDate, setting.timezone),
         userId: mood.userId,
         note: mood.note,
         tags: mood.tags,
@@ -916,9 +929,11 @@ app.get("/stats", async (request: any, response) => {
 
     let stats: Stat[] = [];
 
-    stats.push(createStatLine(moods, "d/m/yyyy", 1, "Day"));
-    stats.push(createStatLine(moods, "m/yyyy", 365 / 12, "Month"));
-    stats.push(createStatLine(moods, "yyyy", 365, "Year"));
+    stats.push(createStatLine(moods, "d/m/yyyy", 1, "Day", setting.timezone));
+    stats.push(
+      createStatLine(moods, "m/yyyy", 365 / 12, "Month", setting.timezone)
+    );
+    stats.push(createStatLine(moods, "yyyy", 365, "Year", setting.timezone));
 
     stats.push(
       createStatBar(
@@ -999,14 +1014,16 @@ function createStatLine(
   moods: Mood[],
   format: string,
   daysIncrement: number,
-  periodName: string
+  periodName: string,
+  timezone: string
 ): Stat {
   let periods: string[] = [];
 
   for (let i: number = 0; i < 20; i++) {
+    let currentTime = new Date(getCurrentDateTimezone(timezone));
     periods.push(
       dateFormat(
-        new Date().setDate(new Date().getDate() - i * daysIncrement),
+        currentTime.setDate(currentTime.getDate() - i * daysIncrement),
         format
       )
     );
@@ -1258,3 +1275,15 @@ export const notificationScheduler = functions.pubsub
 
     return null;
   });
+
+const getTimezoneDate = (date: string, timezone: string): string => {
+  let basicDate = new Date(date);
+  return basicDate.toLocaleString("en-US", {
+    timeZone: timezone ? timezone : "America/New_York",
+  });
+};
+
+const getCurrentDateTimezone = (timezone: string): string => {
+  let currentTime = new Date();
+  return getTimezoneDate(currentTime.toISOString(), timezone);
+};
