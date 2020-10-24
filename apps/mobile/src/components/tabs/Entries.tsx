@@ -3,8 +3,9 @@ import styled from "styled-components";
 import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
 import noData from "../../assets/svgs/Empty.svg";
-import { selectMoods } from "../../state/dataSlice";
+import { selectMoods, selectMoodsLoading } from "../../state/dataSlice";
 import { useSelector } from "react-redux";
+import LoadingLine from "../shared/LoadingLine";
 
 const StyledEntries = styled.div`
   width: 100%;
@@ -12,6 +13,7 @@ const StyledEntries = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 20px;
+  position: relative;
 `;
 
 const NoDataContainer = styled.div`
@@ -49,9 +51,11 @@ const NoDataSub = styled.div`
 
 const Entries = () => {
   const moods = useSelector(selectMoods);
+  const entriesLoading = useSelector(selectMoodsLoading);
 
   return (
     <StyledEntries>
+      <LoadingLine loading={entriesLoading} />
       {moods.length > 0 &&
         moods.slice(0, 30).map((mood: Mood) => <Entry mood={mood} />)}
       {moods.length === 0 && (
