@@ -16,7 +16,7 @@ import {
   selectTagOptions,
   updateNextNotification,
 } from "../../state/settingsSlice";
-import { addMood } from "../../state/dataSlice";
+import { addMood, updateData } from "../../state/dataSlice";
 import { selectUser } from "../../state/userSlice";
 
 const StyledCreateMood = styled.div`
@@ -139,10 +139,12 @@ const CreateMood = () => {
             state.tags
           );
           setState({ ...state, tags: [], note: "", mood: 5 });
-          MoodService.createMood(user.token, mood);
           dispatch(addMood(mood));
           dispatch(updateNextNotification());
           dispatch(hideMood());
+          MoodService.createMood(user.token, mood).then(() => {
+            dispatch(updateData());
+          });
         }}
       >
         Done
