@@ -185,7 +185,7 @@ function* runUpdateData() {
 
 function* runUpdateMoods() {
   const userToken = yield select(selectToken);
-  const moods = yield MoodService.getMoods(userToken, "date");
+  const moods = yield MoodService.getMoods(userToken, "date", 32);
   if (moods) yield put(setMoods(moods));
   yield put(completeMoods());
 }
