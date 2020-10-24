@@ -71,9 +71,11 @@ function* watchUpdateData() {
 function* watchUpdateMoods() {
   yield takeEvery(updateMoods, runUpdateMoods);
 }
+
 function* watchUpdateStats() {
   yield takeEvery(updateStats, runUpdateStats);
 }
+
 function* watchUpdateAchievements() {
   yield takeEvery(updateAchievements, runUpdateAchievements);
 }
@@ -120,11 +122,11 @@ function* watchUpdateNextNotification() {
 }
 
 function* watchAddMood() {
-  yield takeEvery(addMood, updateData);
+  // yield takeEvery(addMood, runUpdateData);
 }
 
 function* watchRemoveMood() {
-  yield takeEvery(removeMood, updateData);
+  // yield takeEvery(removeMood, runUpdateData);
 }
 
 function* watchSetSettings() {
