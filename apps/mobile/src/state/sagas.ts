@@ -185,21 +185,21 @@ function* runUpdateMoods() {
   const userToken = yield select(selectToken);
   const moods = yield MoodService.getMoods(userToken, "date");
   if (moods) yield put(setMoods(moods));
-  yield put(completeMoods);
+  yield put(completeMoods());
 }
 
 function* runUpdateStats() {
   const userToken = yield select(selectToken);
   const stats = yield StatService.getStats(userToken);
   if (stats) yield put(setStats(stats));
-  yield put(completeStats);
+  yield put(completeStats());
 }
 
 function* runUpdateAchievements() {
   const userToken = yield select(selectToken);
   const achievements = yield AchievementService.getAchievements(userToken);
   if (achievements) yield put(setAchievements(achievements!));
-  yield put(completeAchievements);
+  yield put(completeAchievements());
 }
 
 function* setStatusBar() {
