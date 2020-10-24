@@ -7,8 +7,9 @@ import Header from "../components/shared/Header";
 import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
 import { useSelector } from "react-redux";
-import { selectUser } from "../state/userSlice";
 import PushNotificationSetup from "./shared/PushNotifications";
+import { selectDataLoading, selectLoadingPercent } from "../state/dataSlice";
+import LoadingScreen from "./shared/LoadingScreen";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -29,12 +30,15 @@ const ContentContainer = styled.div`
 `;
 
 const App = () => {
-  const user = useSelector(selectUser);
+  const loading = useSelector(selectDataLoading);
+  const loadingPercent = useSelector(selectLoadingPercent);
+
   return (
     <StyledApp>
-    <PushNotificationSetup />
+      <PushNotificationSetup />
       <GlobalStyles />
-      {user.token !== "" && (
+      <LoadingScreen loading={loading} percentComplete={loadingPercent} />
+      {!loading && (
         <ContentContainer>
           <Tabs />
           <Header />
