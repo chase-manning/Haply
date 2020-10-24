@@ -46,10 +46,10 @@ export const dataSlice = createSlice({
       state.updatingStats = false;
     },
     updateAchievements: (state) => {
-      state.updatingMoods = true;
+      state.updatingAchievements = true;
     },
     completeAchievements: (state) => {
-      state.updatingMoods = false;
+      state.updatingAchievements = false;
     },
     setMoods: (state, action: PayloadAction<Mood[]>) => {
       state.moods = action.payload;
@@ -95,5 +95,11 @@ export const selectDarkModeUnlocked = (state: RootState) =>
       achievement.unlocks.indexOf("Dark Mode") >= 0 &&
       achievement.percentComplete === 1
   );
+export const selectMoodsLoading = (state: RootState) =>
+  state.data.updatingMoods;
+export const selectStatsLoading = (state: RootState) =>
+  state.data.updatingStats;
+export const selectAchievementsLoading = (state: RootState) =>
+  state.data.updatingAchievements;
 
 export default dataSlice.reducer;
