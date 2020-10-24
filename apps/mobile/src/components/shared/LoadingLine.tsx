@@ -1,5 +1,5 @@
 import React from "react";
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress, withStyles } from "@material-ui/core";
 import styled from "styled-components";
 
 const StyledLoadingLine = styled.div`
@@ -14,10 +14,19 @@ type Props = {
 };
 
 const LoadingLine = (props: Props) => {
+  const HaplyLinearProgress = withStyles(() => ({
+    colorPrimary: {
+      backgroundColor: "var(--primary-light)",
+    },
+    bar: {
+      backgroundColor: "var(--primary)",
+    },
+  }))(LinearProgress);
+
   if (!props.loading) return null;
   return (
     <StyledLoadingLine>
-      <LinearProgress />
+      <HaplyLinearProgress />
     </StyledLoadingLine>
   );
 };
