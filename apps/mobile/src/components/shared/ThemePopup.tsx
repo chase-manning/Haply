@@ -56,6 +56,7 @@ const UnlockText = styled.div`
 `;
 
 type Props = {
+  open: boolean;
   closePopup: () => void;
 };
 
@@ -63,41 +64,37 @@ const ThemePopup = (props: Props) => {
   const dispatch = useDispatch();
   const colorPrimary = useSelector(selectColorPrimary);
   const achievements = useSelector(selectAchievements);
-  const unlockedAchievements = achievements
-  .filter(
+  const unlockedAchievements = achievements.filter(
     (achievement: AchievementModel) =>
-      achievement.colorPrimary !== "" &&
-      achievement.percentComplete === 1
+      achievement.colorPrimary !== "" && achievement.percentComplete === 1
   );
 
   return (
     <Popup
+      open={props.open}
       content={
         <PopupContent>
           <ColorOptions>
-          <ColorOption
-            onClick={() =>
-              dispatch(setColorPrimary("#4071FE"))
-            }
-            selected={"#4071FE" === colorPrimary}
-          >
-            <Color color={"#4071FE"} />
-          </ColorOption>
-            {
-              unlockedAchievements.map((achievement: AchievementModel) => (
-                <ColorOption
-                  onClick={() =>
-                    dispatch(setColorPrimary(achievement.colorPrimary))
-                  }
-                  selected={achievement.colorPrimary === colorPrimary}
-                >
-                  <Color color={achievement.colorPrimary} />
-                </ColorOption>
-              ))}
+            <ColorOption
+              onClick={() => dispatch(setColorPrimary("#4071FE"))}
+              selected={"#4071FE" === colorPrimary}
+            >
+              <Color color={"#4071FE"} />
+            </ColorOption>
+            {unlockedAchievements.map((achievement: AchievementModel) => (
+              <ColorOption
+                onClick={() =>
+                  dispatch(setColorPrimary(achievement.colorPrimary))
+                }
+                selected={achievement.colorPrimary === colorPrimary}
+              >
+                <Color color={achievement.colorPrimary} />
+              </ColorOption>
+            ))}
           </ColorOptions>
-          {unlockedAchievements.length < 4 &&
+          {unlockedAchievements.length < 4 && (
             <UnlockText>Complete Achievements for more</UnlockText>
-          }
+          )}
         </PopupContent>
       }
       showButton={true}
