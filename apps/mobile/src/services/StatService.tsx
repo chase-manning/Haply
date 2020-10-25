@@ -7,7 +7,7 @@ const api: string =
 const StatService = {
   async getStats(userToken: string): Promise<StatModel[] | null> {
     try {
-      const route: string = api + "stats";
+      const route: string = api + "v2/stats";
 
       const requestOptions = {
         headers: {
