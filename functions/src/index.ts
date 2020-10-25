@@ -67,6 +67,21 @@ type Stat = {
   dataPoints: DataPoint[];
 };
 
+const defaultTags = [
+  "With Friends",
+  "With Family",
+  "Tired",
+  "Well Rested",
+  "In Pain",
+  "Sick",
+  "Working",
+  "At Home",
+  "On Holiday",
+  "Eating Well",
+  "Eating Poorly",
+  "Exercising",
+];
+
 async function getUser(req: any): Promise<admin.auth.DecodedIdToken | null> {
   if (
     (!req.headers.authorization ||
@@ -558,7 +573,7 @@ app.get("/achievements", async (request: any, response) => {
         frequencyMinutesMin: 420,
         frequencyMinutesMax: 420,
         nextNotification: new Date().toString(),
-        tagOptions: [],
+        tagOptions: defaultTags,
         colorPrimary: "#4071fe",
         mode: Mode.Default,
         timezone: "Asia/Kolkata",
@@ -900,7 +915,7 @@ app.get("/v2/achievements", async (request: any, response) => {
         frequencyMinutesMin: 420,
         frequencyMinutesMax: 420,
         nextNotification: new Date().toString(),
-        tagOptions: [],
+        tagOptions: defaultTags,
         colorPrimary: "#4071fe",
         mode: Mode.Default,
         timezone: "Asia/Kolkata",
@@ -1083,6 +1098,17 @@ app.get("/v2/achievements", async (request: any, response) => {
       unlocks: [],
     });
 
+    // Tag Tinkerer
+    achievements.push({
+      svg: "tagTinkerer",
+      percentComplete:
+        setting.tagOptions && setting.tagOptions !== defaultTags ? 1 : 0,
+      title: "Tag Tinkerer",
+      description: "Create your own Custom Tags",
+      colorPrimary: "#FF69B4",
+      unlocks: [],
+    });
+
     // Full Moon
     achievements.push({
       svg: "fullMoon",
@@ -1208,7 +1234,6 @@ app.get("/v2/achievements", async (request: any, response) => {
       unlocks: [],
     });
 
-    // #FF69B4
     // #FFFFFF
     // #F0FFFF
     // #FF1493
@@ -1264,7 +1289,7 @@ app.get("/stats", async (request: any, response) => {
         frequencyMinutesMin: 420,
         frequencyMinutesMax: 420,
         nextNotification: new Date().toString(),
-        tagOptions: [],
+        tagOptions: defaultTags,
         colorPrimary: "#4071fe",
         mode: Mode.Default,
         timezone: "Asia/Kolkata",
