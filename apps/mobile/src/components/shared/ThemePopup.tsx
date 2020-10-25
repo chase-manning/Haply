@@ -4,7 +4,7 @@ import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
 import { useDispatch, useSelector } from "react-redux";
 import { selectColorPrimary, setColorPrimary } from "../../state/settingsSlice";
-import { selectAchievements } from "../../state/dataSlice";
+import { selectAchievements, updateAchievements } from "../../state/dataSlice";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -99,6 +99,9 @@ const ThemePopup = (props: Props) => {
       }
       showButton={true}
       close={() => props.closePopup()}
+      submit={() => {
+        dispatch(updateAchievements());
+      }}
     />
   );
 };
