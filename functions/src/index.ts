@@ -105,7 +105,7 @@ export const webApi = functions.https.onRequest(main);
 app.post("/moods", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const { value, date, note } = request.body;
@@ -131,7 +131,7 @@ app.post("/moods", async (request, response) => {
 app.post("/v1/moods", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const { value, date, note, tags } = request.body;
@@ -158,7 +158,7 @@ app.post("/v1/moods", async (request, response) => {
 app.post("/v2/moods", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const { value, date, note, tags } = request.body;
@@ -212,7 +212,7 @@ app.post("/v2/moods", async (request, response) => {
 app.get("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const moodId = request.params.id;
@@ -240,7 +240,7 @@ app.get("/moods/:id", async (request, response) => {
 app.get("/moods", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const order: string = request.query.order;
@@ -292,7 +292,7 @@ app.get("/moods", async (request: any, response) => {
 app.put("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
     const { value, date, note, tags } = request.body;
@@ -319,7 +319,7 @@ app.put("/moods/:id", async (request, response) => {
 app.delete("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
 
@@ -338,7 +338,7 @@ app.delete("/moods/:id", async (request, response) => {
 app.post("/pushNotificationTokens/:token", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const token: string = request.params.token;
@@ -376,7 +376,7 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
 app.post("/settings", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const {
@@ -419,7 +419,7 @@ app.post("/settings", async (request, response) => {
 app.post("/v2/settings", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const {
@@ -467,7 +467,7 @@ app.post("/v2/settings", async (request, response) => {
 app.post("/v3/settings", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     const {
@@ -517,7 +517,7 @@ app.post("/v3/settings", async (request, response) => {
 app.get("/settings", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     let querySnapshot = await db
@@ -540,7 +540,7 @@ app.get("/settings", async (request: any, response) => {
 app.get("/achievements", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     let querySnapshot = await db
@@ -882,7 +882,7 @@ app.get("/achievements", async (request: any, response) => {
 app.get("/v2/achievements", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     let querySnapshot = await db
@@ -1246,7 +1246,7 @@ app.get("/v2/achievements", async (request: any, response) => {
 app.get("/stats", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (user) response.status(403).send("Unauthorized");
+    if (!user) response.status(403).send("Unauthorized");
     const userId = user!.uid;
 
     let querySnapshot = await db
