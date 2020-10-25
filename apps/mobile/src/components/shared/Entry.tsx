@@ -130,54 +130,53 @@ const Entry = (props: Props) => {
         </EntryText>
         <ChevronRight />
       </Line>
-      {state.popupOpen && (
-        <Popup
-          content={
-            <PopupContent>
-              <PopupHeader>{props.mood.description}</PopupHeader>
+      <Popup
+        open={state.popupOpen}
+        content={
+          <PopupContent>
+            <PopupHeader>{props.mood.description}</PopupHeader>
+            <PopupDetails>
+              <HighlightedWord>Mood: </HighlightedWord>
+              {props.mood.value}
+            </PopupDetails>
+            <PopupDetails>
+              <HighlightedWord>Recorded: </HighlightedWord>
+              {dateFormat(props.mood.date, "h:MM tt d/m/yy")}
+            </PopupDetails>
+            {props.mood.note.length > 0 && (
               <PopupDetails>
-                <HighlightedWord>Mood: </HighlightedWord>
-                {props.mood.value}
-              </PopupDetails>
-              <PopupDetails>
-                <HighlightedWord>Recorded: </HighlightedWord>
-                {dateFormat(props.mood.date, "h:MM tt d/m/yy")}
-              </PopupDetails>
-              {props.mood.note.length > 0 && (
-                <PopupDetails>
-                  <HighlightedWord>Note: </HighlightedWord>
+                <HighlightedWord>Note: </HighlightedWord>
 
-                  {props.mood.note}
-                </PopupDetails>
-              )}
-              {props.mood.tags.length > 0 && (
-                <PopupDetails>
-                  <SelectedTags>
-                    {props.mood.tags.map((tag: string) => (
-                      <SelectedTag includeMargin={true}>{tag}</SelectedTag>
-                    ))}
-                  </SelectedTags>
-                </PopupDetails>
-              )}
-              <Button
-                onClick={() => {
-                  setState({ popupOpen: false });
-                  dispatch(removeMood(props.mood));
-                  MoodService.deleteMood(userToken, props.mood.moodId!).then(
-                    () => {
-                      dispatch(updateData());
-                    }
-                  );
-                }}
-              >
-                Delete
-              </Button>
-            </PopupContent>
-          }
-          showButton={false}
-          close={() => setState({ popupOpen: false })}
-        ></Popup>
-      )}
+                {props.mood.note}
+              </PopupDetails>
+            )}
+            {props.mood.tags.length > 0 && (
+              <PopupDetails>
+                <SelectedTags>
+                  {props.mood.tags.map((tag: string) => (
+                    <SelectedTag includeMargin={true}>{tag}</SelectedTag>
+                  ))}
+                </SelectedTags>
+              </PopupDetails>
+            )}
+            <Button
+              onClick={() => {
+                setState({ popupOpen: false });
+                dispatch(removeMood(props.mood));
+                MoodService.deleteMood(userToken, props.mood.moodId!).then(
+                  () => {
+                    dispatch(updateData());
+                  }
+                );
+              }}
+            >
+              Delete
+            </Button>
+          </PopupContent>
+        }
+        showButton={false}
+        close={() => setState({ popupOpen: false })}
+      ></Popup>
     </StyledEntry>
   );
 };
