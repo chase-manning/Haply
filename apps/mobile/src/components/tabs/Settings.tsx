@@ -144,21 +144,18 @@ const Settings = () => {
           )
         }
       />
-      {state.reminderPopupOpen && (
-        <ReminderPopup
-          closePopup={() => setState({ ...state, reminderPopupOpen: false })}
-        />
-      )}
-      {state.tagPopupOpen && (
-        <TagPopup
-          closePopup={() => setState({ ...state, tagPopupOpen: false })}
-        />
-      )}
-      {state.themePopupOpen && (
-        <ThemePopup
-          closePopup={() => setState({ ...state, themePopupOpen: false })}
-        />
-      )}
+      <ReminderPopup
+        open={state.reminderPopupOpen}
+        closePopup={() => setState({ ...state, reminderPopupOpen: false })}
+      />
+      <TagPopup
+        open={state.tagPopupOpen}
+        closePopup={() => setState({ ...state, tagPopupOpen: false })}
+      />
+      <ThemePopup
+        open={state.themePopupOpen}
+        closePopup={() => setState({ ...state, themePopupOpen: false })}
+      />
     </StyledSettings>
   );
 };
