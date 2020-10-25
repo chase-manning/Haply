@@ -134,7 +134,6 @@ function* watchRemoveTag() {
 function* watchSetColorPrimary() {
   yield takeEvery(setColorPrimary, function* processSetColorPrimary() {
     yield call(saveSettings);
-    yield call(runUpdateAchievements);
   });
 }
 
