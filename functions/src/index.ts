@@ -1275,7 +1275,7 @@ app.get("/v2/achievements", async (request: any, response) => {
   }
 });
 
-app.get("/v2/stats", async (request: any, response) => {
+app.get("/stats", async (request: any, response) => {
   try {
     const user = await getUser(request);
     if (!user) response.status(403).send("Unauthorized");
@@ -1339,7 +1339,6 @@ app.get("/v2/stats", async (request: any, response) => {
     let stats: Stat[] = [];
 
     stats.push(createStatLine(moods, "d/m/yyyy", 1, "Day", setting.timezone));
-    stats.push(createStatLine(moods, "W/yyyy", 1, "Week", setting.timezone));
     stats.push(
       createStatLine(moods, "m/yyyy", 365 / 12, "Month", setting.timezone)
     );
@@ -1416,7 +1415,7 @@ app.get("/v2/stats", async (request: any, response) => {
   }
 });
 
-app.get("/stats", async (request: any, response) => {
+app.get("/v2/stats", async (request: any, response) => {
   try {
     const user = await getUser(request);
     if (!user) response.status(403).send("Unauthorized");
@@ -1480,6 +1479,7 @@ app.get("/stats", async (request: any, response) => {
     let stats: Stat[] = [];
 
     stats.push(createStatLine(moods, "d/m/yyyy", 1, "Day", setting.timezone));
+    stats.push(createStatLine(moods, "W/yyyy", 7, "Week", setting.timezone));
     stats.push(
       createStatLine(moods, "m/yyyy", 365 / 12, "Month", setting.timezone)
     );
@@ -1631,8 +1631,8 @@ function dateAverage(moods: Mood[], format: string, value: string): number {
     : Math.round(
         (dayList.map((day: Mood) => day.value).reduce((a, b) => a + b) /
           dayList.length) *
-          10
-      ) / 10;
+          100
+      ) / 100;
 }
 
 export const notificationScheduler = functions.pubsub
