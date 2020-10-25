@@ -67,12 +67,16 @@ const DoneButton = styled.button`
 
 type Props = {
   content: JSX.Element;
+  open: boolean;
   showButton: boolean;
   close: () => void;
   submit?: () => void;
+  buttonText?: string;
 };
 
 const Popup = (props: Props) => {
+  if (!props.open) return null;
+
   return (
     <StyledPopup>
       <Shadow onClick={() => props.close()} />
@@ -86,11 +90,11 @@ const Popup = (props: Props) => {
         {props.showButton && (
           <DoneButton
             onClick={() => {
-              if (props.submit) props.submit!();
               props.close();
+              if (props.submit) props.submit!();
             }}
           >
-            Done
+            {props.buttonText ? props.buttonText! : "Done"}
           </DoneButton>
         )}
       </Details>
