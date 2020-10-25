@@ -9,6 +9,7 @@ import merryChristmas from "../assets/svgs/ChristmasTree.svg";
 import happyHalloween from "../assets/svgs/Witch.svg";
 import lookingStylish from "../assets/svgs/MakingArt.svg";
 import fullMoon from "../assets/svgs/Moonlight.svg";
+import avidWriter from "../assets/svgs/Learning.svg";
 import masterTagger from "../assets/svgs/Typewriter.svg";
 import slowDay from "../assets/svgs/BookReading.svg";
 import activeDay from "../assets/svgs/Hiking.svg";
@@ -27,7 +28,7 @@ const api: string =
 const AchievementService = {
   async getAchievements(userToken: string): Promise<AchievementModel[] | null> {
     try {
-      const route: string = api + "achievements";
+      const route: string = api + "v2/achievements";
 
       const requestOptions = {
         headers: {
@@ -71,6 +72,8 @@ const getSvg = (name: string): string => {
       return lookingStylish;
     case "fullMoon":
       return fullMoon;
+    case "avidWriter":
+      return avidWriter;
     case "masterTagger":
       return masterTagger;
     case "slowDay":
