@@ -10,6 +10,8 @@ const PushNotificationService = {
     pushNotificationToken: string
   ): Promise<any> {
     try {
+      alert("sending, yay!");
+      alert(pushNotificationToken);
       const route: string =
         api + "pushNotificationTokens/" + pushNotificationToken;
 

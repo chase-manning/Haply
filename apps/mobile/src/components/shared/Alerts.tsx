@@ -16,7 +16,7 @@ const AchievmentAlertPopup = styled.div`
 const AchievementAlertHeader = styled.div`
   width: 100%;
   display: flex;
-  text-align: center;
+  justify-content: center;
   margin-bottom: 20px;
   font-size: 18px;
   color: var(--main);
