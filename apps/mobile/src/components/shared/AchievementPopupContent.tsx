@@ -15,7 +15,7 @@ type SvgDetailsProps = {
 };
 
 const SvgDetails = styled.img`
-  width: 100%;
+  width: 80%;
   filter: ${(props: SvgDetailsProps) => {
     return props.isComplete ? "grayscale(0%)" : "grayscale(100%)";
   }};
