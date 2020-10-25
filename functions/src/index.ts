@@ -1631,8 +1631,8 @@ function dateAverage(moods: Mood[], format: string, value: string): number {
     : Math.round(
         (dayList.map((day: Mood) => day.value).reduce((a, b) => a + b) /
           dayList.length) *
-          100
-      ) / 100;
+          10
+      ) / 10;
 }
 
 export const notificationScheduler = functions.pubsub
