@@ -69,50 +69,49 @@ const AddTags = (props: Props) => {
         <Label>Tags</Label>
         <LocalOfferOutlined />
       </Button>
-      {state.popupOpen && (
-        <Popup
-          content={
-            <PopupContent>
-              <SelectedTags>
-                {state.tags.map((tag: string) => (
-                  <SelectedTag
-                    includeMargin={true}
+      <Popup
+        open={state.popupOpen}
+        content={
+          <PopupContent>
+            <SelectedTags>
+              {state.tags.map((tag: string) => (
+                <SelectedTag
+                  includeMargin={true}
+                  onClick={() => {
+                    let tags: string[] = state.tags.filter(
+                      (selectedTag: string) => selectedTag !== tag
+                    );
+                    setState({ ...state, tags: tags });
+                  }}
+                >
+                  {tag}
+                </SelectedTag>
+              ))}
+              {state.tags.length === 0 && (
+                <PlaceholderText>Select Tags Below...</PlaceholderText>
+              )}
+            </SelectedTags>
+            <Options>
+              {props.options
+                .filter((tag: string) => state.tags.indexOf(tag) === -1)
+                .map((tag: string) => (
+                  <Option
                     onClick={() => {
-                      let tags: string[] = state.tags.filter(
-                        (selectedTag: string) => selectedTag !== tag
-                      );
+                      let tags: string[] = state.tags;
+                      tags.push(tag);
                       setState({ ...state, tags: tags });
                     }}
                   >
                     {tag}
-                  </SelectedTag>
+                  </Option>
                 ))}
-                {state.tags.length === 0 && (
-                  <PlaceholderText>Select Tags Below...</PlaceholderText>
-                )}
-              </SelectedTags>
-              <Options>
-                {props.options
-                  .filter((tag: string) => state.tags.indexOf(tag) === -1)
-                  .map((tag: string) => (
-                    <Option
-                      onClick={() => {
-                        let tags: string[] = state.tags;
-                        tags.push(tag);
-                        setState({ ...state, tags: tags });
-                      }}
-                    >
-                      {tag}
-                    </Option>
-                  ))}
-              </Options>
-            </PopupContent>
-          }
-          showButton={true}
-          close={() => setState({ ...state, popupOpen: false })}
-          submit={() => props.setTags(state.tags)}
-        ></Popup>
-      )}
+            </Options>
+          </PopupContent>
+        }
+        showButton={true}
+        close={() => setState({ ...state, popupOpen: false })}
+        submit={() => props.setTags(state.tags)}
+      ></Popup>
     </StyledAddTags>
   );
 };
