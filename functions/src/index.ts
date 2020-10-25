@@ -293,7 +293,6 @@ app.put("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
     if (user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
 
     const moodId = request.params.id;
     const { value, date, note, tags } = request.body;
@@ -321,7 +320,6 @@ app.delete("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
     if (user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
 
     const moodId = request.params.id;
 
@@ -1065,6 +1063,16 @@ app.get("/v2/achievements", async (request: any, response) => {
       unlocks: [],
     });
 
+    // High Flyer
+    achievements.push({
+      svg: "highFlyer",
+      percentComplete: user!.email ? 1 : 0,
+      title: "High Flyer",
+      description: "Enable Cloud Sync",
+      colorPrimary: "#F5FFFA",
+      unlocks: [],
+    });
+
     // Looking Stylish
     achievements.push({
       svg: "lookingStylish",
@@ -1200,7 +1208,6 @@ app.get("/v2/achievements", async (request: any, response) => {
       unlocks: [],
     });
 
-    // #F5FFFA
     // #FF69B4
     // #FFFFFF
     // #F0FFFF
