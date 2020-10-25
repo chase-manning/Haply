@@ -155,34 +155,33 @@ const Acheivement = (props: Props) => {
           <Complete percentComplete={props.achievement.percentComplete} />
         </Progress>
       )}
-      {state.detailsOpen && (
-        <Popup
-          content={
-            <PopupContent>
-              <SvgDetails
-                src={props.achievement.svg}
-                isComplete={props.achievement.percentComplete === 1}
-              />
-              <Title>{props.achievement.title}</Title>
-              <Description>{props.achievement.description}</Description>
-              <RewardsHeader>Rewards</RewardsHeader>
+      <Popup
+        open={state.detailsOpen}
+        content={
+          <PopupContent>
+            <SvgDetails
+              src={props.achievement.svg}
+              isComplete={props.achievement.percentComplete === 1}
+            />
+            <Title>{props.achievement.title}</Title>
+            <Description>{props.achievement.description}</Description>
+            <RewardsHeader>Rewards</RewardsHeader>
+            <AcheivementReward
+              unlocked={props.achievement.percentComplete === 1}
+              description={"Theme Color"}
+              color={props.achievement.colorPrimary}
+            />
+            {props.achievement.unlocks.map((unlock: string) => (
               <AcheivementReward
                 unlocked={props.achievement.percentComplete === 1}
-                description={"Theme Color"}
-                color={props.achievement.colorPrimary}
+                description={unlock}
               />
-              {props.achievement.unlocks.map((unlock: string) => (
-                <AcheivementReward
-                  unlocked={props.achievement.percentComplete === 1}
-                  description={unlock}
-                />
-              ))}
-            </PopupContent>
-          }
-          showButton={false}
-          close={() => setState({ detailsOpen: false })}
-        ></Popup>
-      )}
+            ))}
+          </PopupContent>
+        }
+        showButton={false}
+        close={() => setState({ detailsOpen: false })}
+      ></Popup>
     </StyledAcheivement>
   );
 };
