@@ -32,7 +32,7 @@ const Alerts = () => {
   return (
     <StyledAlerts>
       <Popup
-        open={newAchievements.length > 0}
+        open={newAchievements.length > 0 && newAchievements.length < 5}
         content={
           <AchievmentAlertPopup>
             <AchievementAlertHeader>
