@@ -10,6 +10,7 @@ import {
   removeTagOption,
   addTagOption,
 } from "../../state/settingsSlice";
+import { updateAchievements } from "../../state/dataSlice";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -134,6 +135,7 @@ const TagPopup = (props: Props) => {
       }
       showButton={true}
       close={() => props.closePopup()}
+      submit={() => dispatch(updateAchievements())}
     />
   );
 };
