@@ -963,7 +963,7 @@ app.get("/v2/achievements", async (request: any, response) => {
       percentComplete: moods.length >= 1 ? 1 : 0,
       title: "First Steps",
       description: "Record your first feeling",
-      colorPrimary: "#8B008B",
+      colorPrimary: "#3F3D56",
       unlocks: [],
     });
 
@@ -1008,7 +1008,7 @@ app.get("/v2/achievements", async (request: any, response) => {
         : 0,
       title: "Night Owl",
       description: "Record a Feeling late at Night between 11pm and 4am",
-      colorPrimary: "#FFA500",
+      colorPrimary: "#ccffff",
       unlocks: ["Dark Mode"],
     });
 
@@ -1018,7 +1018,7 @@ app.get("/v2/achievements", async (request: any, response) => {
       percentComplete: moods.some((mood: Mood) => mood.value === 10) ? 1 : 0,
       title: "Feeling Amazing",
       description: "Record a Feeling when you are feeling Amazing!",
-      colorPrimary: "#FF8C00",
+      colorPrimary: "#284498",
       unlocks: [],
     });
 
@@ -1032,7 +1032,7 @@ app.get("/v2/achievements", async (request: any, response) => {
         : 0,
       title: "Merry Christmas",
       description: "Record a Feeling on Christmas Day",
-      colorPrimary: "#FFFF00",
+      colorPrimary: "#7CFC00",
       unlocks: [],
     });
 
@@ -1046,7 +1046,7 @@ app.get("/v2/achievements", async (request: any, response) => {
         : 0,
       title: "Happy Halloween",
       description: "Record a Feeling on Halloween",
-      colorPrimary: "#7CFC00",
+      colorPrimary: "#FF8C00",
       unlocks: [],
     });
 
@@ -1060,7 +1060,7 @@ app.get("/v2/achievements", async (request: any, response) => {
       ),
       title: "Avid Writer",
       description: "Record 100 Feelings with a Note",
-      colorPrimary: "#F0FFF0",
+      colorPrimary: "#ccffcc",
       unlocks: [],
     });
 
@@ -1084,7 +1084,7 @@ app.get("/v2/achievements", async (request: any, response) => {
       percentComplete: user!.email ? 1 : 0,
       title: "High Flyer",
       description: "Enable Cloud Sync",
-      colorPrimary: "#F5FFFA",
+      colorPrimary: "#ccffe0",
       unlocks: [],
     });
 
@@ -1120,7 +1120,7 @@ app.get("/v2/achievements", async (request: any, response) => {
       percentComplete: setting.mode === Mode.Default ? 0 : 1,
       title: "Full Moon",
       description: "Try out Dark Mode",
-      colorPrimary: "#FFFAFA",
+      colorPrimary: "#ffcccc",
       unlocks: [],
     });
 
@@ -1239,8 +1239,10 @@ app.get("/v2/achievements", async (request: any, response) => {
       unlocks: [],
     });
 
+    // #FFFF00 Yellow
+    // #8B008B Purple
+    // #FFA500 Orange
     // #FFFFFF
-    // #F0FFFF
     // #FF1493
     // #F0F8FF
     // #C0C0C0
