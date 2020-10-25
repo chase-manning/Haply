@@ -1102,7 +1102,12 @@ app.get("/v2/achievements", async (request: any, response) => {
     achievements.push({
       svg: "tagTinkerer",
       percentComplete:
-        setting.tagOptions && setting.tagOptions !== defaultTags ? 1 : 0,
+        setting.tagOptions &&
+        setting.tagOptions.some(
+          (tagOption: string) => defaultTags.indexOf(tagOption) < 0
+        )
+          ? 1
+          : 0,
       title: "Tag Tinkerer",
       description: "Create your own Custom Tags",
       colorPrimary: "#FF69B4",
