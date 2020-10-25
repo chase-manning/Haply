@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
 import Popup from "./Popup";
-import AcheivementReward from "./AchievementReward";
+import AchievementPopupContent from "./AchievementPopupContent";
 
 const StyledAcheivement = styled.div`
   display: flex;
@@ -71,13 +71,6 @@ const Progress = styled.div`
   margin-top: 5px;
 `;
 
-const PopupContent = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 type CompleteProps = {
   percentComplete: number;
 };
@@ -89,43 +82,6 @@ const Complete = styled.div`
   height: 4px;
   border-radius: 2px;
   background-color: var(--primary);
-`;
-
-const SvgDetails = styled.img`
-  width: 100%;
-  filter: ${(props: SvgProps) => {
-    return props.isComplete ? "grayscale(0%)" : "grayscale(100%)";
-  }};
-  opacity: ${(props: SvgProps) => {
-    return props.isComplete ? "1" : "0.5";
-  }};
-`;
-
-const Title = styled.div`
-  text-align: center;
-  width: 100%;
-  font-size: 16px;
-  color: var(--main);
-  margin-top: 30px;
-`;
-
-const Description = styled.div`
-  font-size: 12px;
-  margin: 10px 0 12px 0;
-  color: var(--sub);
-  width: 70%;
-  text-align: center;
-  line-height: 1.5;
-`;
-
-const RewardsHeader = styled.div`
-  color: var(--main);
-  font-size: 14px;
-  padding-top: 12px;
-  margin-bottom: 6px;
-  border-top: solid 1px var(--sub);
-  text-align: center;
-  width: 80%;
 `;
 
 type Props = {
@@ -157,28 +113,7 @@ const Acheivement = (props: Props) => {
       )}
       <Popup
         open={state.detailsOpen}
-        content={
-          <PopupContent>
-            <SvgDetails
-              src={props.achievement.svg}
-              isComplete={props.achievement.percentComplete === 1}
-            />
-            <Title>{props.achievement.title}</Title>
-            <Description>{props.achievement.description}</Description>
-            <RewardsHeader>Rewards</RewardsHeader>
-            <AcheivementReward
-              unlocked={props.achievement.percentComplete === 1}
-              description={"Theme Color"}
-              color={props.achievement.colorPrimary}
-            />
-            {props.achievement.unlocks.map((unlock: string) => (
-              <AcheivementReward
-                unlocked={props.achievement.percentComplete === 1}
-                description={unlock}
-              />
-            ))}
-          </PopupContent>
-        }
+        content={<AchievementPopupContent achievement={props.achievement} />}
         showButton={false}
         close={() => setState({ detailsOpen: false })}
       ></Popup>
