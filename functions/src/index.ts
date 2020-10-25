@@ -67,13 +67,13 @@ type Stat = {
   dataPoints: DataPoint[];
 };
 
-async function getUserId(req: any): Promise<string> {
+async function getUser(req: any): Promise<admin.auth.DecodedIdToken | null> {
   if (
     (!req.headers.authorization ||
       !req.headers.authorization.startsWith("Bearer ")) &&
     !(req.cookies && req.cookies.__session)
   ) {
-    return "";
+    return null;
   }
 
   let idToken;
@@ -85,14 +85,14 @@ async function getUserId(req: any): Promise<string> {
   } else if (req.cookies) {
     idToken = req.cookies.__session;
   } else {
-    return "";
+    return null;
   }
 
   try {
     const user = await admin.auth().verifyIdToken(idToken);
-    return user.uid;
+    return user;
   } catch (error) {
-    return "";
+    return null;
   }
 }
 
@@ -104,8 +104,9 @@ export const webApi = functions.https.onRequest(main);
 
 app.post("/moods", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const { value, date, note } = request.body;
     const data = {
@@ -129,8 +130,9 @@ app.post("/moods", async (request, response) => {
 
 app.post("/v1/moods", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const { value, date, note, tags } = request.body;
     const data = {
@@ -155,8 +157,9 @@ app.post("/v1/moods", async (request, response) => {
 
 app.post("/v2/moods", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const { value, date, note, tags } = request.body;
     const data = {
@@ -208,8 +211,9 @@ app.post("/v2/moods", async (request, response) => {
 
 app.get("/moods/:id", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const moodId = request.params.id;
 
@@ -235,8 +239,9 @@ app.get("/moods/:id", async (request, response) => {
 
 app.get("/moods", async (request: any, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const order: string = request.query.order;
     const limit: number = request.query.limit;
@@ -286,8 +291,9 @@ app.get("/moods", async (request: any, response) => {
 
 app.put("/moods/:id", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const moodId = request.params.id;
     const { value, date, note, tags } = request.body;
@@ -313,8 +319,9 @@ app.put("/moods/:id", async (request, response) => {
 
 app.delete("/moods/:id", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const moodId = request.params.id;
 
@@ -332,8 +339,9 @@ app.delete("/moods/:id", async (request, response) => {
 
 app.post("/pushNotificationTokens/:token", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const token: string = request.params.token;
     if (!token) response.status(400).send("Token Not Provided");
@@ -369,8 +377,9 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
 
 app.post("/settings", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const {
       remindersEnabled,
@@ -411,8 +420,9 @@ app.post("/settings", async (request, response) => {
 
 app.post("/v2/settings", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const {
       remindersEnabled,
@@ -458,8 +468,9 @@ app.post("/v2/settings", async (request, response) => {
 
 app.post("/v3/settings", async (request, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     const {
       remindersEnabled,
@@ -507,8 +518,9 @@ app.post("/v3/settings", async (request, response) => {
 
 app.get("/settings", async (request: any, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     let querySnapshot = await db
       .collection("settings")
@@ -529,8 +541,9 @@ app.get("/settings", async (request: any, response) => {
 
 app.get("/achievements", async (request: any, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     let querySnapshot = await db
       .collection("settings")
@@ -868,10 +881,366 @@ app.get("/achievements", async (request: any, response) => {
   }
 });
 
+app.get("/v2/achievements", async (request: any, response) => {
+  try {
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
+
+    let querySnapshot = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .limit(1)
+      .get();
+
+    let setting: Settings;
+
+    if (querySnapshot.empty) {
+      setting = {
+        remindersEnabled: true,
+        randomReminders: false,
+        frequencyMinutesMin: 420,
+        frequencyMinutesMax: 420,
+        nextNotification: new Date().toString(),
+        tagOptions: [],
+        colorPrimary: "#4071fe",
+        mode: Mode.Default,
+        timezone: "Asia/Kolkata",
+      };
+    } else {
+      const settingData = querySnapshot.docs[0].data();
+      setting = {
+        remindersEnabled: settingData.remindersEnabled,
+        randomReminders: settingData.randomReminders,
+        frequencyMinutesMin: settingData.frequencyMinutesMin,
+        frequencyMinutesMax: settingData.frequencyMinutesMax,
+        nextNotification: settingData.nextNotification,
+        tagOptions: settingData.tagOptions,
+        colorPrimary: settingData.colorPrimary,
+        mode: settingData.mode,
+        timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
+      };
+    }
+
+    let moodQuerySnapshot = await db
+      .collection("moods")
+      .where("userId", "==", userId)
+      .get();
+
+    const moods: Mood[] = [];
+    moodQuerySnapshot.forEach((doc) => {
+      let mood = doc.data();
+      let moodDate = new Date(mood.date).toISOString();
+      moods.push({
+        id: doc.id,
+        value: mood.value,
+        date: getTimezoneDate(moodDate, setting.timezone),
+        userId: mood.userId,
+        note: mood.note,
+        tags: mood.tags,
+        description: mood.description,
+      });
+    });
+
+    let achievements: Achievement[] = [];
+
+    // First Steps
+    achievements.push({
+      svg: "firstSteps",
+      percentComplete: moods.length >= 1 ? 1 : 0,
+      title: "First Steps",
+      description: "Record your first feeling",
+      colorPrimary: "#8B008B",
+      unlocks: [],
+    });
+
+    // Early Bird
+    achievements.push({
+      svg: "earlyBird",
+      percentComplete: moods.some((mood: Mood) => {
+        const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
+        return hour >= 5 && hour <= 6;
+      })
+        ? 1
+        : 0,
+      title: "Early Bird",
+      description: "Record a Feeling in The Early Morning between 5am and 7am",
+      colorPrimary: "#FF0000",
+      unlocks: [],
+    });
+
+    // Lunch Date
+    achievements.push({
+      svg: "lunchDate",
+      percentComplete: moods.some((mood: Mood) => {
+        const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
+        return hour === 12;
+      })
+        ? 1
+        : 0,
+      title: "Lunch Date",
+      description: "Record a Feeling at Luch Time between 12am and 1pm",
+      colorPrimary: "#FFD700",
+      unlocks: [],
+    });
+
+    // Night Owl
+    achievements.push({
+      svg: "nightOwl",
+      percentComplete: moods.some((mood: Mood) => {
+        const hour: number = Number.parseInt(dateFormat(mood.date, "H"));
+        return hour >= 23 || hour <= 3;
+      })
+        ? 1
+        : 0,
+      title: "Night Owl",
+      description: "Record a Feeling late at Night between 11pm and 4am",
+      colorPrimary: "#FFA500",
+      unlocks: ["Dark Mode"],
+    });
+
+    // Feeling Amazing
+    achievements.push({
+      svg: "feelingAmazing",
+      percentComplete: moods.some((mood: Mood) => mood.value === 10) ? 1 : 0,
+      title: "Feeling Amazing",
+      description: "Record a Feeling when you are feeling Amazing!",
+      colorPrimary: "#FF8C00",
+      unlocks: [],
+    });
+
+    // Merry Christmas
+    achievements.push({
+      svg: "merryChristmas",
+      percentComplete: moods.some(
+        (mood: Mood) => dateFormat(mood.date, "d - m") === "25 = 12"
+      )
+        ? 1
+        : 0,
+      title: "Merry Christmas",
+      description: "Record a Feeling on Christmas Day",
+      colorPrimary: "#FFFF00",
+      unlocks: [],
+    });
+
+    // Happy Halloween
+    achievements.push({
+      svg: "happyHalloween",
+      percentComplete: moods.some(
+        (mood: Mood) => dateFormat(mood.date, "d - m") === "31 = 10"
+      )
+        ? 1
+        : 0,
+      title: "Happy Halloween",
+      description: "Record a Feeling on Halloween",
+      colorPrimary: "#7CFC00",
+      unlocks: [],
+    });
+
+    // Avid Writer
+    achievements.push({
+      svg: "avidWriter",
+      percentComplete: Math.min(
+        moods.filter((mood: Mood) => mood.note && mood.note.length > 0).length /
+          100,
+        1
+      ),
+      title: "Avid Writer",
+      description: "Record 100 Feelings with a Note",
+      colorPrimary: "#F0FFF0",
+      unlocks: [],
+    });
+
+    // Master Tagger
+    achievements.push({
+      svg: "masterTagger",
+      percentComplete: Math.min(
+        moods.filter((mood: Mood) => mood.tags && mood.tags.length > 0).length /
+          100,
+        1
+      ),
+      title: "Master Tagger",
+      description: "Record 100 Feelings with a Tag",
+      colorPrimary: "#FA8072",
+      unlocks: [],
+    });
+
+    // Looking Stylish
+    achievements.push({
+      svg: "lookingStylish",
+      percentComplete: setting.colorPrimary === "#4071fe" ? 0 : 1,
+      title: "Looking Stylish",
+      description: "Change the Theme to a new color",
+      colorPrimary: "#8A2BE2",
+      unlocks: [],
+    });
+
+    // Full Moon
+    achievements.push({
+      svg: "fullMoon",
+      percentComplete: setting.mode === Mode.Default ? 0 : 1,
+      title: "Full Moon",
+      description: "Try out Dark Mode",
+      colorPrimary: "#FFFAFA",
+      unlocks: [],
+    });
+
+    const days: string[] = moods.map((mood: Mood) =>
+      dateFormat(mood.date, "d - m - yyyy")
+    );
+
+    let dayCount: number = 0;
+    days.forEach((day: string) => {
+      let count: number = days.filter((day2: string) => day2 === day).length;
+      if (count > dayCount) dayCount = count;
+    });
+
+    const todaysCount: number = days.filter(
+      (day: string) => day === dateFormat(new Date(), "d - m - yyyy")
+    ).length;
+
+    // Slow Day
+    achievements.push({
+      svg: "slowDay",
+      percentComplete: dayCount >= 5 ? 1 : todaysCount / 5,
+      title: "Slow Day",
+      description: "Record 5 Feelings in a Day",
+      colorPrimary: "#008000",
+      unlocks: [],
+    });
+
+    // Active Day
+    achievements.push({
+      svg: "activeDay",
+      percentComplete: dayCount >= 20 ? 1 : todaysCount / 20,
+      title: "Active Day",
+      description: "Record 20 Feelings in a Day",
+      colorPrimary: "#808000",
+      unlocks: [],
+    });
+
+    // Meaty Day
+    achievements.push({
+      svg: "meatyDay",
+      percentComplete: dayCount >= 50 ? 1 : todaysCount / 50,
+      title: "Meaty Day",
+      description: "Record 50 Feelings in a Day",
+      colorPrimary: "#00FFFF",
+      unlocks: [],
+    });
+
+    // The Journey
+    achievements.push({
+      svg: "theJourney",
+      percentComplete: Math.min(moods.length / 10, 1),
+      title: "The Journey",
+      description: "Record 10 Feelings",
+      colorPrimary: "#40E0D0",
+      unlocks: [],
+    });
+
+    // Settle In
+    achievements.push({
+      svg: "settleIn",
+      percentComplete: Math.min(moods.length / 100, 1),
+      title: "Settle In",
+      description: "Record 100 Feelings",
+      colorPrimary: "#00BFFF",
+      unlocks: [],
+    });
+
+    // For Breakfast
+    achievements.push({
+      svg: "forBreakfast",
+      percentComplete: Math.min(moods.length / 1000, 1),
+      title: "For Breakfast",
+      description: "Record 1,000 Feelings",
+      colorPrimary: "#483D8B",
+      unlocks: [],
+    });
+
+    let maxDays: number = 0;
+    let currentDays: number = 1;
+    let lastDate: number = -1;
+
+    moods.forEach((mood: Mood) => {
+      let day: number = Number.parseInt(dateFormat(mood.date, "d"));
+      if (day === lastDate - 1) currentDays++;
+      lastDate = day;
+      if (currentDays > maxDays) maxDays = currentDays;
+    });
+
+    // A Habbit
+    achievements.push({
+      svg: "aHabbit",
+      percentComplete: Math.min(maxDays / 7, 1),
+      title: "A Habbit",
+      description: "Record your Feelings every day for a Week",
+      colorPrimary: "#7B68EE",
+      unlocks: [],
+    });
+
+    // A Routine
+    achievements.push({
+      svg: "aRoutine",
+      percentComplete: Math.min(maxDays / 30, 1),
+      title: "A Routine",
+      description: "Record your Feelings every day for a Month",
+      colorPrimary: "#EE82EE",
+      unlocks: [],
+    });
+
+    // A Lifestyle
+    achievements.push({
+      svg: "aLifestyle",
+      percentComplete: Math.min(maxDays / 365, 1),
+      title: "A Lifestyle",
+      description: "Record your Feelings every day for a Year",
+      colorPrimary: "#FF00FF",
+      unlocks: [],
+    });
+
+    // #F5FFFA
+    // #FF69B4
+    // #FFFFFF
+    // #F0FFFF
+    // #FF1493
+    // #F0F8FF
+    // #C0C0C0
+    // #F5F5F5
+    // #808080
+    // #FFF5EE
+    // #708090
+    // #F5F5DC
+    // #2F4F4F
+    // #FFFAF0
+    // #000000
+    // #FFFFF0
+    // #DEB887
+    // #FAEBD7
+    // #BC8F8F
+    // #FFF0F5
+    // #DAA520
+    // #FFE4E1
+    // #D2691E
+    // #A52A2A
+
+    achievements.sort(function (a, b) {
+      return b.percentComplete - a.percentComplete;
+    });
+
+    response.json(achievements);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+});
+
 app.get("/stats", async (request: any, response) => {
   try {
-    const userId = await getUserId(request);
-    if (userId === "") response.status(403).send("Unauthorized");
+    const user = await getUser(request);
+    if (user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
 
     let querySnapshot = await db
       .collection("settings")
