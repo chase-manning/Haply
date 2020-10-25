@@ -1,8 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
-import { selectAchievements } from "../../state/dataSlice";
+import { selectAchievements, setAchievementAsOld } from "../../state/dataSlice";
 import AchievementPopupContent from "./AchievementPopupContent";
 import Popup from "./Popup";
 
@@ -23,6 +23,7 @@ const AchievementAlertHeader = styled.div`
 `;
 
 const Alerts = () => {
+  const dispatch = useDispatch();
   const achievements = useSelector(selectAchievements);
   const newAchievements = achievements.filter(
     (achievment: AchievementModel) => achievment.isNew
@@ -41,7 +42,11 @@ const Alerts = () => {
           </AchievmentAlertPopup>
         }
         showButton={true}
-        close={() => console.log("meow")}
+        close={() =>
+          dispatch(
+            setAchievementAsOld(achievements.indexOf(newAchievements[0]))
+          )
+        }
         buttonText={"Awesome!"}
       />
     </StyledAlerts>
