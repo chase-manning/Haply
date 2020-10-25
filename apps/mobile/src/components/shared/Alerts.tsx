@@ -16,13 +16,12 @@ const Alerts = () => {
 
   return (
     <StyledAlerts>
-      {newAchievements.length > 0 && (
-        <Popup
-          content={<Acheivement achievement={newAchievements[0]} />}
-          showButton={true}
-          close={() => console.log("meow")}
-        />
-      )}
+      <Popup
+        open={newAchievements.length > 0}
+        content={<Acheivement achievement={newAchievements[0]} />}
+        showButton={true}
+        close={() => console.log("meow")}
+      />
     </StyledAlerts>
   );
 };
