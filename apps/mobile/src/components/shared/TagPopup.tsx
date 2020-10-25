@@ -67,6 +67,7 @@ class State {
 }
 
 type Props = {
+  open: boolean;
   closePopup: () => void;
 };
 
@@ -77,6 +78,7 @@ const TagPopup = (props: Props) => {
 
   return (
     <Popup
+      open={props.open}
       content={
         <PopupContent>
           <SelectedTags>
@@ -100,33 +102,32 @@ const TagPopup = (props: Props) => {
                   <AddIcon fontSize={"inherit"} />
                 </TagIcon>
               </AddTagContent>
-              {state.newTagPopupOpen && (
-                <Popup
-                  content={
-                    <PopupContent>
-                      <TagInput
-                        value={state.newTag}
-                        placeholder="New Tag..."
-                        onChange={(event: any) =>
-                          setState({
-                            ...state,
-                            newTag: event.target.value,
-                          })
-                        }
-                      />
-                    </PopupContent>
-                  }
-                  showButton={true}
-                  close={() =>
-                    setState({
-                      ...state,
-                      newTagPopupOpen: false,
-                      newTag: "",
-                    })
-                  }
-                  submit={() => dispatch(addTagOption(state.newTag))}
-                />
-              )}
+              <Popup
+                open={state.newTagPopupOpen}
+                content={
+                  <PopupContent>
+                    <TagInput
+                      value={state.newTag}
+                      placeholder="New Tag..."
+                      onChange={(event: any) =>
+                        setState({
+                          ...state,
+                          newTag: event.target.value,
+                        })
+                      }
+                    />
+                  </PopupContent>
+                }
+                showButton={true}
+                close={() =>
+                  setState({
+                    ...state,
+                    newTagPopupOpen: false,
+                    newTag: "",
+                  })
+                }
+                submit={() => dispatch(addTagOption(state.newTag))}
+              />
             </AddTag>
           </SelectedTags>
         </PopupContent>
