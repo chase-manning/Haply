@@ -52,24 +52,23 @@ const AddNote = (props: Props) => {
         <ChatBubbleOutline />
         <Label>Note</Label>
       </Button>
-      {state.popupOpen && (
-        <Popup
-          content={
-            <PopupContent>
-              <Input
-                value={state.note}
-                placeholder="Write Note here..."
-                onChange={(event: any) =>
-                  setState({ ...state, note: event.target.value })
-                }
-              />
-            </PopupContent>
-          }
-          showButton={true}
-          close={() => setState({ ...state, popupOpen: false })}
-          submit={() => props.setNote(state.note)}
-        ></Popup>
-      )}
+      <Popup
+        open={state.popupOpen}
+        content={
+          <PopupContent>
+            <Input
+              value={state.note}
+              placeholder="Write Note here..."
+              onChange={(event: any) =>
+                setState({ ...state, note: event.target.value })
+              }
+            />
+          </PopupContent>
+        }
+        showButton={true}
+        close={() => setState({ ...state, popupOpen: false })}
+        submit={() => props.setNote(state.note)}
+      ></Popup>
     </StyledAddNote>
   );
 };
