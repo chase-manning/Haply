@@ -13,20 +13,16 @@ const PushNotificationSetup = () => {
 
   useEffect(() => {
     if (!isPushNotificationsAvailable) return;
-    alert("is available");
 
     PushNotifications.addListener(
       "registration",
       (token: PushNotificationToken) => {
-        alert("registration detected");
         dispatch(setPushNotificationToken(token.value));
       }
     );
 
     PushNotifications.requestPermission().then((result: any) => {
-      alert("permission requested");
       if (result.granted) {
-        alert("permission granted");
         PushNotifications.register();
       }
     });
