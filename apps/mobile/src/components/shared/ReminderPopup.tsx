@@ -83,6 +83,7 @@ const frequency = (input: number, period: string) =>
   input * getFrequencyMultiplier(period);
 
 type Props = {
+  open: boolean;
   closePopup: () => void;
 };
 
@@ -114,6 +115,7 @@ const ReminderPopup = (props: Props) => {
 
   return (
     <Popup
+      open={props.open}
       content={
         <PopupContent>
           <PopupHeader>
