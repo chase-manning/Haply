@@ -51,6 +51,7 @@ interface Settings {
 enum StatType {
   Bar,
   Chart,
+  Percent,
 }
 
 type DataPoint = {
@@ -1555,6 +1556,182 @@ app.get("/v2/stats", async (request: any, response) => {
     response.status(500).send(error);
   }
 });
+
+app.get("/v3/stats", async (request: any, response) => {
+  try {
+    const user = await getUser(request);
+    if (!user) response.status(403).send("Unauthorized");
+    const userId = user!.uid;
+
+    let querySnapshot = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .limit(1)
+      .get();
+
+    let setting: Settings;
+
+    if (querySnapshot.empty) {
+      setting = {
+        remindersEnabled: true,
+        randomReminders: false,
+        frequencyMinutesMin: 420,
+        frequencyMinutesMax: 420,
+        nextNotification: new Date().toString(),
+        tagOptions: defaultTags,
+        colorPrimary: "#4071fe",
+        mode: Mode.Default,
+        timezone: "Asia/Kolkata",
+      };
+    } else {
+      const settingData = querySnapshot.docs[0].data();
+      setting = {
+        remindersEnabled: settingData.remindersEnabled,
+        randomReminders: settingData.randomReminders,
+        frequencyMinutesMin: settingData.frequencyMinutesMin,
+        frequencyMinutesMax: settingData.frequencyMinutesMax,
+        nextNotification: settingData.nextNotification,
+        tagOptions: settingData.tagOptions,
+        colorPrimary: settingData.colorPrimary,
+        mode: settingData.mode,
+        timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
+      };
+    }
+
+    let moodQuerySnapshot = await db
+      .collection("moods")
+      .where("userId", "==", userId)
+      .get();
+
+    const moods: Mood[] = [];
+    moodQuerySnapshot.forEach((doc) => {
+      let mood = doc.data();
+      let moodDate = new Date(mood.date).toISOString();
+      moods.push({
+        id: doc.id,
+        value: mood.value,
+        date: getTimezoneDate(moodDate, setting.timezone),
+        userId: mood.userId,
+        note: mood.note,
+        tags: mood.tags,
+        description: mood.description,
+      });
+    });
+
+    let stats: Stat[] = [];
+
+    stats.push(createStatLine(moods, "d/m/yyyy", 1, "Day", setting.timezone));
+    stats.push(createStatLine(moods, "W/yyyy", 7, "Week", setting.timezone));
+    stats.push(
+      createStatLine(moods, "m/yyyy", 365 / 12, "Month", setting.timezone)
+    );
+    stats.push(createStatLine(moods, "yyyy", 365, "Year", setting.timezone));
+
+    stats.push(
+      createStatBar(
+        moods,
+        "ddd",
+        ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        "Day",
+        true
+      )
+    );
+
+    stats.push(
+      createStatBar(
+        moods,
+        "mmm",
+        [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
+        "Month",
+        true
+      )
+    );
+
+    stats.push(
+      createStatBar(
+        moods,
+        "H",
+        [
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+        ],
+        "Hour",
+        false
+      )
+    );
+
+    setting.tagOptions.forEach((tagOption: string) =>
+      stats.push(createStatPercent(moods, tagOption))
+    );
+
+    stats.sort(function (a, b) {
+      return b.percentComplete - a.percentComplete;
+    });
+
+    response.json(stats);
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(error);
+  }
+});
+
+function createStatPercent(moods: Mood[], tag: string) {
+  const moodsWithoutTag = moods.filter(
+    (mood: Mood) => !mood.tags || mood.tags.indexOf(tag) < 0
+  );
+  const averageWithoutTag = averageMood(moodsWithoutTag);
+  const moodsWithTag = moods.filter(
+    (mood: Mood) => mood.tags && mood.tags.indexOf(tag) >= 0
+  );
+  const averageWithTag = averageMood(moodsWithTag);
+
+  return {
+    title: "Feeling Change With " + tag,
+    type: StatType.Percent,
+    locked: moodsWithoutTag.length < 10 || moodsWithTag.length < 10,
+    lockedMessage:
+      "Record your Feeling 10 times with and without the " + tag + " tag",
+    percentComplete:
+      (Math.min(moodsWithoutTag.length / 10, 1) +
+        Math.min(moodsWithTag.length / 10, 1)) /
+      2,
+    dataPoints: [{ label: "", value: averageWithTag / averageWithoutTag - 1 }],
+  };
+}
+
+const averageMood = (moods: Mood[]) => {
+  return moods.length === 0
+    ? -1
+    : moods.map((mood: Mood) => mood.value).reduce((a, b) => a + b) /
+        moods.length;
+};
 
 function createStatLine(
   moods: Mood[],
