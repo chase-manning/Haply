@@ -54,6 +54,9 @@ export const dataSlice = createSlice({
     setAchievementAsOld: (state, action: PayloadAction<number>) => {
       state.achievements[action.payload].isNew = false;
     },
+    setStatAsOld: (state, action: PayloadAction<number>) => {
+      state.stats[action.payload].isNew = false;
+    },
     setMoods: (state, action: PayloadAction<Mood[]>) => {
       state.moods = action.payload;
     },
@@ -87,6 +90,7 @@ export const {
   updateAchievements,
   completeAchievements,
   setAchievementAsOld,
+  setStatAsOld,
 } = dataSlice.actions;
 
 /* SELECTS */
