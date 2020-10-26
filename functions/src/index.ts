@@ -1591,7 +1591,7 @@ function createStatLine(
     locked: dataPoints.length < 3,
     lockedMessage:
       "Record your Feeling three " + periodName + "s in a row to unlock",
-    percentComplete: dataPoints.length / 3,
+    percentComplete: Math.min(dataPoints.length / 3, 1),
     dataPoints: dataPoints,
   };
 }
