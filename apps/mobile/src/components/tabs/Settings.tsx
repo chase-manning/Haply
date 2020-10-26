@@ -109,17 +109,17 @@ const Settings = () => {
       <Setting
         label={"Suggest a Feature"}
         isToggle={false}
-        clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}
+        clickFunction={() => window.open("mailto:hello@haply.app")}
       />
       <Setting
         label={"Report an Issue"}
         isToggle={false}
-        clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}
+        clickFunction={() => window.open("mailto:hello@haply.app")}
       />
       <Setting
         label={"Say Hi"}
         isToggle={false}
-        clickFunction={() => window.open("mailto:me@chasemanning.co.nz")}
+        clickFunction={() => window.open("mailto:hello@haply.app")}
       />
 
       <Header>About</Header>
