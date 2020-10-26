@@ -10,7 +10,7 @@ const Chart = styled.div`
 
 const ChartRow = styled.div`
   height: 150px;
-  width: 20px;
+  width: 5%;
   display: flex;
   flex-direction: column;
 `;
