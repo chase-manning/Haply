@@ -1718,8 +1718,8 @@ function createStatPercent(moods: Mood[], tag: string) {
     locked: moodsWithoutTag.length < 10 || moodsWithTag.length < 10,
     lockedMessage:
       moodsWithTag.length < 10
-        ? "Record 10 feelings with the " + tag + " tag"
-        : "Record 10 feelings without the " + tag + " tag",
+        ? "Record 10 feelings using '" + tag + "' to unlock"
+        : "Record 10 feelings using '" + tag + "' to unlock",
     percentComplete:
       (Math.min(moodsWithoutTag.length / 10, 1) +
         Math.min(moodsWithTag.length / 10, 1)) /
