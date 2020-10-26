@@ -61,7 +61,7 @@ const Alerts = () => {
         open={
           (newAchievements.length === 0 || newAchievements.length >= 5) &&
           newStats.length > 0 &&
-          newStats.length < 3
+          newStats.length < 4
         }
         content={
           <AlertPopup>
