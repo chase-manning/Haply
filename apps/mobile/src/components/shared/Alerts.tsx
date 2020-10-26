@@ -2,18 +2,25 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
-import { selectAchievements, setAchievementAsOld } from "../../state/dataSlice";
+import { StatModel } from "../../models/StatModel";
+import {
+  selectAchievements,
+  selectStats,
+  setAchievementAsOld,
+  setStatAsOld,
+} from "../../state/dataSlice";
 import AchievementPopupContent from "./AchievementPopupContent";
 import Popup from "./Popup";
+import Stat from "./Stat";
 
 const StyledAlerts = styled.div``;
 
-const AchievmentAlertPopup = styled.div`
+const AlertPopup = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const AchievementAlertHeader = styled.div`
+const AlertHeader = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
@@ -28,18 +35,18 @@ const Alerts = () => {
   const newAchievements = achievements.filter(
     (achievment: AchievementModel) => achievment.isNew
   );
+  const stats = useSelector(selectStats);
+  const newStats = stats.filter((stat: StatModel) => stat.isNew);
 
   return (
     <StyledAlerts>
       <Popup
         open={newAchievements.length > 0 && newAchievements.length < 5}
         content={
-          <AchievmentAlertPopup>
-            <AchievementAlertHeader>
-              Achievement Unlocked!
-            </AchievementAlertHeader>
+          <AlertPopup>
+            <AlertHeader>Achievement Unlocked!</AlertHeader>
             <AchievementPopupContent achievement={newAchievements[0]} />
-          </AchievmentAlertPopup>
+          </AlertPopup>
         }
         showButton={true}
         close={() =>
@@ -47,6 +54,22 @@ const Alerts = () => {
             setAchievementAsOld(achievements.indexOf(newAchievements[0]))
           )
         }
+        buttonText={"Awesome!"}
+      />
+      <Popup
+        open={
+          (newAchievements.length === 0 || newAchievements.length >= 5) &&
+          newStats.length > 0 &&
+          newStats.length < 30
+        }
+        content={
+          <AlertPopup>
+            <AlertHeader>New Analytic Unlocked!</AlertHeader>
+            <Stat stat={newStats[0]} />
+          </AlertPopup>
+        }
+        showButton={true}
+        close={() => dispatch(setStatAsOld(stats.indexOf(newStats[0])))}
         buttonText={"Awesome!"}
       />
     </StyledAlerts>
