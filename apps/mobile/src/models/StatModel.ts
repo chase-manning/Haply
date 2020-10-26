@@ -9,6 +9,7 @@ export type StatModel = {
   locked: boolean;
   lockedMessage: string;
   percentComplete: number;
+  new: boolean;
 
   //Bar
   dataPoints: DataPoint[];
