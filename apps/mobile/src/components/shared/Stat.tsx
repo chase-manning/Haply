@@ -7,6 +7,7 @@ import StatChart from "./StatChart";
 import noData from "../../assets/svgs/NoData.svg";
 import { useSelector } from "react-redux";
 import { selectColorPrimary } from "../../state/settingsSlice";
+import StatPercent from "./StatPercent";
 
 const Header = styled.div`
   width: 100%;
@@ -85,6 +86,9 @@ const Stat = (props: Props) => {
           dataPoints={props.stat.dataPoints}
           colorPrimary={colorPrimary}
         ></StatChart>
+      )}
+      {!props.stat.locked && props.stat.type === StatType.Percent && (
+        <StatPercent percent={props.stat.dataPoints[0].value} />
       )}
     </Card>
   );
