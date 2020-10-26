@@ -28,7 +28,10 @@ const api: string =
   "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
 
 const AchievementService = {
-  async getAchievements(userToken: string): Promise<AchievementModel[] | null> {
+  async getAchievements(
+    userToken: string,
+    currentAchievements: AchievementModel[]
+  ): Promise<AchievementModel[] | null> {
     try {
       const route: string = api + "v2/achievements";
 
@@ -40,10 +43,15 @@ const AchievementService = {
 
       const response = await ApiService(route, requestOptions);
 
-      const achievements: AchievementModel[] = await response!.json();
+      let achievements: AchievementModel[] = await response!.json();
       achievements.forEach(
         (achievement: AchievementModel) =>
           (achievement.svg = getSvg(achievement.svg))
+      );
+
+      achievements = getAchievementsWithIsNew(
+        currentAchievements,
+        achievements
       );
 
       return achievements;
@@ -103,6 +111,33 @@ const getSvg = (name: string): string => {
     default:
       return feelingAmazing;
   }
+};
+
+const getAchievementsWithIsNew = (
+  currentAchievements: AchievementModel[],
+  newAchievements: AchievementModel[]
+): AchievementModel[] => {
+  if (currentAchievements.length === 0) return newAchievements;
+  newAchievements
+    .filter(
+      (newAchievement: AchievementModel) => newAchievement.percentComplete === 1
+    )
+    .forEach((newAchievement: AchievementModel) => {
+      let currentAchievementList = currentAchievements.filter(
+        (achievement: AchievementModel) =>
+          achievement.title === newAchievement.title
+      );
+      if (currentAchievementList.length > 0) {
+        let currentAchievement = currentAchievementList[0];
+        if (
+          currentAchievement &&
+          currentAchievement.percentComplete < 1 &&
+          newAchievement.percentComplete === 1
+        )
+          newAchievement.isNew = true;
+      }
+    });
+  return newAchievements;
 };
 
 export default AchievementService;

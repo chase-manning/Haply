@@ -191,44 +191,14 @@ function* runUpdateAchievements() {
   const currentAchievements: AchievementModel[] = yield select(
     selectAchievements
   );
-  let newAchievements = yield AchievementService.getAchievements(userToken);
+  let newAchievements = yield AchievementService.getAchievements(
+    userToken,
+    currentAchievements
+  );
 
-  if (newAchievements) {
-    newAchievements = getAchievementsWithIsNew(
-      currentAchievements,
-      newAchievements
-    );
-    yield put(setAchievements(newAchievements!));
-  }
+  if (newAchievements) yield put(setAchievements(newAchievements!));
   yield put(completeAchievements());
 }
-
-const getAchievementsWithIsNew = (
-  currentAchievements: AchievementModel[],
-  newAchievements: AchievementModel[]
-): AchievementModel[] => {
-  if (currentAchievements.length === 0) return newAchievements;
-  newAchievements
-    .filter(
-      (newAchievement: AchievementModel) => newAchievement.percentComplete === 1
-    )
-    .forEach((newAchievement: AchievementModel) => {
-      let currentAchievementList = currentAchievements.filter(
-        (achievement: AchievementModel) =>
-          achievement.title === newAchievement.title
-      );
-      if (currentAchievementList.length > 0) {
-        let currentAchievement = currentAchievementList[0];
-        if (
-          currentAchievement &&
-          currentAchievement.percentComplete < 1 &&
-          newAchievement.percentComplete === 1
-        )
-          newAchievement.isNew = true;
-      }
-    });
-  return newAchievements;
-};
 
 function* setStatusBar() {
   if (!isStatusBarAvailable) return;
