@@ -181,7 +181,8 @@ function* runUpdateMoods() {
 
 function* runUpdateStats() {
   const userToken = yield select(selectToken);
-  const stats = yield StatService.getStats(userToken);
+  const currentStats = yield select(selectStats);
+  const stats = yield StatService.getStats(userToken, currentStats);
   if (stats) yield put(setStats(stats));
   yield put(completeStats());
 }
