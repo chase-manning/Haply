@@ -16,6 +16,7 @@ import Stat from "./Stat";
 const StyledAlerts = styled.div``;
 
 const AlertPopup = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
