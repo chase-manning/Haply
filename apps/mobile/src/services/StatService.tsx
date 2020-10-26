@@ -10,7 +10,7 @@ const StatService = {
     currentStats: StatModel[]
   ): Promise<StatModel[] | null> {
     try {
-      const route: string = api + "v2/stats";
+      const route: string = api + "v3/stats";
 
       const requestOptions = {
         headers: {
