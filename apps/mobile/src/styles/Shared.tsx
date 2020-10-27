@@ -23,6 +23,18 @@ export const Card = styled.div`
   box-shadow: var(--shadow);
 `;
 
+export const Icon = styled.div`
+  width: 35px;
+  height: 35px;
+  background-color: var(--primary-light);
+  border-radius: 8px;
+  margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary);
+`;
+
 type SeletedTagProps = {
   includeMargin: boolean;
 };
