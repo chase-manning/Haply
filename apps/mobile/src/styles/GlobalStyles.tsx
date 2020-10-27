@@ -41,7 +41,11 @@ const GlobalStyle = createGlobalStyle`
       --border: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
           ? "none"
-          : "none"} ;
+          : "none"};
+      --shadow: ${(props: GlobalSyleProps) =>
+        props.mode === Mode.Default || props.mode === Mode.Light
+          ? "0px 3px 20px 0px var(--primary-light)"
+          : "none"};
     }
   
     * {
