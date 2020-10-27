@@ -12,7 +12,7 @@ export const Line = styled.button`
 
 export const Card = styled.div`
   width: 100%;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
