@@ -11,7 +11,7 @@ import LoadingLine from "../shared/LoadingLine";
 
 const StyledAchievements = styled.div`
   width: 100%;
-  padding: 20px;
+  padding: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   position: relative;
