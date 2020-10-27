@@ -35,7 +35,7 @@ const StyledSettings = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 30px;
+  padding: 15px 30px;
 `;
 
 const Header = styled.div`
