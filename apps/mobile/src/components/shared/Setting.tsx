@@ -30,6 +30,9 @@ const Icon = styled.div`
   background-color: var(--primary-light);
   border-radius: 5px;
   margin-right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Label = styled.div`
