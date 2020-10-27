@@ -29,6 +29,7 @@ import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import BugReportOutlinedIcon from "@material-ui/icons/BugReportOutlined";
 import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
+import FaceOutlinedIcon from "@material-ui/icons/FaceOutlined";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -148,6 +149,7 @@ const Settings = () => {
         label={"Created By"}
         isToggle={false}
         clickFunction={() => window.open("https://chasemanning.co.nz/")}
+        icon={<FaceOutlinedIcon />}
       />
 
       <ReminderPopup
