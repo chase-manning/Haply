@@ -12,15 +12,20 @@ const StyledSettings = styled.div`
   flex-direction: column;
 `;
 
+const Content = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Label = styled.div`
   color: var(--sub);
-  width: 70%;
   text-align: left;
 `;
 
 const Value = styled.div`
   color: var(--main);
-  width: 30%;
 `;
 
 type ToggleProps = {
@@ -45,20 +50,22 @@ const Setting = (props: Props) => {
   return (
     <StyledSettings>
       <Card onClick={() => props.clickFunction()}>
-        <Label>{props.label}</Label>
-        {props.isToggle ? (
-          <Value>
-            <Toggle on={props.toggleOn!}>
-              {props.toggleOn ? (
-                <ToggleOnIcon fontSize={"large"} />
-              ) : (
-                <ToggleOffIcon fontSize={"large"} />
-              )}
-            </Toggle>
-          </Value>
-        ) : (
-          <ChevronRight />
-        )}
+        <Content>
+          <Label>{props.label}</Label>
+          {props.isToggle ? (
+            <Value>
+              <Toggle on={props.toggleOn!}>
+                {props.toggleOn ? (
+                  <ToggleOnIcon fontSize={"large"} />
+                ) : (
+                  <ToggleOffIcon fontSize={"large"} />
+                )}
+              </Toggle>
+            </Value>
+          ) : (
+            <ChevronRight />
+          )}
+        </Content>
       </Card>
     </StyledSettings>
   );
