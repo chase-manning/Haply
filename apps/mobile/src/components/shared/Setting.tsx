@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
-import { Line } from "../../styles/Shared";
+import { Card } from "../../styles/Shared";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -45,7 +45,7 @@ type Props = {
 const Setting = (props: Props) => {
   return (
     <StyledSettings>
-      <Line onClick={() => props.clickFunction()}>
+      <Card onClick={() => props.clickFunction()}>
         <Label>{props.label}</Label>
         {props.isToggle ? (
           <Value>
@@ -60,7 +60,7 @@ const Setting = (props: Props) => {
         ) : (
           <ChevronRight />
         )}
-      </Line>
+      </Card>
     </StyledSettings>
   );
 };
