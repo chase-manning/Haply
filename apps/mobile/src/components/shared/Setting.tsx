@@ -33,6 +33,7 @@ const Icon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--primary);
 `;
 
 const Label = styled.div`
