@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
       --highlight: #FF6584;
       --bg: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
-          ? "white"
+          ? "#FCFBFF"
           : "#121212"} ;
       --bg-mid: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
