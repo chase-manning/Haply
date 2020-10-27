@@ -9,6 +9,7 @@ import { SelectedTag, SelectedTags, Card, Icon } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood, updateData } from "../../state/dataSlice";
 import { selectToken } from "../../state/userSlice";
+import DynamicIcon from "./DynamicIcon";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -122,7 +123,10 @@ const Entry = (props: Props) => {
       <Card onClick={() => setState({ popupOpen: true })}>
         <EntryContent>
           <Header>
-            <Icon>{props.mood.value}</Icon>
+            <DynamicIcon
+              percent={props.mood.value / 10}
+              value={props.mood.value}
+            />
             <EntryText>
               <EntryHeader>{props.mood.description}</EntryHeader>
               <EntrySubHeader>
