@@ -12,7 +12,7 @@ const StyledEntries = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 30px;
+  padding: 30px;
   position: relative;
 `;
 
