@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
-import { Card } from "../../styles/Shared";
+import { Card, Icon } from "../../styles/Shared";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -22,18 +22,6 @@ const Content = styled.div`
 const LeftSide = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const Icon = styled.div`
-  width: 35px;
-  height: 35px;
-  background-color: var(--primary-light);
-  border-radius: 8px;
-  margin-right: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--primary);
 `;
 
 const Label = styled.div`
