@@ -10,7 +10,6 @@ const StyledSettings = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
 `;
 
 const Label = styled.div`
