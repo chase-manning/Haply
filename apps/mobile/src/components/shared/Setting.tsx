@@ -28,7 +28,7 @@ const Icon = styled.div`
   width: 35px;
   height: 35px;
   background-color: var(--primary-light);
-  border-radius: 5px;
+  border-radius: 8px;
   margin-right: 15px;
   display: flex;
   justify-content: center;
