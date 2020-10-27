@@ -19,6 +19,19 @@ const Content = styled.div`
   align-items: center;
 `;
 
+const LeftSide = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Icon = styled.div`
+  width: 30px;
+  height: 30px;
+  background-color: var(--primary-light);
+  border-radius: 5px;
+  margin-right: 15px;
+`;
+
 const Label = styled.div`
   color: var(--sub);
   text-align: left;
@@ -51,7 +64,10 @@ const Setting = (props: Props) => {
     <StyledSettings>
       <Card onClick={() => props.clickFunction()}>
         <Content>
-          <Label>{props.label}</Label>
+          <LeftSide>
+            <Icon></Icon>
+            <Label>{props.label}</Label>
+          </LeftSide>
           {props.isToggle ? (
             <Value>
               <Toggle on={props.toggleOn!}>
