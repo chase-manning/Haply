@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
       --sub: ;
       --sub: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
-          ? "#9399A9"
+          ? "#a9b0c2"
           : "rgba(255,255,255,0.60)"} ;
       --sub-light: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
