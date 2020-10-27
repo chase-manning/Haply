@@ -42,6 +42,10 @@ const Label = styled.div`
   font-size: 15px;
 `;
 
+const Chevron = styled.div`
+  color: var(--sub);
+`;
+
 const Value = styled.div`
   color: var(--main);
 `;
@@ -85,7 +89,9 @@ const Setting = (props: Props) => {
               </Toggle>
             </Value>
           ) : (
-            <ChevronRight />
+            <Chevron>
+              <ChevronRight />
+            </Chevron>
           )}
         </Content>
       </Card>
