@@ -37,8 +37,9 @@ const Icon = styled.div`
 `;
 
 const Label = styled.div`
-  color: var(--sub);
+  color: var(--main);
   text-align: left;
+  font-size: 15px;
 `;
 
 const Value = styled.div`
