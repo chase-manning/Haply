@@ -123,7 +123,7 @@ const Entry = (props: Props) => {
       <Card onClick={() => setState({ popupOpen: true })}>
         <EntryContent>
           <Header>
-            <Icon>2</Icon>
+            <Icon>{props.mood.value}</Icon>
             <EntryText>
               <EntryHeader>{props.mood.description}</EntryHeader>
               <EntrySubHeader>
