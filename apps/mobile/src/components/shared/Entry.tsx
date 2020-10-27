@@ -36,13 +36,12 @@ const EntryText = styled.div`
 
 const EntryHeader = styled.div`
   color: var(--main);
-  margin-bottom: 3px;
   font-size: 15px;
 `;
 
 const EntrySubHeader = styled.div`
   color: var(--sub);
-  font-size: 12px;
+  font-size: 11px;
 `;
 
 const EntryNote = styled.div`
