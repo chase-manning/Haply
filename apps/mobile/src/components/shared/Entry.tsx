@@ -45,11 +45,11 @@ const EntrySubHeader = styled.div`
   font-size: 11px;
 `;
 
-const EntryNote = styled.div`
-  color: var(--sub);
-  font-size: 12px;
-  margin-bottom: 10px;
-`;
+// const EntryNote = styled.div`
+//   color: var(--sub);
+//   font-size: 12px;
+//   margin-bottom: 10px;
+// `;
 
 const EntryTags = styled.div`
   color: var(--sub);
