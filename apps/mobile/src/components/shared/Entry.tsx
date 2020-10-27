@@ -5,7 +5,7 @@ import MoodService from "../../services/MoodService";
 import Mood from "../../models/mood";
 import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
-import { SelectedTag, SelectedTags, Card } from "../../styles/Shared";
+import { SelectedTag, SelectedTags, Card, Icon } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood, updateData } from "../../state/dataSlice";
 import { selectToken } from "../../state/userSlice";
@@ -17,8 +17,13 @@ const StyledEntry = styled.div`
 const EntryContent = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  display: flex;
 `;
 
 const EntryText = styled.div`
@@ -32,6 +37,7 @@ const EntryText = styled.div`
 const EntryHeader = styled.div`
   color: var(--main);
   margin-bottom: 10px;
+  font-size: 15px;
 `;
 
 const EntrySubHeader = styled.div`
@@ -116,13 +122,16 @@ const Entry = (props: Props) => {
     <StyledEntry>
       <Card onClick={() => setState({ popupOpen: true })}>
         <EntryContent>
-          <EntryText>
-            <EntryHeader>{props.mood.description}</EntryHeader>
-            <EntrySubHeader>
-              {dateFormat(props.mood.date, " dddd h:MM tt")}
-            </EntrySubHeader>
-          </EntryText>
-          <EntryText>
+          <Header>
+            <Icon>2</Icon>
+            <EntryText>
+              <EntryHeader>{props.mood.description}</EntryHeader>
+              <EntrySubHeader>
+                {dateFormat(props.mood.date, " dddd h:MM tt")}
+              </EntrySubHeader>
+            </EntryText>
+          </Header>
+          {/* <EntryText>
             <EntryNote>
               {props.mood.note.substring(0, 20) +
                 (props.mood.note.length > 20 ? "..." : "")}
@@ -137,8 +146,7 @@ const Entry = (props: Props) => {
                 </EntryTagMoreText>
               )}
             </EntryTags>
-          </EntryText>
-          <ChevronRight />
+          </EntryText> */}
         </EntryContent>
       </Card>
       <Popup
