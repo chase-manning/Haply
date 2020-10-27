@@ -24,7 +24,7 @@ const GlobalStyle = createGlobalStyle`
           ? "rgba(147,154,169, 0.1)"
           : "rgba(255,255,255,0.087)"} ;
       --primary: ${(props: GlobalSyleProps) => props.colorPrimary}; 
-      --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "22"};
+      --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "11"};
       --highlight: #FF6584;
       --bg: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
