@@ -149,22 +149,7 @@ const Settings = () => {
         isToggle={false}
         clickFunction={() => window.open("https://chasemanning.co.nz/")}
       />
-      <Setting
-        label={"Source Code"}
-        isToggle={false}
-        clickFunction={() =>
-          window.open("https://github.com/chase-manning/Haply/")
-        }
-      />
-      <Setting
-        label={"License"}
-        isToggle={false}
-        clickFunction={() =>
-          window.open(
-            "https://github.com/chase-manning/Haply/blob/master/LICENSE"
-          )
-        }
-      />
+
       <ReminderPopup
         open={state.reminderPopupOpen}
         closePopup={() => setState({ ...state, reminderPopupOpen: false })}
