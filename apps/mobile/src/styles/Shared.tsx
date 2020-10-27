@@ -21,6 +21,12 @@ export const Card = styled.div`
   border: solid 1px var(--border);
   background-color: var(--bg-mid);
   box-shadow: var(--shadow);
+  transition: all 0.2s ease-out;
+
+  &:active:hover {
+    transform: scale(0.99);
+    box-shadow: var(--shadow-clicked);
+  }
 `;
 
 type IconProps = {
