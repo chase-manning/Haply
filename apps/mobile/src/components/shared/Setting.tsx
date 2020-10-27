@@ -25,8 +25,8 @@ const LeftSide = styled.div`
 `;
 
 const Icon = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   background-color: var(--primary-light);
   border-radius: 5px;
   margin-right: 15px;
@@ -57,6 +57,7 @@ type Props = {
   isToggle: boolean;
   toggleOn?: boolean;
   clickFunction: () => void;
+  icon: JSX.Element;
 };
 
 const Setting = (props: Props) => {
@@ -65,7 +66,7 @@ const Setting = (props: Props) => {
       <Card onClick={() => props.clickFunction()}>
         <Content>
           <LeftSide>
-            <Icon></Icon>
+            <Icon>{props.icon}</Icon>
             <Label>{props.label}</Label>
           </LeftSide>
           {props.isToggle ? (
