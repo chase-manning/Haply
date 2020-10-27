@@ -19,6 +19,17 @@ import TagPopup from "../shared/TagPopup";
 import { selectUser } from "../../state/userSlice";
 import { firebaseApp } from "../../components/shared/Login";
 
+import CloudOutlinedIcon from "@material-ui/icons/CloudOutlined";
+import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
+import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
+import HourglassEmptyOutlinedIcon from "@material-ui/icons/HourglassEmptyOutlined";
+import FormatPaintOutlinedIcon from "@material-ui/icons/FormatPaintOutlined";
+import Brightness2OutlinedIcon from "@material-ui/icons/Brightness2Outlined";
+import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
+import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
+import BugReportOutlinedIcon from "@material-ui/icons/BugReportOutlined";
+import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
+
 const StyledSettings = styled.div`
   width: 100%;
   display: flex;
@@ -64,6 +75,7 @@ const Settings = () => {
             await firebaseApp.auth().signInAnonymously();
           }
         }}
+        icon={<CloudOutlinedIcon />}
       />
 
       <Header>Reminders</Header>
@@ -72,17 +84,20 @@ const Settings = () => {
         isToggle={true}
         toggleOn={remindersEnabled}
         clickFunction={() => dispatch(toggleRemindersEnabled())}
+        icon={<NotificationsOutlinedIcon />}
       />
       <Setting
         label={"Random Range"}
         isToggle={true}
         toggleOn={randomReminders}
         clickFunction={() => dispatch(toggleRandomReminders())}
+        icon={<CasinoOutlinedIcon />}
       />
       <Setting
         label={"Reminder Frequency"}
         isToggle={false}
         clickFunction={() => setState({ ...state, reminderPopupOpen: true })}
+        icon={<HourglassEmptyOutlinedIcon />}
       />
 
       <Header>Settings</Header>
@@ -90,6 +105,7 @@ const Settings = () => {
         label={"Theme"}
         isToggle={false}
         clickFunction={() => setState({ ...state, themePopupOpen: true })}
+        icon={<FormatPaintOutlinedIcon />}
       />
       {darkModeUnlocked && (
         <Setting
@@ -97,12 +113,14 @@ const Settings = () => {
           isToggle={true}
           toggleOn={mode === Mode.Dark}
           clickFunction={() => dispatch(toggleMode())}
+          icon={<Brightness2OutlinedIcon />}
         />
       )}
       <Setting
         label={"Tags"}
         isToggle={false}
         clickFunction={() => setState({ ...state, tagPopupOpen: true })}
+        icon={<LocalOfferOutlinedIcon />}
       />
 
       <Header>Contact</Header>
@@ -110,16 +128,19 @@ const Settings = () => {
         label={"Suggest a Feature"}
         isToggle={false}
         clickFunction={() => window.open("mailto:hello@haply.app")}
+        icon={<EmojiObjectsOutlinedIcon />}
       />
       <Setting
         label={"Report an Issue"}
         isToggle={false}
         clickFunction={() => window.open("mailto:hello@haply.app")}
+        icon={<BugReportOutlinedIcon />}
       />
       <Setting
         label={"Say Hi"}
         isToggle={false}
         clickFunction={() => window.open("mailto:hello@haply.app")}
+        icon={<EmojiPeopleOutlinedIcon />}
       />
 
       <Header>About</Header>
