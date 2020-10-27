@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
           : "#2E2E2E"} ;
       --border: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
-          ? "rgba(0,0,0,0.1)"
+          ? "none"
           : "none"} ;
     }
   
