@@ -36,7 +36,7 @@ const EntryText = styled.div`
 
 const EntryHeader = styled.div`
   color: var(--main);
-  margin-bottom: 10px;
+  margin-bottom: 3px;
   font-size: 15px;
 `;
 
