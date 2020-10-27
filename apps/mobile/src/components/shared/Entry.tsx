@@ -5,13 +5,20 @@ import MoodService from "../../services/MoodService";
 import Mood from "../../models/mood";
 import Popup from "./Popup";
 import ChevronRight from "@material-ui/icons/ChevronRight";
-import { SelectedTag, SelectedTags, Line } from "../../styles/Shared";
+import { SelectedTag, SelectedTags, Card } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood, updateData } from "../../state/dataSlice";
 import { selectToken } from "../../state/userSlice";
 
 const StyledEntry = styled.div`
   width: 100%;
+`;
+
+const EntryContent = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const EntryText = styled.div`
@@ -107,29 +114,33 @@ const Entry = (props: Props) => {
 
   return (
     <StyledEntry>
-      <Line onClick={() => setState({ popupOpen: true })}>
-        <EntryText>
-          <EntryHeader>{props.mood.description}</EntryHeader>
-          <EntrySubHeader>
-            {dateFormat(props.mood.date, " dddd h:MM tt")}
-          </EntrySubHeader>
-        </EntryText>
-        <EntryText>
-          <EntryNote>
-            {props.mood.note.substring(0, 20) +
-              (props.mood.note.length > 20 ? "..." : "")}
-          </EntryNote>
-          <EntryTags>
-            {props.mood.tags.slice(0, 1).map((tag: string) => (
-              <SelectedTag includeMargin={false}>{tag}</SelectedTag>
-            ))}
-            {props.mood.tags.length > 1 && (
-              <EntryTagMoreText>+{props.mood.tags.length - 1}</EntryTagMoreText>
-            )}
-          </EntryTags>
-        </EntryText>
-        <ChevronRight />
-      </Line>
+      <Card onClick={() => setState({ popupOpen: true })}>
+        <EntryContent>
+          <EntryText>
+            <EntryHeader>{props.mood.description}</EntryHeader>
+            <EntrySubHeader>
+              {dateFormat(props.mood.date, " dddd h:MM tt")}
+            </EntrySubHeader>
+          </EntryText>
+          <EntryText>
+            <EntryNote>
+              {props.mood.note.substring(0, 20) +
+                (props.mood.note.length > 20 ? "..." : "")}
+            </EntryNote>
+            <EntryTags>
+              {props.mood.tags.slice(0, 1).map((tag: string) => (
+                <SelectedTag includeMargin={false}>{tag}</SelectedTag>
+              ))}
+              {props.mood.tags.length > 1 && (
+                <EntryTagMoreText>
+                  +{props.mood.tags.length - 1}
+                </EntryTagMoreText>
+              )}
+            </EntryTags>
+          </EntryText>
+          <ChevronRight />
+        </EntryContent>
+      </Card>
       <Popup
         open={state.popupOpen}
         content={
