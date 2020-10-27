@@ -16,6 +16,7 @@ const StyledHeader = styled.div`
   justify-content: center;
   align-items: center;
   border-bottom: solid 1px var(--border);
+  box-shadow: var(--shadow);
 `;
 
 function Header() {
