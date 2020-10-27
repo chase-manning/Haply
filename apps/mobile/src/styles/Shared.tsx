@@ -23,16 +23,22 @@ export const Card = styled.div`
   box-shadow: var(--shadow);
 `;
 
+type IconProps = {
+  secondary?: boolean;
+};
+
 export const Icon = styled.div`
   width: 35px;
   height: 35px;
-  background-color: var(--primary-light);
+  background-color: ${(props: IconProps) =>
+    props.secondary ? "var(--highlight-light)" : "var(--primary-light)"};
   border-radius: 8px;
   margin-right: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--primary);
+  color: ${(props: IconProps) =>
+    props.secondary ? "var(--highlight)" : "var(--primary)"};
 `;
 
 type SeletedTagProps = {
