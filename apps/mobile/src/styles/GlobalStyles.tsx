@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
     :root {
       --main: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
-          ? "black"
+          ? "#24274C"
           : "rgba(255,255,255,0.87)"} ;
       --sub: ;
       --sub: ${(props: GlobalSyleProps) =>
