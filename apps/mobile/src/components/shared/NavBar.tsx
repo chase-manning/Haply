@@ -24,6 +24,7 @@ const StyledNavBar = styled.div`
   justify-content: space-evenly;
   align-items: center;
   border-top: solid 1px var(--border);
+  box-shadow: var(--shadow);
 `;
 
 type NavItemProps = {
