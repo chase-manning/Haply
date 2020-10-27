@@ -47,6 +47,10 @@ const GlobalStyle = createGlobalStyle`
         props.mode === Mode.Default || props.mode === Mode.Light
           ? "0px 3px 20px 0px var(--primary-light)"
           : "none"};
+      --shadow-clicked: ${(props: GlobalSyleProps) =>
+        props.mode === Mode.Default || props.mode === Mode.Light
+          ? "0px 1px 7px 0px var(--primary-light)"
+          : "none"};
     }
   
     * {
