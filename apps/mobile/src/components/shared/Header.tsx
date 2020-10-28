@@ -19,6 +19,12 @@ const StyledHeader = styled.div`
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   font-size: 18px;
+  transition: all 0.2s ease-out;
+
+  &:active:hover {
+    transform: scale(0.99);
+    box-shadow: var(--shadow-clicked);
+  }
 `;
 
 function Header() {
