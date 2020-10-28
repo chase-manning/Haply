@@ -41,6 +41,7 @@ const NavItem = styled.button`
   align-items: center;
   margin: auto;
   text-decoration: none;
+  transition: all 0.2s ease-in-out;
   color: ${(props: NavItemProps) => {
     return props.isActive ? "var(--primary)" : "var(--sub)";
   }};
