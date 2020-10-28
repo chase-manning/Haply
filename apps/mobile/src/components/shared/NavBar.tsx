@@ -55,13 +55,13 @@ const Circle = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: flex;
   border-radius: 50%;
   background-color: var(--primary);
   color: var(--bg);
-  transform: translateY(-30px);
+  box-shadow: var(--shadow);
 `;
 
 const NavBar = () => {
