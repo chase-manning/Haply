@@ -15,7 +15,6 @@ const StyledHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: solid 1px var(--border);
   box-shadow: var(--shadow);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
