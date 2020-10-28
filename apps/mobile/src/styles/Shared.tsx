@@ -18,7 +18,6 @@ export const Card = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  border: solid 1px var(--border);
   background-color: var(--bg-mid);
   box-shadow: var(--shadow);
   transition: all 0.2s ease-out;
