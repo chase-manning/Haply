@@ -26,12 +26,6 @@ const StyledNavBar = styled.div`
   box-shadow: var(--shadow);
   margin: 10px;
   border-radius: 15px;
-  transition: all 0.2s ease-out;
-
-  &:active:hover {
-    transform: scale(0.99);
-    box-shadow: var(--shadow-clicked);
-  }
 `;
 
 type NavItemProps = {
