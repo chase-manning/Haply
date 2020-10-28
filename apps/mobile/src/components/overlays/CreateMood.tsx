@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Mood, { moodDescriptions } from "../../models/mood";
 import styled from "styled-components";
-import Close from "@material-ui/icons/Close";
 import MoodService from "../../services/MoodService";
 import sadAsset from "../../assets/svgs/FeelingBlue.svg";
 import happyAsset from "../../assets/svgs/SmileyFace.svg";
@@ -18,6 +17,7 @@ import {
 } from "../../state/settingsSlice";
 import { addMood, updateData } from "../../state/dataSlice";
 import { selectUser } from "../../state/userSlice";
+import ExitBar from "../shared/ExitBar";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -32,10 +32,6 @@ const StyledCreateMood = styled.div`
   align-items: center;
   padding: 40px;
   color: var(--main);
-`;
-
-const TopBar = styled.div`
-  width: 100%;
 `;
 
 const Header = styled.div`
@@ -104,9 +100,7 @@ const CreateMood = () => {
 
   return (
     <StyledCreateMood>
-      <TopBar>
-        <Close onClick={() => dispatch(hideMood())} />
-      </TopBar>
+      <ExitBar exit={() => dispatch(hideMood())} />
       <Header>How are you feeling?</Header>
       <Emotion>{moodDescriptions[state.mood]}</Emotion>
       <Face>
