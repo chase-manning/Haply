@@ -7,8 +7,6 @@ import AchievementPopupContent from "./AchievementPopupContent";
 const StyledAcheivement = styled.div`
   display: flex;
   flex-direction: column;
-  justify-self: center;
-  align-self: center;
   align-items: center;
 `;
 
