@@ -11,6 +11,7 @@ import PushNotificationSetup from "./shared/PushNotifications";
 import { selectDataLoading, selectLoadingPercent } from "../state/dataSlice";
 import LoadingScreen from "./shared/LoadingScreen";
 import Alerts from "./shared/Alerts";
+import Premium from "./shared/Premium";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -49,6 +50,7 @@ const App = () => {
       <Login />
       <CreateMood />
       <Alerts />
+      <Premium />
     </StyledApp>
   );
 };
