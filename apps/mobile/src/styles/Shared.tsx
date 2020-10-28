@@ -29,6 +29,14 @@ export const Card = styled.div`
   }
 `;
 
+export const Header = styled.div`
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: var(--main);
+`;
+
 type IconProps = {
   secondary?: boolean;
 };
