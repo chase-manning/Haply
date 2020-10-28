@@ -132,7 +132,7 @@ const Entry = (props: Props) => {
           {props.mood.tags && props.mood.tags.length > 0 && (
             <EntryTags>
               {props.mood.tags.map((tag: string) => (
-                <SelectedTag includeMargin={true}>{tag}</SelectedTag>
+                <SelectedTag includeMargin={false}>{tag}</SelectedTag>
               ))}
             </EntryTags>
           )}

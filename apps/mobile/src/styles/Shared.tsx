@@ -57,7 +57,7 @@ export const SelectedTag = styled.button`
   background-color: var(--primary-light);
   font-size: 12px;
   margin: ${(props: SeletedTagProps) => {
-    return props.includeMargin ? "0 5px 5px 0" : "0;";
+    return props.includeMargin ? "0 5px 5px 0" : "0 5px 0 0";
   }};
   color: var(--primary);
   display: inline-block;
