@@ -10,7 +10,6 @@ const StyledAcheivement = styled.div`
   justify-self: center;
   align-self: center;
   align-items: center;
-  padding: 10px;
 `;
 
 type SvgProps = {
