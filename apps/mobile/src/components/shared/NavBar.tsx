@@ -23,7 +23,6 @@ const StyledNavBar = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  border-top: solid 1px var(--border);
   box-shadow: var(--shadow);
   margin: 10px;
   border-radius: 15px;
