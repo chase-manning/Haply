@@ -24,7 +24,6 @@ const EntryContent = styled.div`
 const Header = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 20px;
 `;
 
 const EntryText = styled.div`
@@ -52,17 +51,12 @@ const EntrySubHeader = styled.div`
 // `;
 
 const EntryTags = styled.div`
+  margin-top: 20px;
   color: var(--sub);
   font-size: 12px;
   display: flex;
   align-items: center;
   width: 100%;
-`;
-
-const EntryTagMoreText = styled.div`
-  color: var(--sub);
-  font-size: 12px;
-  margin-left: 5px;
 `;
 
 const PopupContent = styled.div`
@@ -135,14 +129,13 @@ const Entry = (props: Props) => {
               </EntrySubHeader>
             </EntryText>
           </Header>
-          <EntryTags>
-            {props.mood.tags.slice(0, 3).map((tag: string) => (
-              <SelectedTag includeMargin={true}>{tag}</SelectedTag>
-            ))}
-            {props.mood.tags.length > 1 && (
-              <EntryTagMoreText>+{props.mood.tags.length - 1}</EntryTagMoreText>
-            )}
-          </EntryTags>
+          {props.mood.tags && props.mood.tags.length > 0 && (
+            <EntryTags>
+              {props.mood.tags.map((tag: string) => (
+                <SelectedTag includeMargin={true}>{tag}</SelectedTag>
+              ))}
+            </EntryTags>
+          )}
           {/* <EntryText>
             <EntryNote>
               {props.mood.note.substring(0, 20) +
