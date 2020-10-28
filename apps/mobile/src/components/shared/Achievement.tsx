@@ -35,6 +35,12 @@ const Shadow = styled.div`
   border-radius: 50%;
   margin-bottom: 5px;
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  transition: all 0.2s ease-out;
+
+  &:active:hover {
+    transform: scale(0.99);
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+  }
 `;
 
 const Icon = styled.button`
