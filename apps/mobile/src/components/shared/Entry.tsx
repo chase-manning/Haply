@@ -137,10 +137,12 @@ const Entry = (props: Props) => {
               ))}
             </EntryTags>
           )}
-          <EntryNote>
-            {props.mood.note.substring(0, 20000000) +
-              (props.mood.note.length > 2000000 ? "..." : "")}
-          </EntryNote>
+          {props.mood.note && props.mood.note.length > 0 && (
+            <EntryNote>
+              {props.mood.note.substring(0, 20000000) +
+                (props.mood.note.length > 2000000 ? "..." : "")}
+            </EntryNote>
+          )}
         </EntryContent>
       </Card>
       <Popup
