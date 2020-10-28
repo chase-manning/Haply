@@ -18,13 +18,15 @@ const StyledNavBar = styled.div`
   left: 0;
   bottom: 0;
   height: 60px;
-  width: 100%;
+  width: calc(100% - 20px);
   background-color: var(--bg-top);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   border-top: solid 1px var(--border);
   box-shadow: var(--shadow);
+  margin: 10px;
+  border-radius: 15px;
 `;
 
 type NavItemProps = {
