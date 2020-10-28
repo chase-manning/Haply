@@ -30,20 +30,13 @@ import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import BugReportOutlinedIcon from "@material-ui/icons/BugReportOutlined";
 import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
 import FaceOutlinedIcon from "@material-ui/icons/FaceOutlined";
+import { Header } from "../../styles/Shared";
 
 const StyledSettings = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 15px 30px;
-`;
-
-const Header = styled.div`
-  width: 100%;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: var(--main);
 `;
 
 class State {
