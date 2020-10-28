@@ -84,8 +84,8 @@ const NavBar = () => {
       >
         <TimelineOutlined />
       </NavItem>
-      <CircleContainer>
-        <Circle onClick={() => dispatch(showMood())}>
+      <CircleContainer onClick={() => dispatch(showMood())}>
+        <Circle>
           <AddOutlined />
         </Circle>
       </CircleContainer>
