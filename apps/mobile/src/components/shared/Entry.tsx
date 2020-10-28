@@ -30,7 +30,6 @@ const EntryText = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 50%;
   text-align: left;
 `;
 
@@ -44,11 +43,12 @@ const EntrySubHeader = styled.div`
   font-size: 11px;
 `;
 
-// const EntryNote = styled.div`
-//   color: var(--sub);
-//   font-size: 12px;
-//   margin-bottom: 10px;
-// `;
+const EntryNote = styled.div`
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 12px;
+  width: 100%;
+`;
 
 const EntryTags = styled.div`
   margin-top: 20px;
@@ -57,6 +57,7 @@ const EntryTags = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  overflow: auto;
 `;
 
 const PopupContent = styled.div`
@@ -136,12 +137,10 @@ const Entry = (props: Props) => {
               ))}
             </EntryTags>
           )}
-          {/* <EntryText>
-            <EntryNote>
-              {props.mood.note.substring(0, 20) +
-                (props.mood.note.length > 20 ? "..." : "")}
-            </EntryNote>
-          </EntryText> */}
+          <EntryNote>
+            {props.mood.note.substring(0, 20000000) +
+              (props.mood.note.length > 2000000 ? "..." : "")}
+          </EntryNote>
         </EntryContent>
       </Card>
       <Popup
