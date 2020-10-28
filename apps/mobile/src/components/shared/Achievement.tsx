@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
-import Popup from "./Popup";
-import AchievementPopupContent from "./AchievementPopupContent";
 
 const StyledAcheivement = styled.div`
   display: flex;
@@ -83,19 +81,14 @@ const Complete = styled.div`
 
 type Props = {
   achievement: AchievementModel;
+  openPopup: () => void;
 };
 
-class State {
-  detailsOpen: boolean = false;
-}
-
 const Acheivement = (props: Props) => {
-  const [state, setState] = useState(new State());
-
   return (
     <StyledAcheivement>
       <Shadow>
-        <Icon onClick={() => setState({ detailsOpen: true })}>
+        <Icon onClick={() => props.openPopup()}>
           <Svg
             src={props.achievement.svg}
             isComplete={props.achievement.percentComplete === 1}
@@ -108,12 +101,6 @@ const Acheivement = (props: Props) => {
           <Complete percentComplete={props.achievement.percentComplete} />
         </Progress>
       )}
-      <Popup
-        open={state.detailsOpen}
-        content={<AchievementPopupContent achievement={props.achievement} />}
-        showButton={false}
-        close={() => setState({ detailsOpen: false })}
-      ></Popup>
     </StyledAcheivement>
   );
 };

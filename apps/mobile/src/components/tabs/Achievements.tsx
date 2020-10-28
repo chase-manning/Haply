@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
@@ -8,7 +8,9 @@ import {
 } from "../../state/dataSlice";
 import { Card, Header } from "../../styles/Shared";
 import Acheivement from "../shared/Achievement";
+import AchievementPopupContent from "../shared/AchievementPopupContent";
 import LoadingLine from "../shared/LoadingLine";
+import Popup from "../shared/Popup";
 
 const StyledAchievements = styled.div`
   width: 100%;
@@ -29,7 +31,13 @@ const AchievementsList = styled.div`
   grid-row-gap: 15px;
 `;
 
+class State {
+  popupAchievement?: AchievementModel;
+}
+
 const Achievements = () => {
+  const [state, setState] = useState(new State());
+
   const achievements = useSelector(selectAchievements);
   const achievementsLoading = useSelector(selectAchievementsLoading);
 
@@ -49,24 +57,38 @@ const Achievements = () => {
           <Card>
             <AchievementsList>
               {completedAchievements.map((achievment: AchievementModel) => (
-                <Acheivement achievement={achievment} />
+                <Acheivement
+                  achievement={achievment}
+                  openPopup={() => setState({ popupAchievement: achievment })}
+                />
               ))}
             </AchievementsList>
           </Card>
         </AchievementSection>
       )}
-      {inProgressAchievements.length > 0 && (
+      {inProgressAchievements.length > 0 && ( //TODO Remove this duplication
         <AchievementSection>
           <Header>In Progress</Header>
           <Card>
             <AchievementsList>
               {inProgressAchievements.map((achievment: AchievementModel) => (
-                <Acheivement achievement={achievment} />
+                <Acheivement
+                  achievement={achievment}
+                  openPopup={() => setState({ popupAchievement: achievment })}
+                />
               ))}
             </AchievementsList>
           </Card>
         </AchievementSection>
       )}
+      <Popup
+        open={!!state.popupAchievement}
+        content={
+          <AchievementPopupContent achievement={state.popupAchievement!} />
+        }
+        showButton={false}
+        close={() => setState({ popupAchievement: undefined })}
+      ></Popup>
     </StyledAchievements>
   );
 };
