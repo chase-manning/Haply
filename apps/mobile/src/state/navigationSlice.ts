@@ -14,6 +14,7 @@ interface NavigationState {
   moodShowing: boolean;
   loggingIn: boolean;
   AppInit: boolean;
+  premium: boolean;
 }
 
 const initialState: NavigationState = {
@@ -21,6 +22,7 @@ const initialState: NavigationState = {
   moodShowing: false,
   loggingIn: false,
   AppInit: false,
+  premium: true,
 };
 
 /* SLICE */
@@ -46,6 +48,12 @@ export const navigationSlice = createSlice({
     hideLogin: (state) => {
       state.loggingIn = false;
     },
+    showPremium: (state) => {
+      state.premium = true;
+    },
+    hidePremium: (state) => {
+      state.premium = false;
+    },
     setActiveTab: (state, action: PayloadAction<Tab>) => {
       state.activeTab = action.payload;
     },
@@ -59,6 +67,8 @@ export const {
   hideMood,
   showLogin,
   hideLogin,
+  showPremium,
+  hidePremium,
   setActiveTab,
 } = navigationSlice.actions;
 
@@ -69,6 +79,7 @@ export const selectMoodShowing = (state: RootState) =>
 export const selectLoggingIn = (state: RootState) => state.navigation.loggingIn;
 
 export const selectActiveTab = (state: RootState) => state.navigation.activeTab;
+export const selectPremium = (state: RootState) => state.navigation.premium;
 
 export const selectActiveTabText = (state: RootState) => {
   switch (state.navigation.activeTab) {
