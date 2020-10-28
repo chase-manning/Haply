@@ -1,7 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { selectPremium } from "../../state/navigationSlice";
+import { hidePremium, selectPremium } from "../../state/navigationSlice";
+import ExitBar from "./ExitBar";
 
 const StyledPremium = styled.div`
   position: fixed;
@@ -9,13 +10,20 @@ const StyledPremium = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--bg);
+  background-color: var(--bg-mid);
+  display: flex;
+  flex-direction: column;
 `;
 
 const Premium = () => {
+  const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
   if (!premium) return null;
-  return <StyledPremium></StyledPremium>;
+  return (
+    <StyledPremium>
+      <ExitBar exit={() => dispatch(hidePremium())} />
+    </StyledPremium>
+  );
 };
 
 export default Premium;
