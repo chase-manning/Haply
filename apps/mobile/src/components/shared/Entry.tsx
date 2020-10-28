@@ -43,21 +43,21 @@ const EntrySubHeader = styled.div`
   font-size: 11px;
 `;
 
-const EntryNote = styled.div`
-  color: var(--sub);
-  font-size: 12px;
-  margin-top: 12px;
-  width: 100%;
-`;
-
 const EntryTags = styled.div`
-  margin-top: 20px;
+  margin-top: 15px;
   color: var(--sub);
   font-size: 12px;
   display: flex;
   align-items: center;
   width: 100%;
   overflow: auto;
+`;
+
+const EntryNote = styled.div`
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 15px;
+  width: 100%;
 `;
 
 const PopupContent = styled.div`
