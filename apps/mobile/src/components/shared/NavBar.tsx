@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import EmojiEventsOutlined from "@material-ui/icons/EmojiEventsOutlined";
 import TimelineOutlined from "@material-ui/icons/TimelineOutlined";
 import AddOutlined from "@material-ui/icons/AddOutlined";
@@ -12,6 +12,8 @@ import {
   showMood,
 } from "../../state/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { selectBlockMoods } from "../../state/dataSlice";
+import PremiumPopup from "./PremiumPopup";
 
 const StyledNavBar = styled.div`
   position: fixed;
@@ -66,9 +68,15 @@ const Circle = styled.button`
   box-shadow: var(--shadow);
 `;
 
+class State {
+  blockMoodsPopupOpen: boolean = false;
+}
+
 const NavBar = () => {
+  const [state, setState] = useState(new State());
   const activeTab = useSelector(selectActiveTab);
   const dispatch = useDispatch();
+  const blockMoods = useSelector(selectBlockMoods);
 
   return (
     <StyledNavBar>
@@ -84,7 +92,12 @@ const NavBar = () => {
       >
         <TimelineOutlined />
       </NavItem>
-      <CircleContainer onClick={() => dispatch(showMood())}>
+      <CircleContainer
+        onClick={() => {
+          if (blockMoods) setState({ ...state, blockMoodsPopupOpen: true });
+          else dispatch(showMood());
+        }}
+      >
         <Circle>
           <AddOutlined />
         </Circle>
@@ -101,6 +114,20 @@ const NavBar = () => {
       >
         <MenuOutlined />
       </NavItem>
+
+      <PremiumPopup
+        header={"Daily Mood Limit Exceeded"}
+        description={
+          "You have run out of moods for today. Wait until tomorrow or get Haply Premium to unlock unlimited moods"
+        }
+        open={state.blockMoodsPopupOpen}
+        close={() =>
+          setState({
+            ...state,
+            blockMoodsPopupOpen: false,
+          })
+        }
+      />
     </StyledNavBar>
   );
 };
