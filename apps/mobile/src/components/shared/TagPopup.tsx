@@ -12,7 +12,7 @@ import {
   selectBlockTags,
 } from "../../state/settingsSlice";
 import { updateAchievements } from "../../state/dataSlice";
-import { showPremium } from "../../state/navigationSlice";
+import PremiumPopup from "./PremiumPopup";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -137,18 +137,18 @@ const TagPopup = (props: Props) => {
                 }
                 submit={() => dispatch(addTagOption(state.newTag))}
               />
-              <Popup
+              <PremiumPopup
+                header={"Tag Limit Exceeded"}
+                description={
+                  "You have run out of custom tags. Remove some tags or get Haply Premium to unlock unlimited custom tags"
+                }
                 open={state.blockTagsPopupOpen}
-                content={<p>meow</p>}
-                showButton={true}
                 close={() =>
                   setState({
                     ...state,
                     blockTagsPopupOpen: false,
                   })
                 }
-                submit={() => dispatch(showPremium())}
-                buttonText={"Go Premium"}
               />
             </AddTag>
           </SelectedTags>
