@@ -9,8 +9,10 @@ import {
   selectTagOptions,
   removeTagOption,
   addTagOption,
+  selectBlockTags,
 } from "../../state/settingsSlice";
 import { updateAchievements } from "../../state/dataSlice";
+import { showPremium } from "../../state/navigationSlice";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -65,6 +67,7 @@ const TagInput = styled.input`
 class State {
   newTag: string = "";
   newTagPopupOpen: boolean = false;
+  blockTagsPopupOpen: boolean = false;
 }
 
 type Props = {
@@ -76,6 +79,7 @@ const TagPopup = (props: Props) => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const tagOptions = useSelector(selectTagOptions);
+  const blockTags = useSelector(selectBlockTags);
 
   return (
     <Popup
@@ -96,7 +100,11 @@ const TagPopup = (props: Props) => {
             ))}
             <AddTag>
               <AddTagContent
-                onClick={() => setState({ ...state, newTagPopupOpen: true })}
+                onClick={() => {
+                  if (blockTags)
+                    setState({ ...state, blockTagsPopupOpen: true });
+                  else setState({ ...state, newTagPopupOpen: true });
+                }}
               >
                 <AddTagText>Add</AddTagText>
                 <TagIcon>
@@ -128,6 +136,19 @@ const TagPopup = (props: Props) => {
                   })
                 }
                 submit={() => dispatch(addTagOption(state.newTag))}
+              />
+              <Popup
+                open={state.blockTagsPopupOpen}
+                content={<p>meow</p>}
+                showButton={true}
+                close={() =>
+                  setState({
+                    ...state,
+                    blockTagsPopupOpen: false,
+                  })
+                }
+                submit={() => dispatch(showPremium())}
+                buttonText={"Go Premium"}
               />
             </AddTag>
           </SelectedTags>
