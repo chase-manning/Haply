@@ -47,7 +47,7 @@ const PremiumPopup = (props: Props) => {
         </StyledPremiumPopup>
       }
       showButton={true}
-      close={() => props.close}
+      close={() => props.close()}
       submit={() => dispatch(showPremium())}
       buttonText={"Go Premium"}
     />
