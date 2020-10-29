@@ -22,7 +22,7 @@ const initialState: NavigationState = {
   moodShowing: false,
   loggingIn: false,
   AppInit: false,
-  premium: true,
+  premium: false,
 };
 
 /* SLICE */
