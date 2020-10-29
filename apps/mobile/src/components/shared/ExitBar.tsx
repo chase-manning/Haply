@@ -4,6 +4,7 @@ import Close from "@material-ui/icons/Close";
 
 const TopBar = styled.div`
   width: 100%;
+  color: var(--main);
 `;
 
 type Props = {
