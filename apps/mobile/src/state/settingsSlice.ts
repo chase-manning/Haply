@@ -155,5 +155,7 @@ export const selectTagOptions = (state: RootState) => state.settings.tagOptions;
 export const selectColorPrimary = (state: RootState) =>
   state.settings.colorPrimary;
 export const selectMode = (state: RootState) => state.settings.mode;
+export const selectBlockTags = (state: RootState) =>
+  state.settings.tagOptions.length >= 15;
 
 export default settingsSlice.reducer;
