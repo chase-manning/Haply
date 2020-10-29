@@ -3,6 +3,7 @@ import AchievementModel from "../models/AchievementModel";
 import Mood from "../models/mood";
 import { StatModel } from "../models/StatModel";
 import { RootState } from "./store";
+import dateFormat from "dateformat";
 
 /* TYPES */
 interface DataState {
@@ -122,6 +123,13 @@ export const selectLoadingPercent = (state: RootState) => {
     state.data.updatingAchievements,
   ];
   return updates.filter((update: boolean) => !update).length / updates.length;
+};
+export const selectBlockMoods = (state: RootState) => {
+  const today = dateFormat(new Date(), "d/m/yyyy");
+  const moodsToday = state.data.moods
+    .slice(0, 10)
+    .filter((mood: Mood) => dateFormat(mood.date, "d/m/yyyy") === today);
+  return moodsToday.length >= 5;
 };
 
 export default dataSlice.reducer;
