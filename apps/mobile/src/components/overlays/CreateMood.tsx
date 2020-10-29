@@ -18,6 +18,7 @@ import {
 import { addMood, updateData } from "../../state/dataSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
+import { Button } from "../../styles/Shared";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -61,19 +62,6 @@ const Additions = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--bg);
-  padding: 17px;
-  font-size: 16px;
-  font-weight: 400;
-  border-radius: 10px;
-  background-color: var(--primary);
 `;
 
 class State {
