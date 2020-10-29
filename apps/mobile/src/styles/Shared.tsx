@@ -73,3 +73,16 @@ export const SelectedTags = styled.div`
   max-height: 200px;
   overflow: auto;
 `;
+
+export const Button = styled.button`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bg);
+  padding: 17px;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 10px;
+  background-color: var(--primary);
+`;
