@@ -685,7 +685,7 @@ app.get("/achievements", async (request: any, response) => {
     achievements.push({
       svg: "merryChristmas",
       percentComplete: moods.some(
-        (mood: Mood) => dateFormat(mood.date, "d - m") === "25 = 12"
+        (mood: Mood) => dateFormat(mood.date, "d - m") === "25 - 12"
       )
         ? 1
         : 0,
@@ -699,7 +699,7 @@ app.get("/achievements", async (request: any, response) => {
     achievements.push({
       svg: "happyHalloween",
       percentComplete: moods.some(
-        (mood: Mood) => dateFormat(mood.date, "d - m") === "31 = 10"
+        (mood: Mood) => dateFormat(mood.date, "d - m") === "31 - 10"
       )
         ? 1
         : 0,
@@ -1027,7 +1027,7 @@ app.get("/v2/achievements", async (request: any, response) => {
     achievements.push({
       svg: "merryChristmas",
       percentComplete: moods.some(
-        (mood: Mood) => dateFormat(mood.date, "d - m") === "25 = 12"
+        (mood: Mood) => dateFormat(mood.date, "d - m") === "25 - 12"
       )
         ? 1
         : 0,
@@ -1041,7 +1041,7 @@ app.get("/v2/achievements", async (request: any, response) => {
     achievements.push({
       svg: "happyHalloween",
       percentComplete: moods.some(
-        (mood: Mood) => dateFormat(mood.date, "d - m") === "31 = 10"
+        (mood: Mood) => dateFormat(mood.date, "d - m") === "31 - 10"
       )
         ? 1
         : 0,
