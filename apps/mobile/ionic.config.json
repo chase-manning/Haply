@@ -1,0 +1,7 @@
+{
+  "name": "Haply",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
