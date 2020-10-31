@@ -1,3 +1,4 @@
+//f4b793ada2d44c0998fbade6753c7fcc
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
@@ -5,11 +6,15 @@ import { hidePremium, selectPremium } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
 import natureOnScren from "../../assets/svgs/NatureOnScreen.svg";
 import PremiumFeature from "./PremiumFeature";
+import { InAppPurchase2 } from "@ionic-native/in-app-purchase-2";
 
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
-import CasinoIcon from "@material-ui/icons/Casino";
+// import CasinoIcon from "@material-ui/icons/Casino";
 import { Button } from "../../styles/Shared";
+import { setFree, setPremium } from "../../state/premiumSlice";
+
+const productId = "69";
 
 const StyledPremium = styled.div`
   position: fixed;
@@ -43,7 +48,30 @@ const Features = styled.div`
 const Premium = () => {
   const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
+
+  const store = InAppPurchase2;
+
+  store.register({
+    id: productId,
+    type: store.PAID_SUBSCRIPTION,
+  });
+
+  store.refresh();
+
+  const product = store.get(productId);
+
+  store.when(productId).updated((product: any) => {
+    if (product.owned) dispatch(setPremium());
+    else dispatch(setFree());
+  });
+
+  store.when(productId).approved((product: any) => {
+    dispatch(setPremium());
+    product.finish();
+  });
+
   if (!premium) return null;
+
   return (
     <StyledPremium>
       <ExitBar exit={() => dispatch(hidePremium())} />
@@ -72,7 +100,14 @@ const Premium = () => {
           icon={<CasinoIcon />}
         /> */}
       </Features>
-      <Button> Get Premium for $4.99/month</Button>
+      <Button
+        onClick={() => {
+          store.order("extra_chapter");
+          dispatch(hidePremium());
+        }}
+      >
+        {"Get Premium for " + product.price + "/month"}
+      </Button>
     </StyledPremium>
   );
 };
