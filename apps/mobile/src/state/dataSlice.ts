@@ -125,6 +125,7 @@ export const selectLoadingPercent = (state: RootState) => {
   return updates.filter((update: boolean) => !update).length / updates.length;
 };
 export const selectBlockMoods = (state: RootState) => {
+  if (state.premium.isPremium) return false;
   const today = dateFormat(new Date(), "d/m/yyyy");
   const moodsToday = state.data.moods
     .slice(0, 10)
