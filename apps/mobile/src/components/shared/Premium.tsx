@@ -7,6 +7,7 @@ import ExitBar from "./ExitBar";
 import natureOnScren from "../../assets/svgs/NatureOnScreen.svg";
 import PremiumFeature from "./PremiumFeature";
 import { InAppPurchase2, IAPProduct } from "@ionic-native/in-app-purchase-2";
+import { Capacitor } from "@capacitor/core";
 
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
@@ -58,6 +59,8 @@ const Premium = () => {
   const store = InAppPurchase2;
 
   useEffect(() => {
+    if (!Capacitor.isNative) return;
+
     store.register({
       id: productId,
       type: store.PAID_SUBSCRIPTION,
