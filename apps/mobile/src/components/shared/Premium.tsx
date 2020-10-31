@@ -6,13 +6,18 @@ import { hidePremium, selectPremium } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
 import natureOnScren from "../../assets/svgs/NatureOnScreen.svg";
 import PremiumFeature from "./PremiumFeature";
-import { InAppPurchase2 } from "@ionic-native/in-app-purchase-2";
+import { InAppPurchase2, IAPProduct } from "@ionic-native/in-app-purchase-2";
 
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 // import CasinoIcon from "@material-ui/icons/Casino";
 import { Button } from "../../styles/Shared";
-import { setFree, setPremium } from "../../state/premiumSlice";
+import {
+  selectProductPrice,
+  setFree,
+  setPremium,
+  setProductPrice,
+} from "../../state/premiumSlice";
 
 const productId = "69";
 
@@ -48,10 +53,9 @@ const Features = styled.div`
 const Premium = () => {
   const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
+  const price = useSelector(selectProductPrice);
 
   const store = InAppPurchase2;
-
-  let product: any;
 
   useEffect(() => {
     store.register({
@@ -59,19 +63,26 @@ const Premium = () => {
       type: store.PAID_SUBSCRIPTION,
     });
 
-    store.refresh();
-
-    product = store.get(productId);
-
-    store.when(productId).updated((product: any) => {
+    store.when(productId).updated((product: IAPProduct) => {
       if (product.owned) dispatch(setPremium());
       else dispatch(setFree());
+      dispatch(setProductPrice(product.price));
     });
 
-    store.when(productId).approved((product: any) => {
+    store.when(productId).approved((product: IAPProduct) => {
+      product.verify();
+    });
+
+    store.when(productId).verified((product: IAPProduct) => {
       dispatch(setPremium());
       product.finish();
     });
+
+    // store.error((err: any) => {});
+
+    // store.ready(() => {});
+
+    store.refresh();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -112,7 +123,7 @@ const Premium = () => {
           dispatch(hidePremium());
         }}
       >
-        {"Get Premium for " + product?.price + "/month"}
+        {"Get Premium for " + price + "/month"}
       </Button>
     </StyledPremium>
   );
