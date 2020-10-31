@@ -1,5 +1,5 @@
 //f4b793ada2d44c0998fbade6753c7fcc
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { hidePremium, selectPremium } from "../../state/navigationSlice";
@@ -51,24 +51,30 @@ const Premium = () => {
 
   const store = InAppPurchase2;
 
-  store.register({
-    id: productId,
-    type: store.PAID_SUBSCRIPTION,
-  });
+  let product: any;
 
-  store.refresh();
+  useEffect(() => {
+    store.register({
+      id: productId,
+      type: store.PAID_SUBSCRIPTION,
+    });
 
-  const product = store.get(productId);
+    store.refresh();
 
-  store.when(productId).updated((product: any) => {
-    if (product.owned) dispatch(setPremium());
-    else dispatch(setFree());
-  });
+    product = store.get(productId);
 
-  store.when(productId).approved((product: any) => {
-    dispatch(setPremium());
-    product.finish();
-  });
+    store.when(productId).updated((product: any) => {
+      if (product.owned) dispatch(setPremium());
+      else dispatch(setFree());
+    });
+
+    store.when(productId).approved((product: any) => {
+      dispatch(setPremium());
+      product.finish();
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!premium) return null;
 
@@ -102,11 +108,11 @@ const Premium = () => {
       </Features>
       <Button
         onClick={() => {
-          store.order("extra_chapter");
+          store.order(productId);
           dispatch(hidePremium());
         }}
       >
-        {"Get Premium for " + product.price + "/month"}
+        {"Get Premium for " + product?.price + "/month"}
       </Button>
     </StyledPremium>
   );
