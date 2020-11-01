@@ -13,7 +13,7 @@ interface PremiumState {
 
 const initialState: PremiumState = {
   isPremium: false,
-  product: { price: "" },
+  product: { price: "error" },
 };
 
 /* SLICE */
