@@ -5,7 +5,7 @@ import { selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
-import { updateData } from "../../state/dataSlice";
+import { updateData } from "../../state/loadingSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import {
   selectUser,
