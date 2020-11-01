@@ -8,7 +8,7 @@ import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
 import { useSelector } from "react-redux";
 import PushNotificationSetup from "./shared/PushNotifications";
-import { selectDataLoading, selectLoadingPercent } from "../state/dataSlice";
+import { selectDataLoading, selectLoadingPercent } from "../state/loadingSlice";
 import LoadingScreen from "./shared/LoadingScreen";
 import Alerts from "./shared/Alerts";
 import Premium from "./shared/Premium";
