@@ -2,19 +2,21 @@ import { put, takeEvery, all, select, call } from "redux-saga/effects";
 import AchievementService from "../services/AchievementService";
 import StatService from "../services/StatService";
 import {
-  completeAchievements,
-  completeMoods,
-  completeStats,
   selectAchievements,
   selectStats,
   setAchievements,
   setMoods,
   setStats,
+} from "./dataSlice";
+import {
+  completeAchievements,
+  completeMoods,
+  completeStats,
   updateAchievements,
   updateData,
   updateMoods,
   updateStats,
-} from "./dataSlice";
+} from "./loadingSlice";
 import {
   Plugins as CapacitorPlugins,
   StatusBarStyle,
