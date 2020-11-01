@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { initApp, selectLoggingIn } from "../../state/navigationSlice";
+import { selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -55,8 +55,6 @@ const Login = () => {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    dispatch(initApp);
-
     firebaseApp.auth().onAuthStateChanged(async (changedUser) => {
       if (!changedUser) return;
       const userToken = await changedUser.getIdToken(true);
