@@ -33,12 +33,15 @@ import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
 import FaceOutlinedIcon from "@material-ui/icons/FaceOutlined";
 import SecurityIcon from "@material-ui/icons/Security";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
+import LoadingLine from "../shared/LoadingLine";
+import { selectSettingsLoading } from "../../state/loadingSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 15px 30px;
+  position: relative;
 `;
 
 class State {
@@ -55,9 +58,11 @@ const Settings = () => {
   const mode = useSelector(selectMode);
   const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
   const user = useSelector(selectUser);
+  const settingsLoading = useSelector(selectSettingsLoading);
 
   return (
     <StyledSettings>
+      <LoadingLine loading={settingsLoading} />
       <Header>Profile</Header>
       <Setting
         label={"Cloud Sync"}
