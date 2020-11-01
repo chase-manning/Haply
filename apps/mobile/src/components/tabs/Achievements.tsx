@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
-import {
-  selectAchievements,
-  selectAchievementsLoading,
-} from "../../state/dataSlice";
+import { selectAchievements } from "../../state/dataSlice";
+import { selectAchievementsLoading } from "../../state/loadingSlice";
 import { Card, Header } from "../../styles/Shared";
 import Acheivement from "../shared/Achievement";
 import AchievementPopupContent from "../shared/AchievementPopupContent";
