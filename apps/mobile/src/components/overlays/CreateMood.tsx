@@ -122,7 +122,6 @@ const CreateMood = () => {
           );
           setState({ ...state, tags: [], note: "", mood: 5 });
           dispatch(addMood(mood));
-          dispatch(updateNextNotification());
           dispatch(hideMood());
           MoodService.createMood(user.token, mood).then(() => {
             dispatch(updateData());
