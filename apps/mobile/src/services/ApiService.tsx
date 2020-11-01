@@ -2,17 +2,19 @@ import { firebaseApp } from "../components/shared/Login";
 
 const ApiService = async (route: string, requestOptions: any) => {
   try {
-    const response = await fetch(route, requestOptions);
-    if (!response.ok && response.status === 403) {
-      const newToken = await firebaseApp.auth().currentUser!.getIdToken(true);
+    if (requestOptions.headers.Authorization.lenth < 10) {
+      const newToken = await getUpdatedToken();
       requestOptions.headers.Authorization = "Bearer " + newToken;
-      return await fetch(route, requestOptions);
     }
-    return response;
+    return await fetch(route, requestOptions);
   } catch (error) {
     console.log(error);
     return null;
   }
+};
+
+const getUpdatedToken = async (): Promise<string> => {
+  return await firebaseApp.auth().currentUser!.getIdToken(true);
 };
 
 export default ApiService;
