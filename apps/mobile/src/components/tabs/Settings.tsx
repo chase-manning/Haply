@@ -144,6 +144,20 @@ const Settings = () => {
         clickFunction={() => window.open("https://chasemanning.co.nz/")}
         icon={<FaceOutlinedIcon />}
       />
+      <Setting
+        label={"Privacy Policy"}
+        isToggle={false}
+        clickFunction={() => window.open("https://haply.app/privacy-policy")}
+        icon={<FaceOutlinedIcon />}
+      />
+      <Setting
+        label={"Terms & Conditions"}
+        isToggle={false}
+        clickFunction={() =>
+          window.open("https://haply.app/terms-and-conditions")
+        }
+        icon={<FaceOutlinedIcon />}
+      />
 
       <ReminderPopup
         open={state.reminderPopupOpen}
