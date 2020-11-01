@@ -3,6 +3,7 @@ import { RootState } from "./store";
 
 /* TYPES */
 interface LoadingState {
+  initialising: boolean;
   updatingMoods: boolean;
   updatingStats: boolean;
   updatingAchievements: boolean;
@@ -10,6 +11,7 @@ interface LoadingState {
 }
 
 const initialState: LoadingState = {
+  initialising: true,
   updatingMoods: true,
   updatingStats: true,
   updatingAchievements: true,
@@ -26,6 +28,9 @@ export const loadingSlice = createSlice({
       state.updatingStats = true;
       state.updatingAchievements = true;
       state.updatingSettings = true;
+    },
+    completeInitialisation: (state) => {
+      state.initialising = false;
     },
     updateMoods: (state) => {
       state.updatingMoods = true;
@@ -56,6 +61,7 @@ export const loadingSlice = createSlice({
 
 export const {
   updateAll,
+  completeInitialisation,
   updateMoods,
   completeMoods,
   updateStats,
@@ -76,14 +82,7 @@ export const selectAchievementsLoading = (state: RootState) =>
 export const selectSettingsLoading = (state: RootState) =>
   state.loading.updatingSettings;
 export const selectDataLoading = (state: RootState) => {
-  return (
-    state.data.achievements.length === 0 ||
-    state.data.stats.length === 0 ||
-    state.loading.updatingMoods ||
-    state.loading.updatingStats ||
-    state.loading.updatingAchievements ||
-    state.loading.updatingSettings
-  );
+  return state.loading.initialising;
 };
 
 export const selectLoadingPercent = (state: RootState) => {

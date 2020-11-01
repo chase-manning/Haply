@@ -10,6 +10,7 @@ import {
 } from "./dataSlice";
 import {
   completeAchievements,
+  completeInitialisation,
   completeMoods,
   completeSettings,
   completeStats,
@@ -147,6 +148,7 @@ function* runUpdateAll() {
     call(runUpdateAchievements),
     call(runUpdateSettings),
   ]);
+  yield put(completeInitialisation());
 }
 
 function* runUpdateMoods() {
@@ -181,7 +183,7 @@ function* runUpdateAchievements() {
 function* runUpdateSettings() {
   const userToken = yield select(selectToken);
   const setting = yield SettingService.getSetting(userToken);
-  if (setting) put(setSettings(setting));
+  if (setting) yield put(setSettings(setting));
 
   // Update Timezone if Different
   let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
