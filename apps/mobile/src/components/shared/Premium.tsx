@@ -51,6 +51,24 @@ const Features = styled.div`
   flex-direction: column;
 `;
 
+const Buttons = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const RestorePurchases = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--sub);
+  padding: 17px;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: underline;
+`;
+
 const Premium = () => {
   const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
@@ -120,14 +138,19 @@ const Premium = () => {
           icon={<CasinoIcon />}
         /> */}
       </Features>
-      <Button
-        onClick={() => {
-          store.order(productId);
-          dispatch(hidePremium());
-        }}
-      >
-        {"Get Premium for " + price + "/month"}
-      </Button>
+      <Buttons>
+        <Button
+          onClick={() => {
+            store.order(productId);
+            dispatch(hidePremium());
+          }}
+        >
+          {"Get Premium for " + price + "/month"}
+        </Button>
+        <RestorePurchases onClick={() => store.refresh()}>
+          Restore Purchases
+        </RestorePurchases>
+      </Buttons>
     </StyledPremium>
   );
 };
