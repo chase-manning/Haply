@@ -15,7 +15,8 @@ import {
   selectTagOptions,
   updateNextNotification,
 } from "../../state/settingsSlice";
-import { addMood, updateData } from "../../state/dataSlice";
+import { addMood } from "../../state/dataSlice";
+import { updateData } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
