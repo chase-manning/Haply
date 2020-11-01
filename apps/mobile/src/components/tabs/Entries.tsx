@@ -3,9 +3,10 @@ import styled from "styled-components";
 import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
 import noData from "../../assets/svgs/Empty.svg";
-import { selectMoods, selectMoodsLoading } from "../../state/dataSlice";
+import { selectMoods } from "../../state/dataSlice";
 import { useSelector } from "react-redux";
 import LoadingLine from "../shared/LoadingLine";
+import { selectMoodsLoading } from "../../state/loadingSlice";
 
 const StyledEntries = styled.div`
   width: 100%;
