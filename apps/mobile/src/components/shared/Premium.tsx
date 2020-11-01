@@ -45,6 +45,14 @@ const Header = styled.div`
   line-height: 1.2;
 `;
 
+const Illustration = styled.img`
+  width: 80%;
+
+  @media (max-height: 600px) {
+    display: none;
+  }
+`;
+
 const Features = styled.div`
   width: 100%;
   display: flex;
@@ -114,7 +122,7 @@ const Premium = () => {
     <StyledPremium>
       <ExitBar exit={() => dispatch(hidePremium())} />
       <Header>100% of Profits go to Support Mental Health</Header>
-      <img src={natureOnScren} alt="Premium Illustration" width="80%" />
+      <Illustration src={natureOnScren} alt="Premium Illustration" />
       <Features>
         <PremiumFeature
           header={"Unlimited Tags"}
