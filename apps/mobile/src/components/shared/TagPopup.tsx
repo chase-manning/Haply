@@ -156,7 +156,6 @@ const TagPopup = (props: Props) => {
       }
       showButton={true}
       close={() => props.closePopup()}
-      submit={() => dispatch(updateAchievements())}
     />
   );
 };
