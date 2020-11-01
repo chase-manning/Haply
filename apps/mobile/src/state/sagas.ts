@@ -11,10 +11,12 @@ import {
 import {
   completeAchievements,
   completeMoods,
+  completeSettings,
   completeStats,
   updateAchievements,
-  updateData,
+  updateAll,
   updateMoods,
+  updateSettings,
   updateStats,
 } from "./loadingSlice";
 import {
@@ -56,8 +58,8 @@ const { StatusBar } = CapacitorPlugins;
 const isStatusBarAvailable = Capacitor.isPluginAvailable("StatusBar");
 
 /* WATCHERS */
-function* watchUpdateData() {
-  yield takeEvery(updateData, runUpdateData);
+function* watchUpdateAll() {
+  yield takeEvery(updateAll, runUpdateAll);
 }
 
 function* watchUpdateMoods() {
@@ -70,6 +72,10 @@ function* watchUpdateStats() {
 
 function* watchUpdateAchievements() {
   yield takeEvery(updateAchievements, runUpdateAchievements);
+}
+
+function* watchUpdateSettings() {
+  yield takeEvery(updateSettings, runUpdateSettings);
 }
 
 function* watchSetToken() {
@@ -134,11 +140,12 @@ function* watchSetPushNotificationToken() {
 }
 
 /* ACTIONS */
-function* runUpdateData() {
+function* runUpdateAll() {
   yield all([
     call(runUpdateMoods),
     call(runUpdateStats),
     call(runUpdateAchievements),
+    call(runUpdateSettings),
   ]);
 }
 
@@ -171,6 +178,19 @@ function* runUpdateAchievements() {
   yield put(completeAchievements());
 }
 
+function* runUpdateSettings() {
+  const userToken = yield select(selectToken);
+  const setting = yield SettingService.getSetting(userToken);
+  if (setting) put(setSettings(setting));
+
+  // Update Timezone if Different
+  let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (timezone && timezone.length > 1) {
+    if (setting && setting.timezone != timezone) put(setTimezone());
+  }
+  yield put(completeSettings());
+}
+
 function* setStatusBar() {
   if (!isStatusBarAvailable) return;
   const mode = yield select(selectMode);
@@ -199,7 +219,7 @@ function* saveSettings() {
 
 export default function* rootSaga() {
   yield all([
-    watchUpdateData(),
+    watchUpdateAll(),
     watchUpdateMoods(),
     watchUpdateStats(),
     watchUpdateAchievements(),

@@ -7,7 +7,7 @@ import Popup from "./Popup";
 import { SelectedTag, SelectedTags, Card } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
-import { updateData } from "../../state/loadingSlice";
+import { updateAll } from "../../state/loadingSlice";
 import { selectToken } from "../../state/userSlice";
 import DynamicIcon from "./DynamicIcon";
 
@@ -181,7 +181,7 @@ const Entry = (props: Props) => {
                 dispatch(removeMood(props.mood));
                 MoodService.deleteMood(userToken, props.mood.moodId!).then(
                   () => {
-                    dispatch(updateData());
+                    dispatch(updateAll());
                   }
                 );
               }}

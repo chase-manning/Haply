@@ -10,10 +10,10 @@ interface LoadingState {
 }
 
 const initialState: LoadingState = {
-  updatingMoods: false,
-  updatingStats: false,
-  updatingAchievements: false,
-  updatingSettings: false,
+  updatingMoods: true,
+  updatingStats: true,
+  updatingAchievements: true,
+  updatingSettings: true,
 };
 
 /* SLICE */
@@ -21,7 +21,7 @@ export const loadingSlice = createSlice({
   name: "loading",
   initialState,
   reducers: {
-    updateData: (state) => {
+    updateAll: (state) => {
       state.updatingMoods = true;
       state.updatingStats = true;
       state.updatingAchievements = true;
@@ -55,7 +55,7 @@ export const loadingSlice = createSlice({
 });
 
 export const {
-  updateData,
+  updateAll,
   updateMoods,
   completeMoods,
   updateStats,
@@ -87,8 +87,6 @@ export const selectDataLoading = (state: RootState) => {
 };
 
 export const selectLoadingPercent = (state: RootState) => {
-  if (state.data.achievements.length === 0 && state.data.stats.length === 0)
-    return 0;
   let updates = [
     state.loading.updatingMoods,
     state.loading.updatingStats,

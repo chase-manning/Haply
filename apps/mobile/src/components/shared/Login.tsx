@@ -5,7 +5,7 @@ import { selectLoggingIn } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
-import { updateData } from "../../state/loadingSlice";
+import { updateAll } from "../../state/loadingSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import {
   selectUser,
@@ -13,7 +13,6 @@ import {
   setIsAnonymous,
   setToken,
 } from "../../state/userSlice";
-import { updateSettings, setTimezone } from "../../state/settingsSlice";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -61,8 +60,7 @@ const Login = () => {
       dispatch(setToken(userToken));
       dispatch(setId(changedUser.uid));
       dispatch(setIsAnonymous(changedUser.isAnonymous));
-      dispatch(updateData());
-      dispatch(updateSettings(userToken));
+      dispatch(updateAll());
     });
 
     firebaseApp.auth().onIdTokenChanged(async (changedUser) => {

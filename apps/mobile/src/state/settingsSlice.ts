@@ -132,18 +132,18 @@ export const {
 } = settingsSlice.actions;
 
 /* THUNKS */
-export const updateSettings = (userToken: string): AppThunk => async (
-  dispatch
-) => {
-  const setting = await SettingService.getSetting(userToken);
-  if (setting) dispatch(setSettings(setting));
+// export const updateSettings = (userToken: string): AppThunk => async (
+//   dispatch
+// ) => {
+//   const setting = await SettingService.getSetting(userToken);
+//   if (setting) dispatch(setSettings(setting));
 
-  // Update Timezone if Different
-  let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  if (timezone && timezone.length > 1) {
-    if (setting && setting.timezone != timezone) dispatch(setTimezone());
-  }
-};
+//   // Update Timezone if Different
+//   let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+//   if (timezone && timezone.length > 1) {
+//     if (setting && setting.timezone != timezone) dispatch(setTimezone());
+//   }
+// };
 
 /* SELECTS */
 export const selectSettings = (state: RootState) => state.settings;

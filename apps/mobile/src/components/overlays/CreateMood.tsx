@@ -16,7 +16,7 @@ import {
   updateNextNotification,
 } from "../../state/settingsSlice";
 import { addMood } from "../../state/dataSlice";
-import { updateData } from "../../state/loadingSlice";
+import { updateAll } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
@@ -125,7 +125,7 @@ const CreateMood = () => {
           dispatch(addMood(mood));
           dispatch(hideMood());
           MoodService.createMood(user.token, mood).then(() => {
-            dispatch(updateData());
+            dispatch(updateAll());
           });
         }}
       >
