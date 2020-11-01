@@ -11,7 +11,7 @@ import {
   addTagOption,
   selectBlockTags,
 } from "../../state/settingsSlice";
-import { updateAchievements } from "../../state/dataSlice";
+import { updateAchievements } from "../../state/loadingSlice";
 import PremiumPopup from "./PremiumPopup";
 
 const PopupContent = styled.div`
