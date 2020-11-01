@@ -10,6 +10,7 @@ import userReducer from "./userSlice";
 import settingsReducer from "./settingsSlice";
 import dataReducer from "./dataSlice";
 import premiumReducer from "./premiumSlice";
+import loadingReduce from "./loadingSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -23,6 +24,7 @@ export const reducer = combineReducers({
   settings: settingsReducer,
   data: dataReducer,
   premium: premiumReducer,
+  loading: loadingReduce,
 });
 
 export const store = createStore(
