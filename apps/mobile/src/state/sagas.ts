@@ -186,7 +186,7 @@ function* runUpdateSettings() {
   // Update Timezone if Different
   let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   if (timezone && timezone.length > 1) {
-    if (setting && setting.timezone != timezone) put(setTimezone());
+    if (setting && setting.timezone != timezone) yield put(setTimezone());
   }
   yield put(completeSettings());
 }
