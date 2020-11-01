@@ -4,7 +4,8 @@ import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
 import { useDispatch, useSelector } from "react-redux";
 import { selectColorPrimary, setColorPrimary } from "../../state/settingsSlice";
-import { selectAchievements, updateAchievements } from "../../state/dataSlice";
+import { selectAchievements } from "../../state/dataSlice";
+import { updateAchievements } from "../../state/loadingSlice";
 
 const PopupContent = styled.div`
   width: 100%;
