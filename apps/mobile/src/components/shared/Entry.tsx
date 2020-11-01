@@ -6,7 +6,8 @@ import Mood from "../../models/mood";
 import Popup from "./Popup";
 import { SelectedTag, SelectedTags, Card } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
-import { removeMood, updateData } from "../../state/dataSlice";
+import { removeMood } from "../../state/dataSlice";
+import { updateData } from "../../state/loadingSlice";
 import { selectToken } from "../../state/userSlice";
 import DynamicIcon from "./DynamicIcon";
 
