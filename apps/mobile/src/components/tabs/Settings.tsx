@@ -18,6 +18,7 @@ import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
 import { selectUser } from "../../state/userSlice";
 import { firebaseApp } from "../../components/shared/Login";
+import { Header } from "../../styles/Shared";
 
 import CloudOutlinedIcon from "@material-ui/icons/CloudOutlined";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
@@ -30,7 +31,8 @@ import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import BugReportOutlinedIcon from "@material-ui/icons/BugReportOutlined";
 import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
 import FaceOutlinedIcon from "@material-ui/icons/FaceOutlined";
-import { Header } from "../../styles/Shared";
+import SecurityIcon from "@material-ui/icons/Security";
+import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -148,7 +150,7 @@ const Settings = () => {
         label={"Privacy Policy"}
         isToggle={false}
         clickFunction={() => window.open("https://haply.app/privacy-policy")}
-        icon={<FaceOutlinedIcon />}
+        icon={<SecurityIcon />}
       />
       <Setting
         label={"Terms & Conditions"}
@@ -156,7 +158,7 @@ const Settings = () => {
         clickFunction={() =>
           window.open("https://haply.app/terms-and-conditions")
         }
-        icon={<FaceOutlinedIcon />}
+        icon={<VerifiedUserOutlinedIcon />}
       />
 
       <ReminderPopup
