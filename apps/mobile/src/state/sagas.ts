@@ -111,7 +111,16 @@ function* watchSetSettings() {
 }
 
 function* watchAddTag() {
-  yield takeEvery(addTagOption, saveSettings);
+  yield takeEvery(addTagOption, function* processAddTag() {
+    yield call(saveSettings);
+    const achievements: AchievementModel[] = yield select(selectAchievements);
+    const complete = achievements.some(
+      (achievement: AchievementModel) =>
+        achievement.title === "Tag Tinkerer" &&
+        achievement.percentComplete === 1
+    );
+    if (!complete) yield put(updateAchievements());
+  });
 }
 
 function* watchRemoveTag() {
@@ -121,14 +130,26 @@ function* watchRemoveTag() {
 function* watchSetColorPrimary() {
   yield takeEvery(setColorPrimary, function* processSetColorPrimary() {
     yield call(saveSettings);
+    const achievements: AchievementModel[] = yield select(selectAchievements);
+    const complete = achievements.some(
+      (achievement: AchievementModel) =>
+        achievement.title === "Looking Stylish" &&
+        achievement.percentComplete === 1
+    );
+    if (!complete) yield put(updateAchievements());
   });
 }
 
 function* watchToggleMode() {
   yield takeEvery(toggleMode, function* processSetColorPrimary() {
     yield call(saveSettings);
-    yield call(runUpdateAchievements);
     yield call(setStatusBar);
+    const achievements: AchievementModel[] = yield select(selectAchievements);
+    const complete = achievements.some(
+      (achievement: AchievementModel) =>
+        achievement.title === "Full Moon" && achievement.percentComplete === 1
+    );
+    if (!complete) yield put(updateAchievements());
   });
 }
 
