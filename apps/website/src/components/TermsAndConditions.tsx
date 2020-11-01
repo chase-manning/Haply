@@ -8,7 +8,7 @@ const StyledTermsAndConditions = styled.div`
 const TermsAndConditions = () => {
   return (
     <StyledTermsAndConditions>
-      <strong>Terms &amp; Conditions</strong>{" "}
+      <strong>Terms &amp; Conditions</strong>
       <p>
         By downloading or using the app, these terms will automatically apply to
         you – you should make sure therefore that you read them carefully before
@@ -19,14 +19,14 @@ const TermsAndConditions = () => {
         app itself, and all the trade marks, copyright, database rights and
         other intellectual property rights related to it, still belong to Chase
         Manning.
-      </p>{" "}
+      </p>
       <p>
         Chase Manning is committed to ensuring that the app is as useful and
         efficient as possible. For that reason, we reserve the right to make
         changes to the app or to charge for its services, at any time and for
         any reason. We will never charge you for the app or its services without
         making it very clear to you exactly what you’re paying for.
-      </p>{" "}
+      </p>
       <p>
         The Haply app stores and processes personal data that you have provided
         to us, in order to provide my Service. It’s your responsibility to keep
@@ -37,16 +37,16 @@ const TermsAndConditions = () => {
         malware/viruses/malicious programs, compromise your phone’s security
         features and it could mean that the Haply app won’t work properly or at
         all.
-      </p>{" "}
+      </p>
       <div>
         <p>
           The app does use third party services that declare their own Terms and
           Conditions.
-        </p>{" "}
+        </p>
         <p>
           Link to Terms and Conditions of third party service providers used by
           the app
-        </p>{" "}
+        </p>
         <ul>
           <li>
             <a
@@ -76,7 +76,7 @@ const TermsAndConditions = () => {
             </a>
           </li>
         </ul>
-      </div>{" "}
+      </div>
       <p>
         You should be aware that there are certain things that Chase Manning
         will not take responsibility for. Certain functions of the app will
@@ -85,8 +85,8 @@ const TermsAndConditions = () => {
         Manning cannot take responsibility for the app not working at full
         functionality if you don’t have access to Wi-Fi, and you don’t have any
         of your data allowance left.
-      </p>{" "}
-      <p></p>{" "}
+      </p>
+      <p></p>
       <p>
         If you’re using the app outside of an area with Wi-Fi, you should
         remember that your terms of the agreement with your mobile network
@@ -99,13 +99,13 @@ const TermsAndConditions = () => {
         bill payer for the device on which you’re using the app, please be aware
         that we assume that you have received permission from the bill payer for
         using the app.
-      </p>{" "}
+      </p>
       <p>
         Along the same lines, Chase Manning cannot always take responsibility
         for the way you use the app i.e. You need to make sure that your device
         stays charged – if it runs out of battery and you can’t turn it on to
         avail the Service, Chase Manning cannot accept responsibility.
-      </p>{" "}
+      </p>
       <p>
         With respect to Chase Manning’s responsibility for your use of the app,
         when you’re using the app, it’s important to bear in mind that although
@@ -114,7 +114,7 @@ const TermsAndConditions = () => {
         make it available to you. Chase Manning accepts no liability for any
         loss, direct or indirect, you experience as a result of relying wholly
         on this functionality of the app.
-      </p>{" "}
+      </p>
       <p>
         At some point, we may wish to update the app. The app is currently
         available on Android &amp; iOS – the requirements for both systems(and
@@ -129,23 +129,23 @@ const TermsAndConditions = () => {
         you. Unless we tell you otherwise, upon any termination, (a) the rights
         and licenses granted to you in these terms will end; (b) you must stop
         using the app, and (if needed) delete it from your device.
-      </p>{" "}
+      </p>
       <p>
         <strong>Changes to This Terms and Conditions</strong>
-      </p>{" "}
+      </p>
       <p>
         I may update our Terms and Conditions from time to time. Thus, you are
         advised to review this page periodically for any changes. I will notify
         you of any changes by posting the new Terms and Conditions on this page.
-      </p>{" "}
-      <p>These terms and conditions are effective as of 2020-11-01</p>{" "}
+      </p>
+      <p>These terms and conditions are effective as of 2020-11-01</p>
       <p>
         <strong>Contact Us</strong>
-      </p>{" "}
+      </p>
       <p>
         If you have any questions or suggestions about my Terms and Conditions,
         do not hesitate to contact me at hello@haply.app.
-      </p>{" "}
+      </p>
     </StyledTermsAndConditions>
   );
 };
