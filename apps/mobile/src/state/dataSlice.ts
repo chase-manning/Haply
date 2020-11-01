@@ -10,18 +10,12 @@ interface DataState {
   moods: Mood[];
   stats: StatModel[];
   achievements: AchievementModel[];
-  updatingMoods: boolean;
-  updatingStats: boolean;
-  updatingAchievements: boolean;
 }
 
 const initialState: DataState = {
   moods: [],
   stats: [],
   achievements: [],
-  updatingMoods: false,
-  updatingStats: false,
-  updatingAchievements: false,
 };
 
 /* SLICE */
@@ -29,29 +23,6 @@ export const dataSlice = createSlice({
   name: "data",
   initialState,
   reducers: {
-    updateData: (state) => {
-      state.updatingMoods = true;
-      state.updatingStats = true;
-      state.updatingAchievements = true;
-    },
-    updateMoods: (state) => {
-      state.updatingMoods = true;
-    },
-    completeMoods: (state) => {
-      state.updatingMoods = false;
-    },
-    updateStats: (state) => {
-      state.updatingStats = true;
-    },
-    completeStats: (state) => {
-      state.updatingStats = false;
-    },
-    updateAchievements: (state) => {
-      state.updatingAchievements = true;
-    },
-    completeAchievements: (state) => {
-      state.updatingAchievements = false;
-    },
     setAchievementAsOld: (state, action: PayloadAction<number>) => {
       state.achievements[action.payload].isNew = false;
     },
@@ -83,13 +54,6 @@ export const {
   setAchievements,
   addMood,
   removeMood,
-  updateData,
-  updateMoods,
-  completeMoods,
-  updateStats,
-  completeStats,
-  updateAchievements,
-  completeAchievements,
   setAchievementAsOld,
   setStatAsOld,
 } = dataSlice.actions;
@@ -104,26 +68,6 @@ export const selectDarkModeUnlocked = (state: RootState) =>
       achievement.unlocks.indexOf("Dark Mode") >= 0 &&
       achievement.percentComplete === 1
   );
-export const selectMoodsLoading = (state: RootState) =>
-  state.data.updatingMoods;
-export const selectStatsLoading = (state: RootState) =>
-  state.data.updatingStats;
-export const selectAchievementsLoading = (state: RootState) =>
-  state.data.updatingAchievements;
-export const selectDataLoading = (state: RootState) => {
-  return state.data.achievements.length === 0 || state.data.stats.length === 0;
-};
-
-export const selectLoadingPercent = (state: RootState) => {
-  if (state.data.achievements.length === 0 && state.data.stats.length === 0)
-    return 0;
-  let updates = [
-    state.data.updatingMoods,
-    state.data.updatingStats,
-    state.data.updatingAchievements,
-  ];
-  return updates.filter((update: boolean) => !update).length / updates.length;
-};
 export const selectBlockMoods = (state: RootState) => {
   if (state.premium.isPremium) return false;
   const today = dateFormat(new Date(), "d/m/yyyy");
