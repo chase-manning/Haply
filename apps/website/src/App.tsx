@@ -15,18 +15,17 @@ export default class App extends Component {
       <StyledApp>
         <Router>
           <Switch>
-            <Route path="/">
-              <Home />
-            </Route>
             <Route path="/privacy-policy">
               <PrivacyPolicy />
             </Route>
             <Route path="/terms-and-conditions">
               <TermsAndConditions />
             </Route>
+            <Route path="/">
+              <Home />
+            </Route>
           </Switch>
         </Router>
-        <Home />
       </StyledApp>
     );
   }
