@@ -1,9 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import AchievementModel from "../models/AchievementModel";
-import Mood from "../models/mood";
-import { StatModel } from "../models/StatModel";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./store";
-import dateFormat from "dateformat";
 
 /* TYPES */
 interface LoadingState {
