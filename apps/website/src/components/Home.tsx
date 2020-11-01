@@ -70,6 +70,8 @@ const Left = styled.div`
 const Header = styled.h1`
   color: var(--main);
   font-size: 4rem;
+  margin: 0;
+  padding: 0;
 `;
 
 const SubHeader = styled.div`
