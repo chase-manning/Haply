@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { StatModel } from "../../models/StatModel";
 import Stat from "../shared/Stat";
 import { useSelector } from "react-redux";
-import { selectStats, selectStatsLoading } from "../../state/dataSlice";
+import { selectStats } from "../../state/dataSlice";
+import { selectStatsLoading } from "../../state/loadingSlice";
 import LoadingLine from "../shared/LoadingLine";
 
 const StyledAnalytics = styled.div`
