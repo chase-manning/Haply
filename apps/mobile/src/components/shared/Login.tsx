@@ -63,7 +63,6 @@ const Login = () => {
       dispatch(setIsAnonymous(changedUser.isAnonymous));
       dispatch(updateData());
       dispatch(updateSettings(userToken));
-      dispatch(setTimezone());
     });
 
     firebaseApp.auth().onIdTokenChanged(async (changedUser) => {
