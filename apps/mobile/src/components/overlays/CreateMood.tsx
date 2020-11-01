@@ -11,10 +11,7 @@ import AddNote from "../shared/AddNote";
 import AddTags from "../shared/AddTags";
 import { useSelector, useDispatch } from "react-redux";
 import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
-import {
-  selectTagOptions,
-  updateNextNotification,
-} from "../../state/settingsSlice";
+import { selectTagOptions } from "../../state/settingsSlice";
 import { addMood } from "../../state/dataSlice";
 import { updateAll } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
