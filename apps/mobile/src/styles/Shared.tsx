@@ -46,17 +46,20 @@ export const Icon = styled.div`
 
 type SeletedTagProps = {
   includeMargin: boolean;
+  hightlightColor?: boolean;
 };
 
 export const SelectedTag = styled.button`
   padding: 5px 8px;
   border-radius: 12px;
-  background-color: var(--primary-light);
+  background-color: ${(props: SeletedTagProps) =>
+    props.hightlightColor ? "var(--highlight-light)" : "var(--primary-light)"};
   font-size: 12px;
   margin: ${(props: SeletedTagProps) => {
     return props.includeMargin ? "0 5px 5px 0" : "0 5px 0 0";
   }};
-  color: var(--primary);
+  color: ${(props: SeletedTagProps) =>
+    props.hightlightColor ? "var(--highlight)" : "var(--primary)"};
   display: inline-block;
   text-overflow: ellipsis;
   height: 24px;
