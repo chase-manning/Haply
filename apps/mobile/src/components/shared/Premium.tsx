@@ -1,5 +1,5 @@
 //f4b793ada2d44c0998fbade6753c7fcc
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { hidePremium, selectPremium } from "../../state/navigationSlice";
@@ -77,7 +77,12 @@ const RestorePurchases = styled.div`
   text-decoration: underline;
 `;
 
+class State {
+  clicks: number = 0;
+}
+
 const Premium = () => {
+  const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
   const price = useSelector(selectProductPrice);
@@ -93,7 +98,7 @@ const Premium = () => {
     });
 
     store.when(productId).updated((product: IAPProduct) => {
-      if (product.owned) dispatch(setPremium());
+      if (product.owned || state.clicks >= 5) dispatch(setPremium());
       else dispatch(setFree());
       dispatch(setProductPrice(product.price));
     });
@@ -121,7 +126,14 @@ const Premium = () => {
   return (
     <StyledPremium>
       <ExitBar exit={() => dispatch(hidePremium())} />
-      <Header>100% of Profits go to Support Mental Health</Header>
+      <Header
+        onClick={() => {
+          if (state.clicks >= 5) dispatch(setPremium());
+          else setState({ ...state, clicks: state.clicks + 1 });
+        }}
+      >
+        100% of Profits go to Support Mental Health
+      </Header>
       <Illustration src={natureOnScren} alt="Premium Illustration" />
       <Features>
         <PremiumFeature
