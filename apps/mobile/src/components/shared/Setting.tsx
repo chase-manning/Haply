@@ -12,7 +12,7 @@ const StyledSettings = styled.div`
   flex-direction: column;
 `;
 
-const Content = styled.div`
+const Content = styled.button`
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -60,8 +60,8 @@ type Props = {
 const Setting = (props: Props) => {
   return (
     <StyledSettings>
-      <Card onClick={() => props.clickFunction()}>
-        <Content>
+      <Card>
+        <Content onClick={() => props.clickFunction()}>
           <LeftSide>
             <Icon>{props.icon}</Icon>
             <Label>{props.label}</Label>
