@@ -231,13 +231,13 @@ function* savePushNotificationToken() {
   const userToken = yield select(selectToken);
   const pushNotificationToken = yield select(selectPushNotificationToken);
   if (userToken !== "" && pushNotificationToken)
-    PushNotificationService.updateToken(userToken, pushNotificationToken);
+    yield PushNotificationService.updateToken(userToken, pushNotificationToken);
 }
 
 function* saveSettings() {
   let settings: SettingsState = yield select(selectSettings);
   const userToken = yield select(selectToken);
-  SettingService.createSetting(userToken, settings);
+  yield SettingService.createSetting(userToken, settings);
 }
 
 export default function* rootSaga() {
