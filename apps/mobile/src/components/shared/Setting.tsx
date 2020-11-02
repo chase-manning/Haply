@@ -39,12 +39,12 @@ const Value = styled.div`
 `;
 
 type ToggleProps = {
-  on: boolean;
+  enabled: boolean;
 };
 
 const Toggle = styled.div`
   color: ${(props: ToggleProps) =>
-    props.on ? "var(--primary)" : "var(--sub)"};
+    props.enabled ? "var(--primary)" : "var(--sub)"};
   display: flex;
   align-items: center;
 `;
@@ -68,7 +68,7 @@ const Setting = (props: Props) => {
           </LeftSide>
           {props.isToggle ? (
             <Value>
-              <Toggle on={props.toggleOn!}>
+              <Toggle enabled={!!props.toggleOn}>
                 {props.toggleOn ? (
                   <ToggleOnIcon fontSize={"large"} />
                 ) : (
