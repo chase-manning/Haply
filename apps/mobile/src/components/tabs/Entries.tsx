@@ -58,7 +58,11 @@ const Entries = () => {
     <StyledEntries>
       <LoadingLine loading={entriesLoading} />
       {moods.length > 0 &&
-        moods.slice(0, 30).map((mood: Mood) => <Entry mood={mood} />)}
+        moods
+          .slice(0, 30)
+          .map((mood: Mood) => (
+            <Entry key={mood.moodId || mood.value} mood={mood} />
+          ))}
       {moods.length === 0 && (
         <NoDataContainer>
           <NoData>
