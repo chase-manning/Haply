@@ -54,10 +54,11 @@ const Achievements = () => {
           <Header>Completed</Header>
           <Card>
             <AchievementsList>
-              {completedAchievements.map((achievment: AchievementModel) => (
+              {completedAchievements.map((achievement: AchievementModel) => (
                 <Acheivement
-                  achievement={achievment}
-                  openPopup={() => setState({ popupAchievement: achievment })}
+                  key={achievement.title}
+                  achievement={achievement}
+                  openPopup={() => setState({ popupAchievement: achievement })}
                 />
               ))}
             </AchievementsList>
@@ -69,10 +70,11 @@ const Achievements = () => {
           <Header>In Progress</Header>
           <Card>
             <AchievementsList>
-              {inProgressAchievements.map((achievment: AchievementModel) => (
+              {inProgressAchievements.map((achievement: AchievementModel) => (
                 <Acheivement
-                  achievement={achievment}
-                  openPopup={() => setState({ popupAchievement: achievment })}
+                  key={achievement.title}
+                  achievement={achievement}
+                  openPopup={() => setState({ popupAchievement: achievement })}
                 />
               ))}
             </AchievementsList>
