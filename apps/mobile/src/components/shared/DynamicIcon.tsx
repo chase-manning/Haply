@@ -9,16 +9,16 @@ const StyledDynamicIcon = styled.div`
   margin-right: 15px;
 `;
 
-type IconOverlayProps = {
+type OverlayProps = {
   opacity: number;
 };
 
-const IconOverlay = styled.div`
+const Overlay = styled.div`
   background-color: var(--bg-mid);
   position: absolute;
   top: 0;
   left: 0;
-  opacity: ${(props: IconOverlayProps) => props.opacity};
+  opacity: ${(props: OverlayProps) => props.opacity};
 `;
 
 type Props = {
@@ -29,12 +29,12 @@ type Props = {
 const DynamicIcon = (props: Props) => {
   return (
     <StyledDynamicIcon>
-      <IconOverlay opacity={1}>
+      <Overlay opacity={1}>
         <Icon secondary={true}>{props.value}</Icon>
-      </IconOverlay>
-      <IconOverlay opacity={props.percent}>
+      </Overlay>
+      <Overlay opacity={props.percent}>
         <Icon>{props.value}</Icon>
-      </IconOverlay>
+      </Overlay>
     </StyledDynamicIcon>
   );
 };
