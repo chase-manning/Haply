@@ -120,11 +120,15 @@ function* watchAddTag() {
         achievement.percentComplete === 1
     );
     if (!complete) yield put(updateAchievements());
+    yield put(updateStats());
   });
 }
 
 function* watchRemoveTag() {
-  yield takeEvery(removeTagOption, saveSettings);
+  yield takeEvery(removeTagOption, function* processRemoveTag() {
+    yield call(saveSettings);
+    yield put(updateStats());
+  });
 }
 
 function* watchSetColorPrimary() {
