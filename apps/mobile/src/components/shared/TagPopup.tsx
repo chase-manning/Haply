@@ -88,6 +88,7 @@ const TagPopup = (props: Props) => {
           <SelectedTags>
             {tagOptions.map((tagOption: string) => (
               <SelectedTag
+                key={tagOption}
                 onClick={() => dispatch(removeTagOption(tagOption))}
                 includeMargin={true}
               >
