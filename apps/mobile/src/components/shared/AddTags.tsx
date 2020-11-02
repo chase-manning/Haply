@@ -76,6 +76,7 @@ const AddTags = (props: Props) => {
             <SelectedTags>
               {state.tags.map((tag: string) => (
                 <SelectedTag
+                  key={tag}
                   includeMargin={true}
                   onClick={() => {
                     let tags: string[] = state.tags.filter(
@@ -96,6 +97,7 @@ const AddTags = (props: Props) => {
                 .filter((tag: string) => state.tags.indexOf(tag) === -1)
                 .map((tag: string) => (
                   <Option
+                    key={tag}
                     onClick={() => {
                       let tags: string[] = state.tags;
                       tags.push(tag);
