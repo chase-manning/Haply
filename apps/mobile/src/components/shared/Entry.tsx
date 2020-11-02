@@ -134,7 +134,9 @@ const Entry = (props: Props) => {
           {props.mood.tags && props.mood.tags.length > 0 && (
             <EntryTags>
               {props.mood.tags.map((tag: string) => (
-                <SelectedTag includeMargin={false}>{tag}</SelectedTag>
+                <SelectedTag key={tag} includeMargin={false}>
+                  {tag}
+                </SelectedTag>
               ))}
             </EntryTags>
           )}
@@ -170,7 +172,9 @@ const Entry = (props: Props) => {
               <PopupDetails>
                 <SelectedTags>
                   {props.mood.tags.map((tag: string) => (
-                    <SelectedTag includeMargin={true}>{tag}</SelectedTag>
+                    <SelectedTag key={tag} includeMargin={true}>
+                      {tag}
+                    </SelectedTag>
                   ))}
                 </SelectedTags>
               </PopupDetails>
