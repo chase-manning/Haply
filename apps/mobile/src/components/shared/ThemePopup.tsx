@@ -83,6 +83,7 @@ const ThemePopup = (props: Props) => {
             </ColorOption>
             {unlockedAchievements.map((achievement: AchievementModel) => (
               <ColorOption
+                key={achievement.colorPrimary}
                 onClick={() =>
                   dispatch(setColorPrimary(achievement.colorPrimary))
                 }
