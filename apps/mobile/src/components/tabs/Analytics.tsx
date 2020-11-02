@@ -24,7 +24,7 @@ const Analytics = () => {
     <StyledAnalytics>
       <LoadingLine loading={analyticsLoading} />
       {stats.map((stat: StatModel) => (
-        <Stat stat={stat} />
+        <Stat key={stat.title} stat={stat} />
       ))}
     </StyledAnalytics>
   );
