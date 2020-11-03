@@ -8,17 +8,9 @@ const api: string =
 const MoodService = {
   async createMood(userToken: string, mood: Mood): Promise<any> {
     try {
-      const route: string = api + "v2/moods";
+      const route: string = api + "v3/moods";
 
-      const requestOptions = {
-        method: "POST",
-        body: mood.string,
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      };
-      return ApiService(route, requestOptions);
+      return ApiService(route, userToken, "POST", mood.string);
     } catch (error) {
       console.log(error);
       return null;
@@ -33,19 +25,13 @@ const MoodService = {
     try {
       const route: string = api + "moods";
 
-      const requestOptions = {
-        headers: {
-          Authorization: "Bearer " + userToken,
-        },
-      };
-
       let fullRoute: string = route;
       if (!!order || !!limit) fullRoute += "?";
       if (!!order) fullRoute += "order=" + order;
       if (!!order && !!limit) fullRoute += "&";
       if (!!limit) fullRoute += "limit=" + limit;
 
-      const response = await ApiService(fullRoute, requestOptions);
+      const response = await ApiService(fullRoute, userToken, "GET");
 
       const moodResponses: MoodResponse[] = await response!.json();
 
@@ -72,15 +58,7 @@ const MoodService = {
   async deleteMood(userToken: string, moodId: string): Promise<any> {
     try {
       const route: string = api + "moods";
-
-      const requestOptions = {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + userToken,
-        },
-      };
-
-      return await ApiService(route + "/" + moodId, requestOptions);
+      return await ApiService(route + "/" + moodId, userToken, "DELETE");
     } catch (error) {
       console.log(error);
       return null;
