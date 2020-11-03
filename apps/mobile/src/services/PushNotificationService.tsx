@@ -12,16 +12,7 @@ const PushNotificationService = {
     try {
       const route: string =
         api + "pushNotificationTokens/" + pushNotificationToken;
-
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      };
-
-      return await ApiService(route, requestOptions);
+      return await ApiService(route, userToken, "POST");
     } catch (error) {
       console.log(error);
       return null;
