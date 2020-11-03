@@ -50,13 +50,7 @@ export const {
 export const selectUser = (state: RootState) => state.user;
 export const selectPushNotificationToken = (state: RootState) =>
   state.user.pushNotificationToken;
-export const selectToken = (state: RootState) => {
-  const now = new Date();
-  const tokenAge = now.getTime() - state.user.tokenUpdated.getTime();
-  const tokenExpired = tokenAge / (1000 * 60 * 60) >= 1;
-  if (tokenExpired) return "";
-  return state.user.token;
-};
+export const selectToken = (state: RootState) => state.user.token;
 export const selectIsAnonymous = (state: RootState) => state.user.isAnonymous;
 export const selectId = (state: RootState) => state.user.id;
 export const selectTokenExpired = (state: RootState) => {};
