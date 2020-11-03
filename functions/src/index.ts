@@ -174,8 +174,8 @@ app.post("/v1/moods", async (request, response) => {
 app.post("/v2/moods", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     const { value, date, note, tags } = request.body;
     const data = {
@@ -216,12 +216,12 @@ app.post("/v2/moods", async (request, response) => {
       .doc(settings[0].id)
       .set(newSetting, { merge: true });
 
-    response.json({
+    return response.json({
       id: moodRef.id,
       data: mood.data(),
     });
   } catch (error) {
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
@@ -282,8 +282,8 @@ app.post("/v3/moods", async (request, response) => {
 app.get("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     const moodId = request.params.id;
 
@@ -298,20 +298,20 @@ app.get("/moods/:id", async (request, response) => {
     if (mood.data()?.userId !== userId)
       response.status(403).send("Unauthorized");
 
-    response.json({
+    return response.json({
       id: mood.id,
       data: mood.data(),
     });
   } catch (error) {
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
 app.get("/moods", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     const order: string = request.query.order;
     const limit: number = request.query.limit;
@@ -352,17 +352,17 @@ app.get("/moods", async (request: any, response) => {
       });
     });
 
-    response.json(moods);
+    return response.json(moods);
   } catch (error) {
     console.log(error);
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
 app.put("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
+    if (!user) return response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
     const { value, date, note, tags } = request.body;
@@ -377,19 +377,19 @@ app.put("/moods/:id", async (request, response) => {
 
     await db.collection("moods").doc(moodId).set(data, { merge: true });
 
-    response.json({
+    return response.json({
       id: moodId,
       data,
     });
   } catch (error) {
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
 app.delete("/moods/:id", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
+    if (!user) return response.status(403).send("Unauthorized");
 
     const moodId = request.params.id;
 
@@ -397,19 +397,19 @@ app.delete("/moods/:id", async (request, response) => {
 
     await db.collection("moods").doc(moodId).delete();
 
-    response.json({
+    return response.json({
       id: moodId,
     });
   } catch (error) {
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
 app.post("/pushNotificationTokens/:token", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     const token: string = request.params.token;
     if (!token) response.status(400).send("Token Not Provided");
@@ -437,9 +437,9 @@ app.post("/pushNotificationTokens/:token", async (request, response) => {
         .set(data, { merge: true });
     }
 
-    response.json(pushNotificationToken);
+    return response.json(pushNotificationToken);
   } catch (error) {
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
@@ -537,8 +537,8 @@ app.post("/v2/settings", async (request, response) => {
 app.post("/v3/settings", async (request, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     const {
       remindersEnabled,
@@ -578,17 +578,17 @@ app.post("/v3/settings", async (request, response) => {
         .set(data, { merge: true });
     }
 
-    response.json({ result: "All G" });
+    return response.json({ result: "All G" });
   } catch (error) {
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
 app.get("/settings", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     let querySnapshot = await db
       .collection("settings")
@@ -600,10 +600,10 @@ app.get("/settings", async (request: any, response) => {
 
     const setting = querySnapshot.docs[0].data();
 
-    response.json(setting);
+    return response.json(setting);
   } catch (error) {
     console.log(error);
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
@@ -952,8 +952,8 @@ app.get("/achievements", async (request: any, response) => {
 app.get("/v2/achievements", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     let querySnapshot = await db
       .collection("settings")
@@ -1136,7 +1136,7 @@ app.get("/v2/achievements", async (request: any, response) => {
     // High Flyer
     achievements.push({
       svg: "highFlyer",
-      percentComplete: user!.email ? 1 : 0,
+      percentComplete: user.email ? 1 : 0,
       title: "High Flyer",
       description: "Enable Cloud Sync",
       colorPrimary: "#ccffe0",
@@ -1323,10 +1323,10 @@ app.get("/v2/achievements", async (request: any, response) => {
       return b.percentComplete - a.percentComplete;
     });
 
-    response.json(achievements);
+    return response.json(achievements);
   } catch (error) {
     console.log(error);
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
@@ -1614,8 +1614,8 @@ app.get("/v2/stats", async (request: any, response) => {
 app.get("/v3/stats", async (request: any, response) => {
   try {
     const user = await getUser(request);
-    if (!user) response.status(403).send("Unauthorized");
-    const userId = user!.uid;
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
 
     let querySnapshot = await db
       .collection("settings")
@@ -1749,10 +1749,10 @@ app.get("/v3/stats", async (request: any, response) => {
       return b.percentComplete - a.percentComplete;
     });
 
-    response.json(stats);
+    return response.json(stats);
   } catch (error) {
     console.log(error);
-    response.status(500).send(error);
+    return response.status(500).send(error);
   }
 });
 
