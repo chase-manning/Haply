@@ -34,14 +34,7 @@ const AchievementService = {
   ): Promise<AchievementModel[] | null> {
     try {
       const route: string = api + "v2/achievements";
-
-      const requestOptions = {
-        headers: {
-          Authorization: "Bearer " + userToken,
-        },
-      };
-
-      const response = await ApiService(route, requestOptions);
+      const response = await ApiService(route, userToken, "GET");
 
       let achievements: AchievementModel[] = await response!.json();
       achievements.forEach(
