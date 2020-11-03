@@ -9,17 +9,12 @@ const SettingService = {
   async createSetting(userToken: string, setting: SettingsState): Promise<any> {
     try {
       const route: string = api + "v3/settings";
-
-      const requestOptions = {
-        method: "POST",
-        body: JSON.stringify(setting),
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      };
-
-      return await ApiService(route, requestOptions);
+      return await ApiService(
+        route,
+        userToken,
+        "POST",
+        JSON.stringify(setting)
+      );
     } catch (error) {
       console.log(error);
       return null;
@@ -29,16 +24,7 @@ const SettingService = {
   async getSetting(userToken: string): Promise<SettingsState | null> {
     try {
       const route: string = api + "settings";
-
-      const requestOptions = {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + userToken,
-          "Content-Type": "application/json",
-        },
-      };
-
-      const response = await ApiService(route, requestOptions);
+      const response = await ApiService(route, userToken, "GET");
       const settingResponse: any = await response!.json();
       let nextSeconds = settingResponse.nextNotification._seconds;
       let nextDate = new Date(nextSeconds * 1000);
