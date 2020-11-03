@@ -11,14 +11,7 @@ const StatService = {
   ): Promise<StatModel[] | null> {
     try {
       const route: string = api + "v3/stats";
-
-      const requestOptions = {
-        headers: {
-          Authorization: "Bearer " + userToken,
-        },
-      };
-
-      const response = await ApiService(route, requestOptions);
+      const response = await ApiService(route, userToken, "GET");
       if (!response) return null;
 
       let stats: StatModel[] = await response!.json();
