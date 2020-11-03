@@ -1,20 +1,42 @@
 import { firebaseApp } from "../components/shared/Login";
 
-const ApiService = async (route: string, requestOptions: any) => {
+const ApiService = async (
+  route: string,
+  userToken: string,
+  method: string,
+  body?: any
+) => {
   try {
-    if (requestOptions.headers.Authorization.lenth < 10) {
-      const newToken = await getUpdatedToken();
-      requestOptions.headers.Authorization = "Bearer " + newToken;
+    const requestOptions = RequestOptions(userToken, method, body);
+    const response = await fetch(route, requestOptions);
+    if (!response.ok && response.status === 403) {
+      const newToken = await firebaseApp.auth().currentUser!.getIdToken(true);
+      const newRequestOptions = RequestOptions(newToken, method, body);
+      return await fetch(route, newRequestOptions);
     }
-    return await fetch(route, requestOptions);
+    return response;
   } catch (error) {
     console.log(error);
     return null;
   }
 };
 
-const getUpdatedToken = async (): Promise<string> => {
-  return await firebaseApp.auth().currentUser!.getIdToken(true);
+const RequestOptions = (userToken: string, method: string, body?: any): any => {
+  if (body) {
+    return {
+      method: method,
+      body: body,
+      headers: {
+        Authorization: "Bearer " + userToken,
+        "Content-Type": "application/json",
+      },
+    };
+  }
+  return {
+    headers: {
+      Authorization: "Bearer " + userToken,
+    },
+  };
 };
 
 export default ApiService;
