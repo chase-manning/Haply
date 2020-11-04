@@ -29,7 +29,7 @@ const Description = styled.div`
   font-size: 14px;
   margin: 10px 0 12px 0;
   color: var(--sub);
-  width: 70%;
+  width: 100%;
   text-align: center;
   line-height: 1.5;
 `;
