@@ -33,6 +33,7 @@ const RequestOptions = (userToken: string, method: string, body?: any): any => {
     };
   }
   return {
+    method: method,
     headers: {
       Authorization: "Bearer " + userToken,
     },
