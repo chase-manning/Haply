@@ -186,12 +186,12 @@ const Entry = (props: Props) => {
               onClick={() =>
                 setState({ ...state, notesOpen: !state.notesOpen })
               }
-              open={state.notesOpen || props.mood.note.length < 20}
+              open={state.notesOpen || props.mood.note.length < 90}
             >
               {props.mood.note.substring(0, 20000000) +
                 (props.mood.note.length > 2000000 ? "..." : "")}
               <ExpandButton
-                show={!state.notesOpen && props.mood.note.length >= 20}
+                show={!state.notesOpen && props.mood.note.length >= 90}
                 secondLine={true}
               >
                 ...more
