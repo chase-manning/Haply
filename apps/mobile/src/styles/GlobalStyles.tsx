@@ -1,10 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Mode, selectColorPrimary, selectMode } from "../state/settingsSlice";
+import {
+  Mode,
+  selectColorPrimary,
+  selectMode,
+  selectColorSecondary,
+} from "../state/settingsSlice";
 import { createGlobalStyle } from "styled-components";
 
 type GlobalSyleProps = {
   colorPrimary: string;
+  colorSecondary: string;
   mode: Mode;
 };
 
@@ -25,8 +31,9 @@ const GlobalStyle = createGlobalStyle`
           : "rgba(255,255,255,0.087)"} ;
       --primary: ${(props: GlobalSyleProps) => props.colorPrimary}; 
       --primary-light: ${(props: GlobalSyleProps) => props.colorPrimary + "12"};
-      --highlight: #FF6584;
-      --highlight-light: ${(props: GlobalSyleProps) => "#FF658412"};
+      --highlight: ${(props: GlobalSyleProps) => props.colorSecondary};
+      --highlight-light: ${(props: GlobalSyleProps) =>
+        props.colorSecondary + "12"};
       --bg: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
           ? "#FCFBFF"
@@ -73,6 +80,7 @@ const GlobalStyle = createGlobalStyle`
 
 function GlobalStyles() {
   const colorPrimary = useSelector(selectColorPrimary);
+  const colorSecondary = useSelector(selectColorSecondary);
   const mode = useSelector(selectMode);
 
   return <GlobalStyle colorPrimary={colorPrimary} mode={mode} />;
