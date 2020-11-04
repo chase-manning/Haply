@@ -200,7 +200,7 @@ const Entry = (props: Props) => {
           )}
         </EntryContent>
       </Card>
-      <Popup
+      {/* <Popup
         open={state.popupOpen}
         content={
           <PopupContent>
@@ -248,7 +248,7 @@ const Entry = (props: Props) => {
         }
         showButton={false}
         close={() => setState({ ...state, popupOpen: false })}
-      ></Popup>
+      ></Popup> */}
     </StyledEntry>
   );
 };
