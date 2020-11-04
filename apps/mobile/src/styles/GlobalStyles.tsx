@@ -83,7 +83,13 @@ function GlobalStyles() {
   const colorSecondary = useSelector(selectColorSecondary);
   const mode = useSelector(selectMode);
 
-  return <GlobalStyle colorPrimary={colorPrimary} mode={mode} />;
+  return (
+    <GlobalStyle
+      colorPrimary={colorPrimary}
+      colorSecondary={colorSecondary}
+      mode={mode}
+    />
+  );
 }
 
 export default GlobalStyles;
