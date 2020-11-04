@@ -24,14 +24,22 @@ const LeftSide = styled.div`
   align-items: center;
 `;
 
+type LabelProps = {
+  highlight?: boolean;
+};
+
 const Label = styled.div`
-  color: var(--main);
+  color: ${(props: LabelProps) => (props.highlight ? "white" : "var(--main)")};
   text-align: left;
   font-size: 15px;
 `;
 
+type ChevronProps = {
+  highlight?: boolean;
+};
+
 const Chevron = styled.div`
-  color: var(--sub);
+  color: ${(props: ChevronProps) => (props.highlight ? "white" : "var(--sub)")};
 `;
 
 const Value = styled.div`
@@ -55,16 +63,17 @@ type Props = {
   toggleOn?: boolean;
   clickFunction: () => void;
   icon: JSX.Element;
+  highlight?: boolean;
 };
 
 const Setting = (props: Props) => {
   return (
     <StyledSettings>
-      <Card>
+      <Card highlight={props.highlight}>
         <Content onClick={() => props.clickFunction()}>
           <LeftSide>
-            <Icon>{props.icon}</Icon>
-            <Label>{props.label}</Label>
+            <Icon highlight={props.highlight}>{props.icon}</Icon>
+            <Label highlight={props.highlight}>{props.label}</Label>
           </LeftSide>
           {props.isToggle ? (
             <Value>
@@ -77,7 +86,7 @@ const Setting = (props: Props) => {
               </Toggle>
             </Value>
           ) : (
-            <Chevron>
+            <Chevron highlight={props.highlight}>
               <ChevronRight />
             </Chevron>
           )}
