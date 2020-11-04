@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { selectLoggingIn } from "../../state/navigationSlice";
+import { selectLoggingIn, hideLogin } from "../../state/navigationSlice";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -13,6 +13,7 @@ import {
   setIsAnonymous,
   setToken,
 } from "../../state/userSlice";
+import ExitBar from "./ExitBar";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -37,15 +38,27 @@ const uiConfig = {
 };
 
 const OverlayContainer = styled.div`
-  background-color: var(--bg);
+  background-color: var(--bg-mid);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  padding: 40px;
+`;
+
+const LoginHeader = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--main);
+  font-size: 40px;
+  text-align: center;
 `;
 
 const Login = () => {
@@ -88,10 +101,13 @@ const Login = () => {
 
   return (
     <OverlayContainer>
+      <ExitBar exit={() => dispatch(hideLogin())} />
+      <LoginHeader>Login to Enable Cloud Sync</LoginHeader>
       <StyledFirebaseAuth
         uiConfig={uiConfig}
         firebaseAuth={firebaseApp.auth()}
       />
+      <div />
     </OverlayContainer>
   );
 };
