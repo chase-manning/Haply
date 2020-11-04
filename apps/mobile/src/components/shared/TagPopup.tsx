@@ -12,6 +12,7 @@ import {
   selectBlockTags,
 } from "../../state/settingsSlice";
 import PremiumPopup from "./PremiumPopup";
+import { showError } from "../../state/navigationSlice";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -135,7 +136,16 @@ const TagPopup = (props: Props) => {
                     newTag: "",
                   })
                 }
-                submit={() => dispatch(addTagOption(state.newTag))}
+                submit={() => {
+                  if (tagOptions.indexOf(state.newTag) >= 0) {
+                    dispatch(
+                      showError("You can't add a Tag that already exists")
+                    );
+                    return;
+                  }
+
+                  dispatch(addTagOption(state.newTag));
+                }}
               />
               <PremiumPopup
                 header={"Tag Limit Exceeded"}
