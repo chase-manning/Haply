@@ -133,7 +133,7 @@ const Button = styled.button`
 
 class State {
   popupOpen: boolean = false;
-  TagsOpen: boolean = false;
+  tagsOpen: boolean = false;
   notesOpen: boolean = false;
 }
 
@@ -165,8 +165,8 @@ const Entry = (props: Props) => {
           </Header>
           {props.mood.tags && props.mood.tags.length > 0 && (
             <EntryTags
-              onClick={() => setState({ ...state, TagsOpen: !state.TagsOpen })}
-              open={state.TagsOpen}
+              onClick={() => setState({ ...state, tagsOpen: !state.tagsOpen })}
+              open={state.tagsOpen}
             >
               {props.mood.tags.map((tag: string) => (
                 <SelectedTag key={tag} includeMargin={true}>
@@ -174,7 +174,7 @@ const Entry = (props: Props) => {
                 </SelectedTag>
               ))}
               <ExpandButton
-                show={!state.TagsOpen && props.mood.tags.length >= 3}
+                show={!state.tagsOpen && props.mood.tags.length >= 3}
                 secondLine={false}
               >
                 ...more
