@@ -42,7 +42,7 @@ const initialState: SettingsState = {
     "Exercising",
   ],
   colorPrimary: "#4071fe",
-  colorSecondary: "#FF6584",
+  colorSecondary: "#ff6584",
   mode: Mode.Default,
   timezone: "Asia/Shanghai",
 };
