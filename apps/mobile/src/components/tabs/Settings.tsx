@@ -36,6 +36,7 @@ import SecurityIcon from "@material-ui/icons/Security";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
+import { selectIsPremium } from "../../state/premiumSlice";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -60,17 +61,20 @@ const Settings = () => {
   const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
   const user = useSelector(selectUser);
   const settingsLoading = useSelector(selectSettingsLoading);
+  const isPremium = useSelector(selectIsPremium);
 
   return (
     <StyledSettings>
       <LoadingLine loading={settingsLoading} />
-      <Setting
-        highlight={true}
-        label={"Get Haply Premium!"}
-        isToggle={false}
-        clickFunction={() => dispatch(showPremium())}
-        icon={<FavoriteBorderIcon />}
-      />
+      {!isPremium && (
+        <Setting
+          highlight={true}
+          label={"Get Haply Premium!"}
+          isToggle={false}
+          clickFunction={() => dispatch(showPremium())}
+          icon={<FavoriteBorderIcon />}
+        />
+      )}
       <Header>Profile</Header>
       <Setting
         label={"Cloud Sync"}
