@@ -44,14 +44,35 @@ const EntrySubHeader = styled.div`
   font-size: 11px;
 `;
 
+type EntryTagsProps = {
+  open: boolean;
+};
+
 const EntryTags = styled.div`
   margin-top: 15px;
   color: var(--sub);
   font-size: 12px;
-  display: flex;
   align-items: center;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
+  height: ${(props: EntryTagsProps) => (props.open ? "auto" : "25px")};
+  position: relative;
+`;
+
+type ExpandButtonProps = {
+  show: boolean;
+};
+
+const ExpandButton = styled.div`
+  display: ${(props: ExpandButtonProps) => (props.show ? "flex" : "none")};
+  position: absolute;
+  top: 9px;
+  right: 0;
+  background-color: var(--bg-mid);
+  padding: 1px;
+  font-size: 10px;
+  color: var(--sub);
+  box-shadow: -5px -5px 5px 2px var(--bg-mid);
 `;
 
 const EntryNote = styled.div`
@@ -104,6 +125,7 @@ const Button = styled.button`
 
 class State {
   popupOpen: boolean = false;
+  TagsOpen: boolean = false;
 }
 
 type Props = {
@@ -117,7 +139,8 @@ const Entry = (props: Props) => {
 
   return (
     <StyledEntry>
-      <Card onClick={() => setState({ popupOpen: true })}>
+      {/* <Card onClick={() => setState({ ...state, popupOpen: true })}> */}
+      <Card>
         <EntryContent>
           <Header>
             <DynamicIcon
@@ -132,12 +155,20 @@ const Entry = (props: Props) => {
             </EntryText>
           </Header>
           {props.mood.tags && props.mood.tags.length > 0 && (
-            <EntryTags>
+            <EntryTags
+              onClick={() => setState({ ...state, TagsOpen: !state.TagsOpen })}
+              open={state.TagsOpen}
+            >
               {props.mood.tags.map((tag: string) => (
-                <SelectedTag key={tag} includeMargin={false}>
+                <SelectedTag key={tag} includeMargin={true}>
                   {tag}
                 </SelectedTag>
               ))}
+              <ExpandButton
+                show={!state.TagsOpen && props.mood.tags.length >= 3}
+              >
+                more
+              </ExpandButton>
             </EntryTags>
           )}
           {props.mood.note && props.mood.note.length > 0 && (
@@ -181,7 +212,7 @@ const Entry = (props: Props) => {
             )}
             <Button
               onClick={() => {
-                setState({ popupOpen: false });
+                setState({ ...state, popupOpen: false });
                 dispatch(removeMood(props.mood));
                 MoodService.deleteMood(userToken, props.mood.moodId!).then(
                   () => {
@@ -195,7 +226,7 @@ const Entry = (props: Props) => {
           </PopupContent>
         }
         showButton={false}
-        close={() => setState({ popupOpen: false })}
+        close={() => setState({ ...state, popupOpen: false })}
       ></Popup>
     </StyledEntry>
   );
