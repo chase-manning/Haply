@@ -5,7 +5,13 @@ import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
 import { Card, Icon } from "../../styles/Shared";
 
+type StyledSettingsProps = {
+  hightlight: boolean;
+};
+
 const StyledSettings = styled.div`
+  margin-top: ${(props: StyledSettingsProps) =>
+    props.hightlight ? "15px" : "0"};
   width: 100%;
   height: 100%;
   display: flex;
@@ -68,7 +74,7 @@ type Props = {
 
 const Setting = (props: Props) => {
   return (
-    <StyledSettings>
+    <StyledSettings hightlight={!!props.highlight}>
       <Card highlight={props.highlight}>
         <Content onClick={() => props.clickFunction()}>
           <LeftSide>
