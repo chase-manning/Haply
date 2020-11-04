@@ -11,7 +11,7 @@ import {
   Mode,
 } from "../../state/settingsSlice";
 import { selectDarkModeUnlocked } from "../../state/dataSlice";
-import { showLogin } from "../../state/navigationSlice";
+import { showLogin, showPremium } from "../../state/navigationSlice";
 import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
@@ -20,6 +20,7 @@ import { selectUser } from "../../state/userSlice";
 import { firebaseApp } from "../../components/shared/Login";
 import { Header } from "../../styles/Shared";
 
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import CloudOutlinedIcon from "@material-ui/icons/CloudOutlined";
 import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined";
 import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
@@ -63,6 +64,13 @@ const Settings = () => {
   return (
     <StyledSettings>
       <LoadingLine loading={settingsLoading} />
+      <Setting
+        highlight={true}
+        label={"Get Haply Premium!"}
+        isToggle={false}
+        clickFunction={() => dispatch(showPremium())}
+        icon={<FavoriteBorderIcon />}
+      />
       <Header>Profile</Header>
       <Setting
         label={"Cloud Sync"}
