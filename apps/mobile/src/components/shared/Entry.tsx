@@ -3,6 +3,7 @@ import styled from "styled-components";
 import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
 import Mood from "../../models/mood";
+import { Card } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
 import { updateAll } from "../../state/loadingSlice";
