@@ -13,9 +13,6 @@ import tagTinkerer from "../assets/svgs/PersonalGoals.svg";
 import fullMoon from "../assets/svgs/Moonlight.svg";
 import avidWriter from "../assets/svgs/Learning.svg";
 import masterTagger from "../assets/svgs/Typewriter.svg";
-import slowDay from "../assets/svgs/BookReading.svg";
-import activeDay from "../assets/svgs/Hiking.svg";
-import meatyDay from "../assets/svgs/Hamburger.svg";
 import theJourney from "../assets/svgs/HomeCinema.svg";
 import settleIn from "../assets/svgs/DecorativeFriends.svg";
 import forBreakfast from "../assets/svgs/Breakfast.svg";
@@ -33,7 +30,7 @@ const AchievementService = {
     currentAchievements: AchievementModel[]
   ): Promise<AchievementModel[] | null> {
     try {
-      const route: string = api + "v2/achievements";
+      const route: string = api + "v3/achievements";
       const response = await ApiService(route, userToken, "GET");
 
       let achievements: AchievementModel[] = await response!.json();
@@ -83,12 +80,6 @@ const getSvg = (name: string): string => {
       return avidWriter;
     case "masterTagger":
       return masterTagger;
-    case "slowDay":
-      return slowDay;
-    case "activeDay":
-      return activeDay;
-    case "meatyDay":
-      return meatyDay;
     case "theJourney":
       return theJourney;
     case "settleIn":
