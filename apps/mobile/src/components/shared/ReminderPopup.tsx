@@ -9,6 +9,7 @@ import {
   setFrequencyMinutesMax,
   setFrequencyMinutesMin,
 } from "../../state/settingsSlice";
+import { showError } from "../../state/navigationSlice";
 
 const PopupContent = styled.div`
   width: 100%;
@@ -38,6 +39,7 @@ const FrequencyInput = styled.input`
   background-color: var(--bg-top);
   color: var(--main);
 `;
+
 const FrequencySelect = styled.select`
   width: 50%;
   border: solid 1px var(--border);
@@ -187,10 +189,16 @@ const ReminderPopup = (props: Props) => {
           state.reminderFrequencyMinimumInput,
           state.reminderFrequencyMinimumDropdown
         );
+
         let maxFrequncy = frequency(
           state.reminderFrequencyMaximumInput,
           state.reminderFrequencyMaximumDropdown
         );
+
+        if (minFrequency <= 0 || maxFrequncy <= 0) {
+          dispatch(showError("Frequency must be above 0"));
+          return;
+        }
 
         maxFrequncy = randomReminders ? maxFrequncy : minFrequency;
 
