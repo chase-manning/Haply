@@ -36,7 +36,7 @@ const Error = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
 
-  if (error === "") return;
+  if (error === "") return null;
 
   return (
     <Popup
