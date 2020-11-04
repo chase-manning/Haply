@@ -207,6 +207,11 @@ const ReminderPopup = (props: Props) => {
           return;
         }
 
+        if (minFrequency > 10080 || maxFrequncy > 10080) {
+          dispatch(showError("Reminders can't be more than 7 days long"));
+          return;
+        }
+
         maxFrequncy = randomReminders ? maxFrequncy : minFrequency;
 
         dispatch(setFrequencyMinutesMin(minFrequency));
