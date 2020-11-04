@@ -30,6 +30,7 @@ import NotificationsOutlinedIcon from "@material-ui/icons/NotificationsOutlined"
 import CasinoOutlinedIcon from "@material-ui/icons/CasinoOutlined";
 import HourglassEmptyOutlinedIcon from "@material-ui/icons/HourglassEmptyOutlined";
 import FormatPaintOutlinedIcon from "@material-ui/icons/FormatPaintOutlined";
+import BrushOutlinedIcon from "@material-ui/icons/BrushOutlined";
 import Brightness2OutlinedIcon from "@material-ui/icons/Brightness2Outlined";
 import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
@@ -135,7 +136,7 @@ const Settings = () => {
         clickFunction={() =>
           setState({ ...state, themeSecondaryPopupOpen: true })
         }
-        icon={<FormatPaintOutlinedIcon />}
+        icon={<BrushOutlinedIcon />}
       />
       {darkModeUnlocked && (
         <Setting
@@ -211,7 +212,7 @@ const Settings = () => {
         currentColor={colorPrimary}
       />
       <ThemePopup
-        open={state.themePrimaryPopupOpen}
+        open={state.themeSecondaryPopupOpen}
         closePopup={() =>
           setState({ ...state, themeSecondaryPopupOpen: false })
         }
