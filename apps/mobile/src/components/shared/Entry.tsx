@@ -13,6 +13,7 @@ import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { MenuItem } from "@material-ui/core";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import DynamicSelectedTag from "./DynamicSelectedTag";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -208,9 +209,12 @@ const Entry = (props: Props) => {
               open={state.tagsOpen}
             >
               {props.mood.tags.map((tag: string) => (
-                <SelectedTag key={tag} includeMargin={true}>
-                  {tag}
-                </SelectedTag>
+                <DynamicSelectedTag
+                  tag={tag}
+                  percent={props.mood.value / 10}
+                  key={tag}
+                  includeMargin={true}
+                />
               ))}
               <ExpandButton
                 show={!state.tagsOpen && props.mood.tags.length >= 3}
