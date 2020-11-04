@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Popup from "../shared/Popup";
-import { notEqual } from "assert";
 import { useDispatch } from "react-redux";
 import { showError } from "../../state/navigationSlice";
 
