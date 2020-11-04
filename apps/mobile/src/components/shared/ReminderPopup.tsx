@@ -196,7 +196,14 @@ const ReminderPopup = (props: Props) => {
         );
 
         if (minFrequency <= 0 || maxFrequncy <= 0) {
-          dispatch(showError("Frequency must be above 0"));
+          dispatch(showError("Reminder Frequencies must be above 0"));
+          return;
+        }
+
+        if (minFrequency > maxFrequncy) {
+          dispatch(
+            showError("Minimum Reminder must be less than Maximum Reminder")
+          );
           return;
         }
 
