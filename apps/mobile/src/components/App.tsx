@@ -12,6 +12,7 @@ import { selectDataLoading, selectLoadingPercent } from "../state/loadingSlice";
 import LoadingScreen from "./shared/LoadingScreen";
 import Alerts from "./shared/Alerts";
 import Premium from "./shared/Premium";
+import Error from "./shared/Error";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -51,6 +52,7 @@ const App = () => {
       <CreateMood />
       <Alerts />
       <Premium />
+      <Error />
     </StyledApp>
   );
 };
