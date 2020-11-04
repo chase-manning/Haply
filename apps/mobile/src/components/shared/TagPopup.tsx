@@ -144,6 +144,11 @@ const TagPopup = (props: Props) => {
                     return;
                   }
 
+                  if (state.newTag.length > 20) {
+                    dispatch(showError("Tag is too long"));
+                    return;
+                  }
+
                   dispatch(addTagOption(state.newTag));
                 }}
               />
