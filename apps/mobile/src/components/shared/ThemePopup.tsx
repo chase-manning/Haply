@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Popup from "../shared/Popup";
 import AchievementModel from "../../models/AchievementModel";
-import { useDispatch, useSelector } from "react-redux";
-import { selectColorPrimary, setColorPrimary } from "../../state/settingsSlice";
+import { useSelector } from "react-redux";
+import { selectColorPrimary } from "../../state/settingsSlice";
 import { selectAchievements } from "../../state/dataSlice";
 
 const PopupContent = styled.div`
@@ -23,6 +23,7 @@ const ColorOptions = styled.div`
 
 type ColorOptionProps = {
   selected: boolean;
+  color: string;
 };
 
 const ColorOption = styled.button`
@@ -33,7 +34,7 @@ const ColorOption = styled.button`
   align-items: center;
   justify-content: center;
   border: ${(props: ColorOptionProps) =>
-    props.selected ? "solid 2px var(--primary)" : "none"};
+    props.selected ? "solid 2px " + props.color : "none"};
 `;
 
 type ColorProps = {
@@ -58,11 +59,12 @@ const UnlockText = styled.div`
 type Props = {
   open: boolean;
   closePopup: () => void;
+  defaultColor: string;
+  setTheme: (color: string) => void;
+  currentColor: string;
 };
 
 const ThemePopup = (props: Props) => {
-  const dispatch = useDispatch();
-  const colorPrimary = useSelector(selectColorPrimary);
   const achievements = useSelector(selectAchievements);
   const unlockedAchievements = achievements.filter(
     (achievement: AchievementModel) =>
@@ -76,18 +78,18 @@ const ThemePopup = (props: Props) => {
         <PopupContent>
           <ColorOptions>
             <ColorOption
-              onClick={() => dispatch(setColorPrimary("#4071FE"))}
-              selected={"#4071FE" === colorPrimary}
+              onClick={() => props.setTheme(props.defaultColor)}
+              selected={props.defaultColor === props.currentColor}
+              color={props.currentColor}
             >
-              <Color color={"#4071FE"} />
+              <Color color={props.defaultColor} />
             </ColorOption>
             {unlockedAchievements.map((achievement: AchievementModel) => (
               <ColorOption
                 key={achievement.colorPrimary}
-                onClick={() =>
-                  dispatch(setColorPrimary(achievement.colorPrimary))
-                }
-                selected={achievement.colorPrimary === colorPrimary}
+                onClick={() => props.setTheme(achievement.colorPrimary)}
+                selected={achievement.colorPrimary === props.currentColor}
+                color={props.currentColor}
               >
                 <Color color={achievement.colorPrimary} />
               </ColorOption>

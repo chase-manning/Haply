@@ -9,6 +9,10 @@ import {
   selectMode,
   toggleMode,
   Mode,
+  setColorPrimary,
+  setColorSecondary,
+  selectColorPrimary,
+  selectColorSecondary,
 } from "../../state/settingsSlice";
 import { selectDarkModeUnlocked } from "../../state/dataSlice";
 import { showLogin, showPremium } from "../../state/navigationSlice";
@@ -49,7 +53,8 @@ const StyledSettings = styled.div`
 class State {
   reminderPopupOpen: boolean = false;
   tagPopupOpen: boolean = false;
-  themePopupOpen: boolean = false;
+  themePrimaryPopupOpen: boolean = false;
+  themeSecondaryPopupOpen: boolean = false;
 }
 
 const Settings = () => {
@@ -62,6 +67,8 @@ const Settings = () => {
   const user = useSelector(selectUser);
   const settingsLoading = useSelector(selectSettingsLoading);
   const isPremium = useSelector(selectIsPremium);
+  const colorPrimary = useSelector(selectColorPrimary);
+  const colorSecondary = useSelector(selectColorSecondary);
 
   return (
     <StyledSettings>
@@ -115,9 +122,19 @@ const Settings = () => {
 
       <Header>Settings</Header>
       <Setting
-        label={"Theme"}
+        label={"Theme Primary"}
         isToggle={false}
-        clickFunction={() => setState({ ...state, themePopupOpen: true })}
+        clickFunction={() =>
+          setState({ ...state, themePrimaryPopupOpen: true })
+        }
+        icon={<FormatPaintOutlinedIcon />}
+      />
+      <Setting
+        label={"Theme Secondary"}
+        isToggle={false}
+        clickFunction={() =>
+          setState({ ...state, themeSecondaryPopupOpen: true })
+        }
         icon={<FormatPaintOutlinedIcon />}
       />
       {darkModeUnlocked && (
@@ -187,8 +204,20 @@ const Settings = () => {
         closePopup={() => setState({ ...state, tagPopupOpen: false })}
       />
       <ThemePopup
-        open={state.themePopupOpen}
-        closePopup={() => setState({ ...state, themePopupOpen: false })}
+        open={state.themePrimaryPopupOpen}
+        closePopup={() => setState({ ...state, themePrimaryPopupOpen: false })}
+        defaultColor={"#4071FE"}
+        setTheme={(color: string) => dispatch(setColorPrimary(color))}
+        currentColor={colorPrimary}
+      />
+      <ThemePopup
+        open={state.themePrimaryPopupOpen}
+        closePopup={() =>
+          setState({ ...state, themeSecondaryPopupOpen: false })
+        }
+        defaultColor={"#FF6584"}
+        setTheme={(color: string) => dispatch(setColorSecondary(color))}
+        currentColor={colorSecondary}
       />
     </StyledSettings>
   );
