@@ -35,7 +35,8 @@ type LabelProps = {
 };
 
 const Label = styled.div`
-  color: ${(props: LabelProps) => (props.highlight ? "white" : "var(--main)")};
+  color: ${(props: LabelProps) =>
+    props.highlight ? "var(--bg-mid)" : "var(--main)"};
   text-align: left;
   font-size: 15px;
 `;
@@ -45,7 +46,8 @@ type ChevronProps = {
 };
 
 const Chevron = styled.div`
-  color: ${(props: ChevronProps) => (props.highlight ? "white" : "var(--sub)")};
+  color: ${(props: ChevronProps) =>
+    props.highlight ? "var(--bg-mid)" : "var(--sub)"};
 `;
 
 const Value = styled.div`
