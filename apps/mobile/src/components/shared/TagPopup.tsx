@@ -149,6 +149,11 @@ const TagPopup = (props: Props) => {
                     return;
                   }
 
+                  if (state.newTag === "") {
+                    dispatch(showError("No value entered"));
+                    return;
+                  }
+
                   dispatch(addTagOption(state.newTag));
                 }}
               />
