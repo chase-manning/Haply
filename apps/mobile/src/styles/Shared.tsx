@@ -54,7 +54,7 @@ export const Icon = styled.div`
     props.secondary
       ? "var(--highlight)"
       : props.highlight
-      ? "white"
+      ? "var(--bg-mid)"
       : "var(--primary)"};
 `;
 
