@@ -41,6 +41,7 @@ import {
   toggleMode,
   Mode,
   setTimezone,
+  setColorSecondary,
 } from "./settingsSlice";
 import AchievementModel from "../models/AchievementModel";
 import {
@@ -142,6 +143,10 @@ function* watchSetColorPrimary() {
     );
     if (!complete) yield put(updateAchievements());
   });
+}
+
+function* watchSetColorSecondary() {
+  yield takeEvery(setColorSecondary, saveSettings);
 }
 
 function* watchToggleMode() {
@@ -261,6 +266,7 @@ export default function* rootSaga() {
     watchAddTag(),
     watchRemoveTag(),
     watchSetColorPrimary(),
+    watchSetColorSecondary(),
     watchToggleMode(),
     watchSetPushNotificationToken(),
     watchSetTimezone(),
