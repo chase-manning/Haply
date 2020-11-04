@@ -61,25 +61,33 @@ const EntryTags = styled.div`
 
 type ExpandButtonProps = {
   show: boolean;
+  secondLine: boolean;
 };
 
 const ExpandButton = styled.div`
   display: ${(props: ExpandButtonProps) => (props.show ? "flex" : "none")};
   position: absolute;
-  top: 9px;
+  top: ${(props: ExpandButtonProps) => (props.secondLine ? "15px" : "9px")};
   right: 0;
   background-color: var(--bg-mid);
   padding: 1px;
   font-size: 10px;
   color: var(--sub);
-  box-shadow: -5px -5px 5px 2px var(--bg-mid);
+  box-shadow: -5px -0px 5px 2px var(--bg-mid);
 `;
+
+type EntryNoteProps = {
+  open: boolean;
+};
 
 const EntryNote = styled.div`
   color: var(--sub);
   font-size: 12px;
   margin-top: 15px;
   width: 100%;
+  height: ${(props: EntryNoteProps) => (props.open ? "auto" : "26px")};
+  overflow: hidden;
+  position: relative;
 `;
 
 const PopupContent = styled.div`
@@ -126,6 +134,7 @@ const Button = styled.button`
 class State {
   popupOpen: boolean = false;
   TagsOpen: boolean = false;
+  notesOpen: boolean = false;
 }
 
 type Props = {
@@ -166,15 +175,27 @@ const Entry = (props: Props) => {
               ))}
               <ExpandButton
                 show={!state.TagsOpen && props.mood.tags.length >= 3}
+                secondLine={false}
               >
-                more
+                ...more
               </ExpandButton>
             </EntryTags>
           )}
           {props.mood.note && props.mood.note.length > 0 && (
-            <EntryNote>
+            <EntryNote
+              onClick={() =>
+                setState({ ...state, notesOpen: !state.notesOpen })
+              }
+              open={state.notesOpen || props.mood.note.length < 20}
+            >
               {props.mood.note.substring(0, 20000000) +
                 (props.mood.note.length > 2000000 ? "..." : "")}
+              <ExpandButton
+                show={!state.notesOpen && props.mood.note.length >= 20}
+                secondLine={true}
+              >
+                ...more
+              </ExpandButton>
             </EntryNote>
           )}
         </EntryContent>
