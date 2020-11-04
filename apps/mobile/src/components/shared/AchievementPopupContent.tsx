@@ -72,6 +72,7 @@ const AchievementPopupContent = (props: Props) => {
       />
       {props.achievement.unlocks.map((unlock: string) => (
         <AcheivementReward
+          key={unlock}
           unlocked={props.achievement.percentComplete === 1}
           description={unlock}
         />
