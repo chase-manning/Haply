@@ -3,15 +3,12 @@ import styled from "styled-components";
 import dateFormat from "dateformat";
 import MoodService from "../../services/MoodService";
 import Mood from "../../models/mood";
-import Popup from "./Popup";
-import { SelectedTag, SelectedTags, Card } from "../../styles/Shared";
 import { useDispatch, useSelector } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
 import { updateAll } from "../../state/loadingSlice";
 import { selectToken } from "../../state/userSlice";
 import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { MenuItem } from "@material-ui/core";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import DynamicSelectedTag from "./DynamicSelectedTag";
 
