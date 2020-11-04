@@ -90,47 +90,6 @@ const EntryNote = styled.div`
   position: relative;
 `;
 
-const PopupContent = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const PopupHeader = styled.div`
-  color: var(--main);
-  margin-bottom: 20px;
-  font-size: 16px;
-  width: 100%;
-  text-align: center;
-`;
-
-const PopupDetails = styled.div`
-  color: var(--sub);
-  font-size: 14px;
-  margin-bottom: 10px;
-  display: flex;
-`;
-
-const HighlightedWord = styled.p`
-  color: var(--main);
-  margin-right: 5px;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--highlight);
-  border: solid 1px var(--highlight);
-  padding: 17px;
-  font-size: 16px;
-  font-weight: 400;
-  border-radius: 10px;
-  background-color: var(--bg-mid);
-  margin-top: 20px;
-`;
-
 class State {
   popupOpen: boolean = false;
   tagsOpen: boolean = false;
