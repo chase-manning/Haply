@@ -584,6 +584,58 @@ app.post("/v3/settings", async (request, response) => {
   }
 });
 
+app.post("/v4/settings", async (request, response) => {
+  try {
+    const user = await getUser(request);
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
+
+    const {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      nextNotification,
+      tagOptions,
+      colorPrimary,
+      colorSecondary,
+      mode,
+      timezone,
+    } = request.body;
+    const data = {
+      remindersEnabled,
+      randomReminders,
+      frequencyMinutesMin,
+      frequencyMinutesMax,
+      userId,
+      tagOptions,
+      colorPrimary,
+      colorSecondary,
+      mode,
+      nextNotification: new Date(nextNotification),
+      timezone,
+    };
+
+    const querySnapshot = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .get();
+
+    if (querySnapshot.empty) {
+      await db.collection("settings").add(data);
+    } else {
+      await db
+        .collection("settings")
+        .doc(querySnapshot.docs[0].id)
+        .set(data, { merge: true });
+    }
+
+    return response.json({ result: "All G" });
+  } catch (error) {
+    return response.status(500).send(error);
+  }
+});
+
 app.get("/settings", async (request: any, response) => {
   try {
     const user = await getUser(request);
