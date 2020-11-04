@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ChatBubbleOutline from "@material-ui/icons/ChatBubbleOutline";
 import Popup from "../shared/Popup";
+import { notEqual } from "assert";
+import { useDispatch } from "react-redux";
+import { showError } from "../../state/navigationSlice";
 
 const StyledAddNote = styled.div``;
 
@@ -45,6 +48,7 @@ type Props = {
 
 const AddNote = (props: Props) => {
   const [state, setState] = useState(new State());
+  const dispatch = useDispatch();
 
   return (
     <StyledAddNote>
@@ -67,7 +71,13 @@ const AddNote = (props: Props) => {
         }
         showButton={true}
         close={() => setState({ ...state, popupOpen: false })}
-        submit={() => props.setNote(state.note)}
+        submit={() => {
+          if (state.note.length > 8000) {
+            dispatch(showError("Note is to long"));
+            return;
+          }
+          props.setNote(state.note);
+        }}
       ></Popup>
     </StyledAddNote>
   );
