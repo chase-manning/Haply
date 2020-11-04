@@ -16,6 +16,7 @@ export interface SettingsState {
   nextNotification: string;
   tagOptions: string[];
   colorPrimary: string;
+  colorSecondary: string;
   mode: Mode;
   timezone: string;
 }
@@ -41,6 +42,7 @@ const initialState: SettingsState = {
     "Exercising",
   ],
   colorPrimary: "#4071fe",
+  colorSecondary: "#FF6584",
   mode: Mode.Default,
   timezone: "Asia/Shanghai",
 };
@@ -104,6 +106,9 @@ export const settingsSlice = createSlice({
     setColorPrimary: (state, action: PayloadAction<string>) => {
       state.colorPrimary = action.payload;
     },
+    setColorSecondary: (state, action: PayloadAction<string>) => {
+      state.colorSecondary = action.payload;
+    },
     toggleMode: (state) => {
       if (state.mode === Mode.Dark) state.mode = Mode.Light;
       else state.mode = Mode.Dark;
@@ -126,6 +131,7 @@ export const {
   addTagOption,
   removeTagOption,
   setColorPrimary,
+  setColorSecondary,
   toggleMode,
   setTimezone,
 } = settingsSlice.actions;
@@ -145,6 +151,8 @@ export const selectNextNotification = (state: RootState) =>
 export const selectTagOptions = (state: RootState) => state.settings.tagOptions;
 export const selectColorPrimary = (state: RootState) =>
   state.settings.colorPrimary;
+export const selectColorSecondary = (state: RootState) =>
+  state.settings.colorSecondary;
 export const selectMode = (state: RootState) => state.settings.mode;
 export const selectBlockTags = (state: RootState) =>
   !state.premium.isPremium && state.settings.tagOptions.length >= 15;
