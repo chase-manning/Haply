@@ -67,6 +67,8 @@ export const settingsSlice = createSlice({
         state.tagOptions = action.payload.tagOptions;
       if (action.payload.colorPrimary)
         state.colorPrimary = action.payload.colorPrimary;
+      if (action.payload.colorSecondary)
+        state.colorSecondary = action.payload.colorSecondary;
       if (action.payload.mode) state.mode = action.payload.mode;
       if (action.payload.timezone) state.timezone = action.payload.timezone;
     },
