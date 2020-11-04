@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type CardProps = {
+  highlight?: boolean;
+};
+
 export const Card = styled.div`
   width: 100%;
   padding: 12px;
@@ -8,7 +12,8 @@ export const Card = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 10px;
-  background-color: var(--bg-mid);
+  background-color: ${(props: CardProps) =>
+    props.highlight ? "var(--primary)" : "var(--bg-mid)"};
   box-shadow: var(--shadow);
   transition: all 0.2s ease-out;
 
@@ -28,20 +33,29 @@ export const Header = styled.div`
 
 type IconProps = {
   secondary?: boolean;
+  highlight?: boolean;
 };
 
 export const Icon = styled.div`
   width: 35px;
   height: 35px;
   background-color: ${(props: IconProps) =>
-    props.secondary ? "var(--highlight-light)" : "var(--primary-light)"};
+    props.secondary
+      ? "var(--highlight-light)"
+      : props.highlight
+      ? "var(--highlight)"
+      : "var(--primary-light)"};
   border-radius: 8px;
   margin-right: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: ${(props: IconProps) =>
-    props.secondary ? "var(--highlight)" : "var(--primary)"};
+    props.secondary
+      ? "var(--highlight)"
+      : props.highlight
+      ? "white"
+      : "var(--primary)"};
 `;
 
 type SeletedTagProps = {
