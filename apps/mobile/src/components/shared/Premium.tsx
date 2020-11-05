@@ -2,13 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { hidePremium, selectPremium } from "../../state/navigationSlice";
+import {
+  hidePremium,
+  selectPremium,
+  setIsIos,
+  selectIsIos,
+} from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
 import natureOnScren from "../../assets/svgs/NatureOnScreen.svg";
 import PremiumFeature from "./PremiumFeature";
 import { InAppPurchase2, IAPProduct } from "@ionic-native/in-app-purchase-2";
 import { Capacitor } from "@capacitor/core";
-
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 // import CasinoIcon from "@material-ui/icons/Casino";
@@ -19,6 +23,9 @@ import {
   setPremium,
   setProductPrice,
 } from "../../state/premiumSlice";
+import { Plugins } from "@capacitor/core";
+
+const { Device } = Plugins;
 
 const productId = "69";
 
@@ -86,10 +93,14 @@ const Premium = () => {
   const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
   const price = useSelector(selectProductPrice);
-
+  const isIos = useSelector(selectIsIos);
   const store = InAppPurchase2;
 
   useEffect(() => {
+    Device.getInfo().then((deviceInfo) =>
+      dispatch(setIsIos(deviceInfo.platform === "ios"))
+    );
+
     if (!Capacitor.isNative) return;
 
     store.register({
@@ -132,7 +143,9 @@ const Premium = () => {
           else setState({ ...state, clicks: state.clicks + 1 });
         }}
       >
-        100% of Profits go to Support Mental Health
+        {isIos
+          ? "Get Haply Premium!"
+          : "100% of Profits go to Support Mental Health"}
       </Header>
       <Illustration src={natureOnScren} alt="Premium Illustration" />
       <Features>
