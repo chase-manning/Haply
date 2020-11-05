@@ -19,7 +19,7 @@ const StyledWelcomePage = styled.div`
       : props.position === "middle"
       ? "translateX(0)"
       : "translateX(120%)"};
-  transition: all 1s ease-in-out;
+  transition: all 0.8s ease-in-out;
   color: var(--bg-mid);
   justify-content: space-between;
 `;
