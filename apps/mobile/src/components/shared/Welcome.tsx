@@ -17,7 +17,7 @@ const StyledWelcome = styled.div`
   height: 100%;
   top: 0;
   left: 0;
-  background-color: var(--primary);
+  background-color: var(--bg-mid);
   display: flex;
   flex-direction: column;
   padding: 40px;
