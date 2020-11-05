@@ -16,6 +16,7 @@ interface NavigationState {
   premium: boolean;
   error: string;
   isIos: boolean;
+  showWelcome: boolean;
 }
 
 const initialState: NavigationState = {
@@ -25,6 +26,7 @@ const initialState: NavigationState = {
   premium: false,
   error: "",
   isIos: false,
+  showWelcome: false,
 };
 
 /* SLICE */
@@ -62,6 +64,12 @@ export const navigationSlice = createSlice({
     setIsIos: (state, action: PayloadAction<boolean>) => {
       state.isIos = action.payload;
     },
+    showWelcome: (state) => {
+      state.showWelcome = true;
+    },
+    hideWelcome: (state) => {
+      state.showWelcome = false;
+    },
   },
 });
 
@@ -76,6 +84,8 @@ export const {
   showError,
   hideError,
   setIsIos,
+  showWelcome,
+  hideWelcome,
 } = navigationSlice.actions;
 
 /* SELECTS */
@@ -103,5 +113,6 @@ export const selectActiveTabText = (state: RootState) => {
 
 export const selectError = (state: RootState) => state.navigation.error;
 export const selectIsIos = (state: RootState) => state.navigation.isIos;
-
+export const selectShowWelcome = (state: RootState) =>
+  state.navigation.showWelcome;
 export default navigationSlice.reducer;
