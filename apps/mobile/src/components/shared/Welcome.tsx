@@ -66,7 +66,7 @@ const PageIndicator = styled.div`
   background-color: var(--highlight);
   margin: 2px;
   opacity: ${(props: PageIndicatorProps) => (props.active ? "1" : "0.5")};
-  transition: all 0.2s;
+  transition: all 0.8s;
 `;
 
 const NavBar = styled.div`
