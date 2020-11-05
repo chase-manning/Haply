@@ -15,6 +15,7 @@ interface NavigationState {
   loggingIn: boolean;
   premium: boolean;
   error: string;
+  isIos: boolean;
 }
 
 const initialState: NavigationState = {
@@ -23,6 +24,7 @@ const initialState: NavigationState = {
   loggingIn: false,
   premium: false,
   error: "",
+  isIos: false,
 };
 
 /* SLICE */
@@ -57,6 +59,9 @@ export const navigationSlice = createSlice({
     hideError: (state) => {
       state.error = "";
     },
+    setIsIos: (state, action: PayloadAction<boolean>) => {
+      state.isIos = action.payload;
+    },
   },
 });
 
@@ -70,6 +75,7 @@ export const {
   setActiveTab,
   showError,
   hideError,
+  setIsIos,
 } = navigationSlice.actions;
 
 /* SELECTS */
@@ -96,5 +102,6 @@ export const selectActiveTabText = (state: RootState) => {
 };
 
 export const selectError = (state: RootState) => state.navigation.error;
+export const selectIsIos = (state: RootState) => state.navigation.isIos;
 
 export default navigationSlice.reducer;
