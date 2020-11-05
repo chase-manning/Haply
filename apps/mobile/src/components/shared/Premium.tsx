@@ -180,9 +180,11 @@ const Premium = () => {
         >
           {"Get Premium for " + price + "/month"}
         </Button>
-        <RestorePurchases onClick={() => store.refresh()}>
-          Restore Purchases
-        </RestorePurchases>
+        {isIos && (
+          <RestorePurchases onClick={() => store.refresh()}>
+            Restore Purchases
+          </RestorePurchases>
+        )}
       </Buttons>
     </StyledPremium>
   );
