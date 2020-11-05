@@ -13,6 +13,7 @@ import LoadingScreen from "./shared/LoadingScreen";
 import Alerts from "./shared/Alerts";
 import Premium from "./shared/Premium";
 import Error from "./shared/Error";
+import Welcome from "./shared/Welcome";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -53,6 +54,7 @@ const App = () => {
       <Alerts />
       <Premium />
       <Error />
+      <Welcome />
     </StyledApp>
   );
 };
