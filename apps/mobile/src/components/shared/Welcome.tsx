@@ -8,7 +8,7 @@ import {
 } from "../../state/navigationSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import WelcomePage from "./WelcomePage";
-import sadAsset from "../../assets/svgs/AWholeYear.svg";
+import aWholeYear from "../../assets/svgs/AWholeYear.svg";
 const { Storage } = CapacitorPlugins;
 
 const StyledWelcome = styled.div`
@@ -140,7 +140,7 @@ const Welcome = () => {
           description={
             "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
           }
-          illustration={<Svg src={sadAsset} />}
+          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
