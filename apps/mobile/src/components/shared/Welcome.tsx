@@ -79,7 +79,7 @@ const Next = styled.div`
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  background-color: var(--highlight);
+  background-color: var(--primary);
 `;
 
 const ArrowPointTransform = styled.div`
