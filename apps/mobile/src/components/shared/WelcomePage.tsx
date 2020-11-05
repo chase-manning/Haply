@@ -20,7 +20,7 @@ const StyledWelcomePage = styled.div`
       ? "translateX(0)"
       : "translateX(120%)"};
   transition: all 0.8s ease-in-out;
-  color: var(--bg-mid);
+  color: var(--main);
   justify-content: space-between;
 `;
 
