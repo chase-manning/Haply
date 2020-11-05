@@ -8,7 +8,7 @@ import {
 } from "../../state/navigationSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import WelcomePage from "./WelcomePage";
-import sadAsset from "../../assets/svgs/FeelingBlue.svg";
+import sadAsset from "../../assets/svgs/AWholeYear.svg";
 const { Storage } = CapacitorPlugins;
 
 const StyledWelcome = styled.div`
@@ -22,6 +22,14 @@ const StyledWelcome = styled.div`
   flex-direction: column;
   padding: 40px;
   justify-content: space-between;
+`;
+
+const BlobConatiner = styled.div`
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
 `;
 
 const Svg = styled.img`
@@ -109,17 +117,19 @@ const Welcome = () => {
 
   return (
     <StyledWelcome>
-      {/* <svg
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        width="100%"
-      >
-        <path
-          fill="var(--highlight)"
-          d="M39.3,-54.1C50.6,-45.9,59.1,-33.9,62.2,-21C65.3,-8.1,63,5.8,59.4,20.1C55.9,34.5,51.2,49.3,41.2,59.7C31.1,70.2,15.5,76.2,-0.3,76.7C-16.2,77.1,-32.4,72,-39.5,60.6C-46.6,49.2,-44.7,31.5,-45,17.6C-45.4,3.8,-48.1,-6.4,-50,-21.1C-51.8,-35.8,-53,-55.1,-44.5,-64.3C-36,-73.4,-18,-72.4,-2,-69.6C14,-66.8,28,-62.3,39.3,-54.1Z"
-          transform="translate(100 100)"
-        />
-      </svg> */}
+      <BlobConatiner>
+        <svg
+          viewBox="0 0 200 200"
+          xmlns="http://www.w3.org/2000/svg"
+          width="170%"
+        >
+          <path
+            fill="var(--highlight)"
+            d="M39.3,-54.1C50.6,-45.9,59.1,-33.9,62.2,-21C65.3,-8.1,63,5.8,59.4,20.1C55.9,34.5,51.2,49.3,41.2,59.7C31.1,70.2,15.5,76.2,-0.3,76.7C-16.2,77.1,-32.4,72,-39.5,60.6C-46.6,49.2,-44.7,31.5,-45,17.6C-45.4,3.8,-48.1,-6.4,-50,-21.1C-51.8,-35.8,-53,-55.1,-44.5,-64.3C-36,-73.4,-18,-72.4,-2,-69.6C14,-66.8,28,-62.3,39.3,-54.1Z"
+            transform="translate(100 100)"
+          />
+        </svg>
+      </BlobConatiner>
       <div />
       <WelcomePages>
         <WelcomePage
