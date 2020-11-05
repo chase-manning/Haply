@@ -24,10 +24,17 @@ const StyledWelcomePage = styled.div`
   justify-content: space-between;
 `;
 
+const TextArea = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 const Header = styled.div`
   width: 100%;
   font-size: 30px;
   font-weight: 500;
+  margin-bottom: 20px;
 `;
 
 const Description = styled.div`
@@ -47,8 +54,10 @@ const WelcomePage = (props: Props) => {
   return (
     <StyledWelcomePage position={props.position}>
       {props.illustration}
-      <Header>{props.header}</Header>
-      <Description>{props.description}</Description>
+      <TextArea>
+        <Header>{props.header}</Header>
+        <Description>{props.description}</Description>
+      </TextArea>
     </StyledWelcomePage>
   );
 };
