@@ -20,14 +20,37 @@ const StyledWelcomePage = styled.div`
       ? "translateX(0)"
       : "translateX(120%)"};
   transition: all 1s ease-in-out;
+  color: var(--bg-mid);
+  justify-content: space-between;
+`;
+
+const Header = styled.div`
+  width: 100%;
+  font-size: 30px;
+  font-weight: 500;
+`;
+
+const Description = styled.div`
+  width: 100%;
+  font-size: 15px;
+  line-height: 1.3;
 `;
 
 type Props = {
   position: string;
+  illustration: JSX.Element;
+  header: string;
+  description: string;
 };
 
 const WelcomePage = (props: Props) => {
-  return <StyledWelcomePage position={props.position}>Meow</StyledWelcomePage>;
+  return (
+    <StyledWelcomePage position={props.position}>
+      {props.illustration}
+      <Header>{props.header}</Header>
+      <Description>{props.description}</Description>
+    </StyledWelcomePage>
+  );
 };
 
 export default WelcomePage;

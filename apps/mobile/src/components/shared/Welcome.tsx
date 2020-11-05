@@ -8,6 +8,7 @@ import {
 } from "../../state/navigationSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import WelcomePage from "./WelcomePage";
+import sadAsset from "../../assets/svgs/FeelingBlue.svg";
 const { Storage } = CapacitorPlugins;
 
 const StyledWelcome = styled.div`
@@ -21,6 +22,10 @@ const StyledWelcome = styled.div`
   flex-direction: column;
   padding: 40px;
   justify-content: space-between;
+`;
+
+const Svg = styled.img`
+  width: 100%;
 `;
 
 const WelcomePages = styled.div`
@@ -115,27 +120,47 @@ const Welcome = () => {
           transform="translate(100 100)"
         />
       </svg> */}
-
+      <div />
       <WelcomePages>
         <WelcomePage
           position={
             state.page < 0 ? "right" : state.page === 0 ? "middle" : "left"
           }
+          header={"Welcome to Haply Mood Tracker"}
+          description={
+            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+          }
+          illustration={<Svg src={sadAsset} />}
         />
         <WelcomePage
           position={
             state.page < 1 ? "right" : state.page === 1 ? "middle" : "left"
           }
+          header={"Welcome to Haply Mood Tracker"}
+          description={
+            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+          }
+          illustration={<Svg src={sadAsset} />}
         />
         <WelcomePage
           position={
             state.page < 2 ? "right" : state.page === 2 ? "middle" : "left"
           }
+          header={"Welcome to Haply Mood Tracker"}
+          description={
+            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+          }
+          illustration={<Svg src={sadAsset} />}
         />
         <WelcomePage
           position={
             state.page < 3 ? "right" : state.page === 3 ? "middle" : "left"
           }
+          header={"Welcome to Haply Mood Tracker"}
+          description={
+            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+          }
+          illustration={<Svg src={sadAsset} />}
         />
       </WelcomePages>
       <PageIndicators>
