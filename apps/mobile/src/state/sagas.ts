@@ -53,6 +53,7 @@ import {
 import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
 import MoodService from "../services/MoodService";
+import { hideWelcome } from "./navigationSlice";
 
 const { Storage } = CapacitorPlugins;
 const { StatusBar } = CapacitorPlugins;
@@ -60,6 +61,10 @@ const { StatusBar } = CapacitorPlugins;
 const isStatusBarAvailable = Capacitor.isPluginAvailable("StatusBar");
 
 /* WATCHERS */
+function* watchHideWelcome() {
+  yield takeEvery(hideWelcome, saveHideWelcome);
+}
+
 function* watchUpdateAll() {
   yield takeEvery(updateAll, runUpdateAll);
 }
@@ -171,6 +176,11 @@ function* watchSetPushNotificationToken() {
 }
 
 /* ACTIONS */
+function* saveHideWelcome() {
+  let welcomed: boolean = true;
+  Storage.set({ key: "welcomed", value: JSON.stringify(welcomed) });
+}
+
 function* runUpdateAll() {
   yield all([
     call(runUpdateMoods),
