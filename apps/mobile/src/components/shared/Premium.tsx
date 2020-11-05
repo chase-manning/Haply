@@ -145,7 +145,7 @@ const Premium = () => {
       >
         {isIos
           ? "Get Haply Premium!"
-          : "100% of Profits go to Support Mental Health"}
+          : "100% of Profits go to Mental Health Charities"}
       </Header>
       <Illustration src={natureOnScren} alt="Premium Illustration" />
       <Features>
