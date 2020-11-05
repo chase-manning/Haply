@@ -42,10 +42,17 @@ const WelcomePages = styled.div`
   position: relative;
 `;
 
+const BottomBar = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
 const PageIndicators = styled.div`
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 30px;
 `;
 
 type PageIndicatorProps = {
@@ -150,7 +157,7 @@ const Welcome = () => {
           description={
             "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
           }
-          illustration={<Svg src={sadAsset} />}
+          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -160,7 +167,7 @@ const Welcome = () => {
           description={
             "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
           }
-          illustration={<Svg src={sadAsset} />}
+          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -170,29 +177,31 @@ const Welcome = () => {
           description={
             "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
           }
-          illustration={<Svg src={sadAsset} />}
+          illustration={<Svg src={aWholeYear} />}
         />
       </WelcomePages>
-      <PageIndicators>
-        <PageIndicator active={state.page === 0} />
-        <PageIndicator active={state.page === 1} />
-        <PageIndicator active={state.page === 2} />
-        <PageIndicator active={state.page === 3} />
-      </PageIndicators>
-      <NavBar>
-        <div />
-        <Next
-          onClick={() => {
-            if (state.page === 3) dispatch(hideWelcome());
-            setState({ ...state, page: state.page + 1 });
-          }}
-        >
-          <ArrowPointTransform>
-            <ArrowPoint />
-          </ArrowPointTransform>
-          <ArrowLine />
-        </Next>
-      </NavBar>
+      <BottomBar>
+        <PageIndicators>
+          <PageIndicator active={state.page === 0} />
+          <PageIndicator active={state.page === 1} />
+          <PageIndicator active={state.page === 2} />
+          <PageIndicator active={state.page === 3} />
+        </PageIndicators>
+        <NavBar>
+          <div />
+          <Next
+            onClick={() => {
+              if (state.page === 3) dispatch(hideWelcome());
+              setState({ ...state, page: state.page + 1 });
+            }}
+          >
+            <ArrowPointTransform>
+              <ArrowPoint />
+            </ArrowPointTransform>
+            <ArrowLine />
+          </Next>
+        </NavBar>
+      </BottomBar>
     </StyledWelcome>
   );
 };
