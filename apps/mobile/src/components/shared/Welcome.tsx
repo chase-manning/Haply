@@ -10,6 +10,7 @@ import { Plugins as CapacitorPlugins } from "@capacitor/core";
 const { Storage } = CapacitorPlugins;
 
 const StyledWelcome = styled.div`
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
