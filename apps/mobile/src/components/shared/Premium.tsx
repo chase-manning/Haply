@@ -143,9 +143,10 @@ const Premium = () => {
           else setState({ ...state, clicks: state.clicks + 1 });
         }}
       >
-        {isIos
+        Get Haply Premium!
+        {/* {isIos
           ? "Get Haply Premium!"
-          : "100% of Profits go to Mental Health Charities"}
+          : "100% of Profits go to Mental Health Charities"} */}
       </Header>
       <Illustration src={natureOnScren} alt="Premium Illustration" />
       <Features>
@@ -180,11 +181,11 @@ const Premium = () => {
         >
           {"Get Premium for " + price + "/month"}
         </Button>
-        {isIos && (
-          <RestorePurchases onClick={() => store.refresh()}>
-            Restore Purchases
-          </RestorePurchases>
-        )}
+        {/* {isIos && ( */}
+        <RestorePurchases onClick={() => store.refresh()}>
+          Restore Purchases
+        </RestorePurchases>
+        {/* )} */}
       </Buttons>
     </StyledPremium>
   );
