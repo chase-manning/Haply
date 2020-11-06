@@ -45,7 +45,6 @@ const Description = styled.div`
 
 type Props = {
   position: string;
-  illustration: JSX.Element;
   header: string;
   description: string;
 };
@@ -53,7 +52,6 @@ type Props = {
 const WelcomePage = (props: Props) => {
   return (
     <StyledWelcomePage position={props.position}>
-      {props.illustration}
       <TextArea>
         <Header>{props.header}</Header>
         <Description>{props.description}</Description>

@@ -25,17 +25,23 @@ const StyledWelcome = styled.div`
   justify-content: space-between;
 `;
 
-const BlobConatiner = styled.div`
-  width: 100%;
-  height: 50%;
-  top: 0;
-  left: 0;
-  position: fixed;
-  opacity: 0.5;
+const SvgContainer = styled.div`
+  display: flex;
 `;
+
+type SvgProps = {
+  position: string;
+};
 
 const Svg = styled.img`
   width: 100%;
+  transform: ${(props: SvgProps) =>
+    props.position === "left"
+      ? "translateX(-120%)"
+      : props.position === "middle"
+      ? "translateX(0)"
+      : "translateX(120%)"};
+  transition: all 0.8s ease-in-out;
 `;
 
 const WelcomePages = styled.div`
@@ -154,6 +160,44 @@ const Welcome = () => {
   return (
     <StyledWelcome>
       <div />
+      <SvgContainer>
+        <Svg
+          position={
+            state.page < 0 ? "right" : state.page === 0 ? "middle" : "left"
+          }
+          src={aWholeYear}
+        />
+        <Svg
+          position={
+            state.page < 1 ? "right" : state.page === 1 ? "middle" : "left"
+          }
+          src={aWholeYear}
+        />
+        <Svg
+          position={
+            state.page < 2 ? "right" : state.page === 2 ? "middle" : "left"
+          }
+          src={aWholeYear}
+        />
+        <Svg
+          position={
+            state.page < 3 ? "right" : state.page === 3 ? "middle" : "left"
+          }
+          src={aWholeYear}
+        />
+        <Svg
+          position={
+            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
+          }
+          src={aWholeYear}
+        />
+        <Svg
+          position={
+            state.page < 5 ? "right" : state.page === 5 ? "middle" : "left"
+          }
+          src={aWholeYear}
+        />
+      </SvgContainer>
       <WelcomePages>
         <WelcomePage
           position={
@@ -163,7 +207,6 @@ const Welcome = () => {
           description={
             "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
           }
-          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -173,7 +216,6 @@ const Welcome = () => {
           description={
             "Stop every now and again to take a moment and think about how you are feeling"
           }
-          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -183,7 +225,6 @@ const Welcome = () => {
           description={
             "Track where you are, what you are doing, who you are with and more with Tags"
           }
-          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -193,7 +234,6 @@ const Welcome = () => {
           description={
             "Keep tracking your mood to unlock personalised insights into what makes you feel great"
           }
-          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -203,7 +243,6 @@ const Welcome = () => {
           description={
             "By completing achievements you can unlock new themes and even new features in Haply"
           }
-          illustration={<Svg src={aWholeYear} />}
         />
         <WelcomePage
           position={
@@ -211,7 +250,6 @@ const Welcome = () => {
           }
           header={"Let's Create your First Mood!"}
           description={""}
-          illustration={<Svg src={aWholeYear} />}
         />
       </WelcomePages>
       <BottomBar>
