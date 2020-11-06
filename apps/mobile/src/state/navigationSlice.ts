@@ -105,7 +105,7 @@ export const selectActiveTabText = (state: RootState) => {
     case Tab.Stats:
       return "Analytics";
     case Tab.Settings:
-      return "Settings";
+      return "More";
     default:
       return "Error";
   }
