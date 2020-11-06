@@ -82,7 +82,7 @@ type NextProps = {
 };
 
 const Next = styled.button`
-  width: ${(props: NextProps) => (props.final ? "140px" : "70px")};
+  width: ${(props: NextProps) => (props.final ? "160px" : "70px")};
   height: 70px;
   border-radius: 35px;
   background-color: var(--primary);
@@ -92,6 +92,41 @@ const Next = styled.button`
   color: var(--bg-mid);
   font-size: 20px;
   transition: width 0.8s ease-in-out;
+  position: relative;
+`;
+
+type NextArrowProps = {
+  active: boolean;
+};
+
+const NextArrow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: ${(props: NextArrowProps) => (props.active ? "1" : "0")};
+  transition: all 0.4s;
+`;
+
+type NextTextProps = {
+  active: boolean;
+};
+
+const NextText = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: ${(props: NextTextProps) => (props.active ? "1" : "0")};
+  transition: 0.4s all 0.4s;
 `;
 
 class State {
@@ -210,7 +245,10 @@ const Welcome = () => {
               setState({ ...state, page: state.page + 1 });
             }}
           >
-            <ArrowForwardIcon fontSize={"large"} />
+            <NextArrow active={state.page !== 5}>
+              <ArrowForwardIcon fontSize={"large"} />
+            </NextArrow>
+            <NextText active={state.page === 5}>I'm Ready!!</NextText>
           </Next>
         </NavBar>
       </BottomBar>
