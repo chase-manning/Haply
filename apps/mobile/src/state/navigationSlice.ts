@@ -90,7 +90,7 @@ export const {
 
 /* SELECTS */
 export const selectMoodShowing = (state: RootState) =>
-  state.navigation.moodShowing;
+  state.navigation.moodShowing || state.data.moods.length === 0;
 export const selectLoggingIn = (state: RootState) => state.navigation.loggingIn;
 
 export const selectActiveTab = (state: RootState) => state.navigation.activeTab;
