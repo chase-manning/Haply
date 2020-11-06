@@ -41,7 +41,6 @@ const App = () => {
     <StyledApp>
       <PushNotificationSetup />
       <GlobalStyles />
-      <LoadingScreen loading={loading} percentComplete={loadingPercent} />
       {!loading && (
         <ContentContainer>
           <Tabs />
@@ -54,6 +53,7 @@ const App = () => {
       <Alerts />
       <Premium />
       <Error />
+      <LoadingScreen loading={loading} percentComplete={loadingPercent} />
       <Welcome />
     </StyledApp>
   );
