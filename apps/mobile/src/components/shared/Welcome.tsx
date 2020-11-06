@@ -249,8 +249,8 @@ const Welcome = () => {
         <TextArea active={state.page === 2}>
           <Header>Use Tags to Track your Activities</Header>
           <Description>
-            "Track where you are, what you are doing, who you are with and more
-            with Tags"
+            Track where you are, what you are doing, who you are with and more
+            with Tags
           </Description>
         </TextArea>
         <TextArea active={state.page === 3}>
