@@ -7,7 +7,6 @@ import {
   hideWelcome,
 } from "../../state/navigationSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
-import WelcomePage from "./WelcomePage";
 import aWholeYear from "../../assets/svgs/AWholeYear.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const { Storage } = CapacitorPlugins;
