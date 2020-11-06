@@ -15,7 +15,7 @@ interface NavigationState {
   loggingIn: boolean;
   premium: boolean;
   error: string;
-  isIos: boolean;
+  isAndroid: boolean;
   showWelcome: boolean;
 }
 
@@ -25,7 +25,7 @@ const initialState: NavigationState = {
   loggingIn: false,
   premium: false,
   error: "",
-  isIos: false,
+  isAndroid: false,
   showWelcome: false,
 };
 
@@ -61,8 +61,8 @@ export const navigationSlice = createSlice({
     hideError: (state) => {
       state.error = "";
     },
-    setIsIos: (state, action: PayloadAction<boolean>) => {
-      state.isIos = action.payload;
+    setIsAndroid: (state, action: PayloadAction<boolean>) => {
+      state.isAndroid = action.payload;
     },
     showWelcome: (state) => {
       state.showWelcome = true;
@@ -83,7 +83,7 @@ export const {
   setActiveTab,
   showError,
   hideError,
-  setIsIos,
+  setIsAndroid,
   showWelcome,
   hideWelcome,
 } = navigationSlice.actions;
@@ -112,7 +112,7 @@ export const selectActiveTabText = (state: RootState) => {
 };
 
 export const selectError = (state: RootState) => state.navigation.error;
-export const selectIsIos = (state: RootState) => state.navigation.isIos;
+export const selectIsAndroid = (state: RootState) => state.navigation.isAndroid;
 export const selectShowWelcome = (state: RootState) =>
   state.navigation.showWelcome;
 export default navigationSlice.reducer;

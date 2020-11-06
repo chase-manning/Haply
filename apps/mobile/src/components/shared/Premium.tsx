@@ -5,8 +5,8 @@ import styled from "styled-components";
 import {
   hidePremium,
   selectPremium,
-  setIsIos,
-  selectIsIos,
+  selectIsAndroid,
+  setIsAndroid,
 } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
 import natureOnScren from "../../assets/svgs/NatureOnScreen.svg";
@@ -93,12 +93,12 @@ const Premium = () => {
   const dispatch = useDispatch();
   const premium = useSelector(selectPremium);
   const price = useSelector(selectProductPrice);
-  const isIos = useSelector(selectIsIos);
+  const isAndroid = useSelector(selectIsAndroid);
   const store = InAppPurchase2;
 
   useEffect(() => {
     Device.getInfo().then((deviceInfo) =>
-      dispatch(setIsIos(deviceInfo.platform === "ios"))
+      dispatch(setIsAndroid(deviceInfo.platform === "android"))
     );
 
     if (!Capacitor.isNative) return;
@@ -143,10 +143,9 @@ const Premium = () => {
           else setState({ ...state, clicks: state.clicks + 1 });
         }}
       >
-        Get Haply Premium!
-        {/* {isIos
-          ? "Get Haply Premium!"
-          : "100% of Profits go to Mental Health Charities"} */}
+        {isAndroid
+          ? "100% of Profits go to Mental Health Charities"
+          : "Get Haply Premium!"}
       </Header>
       <Illustration src={natureOnScren} alt="Premium Illustration" />
       <Features>
@@ -181,11 +180,11 @@ const Premium = () => {
         >
           {"Get Premium for " + price + "/month"}
         </Button>
-        {/* {isIos && ( */}
-        <RestorePurchases onClick={() => store.refresh()}>
-          Restore Purchases
-        </RestorePurchases>
-        {/* )} */}
+        {!isAndroid && (
+          <RestorePurchases onClick={() => store.refresh()}>
+            Restore Purchases
+          </RestorePurchases>
+        )}
       </Buttons>
     </StyledPremium>
   );
