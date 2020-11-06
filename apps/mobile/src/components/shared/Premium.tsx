@@ -163,13 +163,6 @@ const Premium = () => {
           }
           icon={<EmojiEmotionsIcon />}
         />
-        {/* <PremiumFeature
-          header={"Random Reminders"}
-          description={
-            "Create reminders with a random range to capture your mood at any and all times"
-          }
-          icon={<CasinoIcon />}
-        /> */}
       </Features>
       <Buttons>
         <Button
