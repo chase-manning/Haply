@@ -12,7 +12,7 @@ import AddTags from "../shared/AddTags";
 import { useSelector, useDispatch } from "react-redux";
 import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
 import { selectTagOptions } from "../../state/settingsSlice";
-import { addMood } from "../../state/dataSlice";
+import { addMood, selectMoods } from "../../state/dataSlice";
 import { updateAll } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
@@ -81,12 +81,13 @@ const CreateMood = () => {
   const moodShowing = useSelector(selectMoodShowing);
   const tagOptions = useSelector(selectTagOptions);
   const user = useSelector(selectUser);
+  const moods = useSelector(selectMoods);
 
   if (!moodShowing) return null;
 
   return (
     <StyledCreateMood>
-      <ExitBar exit={() => dispatch(hideMood())} />
+      {moods.length > 0 && <ExitBar exit={() => dispatch(hideMood())} />}
       <Header>How are you feeling?</Header>
       <Emotion>{moodDescriptions[state.mood]}</Emotion>
       <Face>
