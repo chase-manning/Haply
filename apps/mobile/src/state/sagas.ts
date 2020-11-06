@@ -176,7 +176,7 @@ function* watchSetPushNotificationToken() {
 }
 
 /* ACTIONS */
-function* saveHideWelcome() {
+function saveHideWelcome() {
   let welcomed: boolean = true;
   // Storage.set({ key: "welcomed", value: JSON.stringify(welcomed) });
 }
