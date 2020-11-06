@@ -135,15 +135,15 @@ type NextProps = {
 };
 
 const Next = styled.button`
-  width: ${(props: NextProps) => (props.final ? "160px" : "70px")};
-  height: 70px;
-  border-radius: 35px;
+  width: ${(props: NextProps) => (props.final ? "130px" : "60px")};
+  height: 60px;
+  border-radius: 30px;
   background-color: var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--bg-mid);
-  font-size: 20px;
+  font-size: 16px;
   transition: width 0.8s ease-in-out;
   position: relative;
 `;
