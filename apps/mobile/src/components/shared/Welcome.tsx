@@ -25,7 +25,7 @@ const StyledWelcome = styled.div`
   justify-content: space-between;
 `;
 
-const SvgContainer = styled.div`
+const Section = styled.div`
   display: flex;
 `;
 
@@ -44,10 +44,32 @@ const Svg = styled.img`
   transition: all 0.8s ease-in-out;
 `;
 
-const WelcomePages = styled.div`
+type TextAreaProps = {
+  active: boolean;
+};
+
+const TextArea = styled.div`
   width: 100%;
-  height: 60%;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  opacity: ${(props: TextAreaProps) => (props.active ? "1" : "0")};
+  transition: ${(props: TextAreaProps) =>
+    props.active
+      ? "0.4s opacity 0.4s ease-in-out"
+      : "opacity 0.4s ease-in-out"};
+`;
+
+const Header = styled.div`
+  width: 100%;
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 20px;
+`;
+
+const Description = styled.div`
+  width: 100%;
+  font-size: 15px;
+  line-height: 1.3;
 `;
 
 const BottomBar = styled.div`
@@ -160,7 +182,7 @@ const Welcome = () => {
   return (
     <StyledWelcome>
       <div />
-      <SvgContainer>
+      <Section>
         <Svg
           position={
             state.page < 0 ? "right" : state.page === 0 ? "middle" : "left"
@@ -197,61 +219,47 @@ const Welcome = () => {
           }
           src={aWholeYear}
         />
-      </SvgContainer>
-      <WelcomePages>
-        <WelcomePage
-          position={
-            state.page < 0 ? "right" : state.page === 0 ? "middle" : "left"
-          }
-          header={"Welcome to Haply Mood Tracker"}
-          description={
-            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
-          }
-        />
-        <WelcomePage
-          position={
-            state.page < 1 ? "right" : state.page === 1 ? "middle" : "left"
-          }
-          header={"Record your Mood Throughout the Day"}
-          description={
-            "Stop every now and again to take a moment and think about how you are feeling"
-          }
-        />
-        <WelcomePage
-          position={
-            state.page < 2 ? "right" : state.page === 2 ? "middle" : "left"
-          }
-          header={"Use Tags to Track your Activities"}
-          description={
-            "Track where you are, what you are doing, who you are with and more with Tags"
-          }
-        />
-        <WelcomePage
-          position={
-            state.page < 3 ? "right" : state.page === 3 ? "middle" : "left"
-          }
-          header={"Get Personalised Insights into your Feelings"}
-          description={
-            "Keep tracking your mood to unlock personalised insights into what makes you feel great"
-          }
-        />
-        <WelcomePage
-          position={
-            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
-          }
-          header={"Complete Achievement for Unique Rewards"}
-          description={
-            "By completing achievements you can unlock new themes and even new features in Haply"
-          }
-        />
-        <WelcomePage
-          position={
-            state.page < 5 ? "right" : state.page === 5 ? "middle" : "left"
-          }
-          header={"Let's Create your First Mood!"}
-          description={""}
-        />
-      </WelcomePages>
+      </Section>
+      <Section>
+        <TextArea active={state.page === 0}>
+          <Header>Welcome to Haply Mood Tracker</Header>
+          <Description>
+            Congratulations on taking a great step towards a deeper
+            understanding of your emotional and mental fluctuations
+          </Description>
+        </TextArea>
+        <TextArea active={state.page === 1}>
+          <Header>Record your Mood Throughout the Day</Header>
+          <Description>
+            Stop every now and again to take a moment and think about how you
+            are feeling
+          </Description>
+        </TextArea>
+        <TextArea active={state.page === 2}>
+          <Header>Use Tags to Track your Activities</Header>
+          <Description>
+            "Track where you are, what you are doing, who you are with and more
+            with Tags"
+          </Description>
+        </TextArea>
+        <TextArea active={state.page === 3}>
+          <Header>Get Personalised Insights into your Feelings</Header>
+          <Description>
+            Keep tracking your mood to unlock personalised insights into what
+            makes you feel great
+          </Description>
+        </TextArea>
+        <TextArea active={state.page === 4}>
+          <Header>Complete Achievement for Unique Rewards</Header>
+          <Description>
+            By completing achievements you can unlock new themes and even new
+            features in Haply
+          </Description>
+        </TextArea>
+        <TextArea active={state.page === 5}>
+          <Header>Let's Create your First Mood!</Header>
+        </TextArea>
+      </Section>
       <BottomBar>
         <PageIndicators>
           <PageIndicator active={state.page === 0} />
