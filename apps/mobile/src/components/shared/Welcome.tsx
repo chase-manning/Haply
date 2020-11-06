@@ -11,6 +11,7 @@ import hookedAsset from "../../assets/svgs/Hooked.svg";
 import walkingOutsideAsset from "../../assets/svgs/WalkingOutside.svg";
 import designSprintAsset from "../../assets/svgs/DesignSprint.svg";
 import growthAnalyticsAsset from "../../assets/svgs/GrowthAnalytics.svg";
+import winnersAsset from "../../assets/svgs/Winners.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const { Storage } = CapacitorPlugins;
 
@@ -223,7 +224,7 @@ const Welcome = () => {
           position={
             state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
           }
-          src={hookedAsset}
+          src={winnersAsset}
         />
         <Svg
           position={
