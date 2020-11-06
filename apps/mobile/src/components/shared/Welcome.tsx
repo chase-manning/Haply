@@ -153,19 +153,6 @@ const Welcome = () => {
 
   return (
     <StyledWelcome>
-      <BlobConatiner>
-        <svg
-          viewBox="0 0 200 200"
-          xmlns="http://www.w3.org/2000/svg"
-          height="100%"
-        >
-          <path
-            fill="var(--primary)"
-            d="M37.8,-50.1C48.3,-44.3,55.8,-32.4,64.7,-18C73.5,-3.6,83.7,13.5,78.7,24.6C73.7,35.7,53.6,40.9,38,46.5C22.4,52,11.2,57.9,-0.3,58.3C-11.8,58.7,-23.6,53.8,-39.4,48.3C-55.2,42.8,-75,36.8,-82.4,24.4C-89.8,11.9,-84.8,-7,-73.9,-18.9C-63.1,-30.8,-46.3,-35.7,-33,-40.7C-19.7,-45.6,-9.8,-50.6,1.9,-53.2C13.6,-55.8,27.2,-56,37.8,-50.1Z"
-            transform="translate(100 100)"
-          />
-        </svg>
-      </BlobConatiner>
       <div />
       <WelcomePages>
         <WelcomePage
@@ -220,7 +207,7 @@ const Welcome = () => {
         />
         <WelcomePage
           position={
-            state.page < 5 ? "right" : state.page === 4 ? "middle" : "left"
+            state.page < 5 ? "right" : state.page === 5 ? "middle" : "left"
           }
           header={"Let's Create your First Mood!"}
           description={""}
