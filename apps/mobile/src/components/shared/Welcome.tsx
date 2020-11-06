@@ -25,7 +25,9 @@ const StyledWelcome = styled.div`
 `;
 
 const Section = styled.div`
-  display: flex;
+  width: 100%;
+  height: 30%;
+  position: relative;
 `;
 
 type SvgProps = {
@@ -33,13 +35,16 @@ type SvgProps = {
 };
 
 const Svg = styled.img`
+  position: absolute;
+  left: 0;
+  top: 50%;
   width: 100%;
   transform: ${(props: SvgProps) =>
     props.position === "left"
-      ? "translateX(-120%)"
+      ? "translate(-120%, -50%)"
       : props.position === "middle"
-      ? "translateX(0)"
-      : "translateX(120%)"};
+      ? "translate(0, -50%)"
+      : "translate(120%, -50%)"};
   transition: all 0.8s ease-in-out;
 `;
 
@@ -48,6 +53,10 @@ type TextAreaProps = {
 };
 
 const TextArea = styled.div`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -56,6 +65,7 @@ const TextArea = styled.div`
     props.active
       ? "0.4s opacity 0.4s ease-in-out"
       : "opacity 0.4s ease-in-out"};
+  transform: translateY(-50%);
 `;
 
 const Header = styled.div`
