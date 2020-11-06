@@ -142,9 +142,9 @@ const Welcome = () => {
           position={
             state.page < 1 ? "right" : state.page === 1 ? "middle" : "left"
           }
-          header={"Welcome to Haply Mood Tracker"}
+          header={"Record your Mood Throughout the Day"}
           description={
-            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+            "Stop every now and again to take a moment and think about how you are feeling"
           }
           illustration={<Svg src={aWholeYear} />}
         />
@@ -152,9 +152,9 @@ const Welcome = () => {
           position={
             state.page < 2 ? "right" : state.page === 2 ? "middle" : "left"
           }
-          header={"Welcome to Haply Mood Tracker"}
+          header={"Use Tags to Track your Activities"}
           description={
-            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+            "Track where you are, what you are doing, who you are with and more with Tags"
           }
           illustration={<Svg src={aWholeYear} />}
         />
@@ -162,10 +162,28 @@ const Welcome = () => {
           position={
             state.page < 3 ? "right" : state.page === 3 ? "middle" : "left"
           }
-          header={"Welcome to Haply Mood Tracker"}
+          header={"Get Personalised Insights into your Feelings"}
           description={
-            "Congratulations on taking a great step towards a deeper understanding of your emotional and mental fluctuations"
+            "Keep tracking your mood to unlock personalised insights into what makes you feel great"
           }
+          illustration={<Svg src={aWholeYear} />}
+        />
+        <WelcomePage
+          position={
+            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
+          }
+          header={"Complete Achievement for Unique Rewards"}
+          description={
+            "By completing achievements you can unlock new themes and even new features in Haply"
+          }
+          illustration={<Svg src={aWholeYear} />}
+        />
+        <WelcomePage
+          position={
+            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
+          }
+          header={"Let's Create your First Mood!"}
+          description={""}
           illustration={<Svg src={aWholeYear} />}
         />
       </WelcomePages>
@@ -175,12 +193,14 @@ const Welcome = () => {
           <PageIndicator active={state.page === 1} />
           <PageIndicator active={state.page === 2} />
           <PageIndicator active={state.page === 3} />
+          <PageIndicator active={state.page === 4} />
+          <PageIndicator active={state.page === 5} />
         </PageIndicators>
         <NavBar>
           <div />
           <Next
             onClick={() => {
-              if (state.page === 3) dispatch(hideWelcome());
+              if (state.page === 5) dispatch(hideWelcome());
               setState({ ...state, page: state.page + 1 });
             }}
           >
