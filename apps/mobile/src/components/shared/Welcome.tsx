@@ -9,6 +9,7 @@ import {
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import WelcomePage from "./WelcomePage";
 import aWholeYear from "../../assets/svgs/AWholeYear.svg";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const { Storage } = CapacitorPlugins;
 
 const StyledWelcome = styled.div`
@@ -76,29 +77,16 @@ const NavBar = styled.div`
   justify-content: space-between;
 `;
 
-const Next = styled.div`
+const Next = styled.button`
   width: 70px;
   height: 70px;
   border-radius: 50%;
   background-color: var(--primary);
-`;
-
-const ArrowPointTransform = styled.div`
-  transform: translate(15px, 14px);
-`;
-
-const ArrowPoint = styled.div`
-  border-right: solid 2px var(--bg-mid);
-  border-bottom: solid 2px var(--bg-mid);
-  width: 30px;
-  height: 30px;
-  transform: rotate(-45deg);
-`;
-
-const ArrowLine = styled.div`
-  width: 80px;
-  border-bottom: solid 2px var(--bg-mid);
-  transform: translate(-30px, -2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--bg-mid);
+  font-size: 20px;
 `;
 
 class State {
@@ -196,10 +184,7 @@ const Welcome = () => {
               setState({ ...state, page: state.page + 1 });
             }}
           >
-            <ArrowPointTransform>
-              <ArrowPoint />
-            </ArrowPointTransform>
-            <ArrowLine />
+            <ArrowForwardIcon fontSize={"large"} />
           </Next>
         </NavBar>
       </BottomBar>
