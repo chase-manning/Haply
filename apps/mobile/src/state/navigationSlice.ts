@@ -101,7 +101,7 @@ export const selectActiveTabText = (state: RootState) => {
     case Tab.Profile:
       return "Achievements";
     case Tab.Entries:
-      return "Entries";
+      return "Moods";
     case Tab.Stats:
       return "Analytics";
     case Tab.Settings:
