@@ -204,6 +204,8 @@ const Welcome = () => {
         dispatch(showWelcome());
       }
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!show) return null;
