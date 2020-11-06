@@ -77,16 +77,21 @@ const NavBar = styled.div`
   justify-content: space-between;
 `;
 
+type NextProps = {
+  final: boolean;
+};
+
 const Next = styled.button`
-  width: 70px;
+  width: ${(props: NextProps) => (props.final ? "140px" : "70px")};
   height: 70px;
-  border-radius: 50%;
+  border-radius: 35px;
   background-color: var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--bg-mid);
   font-size: 20px;
+  transition: width 0.8s ease-in-out;
 `;
 
 class State {
@@ -180,7 +185,7 @@ const Welcome = () => {
         />
         <WelcomePage
           position={
-            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
+            state.page < 5 ? "right" : state.page === 4 ? "middle" : "left"
           }
           header={"Let's Create your First Mood!"}
           description={""}
@@ -199,6 +204,7 @@ const Welcome = () => {
         <NavBar>
           <div />
           <Next
+            final={state.page === 5}
             onClick={() => {
               if (state.page === 5) dispatch(hideWelcome());
               setState({ ...state, page: state.page + 1 });
