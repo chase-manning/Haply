@@ -261,6 +261,7 @@ function* saveSettings() {
 
 export default function* rootSaga() {
   yield all([
+    watchHideWelcome(),
     watchUpdateAll(),
     watchUpdateMoods(),
     watchUpdateStats(),
