@@ -107,7 +107,7 @@ const PageIndicators = styled.div`
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 type PageIndicatorProps = {
