@@ -8,6 +8,7 @@ import {
 } from "../../state/navigationSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import hookedAsset from "../../assets/svgs/Hooked.svg";
+import walkingOutsideAsset from "../../assets/svgs/WalkingOutside.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const { Storage } = CapacitorPlugins;
 
@@ -202,7 +203,7 @@ const Welcome = () => {
           position={
             state.page < 1 ? "right" : state.page === 1 ? "middle" : "left"
           }
-          src={hookedAsset}
+          src={walkingOutsideAsset}
         />
         <Svg
           position={
