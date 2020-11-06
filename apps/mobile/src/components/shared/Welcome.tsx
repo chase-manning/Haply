@@ -242,8 +242,8 @@ const Welcome = () => {
         <TextArea active={state.page === 1}>
           <Header>Record your Mood Throughout the Day</Header>
           <Description>
-            Stop every now and again to take a moment and think about how you
-            are feeling
+            Stop every now and then to take a moment and think about how you are
+            feeling
           </Description>
         </TextArea>
         <TextArea active={state.page === 2}>
