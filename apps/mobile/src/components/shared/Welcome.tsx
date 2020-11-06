@@ -92,9 +92,9 @@ const PageIndicator = styled.div`
   width: ${(props: PageIndicatorProps) => (props.active ? "24px" : "6px")};
   height: 6px;
   border-radius: 3px;
-  background-color: var(--highlight);
+  background-color: ${(props: PageIndicatorProps) =>
+    props.active ? "var(--primary)" : "var(--sub)"};
   margin: 2px;
-  opacity: ${(props: PageIndicatorProps) => (props.active ? "1" : "0.5")};
   transition: all 0.8s;
 `;
 
