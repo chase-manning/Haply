@@ -7,7 +7,7 @@ import {
   hideWelcome,
 } from "../../state/navigationSlice";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
-import aWholeYear from "../../assets/svgs/AWholeYear.svg";
+import hookedAsset from "../../assets/svgs/Hooked.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const { Storage } = CapacitorPlugins;
 
@@ -36,15 +36,15 @@ type SvgProps = {
 
 const Svg = styled.img`
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 50%;
-  width: 100%;
+  width: 80%;
   transform: ${(props: SvgProps) =>
     props.position === "left"
-      ? "translate(-120%, -50%)"
+      ? "translate(-200%, -50%)"
       : props.position === "middle"
-      ? "translate(0, -50%)"
-      : "translate(120%, -50%)"};
+      ? "translate(-50%, -50%)"
+      : "translate(100%, -50%)"};
   transition: all 0.8s ease-in-out;
 `;
 
@@ -196,37 +196,37 @@ const Welcome = () => {
           position={
             state.page < 0 ? "right" : state.page === 0 ? "middle" : "left"
           }
-          src={aWholeYear}
+          src={hookedAsset}
         />
         <Svg
           position={
             state.page < 1 ? "right" : state.page === 1 ? "middle" : "left"
           }
-          src={aWholeYear}
+          src={hookedAsset}
         />
         <Svg
           position={
             state.page < 2 ? "right" : state.page === 2 ? "middle" : "left"
           }
-          src={aWholeYear}
+          src={hookedAsset}
         />
         <Svg
           position={
             state.page < 3 ? "right" : state.page === 3 ? "middle" : "left"
           }
-          src={aWholeYear}
+          src={hookedAsset}
         />
         <Svg
           position={
             state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
           }
-          src={aWholeYear}
+          src={hookedAsset}
         />
         <Svg
           position={
             state.page < 5 ? "right" : state.page === 5 ? "middle" : "left"
           }
-          src={aWholeYear}
+          src={hookedAsset}
         />
       </Section>
       <Section>
