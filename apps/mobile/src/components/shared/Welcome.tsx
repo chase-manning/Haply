@@ -27,6 +27,10 @@ const StyledWelcome = styled.div`
   flex-direction: column;
   padding: 40px;
   justify-content: space-between;
+
+  @media (max-height: 600px) {
+    padding: 20px;
+  }
 `;
 
 const SkipContainer = styled.div`
