@@ -114,5 +114,5 @@ export const selectActiveTabText = (state: RootState) => {
 export const selectError = (state: RootState) => state.navigation.error;
 export const selectIsAndroid = (state: RootState) => state.navigation.isAndroid;
 export const selectShowWelcome = (state: RootState) =>
-  state.navigation.showWelcome && state.data.moods.length === 0;
+  state.navigation.showWelcome;
 export default navigationSlice.reducer;
