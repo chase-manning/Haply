@@ -116,8 +116,7 @@ const Welcome = () => {
       if (ret.value) {
         dispatch(hideWelcome());
       } else {
-        dispatch(hideWelcome());
-        // dispatch(showWelcome());
+        dispatch(showWelcome());
       }
     });
   }, []);
