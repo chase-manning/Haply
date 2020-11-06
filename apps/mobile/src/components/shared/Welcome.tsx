@@ -12,6 +12,7 @@ import walkingOutsideAsset from "../../assets/svgs/WalkingOutside.svg";
 import designSprintAsset from "../../assets/svgs/DesignSprint.svg";
 import growthAnalyticsAsset from "../../assets/svgs/GrowthAnalytics.svg";
 import winnersAsset from "../../assets/svgs/Winners.svg";
+import duaLipaAsset from "../../assets/svgs/DuaLipa.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 const { Storage } = CapacitorPlugins;
 
@@ -26,6 +27,17 @@ const StyledWelcome = styled.div`
   flex-direction: column;
   padding: 40px;
   justify-content: space-between;
+`;
+
+const SkipContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Skip = styled.button`
+  color: var(--sub);
+  font-size: 16px;
 `;
 
 const Section = styled.div`
@@ -194,7 +206,10 @@ const Welcome = () => {
 
   return (
     <StyledWelcome>
-      <div />
+      <SkipContainer>
+        <div />
+        <Skip onClick={() => dispatch(hideWelcome())}>Skip</Skip>
+      </SkipContainer>
       <Section>
         <Svg
           position={
@@ -230,7 +245,7 @@ const Welcome = () => {
           position={
             state.page < 5 ? "right" : state.page === 5 ? "middle" : "left"
           }
-          src={hookedAsset}
+          src={duaLipaAsset}
         />
       </Section>
       <Section>
