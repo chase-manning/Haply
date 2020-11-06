@@ -32,7 +32,7 @@ const TextArea = styled.div`
 
 const Header = styled.div`
   width: 100%;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 500;
   margin-bottom: 20px;
 `;
