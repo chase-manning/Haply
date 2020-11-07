@@ -7,6 +7,7 @@ interface LoadingState {
   updatingMoods: boolean;
   updatingStats: boolean;
   updatingAchievements: boolean;
+  updatingDayAverages: boolean;
   updatingSettings: boolean;
 }
 
@@ -15,6 +16,7 @@ const initialState: LoadingState = {
   updatingMoods: true,
   updatingStats: true,
   updatingAchievements: true,
+  updatingDayAverages: true,
   updatingSettings: true,
 };
 
@@ -27,6 +29,7 @@ export const loadingSlice = createSlice({
       state.updatingMoods = true;
       state.updatingStats = true;
       state.updatingAchievements = true;
+      state.updatingDayAverages = true;
       state.updatingSettings = true;
     },
     completeInitialisation: (state) => {
@@ -50,6 +53,12 @@ export const loadingSlice = createSlice({
     completeAchievements: (state) => {
       state.updatingAchievements = false;
     },
+    updateDayAverages: (state) => {
+      state.updatingDayAverages = true;
+    },
+    completeDayAverages: (state) => {
+      state.updatingDayAverages = false;
+    },
     updateSettings: (state) => {
       state.updatingSettings = true;
     },
@@ -68,6 +77,8 @@ export const {
   completeStats,
   updateAchievements,
   completeAchievements,
+  updateDayAverages,
+  completeDayAverages,
   updateSettings,
   completeSettings,
 } = loadingSlice.actions;
@@ -79,6 +90,8 @@ export const selectStatsLoading = (state: RootState) =>
   state.loading.updatingStats;
 export const selectAchievementsLoading = (state: RootState) =>
   state.loading.updatingAchievements;
+export const selectDayAveragesLoading = (state: RootState) =>
+  state.loading.updatingDayAverages;
 export const selectSettingsLoading = (state: RootState) =>
   state.loading.updatingSettings;
 export const selectDataLoading = (state: RootState) => {
@@ -90,6 +103,7 @@ export const selectLoadingPercent = (state: RootState) => {
     state.loading.updatingMoods,
     state.loading.updatingStats,
     state.loading.updatingAchievements,
+    state.loading.updatingDayAverages,
     state.loading.updatingSettings,
   ];
   return updates.filter((update: boolean) => !update).length / updates.length;
