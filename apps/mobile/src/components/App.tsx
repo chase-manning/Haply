@@ -14,6 +14,7 @@ import Alerts from "./shared/Alerts";
 import Premium from "./shared/Premium";
 import Error from "./shared/Error";
 import Welcome from "./shared/Welcome";
+import { selectActiveTab, Tab } from "../state/navigationSlice";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -23,26 +24,32 @@ const StyledApp = styled.div`
   width: 100%;
 `;
 
+type ContentContainerProps = {
+  tabbedPage: boolean;
+};
+
 const ContentContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 80px 0 60px 0;
+  padding: ${(props: ContentContainerProps) =>
+    props.tabbedPage ? "115px 0 60px 0" : "80px 0 60px 0"};
   background-color: var(--bg);
 `;
 
 const App = () => {
   const loading = useSelector(selectDataLoading);
   const loadingPercent = useSelector(selectLoadingPercent);
+  const activeTab = useSelector(selectActiveTab);
 
   return (
     <StyledApp>
       <PushNotificationSetup />
       <GlobalStyles />
       {!loading && (
-        <ContentContainer>
+        <ContentContainer tabbedPage={activeTab === Tab.Entries}>
           <Tabs />
           <Header />
           <NavBar />
