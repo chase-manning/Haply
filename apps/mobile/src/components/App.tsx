@@ -35,7 +35,7 @@ const ContentContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: ${(props: ContentContainerProps) =>
-    props.tabbedPage ? "115px 0 60px 0" : "80px 0 60px 0"};
+    props.tabbedPage ? "110px 0 60px 0" : "80px 0 60px 0"};
   background-color: var(--bg);
 `;
 

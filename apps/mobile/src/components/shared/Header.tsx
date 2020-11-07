@@ -51,7 +51,7 @@ type TabProps = {
 
 const TabItem = styled.button`
   width: 100%;
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
