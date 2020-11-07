@@ -283,6 +283,7 @@ export default function* rootSaga() {
     watchUpdateMoods(),
     watchUpdateStats(),
     watchUpdateAchievements(),
+    watchUpdateDayAverages(),
     watchUpdateSettings(),
     watchSetToken(),
     watchToggleRemindersEnabled(),
