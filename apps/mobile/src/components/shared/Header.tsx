@@ -96,7 +96,7 @@ function Header() {
               active={entriesTab === EntriesTab.Calander}
               onClick={() => dispatch(setEntriesTab(EntriesTab.Calander))}
             >
-              Calander
+              Calendar
             </TabItem>
           </Tabs>
           <Underline
