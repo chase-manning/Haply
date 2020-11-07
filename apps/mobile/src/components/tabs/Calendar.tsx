@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { Header } from "../../styles/Shared";
+import { Header, Card } from "../../styles/Shared";
 import { useSelector } from "react-redux";
 import { selectDayAverages, DayAverage } from "../../state/dataSlice";
 import dateFormat from "dateformat";
+import DynamicIcon from "../shared/DynamicIcon";
 
 interface Month {
   month: string;
@@ -23,6 +24,13 @@ const MonthSection = styled.div`
   flex-direction: column;
 `;
 
+const Dates = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-row-gap: 15px;
+`;
+
 const Calendar = () => {
   const dayAverages = useSelector(selectDayAverages);
   let months: Month[] = [];
@@ -40,9 +48,16 @@ const Calendar = () => {
         return (
           <MonthSection>
             <Header>{month.month}</Header>
-            {month.dayAverages.map((dayAverage: DayAverage) => (
-              <p>{dayAverage.average}</p>
-            ))}
+            <Card>
+              <Dates>
+                {month.dayAverages.map((dayAverage: DayAverage) => (
+                  <DynamicIcon
+                    percent={dayAverage.average / 10}
+                    value={new Date(dayAverage.date).getDate()}
+                  />
+                ))}
+              </Dates>
+            </Card>
           </MonthSection>
         );
       })}
