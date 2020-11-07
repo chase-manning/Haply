@@ -4,12 +4,21 @@ import { DataPoint } from "../../models/StatModel";
 import { Line } from "react-chartjs-2";
 
 const Chart = styled.div`
-  width: 100%;
+  width: calc(100% + 20px);
+  transform: translateY(-10px, -10px);
 `;
 
 const options = {
   legend: {
     display: false,
+  },
+  layout: {
+    padding: {
+      left: 10,
+      right: 10,
+      top: 10,
+      bottom: 10,
+    },
   },
   scales: {
     xAxes: [
@@ -53,9 +62,13 @@ const StatChart = (props: Props) => {
         backgroundColor: "rgba(64,114,253,0.1)",
         borderColor: props.colorPrimary,
         fill: false,
-        pointRadius: 12,
+        pointRadius:
+          (window.innerWidth - 40 * 2) / (props.dataPoints.length * 2),
+        pointHoverRadius:
+          (window.innerWidth - 40 * 2) / (props.dataPoints.length * 2),
         pointBorderColor: "rgba(0,0,0,0)",
         pointBackgroundColor: "rgba(0,0,0,0)",
+        clip: false,
       },
     ],
   };
