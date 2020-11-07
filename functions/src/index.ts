@@ -2217,11 +2217,11 @@ app.get("/v1/calendar", async (request: any, response) => {
     console.log("getting into the good stuff");
     let dayAverages: DayAverage[] = [];
 
-    let startDate: Date = new Date(
-      moods.sort(function (a, b) {
-        return new Date(b.date).getSeconds() - new Date(a.date).getSeconds();
-      })[0].date
-    );
+    let sortedMoods = moods.sort(function (a, b) {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+
+    let startDate: Date = new Date(sortedMoods[0].date);
     console.log("start date calced");
     console.log(startDate);
 
@@ -2238,7 +2238,7 @@ app.get("/v1/calendar", async (request: any, response) => {
         dateFormat(startDate, "dd-mm-yyyy")
       );
       console.log(average);
-      dayAverages.push({ date: startDate, average: average });
+      dayAverages.push({ date: new Date(startDate), average: average });
       startDate.setDate(startDate.getDate() + 1);
       console.log(startDate);
     }
