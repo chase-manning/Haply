@@ -39,8 +39,10 @@ const TabMenu = (props: Props) => {
   return (
     <StyledTabMenu>
       <Tabs>
-        {props.tabs.map((tab: Tab) => (
-          <Tab>{tab.title}</Tab>
+        {props.tabs.map((tab: Tab, index: number) => (
+          <Tab onClick={() => setState({ ...state, tab: index })}>
+            {tab.title}
+          </Tab>
         ))}
       </Tabs>
       <Content>{props.tabs[state.tab].content}</Content>
