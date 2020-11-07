@@ -17,8 +17,6 @@ const StyledHeader = styled.div`
   width: 100%;
   background-color: var(--bg-top);
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
   box-shadow: var(--shadow);
   border-bottom-left-radius: 30px;
@@ -34,6 +32,12 @@ const HeaderText = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 18px;
+`;
+
+const TabBar = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Tabs = styled.div`
@@ -52,6 +56,22 @@ const TabItem = styled.button`
   justify-content: center;
   align-items: center;
   color: ${(props: TabProps) => (props.active ? "var(--main)" : "var(--sub)")};
+  transition: all 0.2s ease-in-out;
+`;
+
+type UnderlineProps = {
+  left: string;
+};
+
+const Underline = styled.div`
+  position: relative;
+  left: ${(props: UnderlineProps) => props.left};
+  width: 15%;
+  background-color: var(--primary);
+  height: 2px;
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: all 0.2s ease-in-out;
 `;
 
 function Header() {
@@ -64,20 +84,25 @@ function Header() {
     <StyledHeader>
       <HeaderText>{headerText}</HeaderText>
       {activeTab === Tab.Entries && (
-        <Tabs>
-          <TabItem
-            active={entriesTab === EntriesTab.Recent}
-            onClick={() => dispatch(setEntriesTab(EntriesTab.Recent))}
-          >
-            Recent
-          </TabItem>
-          <TabItem
-            active={entriesTab === EntriesTab.Calander}
-            onClick={() => dispatch(setEntriesTab(EntriesTab.Calander))}
-          >
-            Calander
-          </TabItem>
-        </Tabs>
+        <TabBar>
+          <Tabs>
+            <TabItem
+              active={entriesTab === EntriesTab.Recent}
+              onClick={() => dispatch(setEntriesTab(EntriesTab.Recent))}
+            >
+              Recent
+            </TabItem>
+            <TabItem
+              active={entriesTab === EntriesTab.Calander}
+              onClick={() => dispatch(setEntriesTab(EntriesTab.Calander))}
+            >
+              Calander
+            </TabItem>
+          </Tabs>
+          <Underline
+            left={entriesTab === EntriesTab.Calander ? "75%" : "25%"}
+          />
+        </TabBar>
       )}
     </StyledHeader>
   );
