@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { selectActiveTabText } from "../../state/navigationSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectActiveTabText,
+  EntriesTab,
+  selectEntriesTab,
+  selectActiveTab,
+  Tab,
+  setEntriesTab,
+} from "../../state/navigationSlice";
 
 const StyledHeader = styled.div`
   position: fixed;
@@ -29,11 +36,49 @@ const HeaderText = styled.div`
   font-size: 18px;
 `;
 
+const Tabs = styled.div`
+  width: 100%;
+  display: flex;
+`;
+
+type TabProps = {
+  active: boolean;
+};
+
+const TabItem = styled.button`
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: ${(props: TabProps) => (props.active ? "var(--main)" : "var(--sub)")};
+`;
+
 function Header() {
+  const dispatch = useDispatch();
   const headerText: string = useSelector(selectActiveTabText);
+  const activeTab: Tab = useSelector(selectActiveTab);
+  const entriesTab: EntriesTab = useSelector(selectEntriesTab);
+
   return (
     <StyledHeader>
       <HeaderText>{headerText}</HeaderText>
+      {activeTab === Tab.Entries && (
+        <Tabs>
+          <TabItem
+            active={entriesTab === EntriesTab.Recent}
+            onClick={() => dispatch(setEntriesTab(EntriesTab.Recent))}
+          >
+            Recent
+          </TabItem>
+          <TabItem
+            active={entriesTab === EntriesTab.Calander}
+            onClick={() => dispatch(setEntriesTab(EntriesTab.Calander))}
+          >
+            Calander
+          </TabItem>
+        </Tabs>
+      )}
     </StyledHeader>
   );
 }
