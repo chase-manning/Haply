@@ -11,7 +11,7 @@ const Tabs = styled.div`
   display: flex;
 `;
 
-const Tab = styled.div`
+const Tab = styled.button`
   width: 100%;
 `;
 
