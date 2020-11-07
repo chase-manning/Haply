@@ -34,28 +34,35 @@ export const Header = styled.div`
 type IconProps = {
   secondary?: boolean;
   highlight?: boolean;
+  noData?: boolean;
 };
 
 export const Icon = styled.div`
   width: 35px;
   height: 35px;
-  background-color: ${(props: IconProps) =>
-    props.secondary
-      ? "var(--highlight-light)"
-      : props.highlight
-      ? "var(--highlight)"
-      : "var(--primary-light)"};
+  background-color: ${(props: IconProps) => {
+    if (props.secondary) return "var(--highlight-light)";
+    else if (props.highlight) return "var(--highlight)";
+    else if (props.noData) return "var(--sub-light)";
+    else return "var(--primary-light)";
+  }};
   border-radius: 8px;
   margin-right: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props: IconProps) =>
-    props.secondary
-      ? "var(--highlight)"
-      : props.highlight
-      ? "var(--bg-mid)"
-      : "var(--primary)"};
+  color: ${(props: IconProps) => {
+    if (props.secondary) return "var(--highlight)";
+    else if (props.highlight) return "var(--bg-mid)";
+    else if (props.noData) return "var(--sub)";
+    else return "var(--primary)";
+  }};
+  border: ${(props: IconProps) => {
+    if (props.secondary) return "none";
+    else if (props.highlight) return "none";
+    else if (props.noData) return "dashed 1px var(--sub)";
+    else return "none";
+  }};
 `;
 
 type SeletedTagProps = {
