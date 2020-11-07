@@ -35,6 +35,9 @@ const DynamicIcon = (props: Props) => {
       <Overlay opacity={props.percent}>
         <Icon>{props.value}</Icon>
       </Overlay>
+      <Overlay opacity={props.percent < 0 ? 1 : 0}>
+        <Icon noData={true}>{props.value}</Icon>
+      </Overlay>
     </StyledDynamicIcon>
   );
 };
