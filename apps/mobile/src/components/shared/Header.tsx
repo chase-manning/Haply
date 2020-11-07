@@ -8,22 +8,34 @@ const StyledHeader = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px;
-  padding-top: 20px;
   background-color: var(--bg-top);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+`;
+
+const HeaderText = styled.div`
+  width: 100%;
+  margin-top: 35px;
+  margin-bottom: 25px;
   color: var(--main);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: var(--shadow);
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
   font-size: 18px;
 `;
 
 function Header() {
   const headerText: string = useSelector(selectActiveTabText);
-  return <StyledHeader>{headerText}</StyledHeader>;
+  return (
+    <StyledHeader>
+      <HeaderText>{headerText}</HeaderText>
+    </StyledHeader>
+  );
 }
 
 export default Header;
