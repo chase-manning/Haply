@@ -7,6 +7,7 @@ import {
   setAchievements,
   setMoods,
   setStats,
+  setDayAverages,
 } from "./dataSlice";
 import {
   completeAchievements,
@@ -19,6 +20,8 @@ import {
   updateMoods,
   updateSettings,
   updateStats,
+  updateDayAverages,
+  completeDayAverages,
 } from "./loadingSlice";
 import {
   Plugins as CapacitorPlugins,
@@ -54,6 +57,7 @@ import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
 import MoodService from "../services/MoodService";
 import { hideWelcome } from "./navigationSlice";
+import DayAveragesService from "../services/DayAveragesService";
 
 const { Storage } = CapacitorPlugins;
 const { StatusBar } = CapacitorPlugins;
@@ -79,6 +83,10 @@ function* watchUpdateStats() {
 
 function* watchUpdateAchievements() {
   yield takeEvery(updateAchievements, runUpdateAchievements);
+}
+
+function* watchUpdateDayAverages() {
+  yield takeEvery(updateDayAverages, runUpdateDayAverages);
 }
 
 function* watchUpdateSettings() {
@@ -186,6 +194,7 @@ function* runUpdateAll() {
     call(runUpdateMoods),
     call(runUpdateStats),
     call(runUpdateAchievements),
+    call(runUpdateDayAverages),
     call(runUpdateSettings),
   ]);
   yield put(completeInitialisation());
@@ -218,6 +227,14 @@ function* runUpdateAchievements() {
 
   if (newAchievements) yield put(setAchievements(newAchievements!));
   yield put(completeAchievements());
+}
+
+function* runUpdateDayAverages() {
+  const userToken = yield select(selectToken);
+  let dayAverages = yield DayAveragesService.getDayAverages(userToken);
+
+  if (dayAverages) yield put(setDayAverages(dayAverages!));
+  yield put(completeDayAverages());
 }
 
 function* runUpdateSettings() {
