@@ -11,6 +11,11 @@ const db = admin.firestore();
 const app = express();
 const main = express();
 
+interface DayAverage {
+  date: Date;
+  average: number;
+}
+
 interface Mood {
   value: number;
   date: string;
@@ -2142,6 +2147,105 @@ app.get("/v3/stats", async (request: any, response) => {
     });
 
     return response.json(stats);
+  } catch (error) {
+    console.log(error);
+    return response.status(500).send(error);
+  }
+});
+
+app.get("/v1/calendar", async (request: any, response) => {
+  try {
+    const user = await getUser(request);
+    if (!user) return response.status(403).send("Unauthorized");
+    const userId = user.uid;
+
+    let querySnapshot = await db
+      .collection("settings")
+      .where("userId", "==", userId)
+      .limit(1)
+      .get();
+
+    let setting: Settings;
+
+    if (querySnapshot.empty) {
+      setting = {
+        remindersEnabled: true,
+        randomReminders: false,
+        frequencyMinutesMin: 420,
+        frequencyMinutesMax: 420,
+        nextNotification: new Date().toString(),
+        tagOptions: defaultTags,
+        colorPrimary: "#4071fe",
+        mode: Mode.Default,
+        timezone: "Asia/Kolkata",
+      };
+    } else {
+      const settingData = querySnapshot.docs[0].data();
+      setting = {
+        remindersEnabled: settingData.remindersEnabled,
+        randomReminders: settingData.randomReminders,
+        frequencyMinutesMin: settingData.frequencyMinutesMin,
+        frequencyMinutesMax: settingData.frequencyMinutesMax,
+        nextNotification: settingData.nextNotification,
+        tagOptions: settingData.tagOptions,
+        colorPrimary: settingData.colorPrimary,
+        mode: settingData.mode,
+        timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
+      };
+    }
+
+    let moodQuerySnapshot = await db
+      .collection("moods")
+      .where("userId", "==", userId)
+      .get();
+
+    const moods: Mood[] = [];
+    moodQuerySnapshot.forEach((doc) => {
+      let mood = doc.data();
+      let moodDate = new Date(mood.date).toISOString();
+      moods.push({
+        id: doc.id,
+        value: mood.value,
+        date: getTimezoneDate(moodDate, setting.timezone),
+        userId: mood.userId,
+        note: mood.note,
+        tags: mood.tags,
+        description: mood.description,
+      });
+    });
+
+    console.log("getting into the good stuff");
+    let dayAverages: DayAverage[] = [];
+
+    let startDate: Date = new Date(
+      moods.sort(function (a, b) {
+        return new Date(b.date).getSeconds() - new Date(a.date).getSeconds();
+      })[0].date
+    );
+    console.log("start date calced");
+    console.log(startDate);
+
+    let today = new Date(getCurrentDateTimezone(setting.timezone));
+    console.log("today");
+    console.log(today);
+
+    console.log("starting loop");
+    while (startDate <= today) {
+      console.log(startDate);
+      let average = dateAverage(
+        moods,
+        "dd-mm-yyyy",
+        dateFormat(startDate, "dd-mm-yyyy")
+      );
+      console.log(average);
+      dayAverages.push({ date: startDate, average: average });
+      startDate.setDate(startDate.getDate() + 1);
+      console.log(startDate);
+    }
+    console.log("done");
+    console.log(dayAverages);
+
+    return response.json(dayAverages);
   } catch (error) {
     console.log(error);
     return response.status(500).send(error);
