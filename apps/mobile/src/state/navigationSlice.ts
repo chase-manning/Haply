@@ -9,6 +9,11 @@ export enum Tab {
   Settings,
 }
 
+export enum EntriesTab {
+  Recent,
+  Calander,
+}
+
 interface NavigationState {
   activeTab: Tab;
   moodShowing: boolean;
@@ -17,6 +22,7 @@ interface NavigationState {
   error: string;
   isAndroid: boolean;
   showWelcome: boolean;
+  entriesTab: EntriesTab;
 }
 
 const initialState: NavigationState = {
@@ -27,6 +33,7 @@ const initialState: NavigationState = {
   error: "",
   isAndroid: false,
   showWelcome: false,
+  entriesTab: EntriesTab.Recent,
 };
 
 /* SLICE */
@@ -70,6 +77,9 @@ export const navigationSlice = createSlice({
     hideWelcome: (state) => {
       state.showWelcome = false;
     },
+    setEntriesTab: (state, action: PayloadAction<EntriesTab>) => {
+      state.entriesTab = action.payload;
+    },
   },
 });
 
@@ -86,6 +96,7 @@ export const {
   setIsAndroid,
   showWelcome,
   hideWelcome,
+  setEntriesTab,
 } = navigationSlice.actions;
 
 /* SELECTS */
@@ -110,6 +121,9 @@ export const selectActiveTabText = (state: RootState) => {
       return "Error";
   }
 };
+
+export const selectEntriesTab = (state: RootState) =>
+  state.navigation.entriesTab;
 
 export const selectError = (state: RootState) => state.navigation.error;
 export const selectIsAndroid = (state: RootState) => state.navigation.isAndroid;
