@@ -55,12 +55,13 @@ const Calendar = () => {
       <LoadingLine loading={dayAveragesLoading} />
       {months.map((month: Month) => {
         return (
-          <MonthSection>
+          <MonthSection key={month.month}>
             <Header>{month.month}</Header>
             <Card>
               <Dates>
                 {month.dayAverages.map((dayAverage: DayAverage) => (
                   <DynamicIcon
+                    key={dayAverage.date.toISOString()}
                     percent={dayAverage.average / 10}
                     value={new Date(dayAverage.date).getDate()}
                   />
