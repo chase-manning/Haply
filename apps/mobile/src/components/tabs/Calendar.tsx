@@ -14,7 +14,7 @@ interface Month {
 const StyledCalendar = styled.div`
   width: 100%;
   display: flex;
-  padding: 30px;
+  padding: 15px 30px;
   flex-direction: column;
 `;
 
