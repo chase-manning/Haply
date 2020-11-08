@@ -2243,7 +2243,6 @@ app.get("/v1/calendar", async (request: any, response) => {
       console.log(startDate);
     }
     console.log("done");
-    console.log(dayAverages);
 
     dayAverages.sort((a, b) => b.date.getTime() - a.date.getTime());
 
