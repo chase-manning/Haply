@@ -61,7 +61,7 @@ const Calendar = () => {
               <Dates>
                 {month.dayAverages.map((dayAverage: DayAverage) => (
                   <DynamicIcon
-                    key={dayAverage.date.toISOString()}
+                    key={new Date(dayAverage.date).toISOString()}
                     percent={dayAverage.average / 10}
                     value={new Date(dayAverage.date).getDate()}
                   />
