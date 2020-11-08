@@ -2245,6 +2245,8 @@ app.get("/v1/calendar", async (request: any, response) => {
     console.log("done");
     console.log(dayAverages);
 
+    dayAverages.sort((a, b) => b.date.getTime() - a.date.getTime());
+
     return response.json(dayAverages);
   } catch (error) {
     console.log(error);
