@@ -40,6 +40,7 @@ const EntryText = styled.div`
   flex-direction: column;
   justify-content: space-between;
   text-align: left;
+  margin-left: 15px;
 `;
 
 const EntryHeader = styled.div`
