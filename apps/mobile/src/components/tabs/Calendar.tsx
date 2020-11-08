@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { selectDayAverages, DayAverage } from "../../state/dataSlice";
 import dateFormat from "dateformat";
 import DynamicIcon from "../shared/DynamicIcon";
+import LoadingLine from "../shared/LoadingLine";
+import { selectDayAveragesLoading } from "../../state/loadingSlice";
 
 interface Month {
   month: string;
@@ -32,9 +34,11 @@ const Dates = styled.div`
 `;
 
 const Calendar = () => {
+  const dayAveragesLoading = useSelector(selectDayAveragesLoading);
   const dayAverages = useSelector(selectDayAverages);
   let months: Month[] = [];
 
+  if (dayAverages.length === 0) return null;
   dayAverages.forEach((dayAverage: DayAverage) => {
     const monthString = dateFormat(dayAverage.date, "mmmm yyyy");
     let month = months.filter((month: Month) => month.month === monthString);
@@ -44,6 +48,7 @@ const Calendar = () => {
 
   return (
     <StyledCalendar>
+      <LoadingLine loading={dayAveragesLoading} />
       {months.map((month: Month) => {
         return (
           <MonthSection>
