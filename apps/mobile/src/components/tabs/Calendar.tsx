@@ -18,6 +18,7 @@ const StyledCalendar = styled.div`
   display: flex;
   padding: 15px 30px;
   flex-direction: column;
+  position: relative;
 `;
 
 const MonthSection = styled.div`
