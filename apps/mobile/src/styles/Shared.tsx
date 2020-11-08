@@ -47,7 +47,6 @@ export const Icon = styled.div`
     else return "var(--primary-light)";
   }};
   border-radius: 8px;
-  margin-right: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
