@@ -31,6 +31,7 @@ const Dates = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-row-gap: 15px;
+  justify-items: center;
 `;
 
 const Calendar = () => {
