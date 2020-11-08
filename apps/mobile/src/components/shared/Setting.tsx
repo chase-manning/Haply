@@ -39,6 +39,7 @@ const Label = styled.div`
     props.highlight ? "var(--bg-mid)" : "var(--main)"};
   text-align: left;
   font-size: 15px;
+  margin-left: 15px;
 `;
 
 type ChevronProps = {
