@@ -2231,16 +2231,13 @@ app.get("/v1/calendar", async (request: any, response) => {
 
     console.log("starting loop");
     while (startDate <= today) {
-      console.log(startDate);
       let average = dateAverage(
         moods,
         "dd-mm-yyyy",
         dateFormat(startDate, "dd-mm-yyyy")
       );
-      console.log(average);
       dayAverages.push({ date: new Date(startDate), average: average });
       startDate.setDate(startDate.getDate() + 1);
-      console.log(startDate);
     }
     console.log("done");
 
