@@ -12,7 +12,7 @@ const app = express();
 const main = express();
 
 interface DayAverage {
-  date: Date;
+  date: string;
   average: number;
 }
 
@@ -2221,27 +2221,34 @@ app.get("/v1/calendar", async (request: any, response) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
 
-    let startDate: Date = new Date(sortedMoods[0].date);
+    let startDate = sortedMoods[0].date;
     console.log("start date calced");
     console.log(startDate);
 
-    let today = new Date(getCurrentDateTimezone(setting.timezone));
+    let today = getCurrentDateTimezone(setting.timezone);
     console.log("today");
     console.log(today);
 
     console.log("starting loop");
-    while (startDate <= today) {
+    while (
+      new Date(dateFormat(startDate, "m/d/yyyy")) <=
+      new Date(dateFormat(today, "m/d/yyyy"))
+    ) {
       let average = dateAverage(
         moods,
         "dd-mm-yyyy",
         dateFormat(startDate, "dd-mm-yyyy")
       );
-      dayAverages.push({ date: new Date(startDate), average: average });
-      startDate.setDate(startDate.getDate() + 1);
+      dayAverages.push({ date: startDate, average: average });
+      let nextDate = new Date(startDate);
+      nextDate.setDate(nextDate.getDate() + 1);
+      startDate = dateFormat(nextDate, "m/d/yyyy, h:M:s TT");
     }
     console.log("done");
 
-    dayAverages.sort((a, b) => b.date.getTime() - a.date.getTime());
+    dayAverages.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 
     return response.json(dayAverages);
   } catch (error) {
