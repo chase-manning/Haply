@@ -32,6 +32,8 @@ type Props = {
 };
 
 const NoData = (props: Props) => {
+  if (!props.show) return null;
+
   return (
     <StyledNoData>
       <img src={noData} alt="No Data Found Illustration" width="60%" />
