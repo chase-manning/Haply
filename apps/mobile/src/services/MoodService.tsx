@@ -23,7 +23,7 @@ const MoodService = {
     limit?: number
   ): Promise<Mood[] | null> {
     try {
-      const route: string = api + "moods";
+      const route: string = api + "v2/moods";
 
       let fullRoute: string = route;
       if (!!order || !!limit) fullRoute += "?";
@@ -59,6 +59,46 @@ const MoodService = {
     try {
       const route: string = api + "moods";
       return await ApiService(route + "/" + moodId, userToken, "DELETE");
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  },
+
+  async getMoodsByDate(userToken: string, date: Date) {
+    try {
+      const startDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+      const endDate = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate()
+      );
+      endDate.setDate(endDate.getDate() + 1);
+      const route: string =
+        api + "v2/moods?startdate=" + startDate + "&enddate=" + endDate;
+
+      const response = await ApiService(route, userToken, "GET");
+
+      const moodResponses: MoodResponse[] = await response!.json();
+
+      let moods: Mood[] = [];
+      moodResponses.forEach((moodResponse: MoodResponse) => {
+        moods.push(
+          new Mood(
+            moodResponse.data.value,
+            moodResponse.data.userId,
+            moodResponse.data.note,
+            moodResponse.data.tags,
+            moodResponse.data.date,
+            moodResponse.id
+          )
+        );
+      });
+      return moods;
     } catch (error) {
       console.log(error);
       return null;
