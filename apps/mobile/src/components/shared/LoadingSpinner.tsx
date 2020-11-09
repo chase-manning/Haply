@@ -7,6 +7,11 @@ const StyledLoadingSpinner = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
+  background-color: var(--main-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 type Props = {
