@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { selectMoodDateSearch } from "../../state/navigationSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectMoodDateSearch,
+  hideMoodDateSearch,
+} from "../../state/navigationSlice";
 import { Header, Button } from "../../styles/Shared";
 import dateFormat from "dateformat";
 import { selectDateSearchMoods } from "../../state/dataSlice";
 import NoData from "./NoData";
 import Mood from "../../models/mood";
 import Entry from "./Entry";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const StyledMoodDateSearch = styled.div`
   position: fixed;
@@ -28,6 +32,19 @@ const NavigationHeader = styled.div`
   box-shadow: var(--shadow);
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
+  position: relative;
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 35px 25px;
 `;
 
 const HeaderText = styled.div`
@@ -66,6 +83,7 @@ const ButtonContainer = styled.div`
 `;
 
 const MoodDateSearch = () => {
+  const dispatch = useDispatch();
   const date = useSelector(selectMoodDateSearch);
   const moods = useSelector(selectDateSearchMoods);
 
@@ -74,6 +92,9 @@ const MoodDateSearch = () => {
   return (
     <StyledMoodDateSearch>
       <NavigationHeader>
+        <BackButton onClick={() => dispatch(hideMoodDateSearch())}>
+          <ArrowBackIcon />
+        </BackButton>
         <HeaderText>{dateFormat(new Date(date), "dS mmmm yyyy")}</HeaderText>
       </NavigationHeader>
       <ScrollContainer>
