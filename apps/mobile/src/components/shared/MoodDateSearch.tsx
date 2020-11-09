@@ -6,7 +6,7 @@ import {
   hideMoodDateSearch,
   showMood,
 } from "../../state/navigationSlice";
-import { Header, Button } from "../../styles/Shared";
+import { Button } from "../../styles/Shared";
 import dateFormat from "dateformat";
 import { selectDateSearchMoods } from "../../state/dataSlice";
 import NoData from "./NoData";
