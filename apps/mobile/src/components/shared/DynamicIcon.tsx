@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Icon } from "../../styles/Shared";
+import { useDispatch } from "react-redux";
+import { showMoodDateSearch } from "../../state/navigationSlice";
 
 const StyledDynamicIcon = styled.div`
   position: relative;
@@ -23,11 +25,17 @@ const Overlay = styled.div`
 type Props = {
   percent: number;
   value: number;
+  date?: string;
 };
 
 const DynamicIcon = (props: Props) => {
+  const dispatch = useDispatch();
   return (
-    <StyledDynamicIcon>
+    <StyledDynamicIcon
+      onClick={() => {
+        if (props.date) dispatch(showMoodDateSearch(props.date));
+      }}
+    >
       <Overlay opacity={1}>
         <Icon secondary={true}>{props.value}</Icon>
       </Overlay>
