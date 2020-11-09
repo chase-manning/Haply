@@ -15,6 +15,7 @@ import Premium from "./shared/Premium";
 import Error from "./shared/Error";
 import Welcome from "./shared/Welcome";
 import { selectActiveTab, Tab } from "../state/navigationSlice";
+import MoodDateSearch from "./shared/MoodDateSearch";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -56,6 +57,7 @@ const App = () => {
         </ContentContainer>
       )}
       <Login />
+      <MoodDateSearch />
       <CreateMood />
       <Alerts />
       <Premium />
