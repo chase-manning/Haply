@@ -10,7 +10,11 @@ import MoodSlider from "../shared/MoodSlider";
 import AddNote from "../shared/AddNote";
 import AddTags from "../shared/AddTags";
 import { useSelector, useDispatch } from "react-redux";
-import { hideMood, selectMoodShowing } from "../../state/navigationSlice";
+import {
+  hideMood,
+  selectMoodShowing,
+  selectMoodDateSearch,
+} from "../../state/navigationSlice";
 import { selectTagOptions } from "../../state/settingsSlice";
 import { addMood, selectMoods } from "../../state/dataSlice";
 import { updateAll } from "../../state/loadingSlice";
@@ -82,6 +86,7 @@ const CreateMood = () => {
   const tagOptions = useSelector(selectTagOptions);
   const user = useSelector(selectUser);
   const moods = useSelector(selectMoods);
+  const dateOverride = useSelector(selectMoodDateSearch);
 
   if (!moodShowing) return null;
 
@@ -117,7 +122,8 @@ const CreateMood = () => {
             state.mood,
             user.id,
             state.note,
-            state.tags
+            state.tags,
+            dateOverride ? new Date(dateOverride) : undefined
           );
           setState({ ...state, tags: [], note: "", mood: 5 });
           dispatch(addMood(mood));
