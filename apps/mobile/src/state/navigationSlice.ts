@@ -23,6 +23,7 @@ interface NavigationState {
   isAndroid: boolean;
   showWelcome: boolean;
   entriesTab: EntriesTab;
+  moodDateSearch?: string;
 }
 
 const initialState: NavigationState = {
@@ -80,6 +81,12 @@ export const navigationSlice = createSlice({
     setEntriesTab: (state, action: PayloadAction<EntriesTab>) => {
       state.entriesTab = action.payload;
     },
+    showMoodDateSearch: (state, action: PayloadAction<string>) => {
+      state.moodDateSearch = action.payload;
+    },
+    hideMoodDateSearch: (state) => {
+      state.moodDateSearch = undefined;
+    },
   },
 });
 
@@ -97,6 +104,8 @@ export const {
   showWelcome,
   hideWelcome,
   setEntriesTab,
+  showMoodDateSearch,
+  hideMoodDateSearch,
 } = navigationSlice.actions;
 
 /* SELECTS */
@@ -129,4 +138,6 @@ export const selectError = (state: RootState) => state.navigation.error;
 export const selectIsAndroid = (state: RootState) => state.navigation.isAndroid;
 export const selectShowWelcome = (state: RootState) =>
   state.navigation.showWelcome;
+export const selectMoodDateSearch = (state: RootState) =>
+  state.navigation.moodDateSearch;
 export default navigationSlice.reducer;
