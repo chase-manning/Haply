@@ -338,7 +338,7 @@ app.get("/v2/moods", async (request: any, response) => {
             .collection("moods")
             .where("userId", "==", userId)
             .where("date", ">=", new Date(startDate).toISOString())
-            .where("date", "<=", new Date(endDate).toISOString())
+            .where("date", "<", new Date(endDate).toISOString())
             .orderBy(order, "desc")
             .limit(32)
             .get();
@@ -356,7 +356,7 @@ app.get("/v2/moods", async (request: any, response) => {
             .collection("moods")
             .where("userId", "==", userId)
             .where("date", ">=", new Date(startDate).toISOString())
-            .where("date", "<=", new Date(endDate).toISOString())
+            .where("date", "<", new Date(endDate).toISOString())
             .orderBy(order, "desc")
             .get();
         } else {
@@ -374,7 +374,7 @@ app.get("/v2/moods", async (request: any, response) => {
             .collection("moods")
             .where("userId", "==", userId)
             .where("date", ">=", new Date(startDate).toISOString())
-            .where("date", "<=", new Date(endDate).toISOString())
+            .where("date", "<", new Date(endDate).toISOString())
             .limit(32)
             .get();
         } else {
@@ -390,7 +390,7 @@ app.get("/v2/moods", async (request: any, response) => {
             .collection("moods")
             .where("userId", "==", userId)
             .where("date", ">=", new Date(startDate).toISOString())
-            .where("date", "<=", new Date(endDate).toISOString())
+            .where("date", "<", new Date(endDate).toISOString())
             .get();
         } else {
           moodQuerySnapshot = await db
