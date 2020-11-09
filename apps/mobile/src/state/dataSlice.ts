@@ -16,6 +16,7 @@ interface DataState {
   stats: StatModel[];
   achievements: AchievementModel[];
   dayAverages: DayAverage[];
+  dateSearchMoods: Mood[];
 }
 
 const initialState: DataState = {
@@ -23,6 +24,7 @@ const initialState: DataState = {
   stats: [],
   achievements: [],
   dayAverages: [],
+  dateSearchMoods: [],
 };
 
 /* SLICE */
@@ -48,6 +50,9 @@ export const dataSlice = createSlice({
     setDayAverages: (state, action: PayloadAction<DayAverage[]>) => {
       state.dayAverages = action.payload;
     },
+    setDateSearchMoods: (state, action: PayloadAction<Mood[]>) => {
+      state.dateSearchMoods = action.payload;
+    },
     addMood: (state, action: PayloadAction<Mood>) => {
       state.moods.unshift(action.payload);
     },
@@ -63,6 +68,7 @@ export const {
   setStats,
   setAchievements,
   setDayAverages,
+  setDateSearchMoods,
   addMood,
   removeMood,
   setAchievementAsOld,
@@ -74,6 +80,8 @@ export const selectMoods = (state: RootState) => state.data.moods;
 export const selectStats = (state: RootState) => state.data.stats;
 export const selectAchievements = (state: RootState) => state.data.achievements;
 export const selectDayAverages = (state: RootState) => state.data.dayAverages;
+export const selectDateSearchMoods = (state: RootState) =>
+  state.data.dateSearchMoods;
 export const selectDarkModeUnlocked = (state: RootState) =>
   state.data.achievements.some(
     (achievement: AchievementModel) =>
