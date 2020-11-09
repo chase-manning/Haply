@@ -196,6 +196,7 @@ function* watchSetPushNotificationToken() {
 
 function* watchShowMoodDateSearch() {
   yield takeEvery(showMoodDateSearch, function* processShowMoodDateSearch() {
+    yield put(setDateSearchMoods([]));
     yield put(updateDateSearchMoods());
   });
 }
