@@ -8,6 +8,7 @@ interface LoadingState {
   updatingStats: boolean;
   updatingAchievements: boolean;
   updatingDayAverages: boolean;
+  updatingDateSearchMoods: boolean;
   updatingSettings: boolean;
 }
 
@@ -17,6 +18,7 @@ const initialState: LoadingState = {
   updatingStats: true,
   updatingAchievements: true,
   updatingDayAverages: true,
+  updatingDateSearchMoods: false,
   updatingSettings: true,
 };
 
@@ -59,6 +61,12 @@ export const loadingSlice = createSlice({
     completeDayAverages: (state) => {
       state.updatingDayAverages = false;
     },
+    updateDateSearchMoods: (state) => {
+      state.updatingDateSearchMoods = true;
+    },
+    completeDateSearchMoods: (state) => {
+      state.updatingDateSearchMoods = false;
+    },
     updateSettings: (state) => {
       state.updatingSettings = true;
     },
@@ -79,6 +87,8 @@ export const {
   completeAchievements,
   updateDayAverages,
   completeDayAverages,
+  updateDateSearchMoods,
+  completeDateSearchMoods,
   updateSettings,
   completeSettings,
 } = loadingSlice.actions;
@@ -108,5 +118,8 @@ export const selectLoadingPercent = (state: RootState) => {
   ];
   return updates.filter((update: boolean) => !update).length / updates.length;
 };
+
+export const selectDateSearchMoodsLoading = (state: RootState) =>
+  state.loading.updatingDateSearchMoods;
 
 export default loadingSlice.reducer;
