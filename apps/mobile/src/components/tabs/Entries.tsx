@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Entry from "../shared/Entry";
 import Mood from "../../models/mood";
-import noData from "../../assets/svgs/Empty.svg";
 import { selectMoods } from "../../state/dataSlice";
 import { useSelector } from "react-redux";
 import LoadingLine from "../shared/LoadingLine";
 import { selectMoodsLoading } from "../../state/loadingSlice";
+import NoData from "../shared/NoData";
 
 const StyledEntries = styled.div`
   width: 100%;
@@ -15,39 +15,6 @@ const StyledEntries = styled.div`
   align-items: center;
   padding: 30px;
   position: relative;
-`;
-
-const NoDataContainer = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const NoData = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const NoDataHeader = styled.div`
-  font-size: 16px;
-  color: var(--main);
-  margin-top: 30px;
-`;
-
-const NoDataSub = styled.div`
-  font-size: 12px;
-  margin-top: 15px;
-  color: var(--sub);
-  width: 70%;
-  text-align: center;
-  line-height: 1.5;
 `;
 
 const Entries = () => {
@@ -63,17 +30,10 @@ const Entries = () => {
           .map((mood: Mood) => (
             <Entry key={mood.moodId || mood.value} mood={mood} />
           ))}
-      {moods.length === 0 && (
-        <NoDataContainer>
-          <NoData>
-            <img src={noData} alt="No Data Found Illustration" width="60%" />
-            <NoDataHeader>No Entries</NoDataHeader>
-            <NoDataSub>
-              Record how you are Feeling. New Entries will appear here.
-            </NoDataSub>
-          </NoData>
-        </NoDataContainer>
-      )}
+      <NoData
+        show={moods.length === 0}
+        text={"Record how you are Feeling. New Entries will appear here."}
+      />
     </StyledEntries>
   );
 };
