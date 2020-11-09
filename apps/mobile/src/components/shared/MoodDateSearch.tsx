@@ -12,6 +12,8 @@ import NoData from "./NoData";
 import Mood from "../../models/mood";
 import Entry from "./Entry";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { selectDateSearchMoodsLoading } from "../../state/loadingSlice";
+import LoadingSpinner from "./LoadingSpinner";
 
 const StyledMoodDateSearch = styled.div`
   position: fixed;
@@ -86,6 +88,7 @@ const MoodDateSearch = () => {
   const dispatch = useDispatch();
   const date = useSelector(selectMoodDateSearch);
   const moods = useSelector(selectDateSearchMoods);
+  const loading = useSelector(selectDateSearchMoodsLoading);
 
   if (!date) return null;
 
@@ -106,11 +109,12 @@ const MoodDateSearch = () => {
           </Content>
         )}
         <NoData
-          show={moods.length === 0}
+          show={moods.length === 0 && !loading}
           text={
             "No Moods exist for this period. Create a new one with the button below."
           }
         />
+        <LoadingSpinner loading={true} />
       </ScrollContainer>
       <ButtonContainer>
         <Button onClick={() => alert("Meow")}>Create Mood</Button>
