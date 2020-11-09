@@ -115,7 +115,7 @@ const MoodDateSearch = () => {
             "No Moods exist for this period. Create a new one with the button below."
           }
         />
-        <LoadingSpinner loading={true} />
+        <LoadingSpinner loading={loading} />
       </ScrollContainer>
       <ButtonContainer>
         <Button onClick={() => alert("Meow")}>Create Mood</Button>
