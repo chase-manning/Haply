@@ -8,6 +8,7 @@ import {
   setMoods,
   setStats,
   setDayAverages,
+  setDateSearchMoods,
 } from "./dataSlice";
 import {
   completeAchievements,
@@ -22,6 +23,8 @@ import {
   updateStats,
   updateDayAverages,
   completeDayAverages,
+  updateDateSearchMoods,
+  completeDateSearchMoods,
 } from "./loadingSlice";
 import {
   Plugins as CapacitorPlugins,
@@ -56,7 +59,11 @@ import {
 import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
 import MoodService from "../services/MoodService";
-import { hideWelcome } from "./navigationSlice";
+import {
+  hideWelcome,
+  selectMoodDateSearch,
+  showMoodDateSearch,
+} from "./navigationSlice";
 import DayAveragesService from "../services/DayAveragesService";
 
 const { Storage } = CapacitorPlugins;
@@ -87,6 +94,10 @@ function* watchUpdateAchievements() {
 
 function* watchUpdateDayAverages() {
   yield takeEvery(updateDayAverages, runUpdateDayAverages);
+}
+
+function* watchUpdateDateSearchMoods() {
+  yield takeEvery(updateDateSearchMoods, runUpdateDateSearchMoods);
 }
 
 function* watchUpdateSettings() {
@@ -183,6 +194,12 @@ function* watchSetPushNotificationToken() {
   yield takeEvery(setPushNotificationToken, savePushNotificationToken);
 }
 
+function* watchShowMoodDateSearch() {
+  yield takeEvery(showMoodDateSearch, function* processShowMoodDateSearch() {
+    yield put(updateDateSearchMoods());
+  });
+}
+
 /* ACTIONS */
 function saveHideWelcome() {
   let welcomed: boolean = true;
@@ -235,6 +252,16 @@ function* runUpdateDayAverages() {
 
   if (dayAverages) yield put(setDayAverages(dayAverages!));
   yield put(completeDayAverages());
+}
+
+function* runUpdateDateSearchMoods() {
+  const userToken = yield select(selectToken);
+  const date = yield select(selectMoodDateSearch);
+  if (!date) return;
+  let moods = yield MoodService.getMoodsByDate(userToken, new Date(date!));
+
+  if (moods) yield put(setDateSearchMoods(moods!));
+  yield put(completeDateSearchMoods());
 }
 
 function* runUpdateSettings() {
@@ -299,5 +326,7 @@ export default function* rootSaga() {
     watchToggleMode(),
     watchSetPushNotificationToken(),
     watchSetTimezone(),
+    watchUpdateDateSearchMoods(),
+    watchShowMoodDateSearch(),
   ]);
 }
