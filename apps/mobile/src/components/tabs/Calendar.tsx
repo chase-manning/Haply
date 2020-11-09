@@ -64,6 +64,7 @@ const Calendar = () => {
                     key={new Date(dayAverage.date).toISOString()}
                     percent={dayAverage.average / 10}
                     value={new Date(dayAverage.date).getDate()}
+                    date={dateFormat(dayAverage.date, "m/d/yyyy")}
                   />
                 ))}
               </Dates>
