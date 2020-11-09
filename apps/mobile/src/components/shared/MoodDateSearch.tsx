@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectMoodDateSearch,
   hideMoodDateSearch,
+  showMood,
 } from "../../state/navigationSlice";
 import { Header, Button } from "../../styles/Shared";
 import dateFormat from "dateformat";
@@ -118,7 +119,7 @@ const MoodDateSearch = () => {
         <LoadingSpinner loading={loading} />
       </ScrollContainer>
       <ButtonContainer>
-        <Button onClick={() => alert("Meow")}>Create Mood</Button>
+        <Button onClick={() => dispatch(showMood())}>Create Mood</Button>
       </ButtonContainer>
     </StyledMoodDateSearch>
   );
