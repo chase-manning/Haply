@@ -113,7 +113,7 @@ const MoodDateSearch = () => {
         />
       </ScrollContainer>
       <ButtonContainer>
-        <Button onClick={() => alert("Meow")}>Create New Mood</Button>
+        <Button onClick={() => alert("Meow")}>Create Mood</Button>
       </ButtonContainer>
     </StyledMoodDateSearch>
   );
