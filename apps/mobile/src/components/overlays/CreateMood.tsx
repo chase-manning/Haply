@@ -17,7 +17,7 @@ import {
 } from "../../state/navigationSlice";
 import { selectTagOptions } from "../../state/settingsSlice";
 import { addMood, selectMoods } from "../../state/dataSlice";
-import { updateAll } from "../../state/loadingSlice";
+import { updateAll, updateDateSearchMoods } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
@@ -130,6 +130,7 @@ const CreateMood = () => {
           dispatch(hideMood());
           MoodService.createMood(user.token, mood).then(() => {
             dispatch(updateAll());
+            if (dateOverride) dispatch(updateDateSearchMoods());
           });
         }}
       >
