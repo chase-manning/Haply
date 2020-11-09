@@ -79,7 +79,11 @@ const MoodService = {
       );
       endDate.setDate(endDate.getDate() + 1);
       const route: string =
-        api + "v2/moods?startdate=" + startDate + "&enddate=" + endDate;
+        api +
+        "v2/moods?startdate=" +
+        startDate.toISOString() +
+        "&enddate=" +
+        endDate.toISOString();
 
       const response = await ApiService(route, userToken, "GET");
 
