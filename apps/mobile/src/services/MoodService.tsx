@@ -102,7 +102,7 @@ const MoodService = {
           )
         );
       });
-      return moods;
+      return moods.reverse();
     } catch (error) {
       console.log(error);
       return null;
