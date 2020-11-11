@@ -41,8 +41,7 @@ const NavigationHeader = styled.div`
 const BackButton = styled.button`
   position: absolute;
   left: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
   color: var(--main);
   display: flex;
   justify-content: center;
