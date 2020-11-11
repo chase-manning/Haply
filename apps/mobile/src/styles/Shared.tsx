@@ -2,10 +2,12 @@ import styled from "styled-components";
 
 type CardProps = {
   highlight?: boolean;
+  height?: string;
 };
 
 export const Card = styled.div`
   width: 100%;
+  height: ${(props: CardProps) => (props.height ? props.height : "auto")};
   padding: 12px;
   border-radius: 10px;
   display: flex;
