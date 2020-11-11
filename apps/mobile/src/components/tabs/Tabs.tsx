@@ -14,6 +14,7 @@ import {
 import { NOTFOUND } from "dns";
 import { useSelector } from "react-redux";
 import Calendar from "./Calendar";
+import Pixels from "../shared/Pixels";
 
 const StyledTabs = styled.div`
   width: 100%;
@@ -29,7 +30,9 @@ const Tabs = () => {
   if (activeTab === Tab.Profile) tabContents = <Achievements />;
   else if (activeTab === Tab.Entries) {
     if (entriesTab === EntriesTab.Recent) tabContents = <Entries />;
-    else tabContents = <Calendar />;
+    else if (entriesTab === EntriesTab.Calander) tabContents = <Calendar />;
+    else if (entriesTab === EntriesTab.Pixels) tabContents = <Pixels />;
+    else throw NOTFOUND;
   } else if (activeTab === Tab.Stats) tabContents = <Analytics />;
   else if (activeTab === Tab.Settings) tabContents = <Settings />;
   else throw NOTFOUND;
