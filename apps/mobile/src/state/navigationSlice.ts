@@ -12,6 +12,7 @@ export enum Tab {
 export enum EntriesTab {
   Recent,
   Calander,
+  Pixels,
 }
 
 interface NavigationState {
