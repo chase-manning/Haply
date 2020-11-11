@@ -38,6 +38,7 @@ const TabBar = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0 30px;
 `;
 
 const Tabs = styled.div`
@@ -80,6 +81,12 @@ function Header() {
   const activeTab: Tab = useSelector(selectActiveTab);
   const entriesTab: EntriesTab = useSelector(selectEntriesTab);
 
+  const tabPosition = () => {
+    if (entriesTab === EntriesTab.Recent) return "16.666%";
+    else if (entriesTab === EntriesTab.Calander) return "50%";
+    else return "83.333%";
+  };
+
   return (
     <StyledHeader>
       <HeaderText>{headerText}</HeaderText>
@@ -98,10 +105,14 @@ function Header() {
             >
               Calendar
             </TabItem>
+            <TabItem
+              active={entriesTab === EntriesTab.Pixels}
+              onClick={() => dispatch(setEntriesTab(EntriesTab.Pixels))}
+            >
+              Pixels
+            </TabItem>
           </Tabs>
-          <Underline
-            left={entriesTab === EntriesTab.Calander ? "75%" : "25%"}
-          />
+          <Underline left={tabPosition()} />
         </TabBar>
       )}
     </StyledHeader>
