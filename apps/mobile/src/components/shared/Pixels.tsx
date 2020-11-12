@@ -130,14 +130,14 @@ const Pixels = () => {
       <YearSelector>
         <YearContainer>
           <YearNavButton
-            disabled={years.some((year: Year) => year.year < state.year)}
+            disabled={!years.some((year: Year) => year.year < state.year)}
             onClick={() => setState({ ...state, year: state.year - 1 })}
           >
             <ArrowBackIosIcon />
           </YearNavButton>
           <Year>{state.year}</Year>
           <YearNavButton
-            disabled={years.some((year: Year) => year.year > state.year)}
+            disabled={!years.some((year: Year) => year.year > state.year)}
             onClick={() => setState({ ...state, year: state.year + 1 })}
           >
             <ArrowForwardIosIcon />
