@@ -101,14 +101,13 @@ const Passcode = (props: Props) => {
   };
 
   const add = (code: string) => {
-    setState({ ...state, passcode: state.passcode + code });
-    if (state.passcode.length === 4) {
+    const newPasscode = state.passcode + code;
+    if (newPasscode.length === 4) {
       if (state.saved.length === 4) {
-        if (state.saved === state.passcode)
-          dispatch(enablePasscode(state.passcode));
+        if (state.saved === newPasscode) dispatch(enablePasscode(newPasscode));
         else setState({ ...state, saved: "", passcode: "" });
-      } else setState({ ...state, saved: state.passcode, passcode: "" });
-    }
+      } else setState({ ...state, saved: newPasscode, passcode: "" });
+    } else setState({ ...state, passcode: newPasscode });
   };
 
   return (
