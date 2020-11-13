@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { store } from "../../state/store";
 import { Mode } from "../../state/settingsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { enablePasscode, selectPasscode } from "../../state/navigationSlice";
+import {
+  disablePasscode,
+  enablePasscode,
+  selectPasscode,
+} from "../../state/navigationSlice";
+import ExitBar from "./ExitBar";
 
 const StyledPasscode = styled.div`
   position: fixed;
@@ -86,9 +91,12 @@ const Passcode = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState(new State());
   const passcode = useSelector(selectPasscode);
+  console.log(passcode);
 
-  if (!passcode) return null;
+  console.log(!passcode);
+  if (passcode === undefined) return null;
 
+  console.log("inside");
   const headerText = () => {
     if (passcode.length === 0) {
       if (state.saved.length < 4) return "Set Passcode";
@@ -108,6 +116,10 @@ const Passcode = () => {
 
   return (
     <StyledPasscode>
+      <ExitBar
+        exit={() => dispatch(disablePasscode())}
+        hideExit={passcode.length === 4}
+      />
       <Header>{headerText()}</Header>
       <Pins>
         <Pin filled={state.passcode.length >= 1} />
