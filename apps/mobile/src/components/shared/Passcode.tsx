@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { store } from "../../state/store";
 import { Mode } from "../../state/settingsSlice";
-import { useDispatch } from "react-redux";
-import { enablePasscode } from "../../state/navigationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { enablePasscode, selectPasscode } from "../../state/navigationSlice";
 
 const StyledPasscode = styled.div`
   position: fixed;
@@ -82,22 +82,18 @@ class State {
   passcode: string = "";
 }
 
-type Props = {
-  mode: PasscodeMode;
-};
-
-const Passcode = (props: Props) => {
+const Passcode = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState(new State());
+  const passcode = useSelector(selectPasscode);
 
-  if (props.mode === PasscodeMode.Hidden) return null;
+  if (!passcode) return null;
 
   const headerText = () => {
-    if (props.mode === PasscodeMode.Set) {
+    if (passcode.length === 0) {
       if (state.saved.length < 4) return "Set Passcode";
       else return "Confirm Passcode";
-    } else if (props.mode === PasscodeMode.Enter) return "Enter Passcode";
-    else return "Error";
+    } else return "Enter Passcode";
   };
 
   const add = (code: string) => {
