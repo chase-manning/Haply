@@ -209,7 +209,6 @@ const Settings = () => {
         icon={<VerifiedUserOutlinedIcon />}
       />
 
-      <Passcode mode={PasscodeMode.Set} />
       <ReminderPopup
         open={state.reminderPopupOpen}
         closePopup={() => setState({ ...state, reminderPopupOpen: false })}

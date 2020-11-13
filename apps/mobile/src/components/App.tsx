@@ -16,6 +16,7 @@ import Error from "./shared/Error";
 import Welcome from "./shared/Welcome";
 import { selectActiveTab, Tab } from "../state/navigationSlice";
 import MoodDateSearch from "./shared/MoodDateSearch";
+import Passcode from "./shared/Passcode";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -64,6 +65,7 @@ const App = () => {
       <Error />
       <LoadingScreen loading={loading} percentComplete={loadingPercent} />
       <Welcome />
+      <Passcode />
     </StyledApp>
   );
 };
