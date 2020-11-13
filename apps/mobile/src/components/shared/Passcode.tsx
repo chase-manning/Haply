@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { store } from "../../state/store";
+import { Mode } from "../../state/settingsSlice";
+import { useDispatch } from "react-redux";
+import { enablePasscode } from "../../state/navigationSlice";
 
 const StyledPasscode = styled.div`
   position: fixed;
@@ -69,11 +72,12 @@ const Number = styled.div`
 
 export enum PasscodeMode {
   Set,
-  Confirm,
   Enter,
+  Hidden,
 }
 
 class State {
+  saved: string = "";
   passcode: string = "";
 }
 
@@ -82,23 +86,29 @@ type Props = {
 };
 
 const Passcode = (props: Props) => {
+  if (props.mode === PasscodeMode.Hidden) return null;
+
+  const dispatch = useDispatch();
   const [state, setState] = useState(new State());
 
   const headerText = () => {
-    switch (props.mode) {
-      case PasscodeMode.Set:
-        return "Set Passcode";
-      case PasscodeMode.Confirm:
-        return "Confirm Passcode";
-      case PasscodeMode.Enter:
-        return "Enter Passcode";
-      default:
-        return "ERROR";
-    }
+    if (props.mode === PasscodeMode.Set) {
+      if (state.saved.length < 4) return "Set Passcode";
+      else return "Confirm Passcode";
+    } else if (props.mode === PasscodeMode.Enter) return "Enter Passcode";
+    else return "Error";
   };
 
-  const add = (code: string) =>
+  const add = (code: string) => {
     setState({ ...state, passcode: state.passcode + code });
+    if (state.passcode.length === 4) {
+      if (state.saved.length === 4) {
+        if (state.saved === state.passcode)
+          dispatch(enablePasscode(state.passcode));
+        else setState({ ...state, saved: "", passcode: "" });
+      } else setState({ ...state, saved: state.passcode, passcode: "" });
+    }
+  };
 
   return (
     <StyledPasscode>
