@@ -76,7 +76,7 @@ const PixelsContainer = styled.div`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
+  grid-template-columns: repeat(10, 1fr);
   grid-row-gap: 10px;
 `;
 
@@ -84,8 +84,8 @@ const PixelContainer = styled.div`
   justify-self: center;
   align-self: center;
   position: relative;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
 `;
 
 type PixelProps = {
@@ -96,8 +96,8 @@ type PixelProps = {
 };
 
 const Pixel = styled.div`
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   position: absolute;
   top: 0px;
