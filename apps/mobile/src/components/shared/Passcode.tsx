@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   disablePasscode,
   enablePasscode,
+  selectLocked,
   selectPasscode,
 } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
@@ -99,12 +100,10 @@ const Passcode = () => {
   const dispatch = useDispatch();
   const [state, setState] = useState(new State());
   const passcode = useSelector(selectPasscode);
-  console.log(passcode);
+  const locked = useSelector(selectLocked);
 
-  console.log(!passcode);
-  if (passcode === undefined) return null;
+  if (passcode === undefined || (passcode.length === 4 && !locked)) return null;
 
-  console.log("inside");
   const headerText = () => {
     if (passcode.length === 0) {
       if (state.saved.length < 4) return "Set Passcode";
