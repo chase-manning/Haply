@@ -106,7 +106,7 @@ const Pixel = styled.div`
 `;
 
 class State {
-  year: number = new Date().getFullYear();
+  yearIndex: number = 0;
 }
 
 const Pixels = () => {
@@ -119,45 +119,51 @@ const Pixels = () => {
     return null;
 
   dayAverages.forEach((dayAverage: DayAverage) => {
-    const yearNumber = Number.parseInt(dateFormat(dayAverage.date, "yyyy"));
+    const yearNumber = Number.parseInt(dateFormat(dayAverage.date, "yyyym"));
     let year = years.filter((year: Year) => year.year === yearNumber);
     if (year.length > 0) year[0].dayAverages.push(dayAverage);
     else years.push({ year: yearNumber, dayAverages: [dayAverage] });
   });
+
+  const activeYear = () => years[years.length - 1 - state.yearIndex].year;
 
   return (
     <StyledPixels>
       <YearSelector>
         <YearContainer>
           <YearNavButton
-            disabled={!years.some((year: Year) => year.year < state.year)}
-            onClick={() => setState({ ...state, year: state.year - 1 })}
+            disabled={!years.some((year: Year) => year.year < activeYear())}
+            onClick={() =>
+              setState({ ...state, yearIndex: state.yearIndex - 1 })
+            }
           >
             <ArrowBackIosIcon />
           </YearNavButton>
-          <Year>{state.year}</Year>
+          <Year>{activeYear()}</Year>
           <YearNavButton
-            disabled={!years.some((year: Year) => year.year > state.year)}
-            onClick={() => setState({ ...state, year: state.year + 1 })}
+            disabled={!years.some((year: Year) => year.year > activeYear())}
+            onClick={() =>
+              setState({ ...state, yearIndex: state.yearIndex + 1 })
+            }
           >
             <ArrowForwardIosIcon />
           </YearNavButton>
         </YearContainer>
       </YearSelector>
-      {years.map((year: Year) => (
-        <TransformContainer>
+      <TransformContainer>
+        {years.map((year: Year) => (
           <Transform
             position={
-              year.year < state.year
+              year.year < activeYear()
                 ? Position.Left
-                : year.year === state.year
+                : year.year === activeYear()
                 ? Position.Active
                 : Position.Right
             }
           >
             <Card height={"100%"}>
               <PixelsContainer>
-                {dayAverages.map((dayAverage: DayAverage) => (
+                {year.dayAverages.map((dayAverage: DayAverage) => (
                   <PixelContainer>
                     <Pixel opacity={1} />
                     <Pixel primary={true} opacity={dayAverage.average / 10} />
@@ -166,8 +172,8 @@ const Pixels = () => {
               </PixelsContainer>
             </Card>
           </Transform>
-        </TransformContainer>
-      ))}
+        ))}
+      </TransformContainer>
     </StyledPixels>
   );
 };
