@@ -26,6 +26,7 @@ interface NavigationState {
   entriesTab: EntriesTab;
   moodDateSearch?: string;
   passcode?: string;
+  locked: boolean;
 }
 
 const initialState: NavigationState = {
@@ -38,6 +39,7 @@ const initialState: NavigationState = {
   showWelcome: false,
   entriesTab: EntriesTab.Recent,
   passcode: undefined,
+  locked: false,
 };
 
 /* SLICE */
@@ -96,6 +98,12 @@ export const navigationSlice = createSlice({
     disablePasscode: (state) => {
       state.passcode = undefined;
     },
+    lock: (state) => {
+      state.locked = true;
+    },
+    unlock: (state) => {
+      state.locked = false;
+    },
   },
 });
 
@@ -117,6 +125,8 @@ export const {
   hideMoodDateSearch,
   enablePasscode,
   disablePasscode,
+  lock,
+  unlock,
 } = navigationSlice.actions;
 
 /* SELECTS */
@@ -152,5 +162,6 @@ export const selectShowWelcome = (state: RootState) =>
 export const selectMoodDateSearch = (state: RootState) =>
   state.navigation.moodDateSearch;
 export const selectPasscode = (state: RootState) => state.navigation.passcode;
+export const selectLocked = (state: RootState) => state.navigation.locked;
 
 export default navigationSlice.reducer;
