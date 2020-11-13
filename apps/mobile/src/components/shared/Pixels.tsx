@@ -32,7 +32,6 @@ const YearSelector = styled.div`
 
 const TransformContainer = styled.div`
   width: 100%;
-  height: 100%;
   position: relative;
 `;
 
@@ -51,7 +50,6 @@ const Transform = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
   transform: ${(props: TransformProps) => {
     if (props.position === Position.Left) return "translateX(-120%)";
     else if (props.position === Position.Right) return "translateX(120%)";
@@ -76,7 +74,6 @@ const Year = styled.div`
 `;
 
 const PixelsContainer = styled.div`
-  height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(10, 1fr);
