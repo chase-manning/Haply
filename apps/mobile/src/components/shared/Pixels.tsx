@@ -125,7 +125,7 @@ const Pixels = () => {
     return null;
 
   dayAverages.forEach((dayAverage: DayAverage) => {
-    const yearNumber = Number.parseInt(dateFormat(dayAverage.date, "yyyym"));
+    const yearNumber = Number.parseInt(dateFormat(dayAverage.date, "yyyy"));
     let year = years.filter((year: Year) => year.year === yearNumber);
     if (year.length > 0) year[0].dayAverages.push(dayAverage);
     else years.push({ year: yearNumber, dayAverages: [dayAverage] });
