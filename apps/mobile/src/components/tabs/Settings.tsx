@@ -15,7 +15,11 @@ import {
   selectColorSecondary,
 } from "../../state/settingsSlice";
 import { selectDarkModeUnlocked } from "../../state/dataSlice";
-import { showLogin, showPremium } from "../../state/navigationSlice";
+import {
+  showLogin,
+  showPremium,
+  selectPasscode,
+} from "../../state/navigationSlice";
 import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
@@ -42,6 +46,7 @@ import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
 import { selectIsPremium } from "../../state/premiumSlice";
+import Passcode, { PasscodeMode } from "../shared/Passcode";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -70,6 +75,7 @@ const Settings = () => {
   const isPremium = useSelector(selectIsPremium);
   const colorPrimary = useSelector(selectColorPrimary);
   const colorSecondary = useSelector(selectColorSecondary);
+  const passcode = useSelector(selectPasscode);
 
   return (
     <StyledSettings>
@@ -122,6 +128,13 @@ const Settings = () => {
       />
 
       <Header>Settings</Header>
+      <Setting
+        label={"Passcode Protect"}
+        isToggle={true}
+        toggleOn={!!passcode}
+        clickFunction={() => dispatch(toggleMode())}
+        icon={<Brightness2OutlinedIcon />}
+      />
       <Setting
         label={"Theme Primary"}
         isToggle={false}
@@ -196,6 +209,7 @@ const Settings = () => {
         icon={<VerifiedUserOutlinedIcon />}
       />
 
+      <Passcode mode={PasscodeMode.Set} />
       <ReminderPopup
         open={state.reminderPopupOpen}
         closePopup={() => setState({ ...state, reminderPopupOpen: false })}
