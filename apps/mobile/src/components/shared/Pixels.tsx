@@ -77,7 +77,7 @@ const PixelsContainer = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(14, 1fr);
-  grid-gap: 10px;
+  grid-row-gap: 10px;
 `;
 
 const PixelContainer = styled.div`
