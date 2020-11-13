@@ -180,7 +180,7 @@ const Pixels = () => {
                 : Position.Right
             }
           >
-            <Card height={"100%"}>
+            <Card>
               <PixelsContainer>
                 {year.dayAverages.map((dayAverage: DayAverage) => (
                   <PixelContainer>
