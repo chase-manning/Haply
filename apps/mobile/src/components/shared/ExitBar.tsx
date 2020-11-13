@@ -9,13 +9,12 @@ const TopBar = styled.div`
 
 type Props = {
   exit: () => void;
+  hideExit?: boolean;
 };
 
 const ExitBar = (props: Props) => {
   return (
-    <TopBar>
-      <Close onClick={() => props.exit()} />
-    </TopBar>
+    <TopBar>{!props.hideExit && <Close onClick={() => props.exit()} />}</TopBar>
   );
 };
 
