@@ -60,13 +60,14 @@ const Number = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: var(--shadow);
-  transition: all 0.2s ease-out;
   font-size: 20px;
   background-color: var(--bg-mid);
+  transition: all 0.2s ease-out;
 
   &:active:hover {
     transform: scale(0.99);
     box-shadow: var(--shadow-clicked);
+    color: var(--primary);
   }
 `;
 
@@ -86,10 +87,10 @@ type Props = {
 };
 
 const Passcode = (props: Props) => {
-  if (props.mode === PasscodeMode.Hidden) return null;
-
   const dispatch = useDispatch();
   const [state, setState] = useState(new State());
+
+  if (props.mode === PasscodeMode.Hidden) return null;
 
   const headerText = () => {
     if (props.mode === PasscodeMode.Set) {
