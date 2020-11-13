@@ -25,6 +25,7 @@ interface NavigationState {
   showWelcome: boolean;
   entriesTab: EntriesTab;
   moodDateSearch?: string;
+  passcode?: string;
 }
 
 const initialState: NavigationState = {
@@ -36,6 +37,7 @@ const initialState: NavigationState = {
   isAndroid: false,
   showWelcome: false,
   entriesTab: EntriesTab.Recent,
+  passcode: undefined,
 };
 
 /* SLICE */
@@ -88,6 +90,12 @@ export const navigationSlice = createSlice({
     hideMoodDateSearch: (state) => {
       state.moodDateSearch = undefined;
     },
+    enablePasscode: (state, action: PayloadAction<string>) => {
+      state.passcode = action.payload;
+    },
+    disablePasscode: (state) => {
+      state.passcode = undefined;
+    },
   },
 });
 
@@ -107,6 +115,8 @@ export const {
   setEntriesTab,
   showMoodDateSearch,
   hideMoodDateSearch,
+  enablePasscode,
+  disablePasscode,
 } = navigationSlice.actions;
 
 /* SELECTS */
@@ -141,4 +151,6 @@ export const selectShowWelcome = (state: RootState) =>
   state.navigation.showWelcome;
 export const selectMoodDateSearch = (state: RootState) =>
   state.navigation.moodDateSearch;
+export const selectPasscode = (state: RootState) => state.navigation.passcode;
+
 export default navigationSlice.reducer;
