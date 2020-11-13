@@ -89,6 +89,7 @@ const PixelContainer = styled.div`
 `;
 
 type PixelProps = {
+  empty?: boolean;
   primary?: boolean;
   opacity: number;
 };
@@ -100,9 +101,14 @@ const Pixel = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  background-color: ${(props: PixelProps) =>
-    props.primary ? "var(--primary)" : "var(--highlight)"};
+  background-color: ${(props: PixelProps) => {
+    if (props.primary) return "var(--primary)";
+    else if (props.empty) return "var(--bg-mid)";
+    else return "var(--highlight)";
+  }};
   opacity: ${(props: PixelProps) => props.opacity};
+  border: ${(props: PixelProps) =>
+    props.empty ? "dashed 1px var(--sub)" : "none"};
 `;
 
 class State {
@@ -125,7 +131,7 @@ const Pixels = () => {
     else years.push({ year: yearNumber, dayAverages: [dayAverage] });
   });
 
-  const activeYear = () => years[years.length - 1 - state.yearIndex].year;
+  const activeYear = () => years[state.yearIndex].year;
 
   return (
     <StyledPixels>
@@ -134,7 +140,7 @@ const Pixels = () => {
           <YearNavButton
             disabled={!years.some((year: Year) => year.year < activeYear())}
             onClick={() =>
-              setState({ ...state, yearIndex: state.yearIndex - 1 })
+              setState({ ...state, yearIndex: state.yearIndex + 1 })
             }
           >
             <ArrowBackIosIcon />
@@ -143,7 +149,7 @@ const Pixels = () => {
           <YearNavButton
             disabled={!years.some((year: Year) => year.year > activeYear())}
             onClick={() =>
-              setState({ ...state, yearIndex: state.yearIndex + 1 })
+              setState({ ...state, yearIndex: state.yearIndex - 1 })
             }
           >
             <ArrowForwardIosIcon />
@@ -167,6 +173,10 @@ const Pixels = () => {
                   <PixelContainer>
                     <Pixel opacity={1} />
                     <Pixel primary={true} opacity={dayAverage.average / 10} />
+                    <Pixel
+                      empty={dayAverage.average === -1}
+                      opacity={dayAverage.average === -1 ? 1 : 0}
+                    />
                   </PixelContainer>
                 ))}
               </PixelsContainer>
