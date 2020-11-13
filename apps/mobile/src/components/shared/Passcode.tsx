@@ -19,10 +19,18 @@ const StyledPasscode = styled.div`
   background-color: var(--bg);
   padding: 30px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   z-index: 100;
+`;
+
+const PasscodeContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Header = styled.div`
@@ -120,27 +128,30 @@ const Passcode = () => {
         exit={() => dispatch(disablePasscode())}
         hideExit={passcode.length === 4}
       />
-      <Header>{headerText()}</Header>
-      <Pins>
-        <Pin filled={state.passcode.length >= 1} />
-        <Pin filled={state.passcode.length >= 2} />
-        <Pin filled={state.passcode.length >= 3} />
-        <Pin filled={state.passcode.length >= 4} />
-      </Pins>
-      <Numbers>
-        <Number onClick={() => add("1")}>1</Number>
-        <Number onClick={() => add("2")}>2</Number>
-        <Number onClick={() => add("3")}>3</Number>
-        <Number onClick={() => add("4")}>4</Number>
-        <Number onClick={() => add("5")}>5</Number>
-        <Number onClick={() => add("6")}>6</Number>
-        <Number onClick={() => add("7")}>7</Number>
-        <Number onClick={() => add("8")}>8</Number>
-        <Number onClick={() => add("9")}>9</Number>
-        <div />
-        <Number onClick={() => add("0")}>0</Number>
-        <div />
-      </Numbers>
+      <PasscodeContent>
+        <Header>{headerText()}</Header>
+        <Pins>
+          <Pin filled={state.passcode.length >= 1} />
+          <Pin filled={state.passcode.length >= 2} />
+          <Pin filled={state.passcode.length >= 3} />
+          <Pin filled={state.passcode.length >= 4} />
+        </Pins>
+        <Numbers>
+          <Number onClick={() => add("1")}>1</Number>
+          <Number onClick={() => add("2")}>2</Number>
+          <Number onClick={() => add("3")}>3</Number>
+          <Number onClick={() => add("4")}>4</Number>
+          <Number onClick={() => add("5")}>5</Number>
+          <Number onClick={() => add("6")}>6</Number>
+          <Number onClick={() => add("7")}>7</Number>
+          <Number onClick={() => add("8")}>8</Number>
+          <Number onClick={() => add("9")}>9</Number>
+          <div />
+          <Number onClick={() => add("0")}>0</Number>
+          <div />
+        </Numbers>
+      </PasscodeContent>
+      <div />
     </StyledPasscode>
   );
 };
