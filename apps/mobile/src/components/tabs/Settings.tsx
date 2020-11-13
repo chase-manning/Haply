@@ -19,6 +19,8 @@ import {
   showLogin,
   showPremium,
   selectPasscode,
+  enablePasscode,
+  disablePasscode,
 } from "../../state/navigationSlice";
 import Setting from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
@@ -132,7 +134,10 @@ const Settings = () => {
         label={"Passcode Protect"}
         isToggle={true}
         toggleOn={!!passcode}
-        clickFunction={() => dispatch(toggleMode())}
+        clickFunction={() => {
+          if (passcode) dispatch(disablePasscode());
+          else dispatch(enablePasscode(""));
+        }}
         icon={<Brightness2OutlinedIcon />}
       />
       <Setting
