@@ -76,7 +76,7 @@ const PixelsContainer = styled.div`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(14, 1fr);
   grid-gap: 10px;
 `;
 
@@ -84,31 +84,33 @@ const PixelContainer = styled.div`
   justify-self: center;
   align-self: center;
   position: relative;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 `;
 
 type PixelProps = {
   empty?: boolean;
   primary?: boolean;
   opacity: number;
+  blocked?: boolean;
 };
 
 const Pixel = styled.div`
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   position: absolute;
   top: 0px;
   left: 0px;
   background-color: ${(props: PixelProps) => {
     if (props.primary) return "var(--primary)";
-    else if (props.empty) return "var(--bg-mid)";
+    else if (props.blocked) return "var(--bg-mid)";
+    else if (props.empty) return "var(--sub)";
     else return "var(--highlight)";
   }};
   opacity: ${(props: PixelProps) => props.opacity};
   border: ${(props: PixelProps) =>
-    props.empty ? "dashed 1px var(--sub)" : "none"};
+    props.blocked ? "solid 1px var(--sub)" : "none"};
 `;
 
 class State {
@@ -129,6 +131,17 @@ const Pixels = () => {
     let year = years.filter((year: Year) => year.year === yearNumber);
     if (year.length > 0) year[0].dayAverages.push(dayAverage);
     else years.push({ year: yearNumber, dayAverages: [dayAverage] });
+  });
+
+  years.forEach((year: Year) => {
+    const lastDate = new Date(
+      year.dayAverages[year.dayAverages.length - 1].date
+    );
+    lastDate.setDate(lastDate.getDate() + 1);
+    while (dateFormat(lastDate, "yyyy") === year.year.toString()) {
+      year.dayAverages.unshift({ date: lastDate, average: -2 });
+      lastDate.setDate(lastDate.getDate() + 1);
+    }
   });
 
   const activeYear = () => years[state.yearIndex].year;
@@ -176,6 +189,10 @@ const Pixels = () => {
                     <Pixel
                       empty={dayAverage.average === -1}
                       opacity={dayAverage.average === -1 ? 1 : 0}
+                    />
+                    <Pixel
+                      blocked={dayAverage.average === -2}
+                      opacity={dayAverage.average === -2 ? 1 : 0}
                     />
                   </PixelContainer>
                 ))}
