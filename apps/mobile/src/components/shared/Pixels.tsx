@@ -6,6 +6,8 @@ import { Card } from "../../styles/Shared";
 import { useSelector } from "react-redux";
 import { selectDayAverages, DayAverage } from "../../state/dataSlice";
 import dateFormat from "dateformat";
+import LoadingLine from "./LoadingLine";
+import { selectDayAveragesLoading } from "../../state/loadingSlice";
 
 interface Year {
   year: number;
@@ -16,6 +18,7 @@ const StyledPixels = styled.div`
   width: 100%;
   height: 100%;
   padding: 30px 30px 60px 30px;
+  position: relative;
 `;
 
 const YearSelector = styled.div`
@@ -120,6 +123,7 @@ class State {
 const Pixels = () => {
   const [state, setState] = useState(new State());
   const dayAverages = useSelector(selectDayAverages);
+  const dayAveragesLoading = useSelector(selectDayAveragesLoading);
 
   let years: Year[] = [];
 
@@ -148,6 +152,7 @@ const Pixels = () => {
 
   return (
     <StyledPixels>
+      <LoadingLine loading={dayAveragesLoading} />
       <YearSelector>
         <YearContainer>
           <YearNavButton
