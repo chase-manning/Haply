@@ -54,16 +54,14 @@ type Props = {
 const StatBar = (props: Props) => {
   return (
     <Chart>
-      {props.dataPoints.map((dataPoint: DataPoint) => {
-        return (
-          <ChartRow>
-            <StyledColumn>
-              <Filled value={dataPoint.value / 10}></Filled>
-            </StyledColumn>
-            <Label>{dataPoint.label}</Label>
-          </ChartRow>
-        );
-      })}
+      {props.dataPoints.map((dataPoint: DataPoint, index) => (
+        <ChartRow key={index}>
+          <StyledColumn>
+            <Filled value={dataPoint.value / 10}></Filled>
+          </StyledColumn>
+          <Label>{dataPoint.label}</Label>
+        </ChartRow>
+      ))}
     </Chart>
   );
 };
