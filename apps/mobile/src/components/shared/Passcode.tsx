@@ -80,6 +80,7 @@ const Number = styled.div`
   font-size: 20px;
   background-color: var(--bg-mid);
   transition: all 0.2s ease-out;
+  color: var(--main);
 
   &:active:hover {
     transform: scale(0.99);
