@@ -84,7 +84,7 @@ const Login = () => {
 
     Storage.get({ key: "logged" }).then((result: any) => {
       let ret: { value: any } = result;
-      if (!ret.value) {
+      if (!ret.value)
         firebase
           .auth()
           .signInAnonymously()
@@ -92,7 +92,6 @@ const Login = () => {
             var errorMessage = error.message;
             console.log(errorMessage);
           });
-      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
