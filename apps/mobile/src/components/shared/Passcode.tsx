@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { store } from "../../state/store";
-import { Mode } from "../../state/settingsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   disablePasscode,
   enablePasscode,
+  lock,
   selectLocked,
   selectPasscode,
+  unlock,
 } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
+import { Plugins, AppState } from "@capacitor/core";
+
+const { App, Storage } = Plugins;
 
 const StyledPasscode = styled.div`
   position: fixed;
@@ -102,6 +105,15 @@ const Passcode = () => {
   const passcode = useSelector(selectPasscode);
   const locked = useSelector(selectLocked);
 
+  App.addListener("appStateChange", (appState: AppState) => {
+    Storage.get({ key: "passcode" }).then((result: any) => {
+      let ret: { value: any } = result;
+      if (!ret.value) return;
+      dispatch(enablePasscode(ret.value));
+      dispatch(lock());
+    });
+  });
+
   if (passcode === undefined || (passcode.length === 4 && !locked)) return null;
 
   const headerText = () => {
@@ -111,12 +123,17 @@ const Passcode = () => {
     } else return "Enter Passcode";
   };
 
+  const reset = () => setState({ ...state, saved: "", passcode: "" });
+
   const add = (code: string) => {
     const newPasscode = state.passcode + code;
     if (newPasscode.length === 4) {
-      if (state.saved.length === 4) {
+      if (locked) {
+        if (newPasscode === passcode) dispatch(unlock());
+        reset();
+      } else if (state.saved.length === 4) {
         if (state.saved === newPasscode) dispatch(enablePasscode(newPasscode));
-        else setState({ ...state, saved: "", passcode: "" });
+        reset();
       } else setState({ ...state, saved: newPasscode, passcode: "" });
     } else setState({ ...state, passcode: newPasscode });
   };
@@ -124,7 +141,10 @@ const Passcode = () => {
   return (
     <StyledPasscode>
       <ExitBar
-        exit={() => dispatch(disablePasscode())}
+        exit={() => {
+          dispatch(disablePasscode());
+          reset();
+        }}
         hideExit={passcode.length === 4}
       />
       <PasscodeContent>
