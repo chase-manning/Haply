@@ -105,10 +105,10 @@ const Passcode = () => {
   const passcode = useSelector(selectPasscode);
   const locked = useSelector(selectLocked);
 
-  App.addListener("appStateChange", (appState: AppState) => {
+  App.addListener("appStateChange", () => {
     Storage.get({ key: "passcode" }).then((result: any) => {
       let ret: { value: any } = result;
-      if (!ret.value) return;
+      if (!ret.value || ret.value.length < 4) return;
       dispatch(enablePasscode(ret.value));
       dispatch(lock());
     });

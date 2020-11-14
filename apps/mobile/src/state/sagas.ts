@@ -60,6 +60,7 @@ import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
 import MoodService from "../services/MoodService";
 import {
+  disablePasscode,
   enablePasscode,
   hideWelcome,
   selectMoodDateSearch,
@@ -76,6 +77,12 @@ const isStatusBarAvailable = Capacitor.isPluginAvailable("StatusBar");
 /* WATCHERS */
 function* watchEnablePasscode() {
   yield takeEvery(enablePasscode, savePasscode);
+}
+
+function* watchDisablePasscode() {
+  yield takeEvery(disablePasscode, () => {
+    Storage.set({ key: "passcode", value: "" });
+  });
 }
 
 function* watchHideWelcome() {
@@ -341,5 +348,6 @@ export default function* rootSaga() {
     watchUpdateDateSearchMoods(),
     watchShowMoodDateSearch(),
     watchEnablePasscode(),
+    watchDisablePasscode(),
   ]);
 }
