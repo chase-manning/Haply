@@ -60,8 +60,10 @@ import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
 import MoodService from "../services/MoodService";
 import {
+  enablePasscode,
   hideWelcome,
   selectMoodDateSearch,
+  selectPasscode,
   showMoodDateSearch,
 } from "./navigationSlice";
 import DayAveragesService from "../services/DayAveragesService";
@@ -72,6 +74,10 @@ const { StatusBar } = CapacitorPlugins;
 const isStatusBarAvailable = Capacitor.isPluginAvailable("StatusBar");
 
 /* WATCHERS */
+function* watchEnablePasscode() {
+  yield takeEvery(enablePasscode, savePasscode);
+}
+
 function* watchHideWelcome() {
   yield takeEvery(hideWelcome, saveHideWelcome);
 }
@@ -202,6 +208,11 @@ function* watchShowMoodDateSearch() {
 }
 
 /* ACTIONS */
+function* savePasscode() {
+  const passcode = yield select(selectPasscode);
+  Storage.set({ key: "passcode", value: passcode });
+}
+
 function saveHideWelcome() {
   let welcomed: boolean = true;
   Storage.set({ key: "welcomed", value: JSON.stringify(welcomed) });
@@ -329,5 +340,6 @@ export default function* rootSaga() {
     watchSetTimezone(),
     watchUpdateDateSearchMoods(),
     watchShowMoodDateSearch(),
+    watchEnablePasscode(),
   ]);
 }
