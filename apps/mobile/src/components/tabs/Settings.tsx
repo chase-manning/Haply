@@ -48,7 +48,7 @@ import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
 import { selectIsPremium } from "../../state/premiumSlice";
-import Passcode, { PasscodeMode } from "../shared/Passcode";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const StyledSettings = styled.div`
   width: 100%;
@@ -138,7 +138,7 @@ const Settings = () => {
           if (passcode) dispatch(disablePasscode());
           else dispatch(enablePasscode(""));
         }}
-        icon={<Brightness2OutlinedIcon />}
+        icon={<LockOutlinedIcon />}
       />
       <Setting
         label={"Theme Primary"}
