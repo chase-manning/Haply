@@ -10,7 +10,7 @@ import {
   unlock,
 } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
-import { Plugins, AppState } from "@capacitor/core";
+import { Plugins } from "@capacitor/core";
 
 const { App, Storage } = Plugins;
 
