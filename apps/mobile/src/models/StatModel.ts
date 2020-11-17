@@ -11,8 +11,6 @@ export type StatModel = {
   lockedMessage: string;
   percentComplete: number;
   isNew: boolean;
-
-  //Bar
   dataPoints: DataPoint[];
 };
 
