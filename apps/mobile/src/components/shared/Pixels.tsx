@@ -140,7 +140,7 @@ const Pixels = () => {
     );
     lastDate.setDate(lastDate.getDate() + 1);
     while (dateFormat(lastDate, "yyyy") === year.year.toString()) {
-      year.dayAverages.unshift({ date: lastDate, average: -2 });
+      year.dayAverages.unshift({ date: new Date(lastDate), average: -2 });
       lastDate.setDate(lastDate.getDate() + 1);
     }
   });
