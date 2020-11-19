@@ -40,14 +40,20 @@ import {
   setFrequencyMinutesMin,
   setFrequencyMinutesMax,
   updateNextNotification,
-  addTagOption,
-  removeTagOption,
   selectMode,
   setColorPrimary,
   toggleMode,
   Mode,
   setTimezone,
   setColorSecondary,
+  addFeeling,
+  removeFeeling,
+  addPlace,
+  removePlace,
+  addActivity,
+  removeActivity,
+  addPerson,
+  removePerson,
 } from "./settingsSlice";
 import AchievementModel from "../models/AchievementModel";
 import {
@@ -148,25 +154,35 @@ function* watchSetSettings() {
   yield takeEvery(setSettings, setStatusBar);
 }
 
-function* watchAddTag() {
-  yield takeEvery(addTagOption, function* processAddTag() {
-    yield call(saveSettings);
-    const achievements: AchievementModel[] = yield select(selectAchievements);
-    const complete = achievements.some(
-      (achievement: AchievementModel) =>
-        achievement.title === "Tag Tinkerer" &&
-        achievement.percentComplete === 1
-    );
-    if (!complete) yield put(updateAchievements());
-    yield put(updateStats());
-  });
+function* watchAddFeeling() {
+  yield takeEvery(addFeeling, tagChange);
 }
 
-function* watchRemoveTag() {
-  yield takeEvery(removeTagOption, function* processRemoveTag() {
-    yield call(saveSettings);
-    yield put(updateStats());
-  });
+function* watchRemoveFeeling() {
+  yield takeEvery(removeFeeling, tagChange);
+}
+function* watchAddPlace() {
+  yield takeEvery(addPlace, tagChange);
+}
+
+function* watchRemovePlace() {
+  yield takeEvery(removePlace, tagChange);
+}
+
+function* watchAddActivity() {
+  yield takeEvery(addActivity, tagChange);
+}
+
+function* watchRemoveActivity() {
+  yield takeEvery(removeActivity, tagChange);
+}
+
+function* watchAddPerson() {
+  yield takeEvery(addPerson, tagChange);
+}
+
+function* watchRemovePerson() {
+  yield takeEvery(removePerson, tagChange);
 }
 
 function* watchSetColorPrimary() {
@@ -215,6 +231,11 @@ function* watchShowMoodDateSearch() {
 }
 
 /* ACTIONS */
+function* tagChange() {
+  yield call(saveSettings);
+  yield put(updateStats());
+}
+
 function* savePasscode() {
   const passcode = yield select(selectPasscode);
   Storage.set({ key: "passcode", value: passcode });
@@ -338,8 +359,14 @@ export default function* rootSaga() {
     watchSetFrequencyMinutesMax(),
     watchUpdateNextNotification(),
     watchSetSettings(),
-    watchAddTag(),
-    watchRemoveTag(),
+    watchAddFeeling(),
+    watchRemoveFeeling(),
+    watchAddPlace(),
+    watchRemovePlace(),
+    watchAddActivity(),
+    watchRemoveActivity(),
+    watchAddPerson(),
+    watchRemovePerson(),
     watchSetColorPrimary(),
     watchSetColorSecondary(),
     watchToggleMode(),

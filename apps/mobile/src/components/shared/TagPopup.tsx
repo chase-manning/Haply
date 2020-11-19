@@ -5,12 +5,6 @@ import { SelectedTags, SelectedTag } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectTagOptions,
-  removeTagOption,
-  addTagOption,
-  selectBlockTags,
-} from "../../state/settingsSlice";
 import PremiumPopup from "./PremiumPopup";
 import { showError } from "../../state/navigationSlice";
 
@@ -73,13 +67,15 @@ class State {
 type Props = {
   open: boolean;
   closePopup: () => void;
+  tags: string[];
+  addTag: (tag: string) => void;
+  removeTag: (tag: string) => void;
+  block: boolean;
 };
 
 const TagPopup = (props: Props) => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
-  const tagOptions = useSelector(selectTagOptions);
-  const blockTags = useSelector(selectBlockTags);
 
   return (
     <Popup
@@ -87,13 +83,13 @@ const TagPopup = (props: Props) => {
       content={
         <PopupContent>
           <SelectedTags>
-            {tagOptions.map((tagOption: string) => (
+            {props.tags.map((tag: string) => (
               <SelectedTag
-                key={tagOption}
-                onClick={() => dispatch(removeTagOption(tagOption))}
+                key={tag}
+                onClick={() => dispatch(props.removeTag(tag))}
                 includeMargin={true}
               >
-                {tagOption}
+                {tag}
                 <TagIcon>
                   <CloseIcon fontSize={"inherit"} />
                 </TagIcon>
@@ -102,7 +98,7 @@ const TagPopup = (props: Props) => {
             <AddTag>
               <AddTagContent
                 onClick={() => {
-                  if (blockTags)
+                  if (props.block)
                     setState({ ...state, blockTagsPopupOpen: true });
                   else setState({ ...state, newTagPopupOpen: true });
                 }}
@@ -137,7 +133,7 @@ const TagPopup = (props: Props) => {
                   })
                 }
                 submit={() => {
-                  if (tagOptions.indexOf(state.newTag) >= 0) {
+                  if (props.tags.indexOf(state.newTag) >= 0) {
                     dispatch(
                       showError("You can't add a Tag that already exists")
                     );
@@ -154,7 +150,7 @@ const TagPopup = (props: Props) => {
                     return;
                   }
 
-                  dispatch(addTagOption(state.newTag));
+                  dispatch(props.addTag(state.newTag));
                 }}
               />
               <PremiumPopup

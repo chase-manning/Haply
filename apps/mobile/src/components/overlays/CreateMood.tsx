@@ -15,12 +15,17 @@ import {
   selectMoodShowing,
   selectMoodDateSearch,
 } from "../../state/navigationSlice";
-import { selectTagOptions } from "../../state/settingsSlice";
 import { addMood, selectMoods } from "../../state/dataSlice";
 import { updateAll, updateDateSearchMoods } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
+import {
+  selectActivities,
+  selectFeelings,
+  selectPeople,
+  selectPlaces,
+} from "../../state/settingsSlice";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -69,7 +74,10 @@ const Additions = styled.div`
 class State {
   mood: number = 5;
   note: string = "";
-  tags: string[] = [];
+  feelings: string[] = [];
+  places: string[] = [];
+  activities: string[] = [];
+  people: string[] = [];
 }
 
 const moodAsset = (mood: number): string => {
@@ -83,7 +91,10 @@ const CreateMood = () => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const moodShowing = useSelector(selectMoodShowing);
-  const tagOptions = useSelector(selectTagOptions);
+  const feelings = useSelector(selectFeelings);
+  const places = useSelector(selectPlaces);
+  const activities = useSelector(selectActivities);
+  const people = useSelector(selectPeople);
   const user = useSelector(selectUser);
   const moods = useSelector(selectMoods);
   const dateOverride = useSelector(selectMoodDateSearch);
@@ -111,10 +122,6 @@ const CreateMood = () => {
         <AddNote
           setNote={(note: string) => setState({ ...state, note: note })}
         />
-        <AddTags
-          options={tagOptions}
-          setTags={(tags: string[]) => setState({ ...state, tags: tags })}
-        />
       </Additions>
       <Button
         onClick={() => {
@@ -122,10 +129,18 @@ const CreateMood = () => {
             state.mood,
             user.id,
             state.note,
-            state.tags,
+            [],
             dateOverride ? new Date(dateOverride) : undefined
           );
-          setState({ ...state, tags: [], note: "", mood: 5 });
+          setState({
+            ...state,
+            feelings: [],
+            places: [],
+            activities: [],
+            people: [],
+            note: "",
+            mood: 5,
+          });
           dispatch(addMood(mood));
           dispatch(hideMood());
           MoodService.createMood(user.token, mood).then(() => {

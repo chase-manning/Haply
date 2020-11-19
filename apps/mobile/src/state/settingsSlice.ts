@@ -8,18 +8,28 @@ export enum Mode {
   Light,
 }
 
+export type TagCategory = {
+  name: string;
+  tags: string[];
+};
+
 export interface SettingsState {
   remindersEnabled: boolean;
   randomReminders: boolean;
   frequencyMinutesMin: number;
   frequencyMinutesMax: number;
   nextNotification: string;
-  tagOptions: string[];
+  feelings: string[];
+  activities: string[];
+  places: string[];
+  people: string[];
   colorPrimary: string;
   colorSecondary: string;
   mode: Mode;
   timezone: string;
 }
+
+// I'm feeling _____ while _____ at _____ with _____
 
 const initialState: SettingsState = {
   remindersEnabled: true,
@@ -27,20 +37,10 @@ const initialState: SettingsState = {
   frequencyMinutesMin: 7 * 60,
   frequencyMinutesMax: 7 * 60,
   nextNotification: new Date(2040, 1, 1).toString(),
-  tagOptions: [
-    "With Friends",
-    "With Family",
-    "Tired",
-    "Well Rested",
-    "In Pain",
-    "Sick",
-    "Working",
-    "At Home",
-    "On Holiday",
-    "Eating Well",
-    "Eating Poorly",
-    "Exercising",
-  ],
+  places: ["Home", "Work", "School"],
+  activities: ["On Holiday", "Exercising", "Working"],
+  feelings: ["Tired", "Stressed", "Energetic"],
+  people: ["Friends", "Family", "Colleagues"],
   colorPrimary: "#4071fe",
   colorSecondary: "#ff6584",
   mode: Mode.Default,
@@ -63,8 +63,10 @@ export const settingsSlice = createSlice({
         state.frequencyMinutesMax = action.payload.frequencyMinutesMax;
       if (action.payload.nextNotification)
         state.nextNotification = action.payload.nextNotification;
-      if (action.payload.tagOptions)
-        state.tagOptions = action.payload.tagOptions;
+      if (action.payload.feelings) state.places = action.payload.feelings;
+      if (action.payload.activities) state.places = action.payload.activities;
+      if (action.payload.places) state.places = action.payload.places;
+      if (action.payload.people) state.places = action.payload.people;
       if (action.payload.colorPrimary)
         state.colorPrimary = action.payload.colorPrimary;
       if (action.payload.colorSecondary)
@@ -95,15 +97,33 @@ export const settingsSlice = createSlice({
         now.getTime() + minutesAdded * 60000
       ).toString();
     },
-    setTagOptions: (state, action: PayloadAction<string[]>) => {
-      state.tagOptions = action.payload;
+    addFeeling: (state, action: PayloadAction<string>) => {
+      state.feelings.push(action.payload);
     },
-    addTagOption: (state, action: PayloadAction<string>) => {
-      state.tagOptions.push(action.payload);
+    removeFeeling: (state, action: PayloadAction<string>) => {
+      const index = state.feelings.indexOf(action.payload);
+      if (index > -1) state.feelings.splice(index, 1);
     },
-    removeTagOption: (state, action: PayloadAction<string>) => {
-      const index = state.tagOptions.indexOf(action.payload);
-      if (index > -1) state.tagOptions.splice(index, 1);
+    addActivity: (state, action: PayloadAction<string>) => {
+      state.activities.push(action.payload);
+    },
+    removeActivity: (state, action: PayloadAction<string>) => {
+      const index = state.activities.indexOf(action.payload);
+      if (index > -1) state.activities.splice(index, 1);
+    },
+    addPlace: (state, action: PayloadAction<string>) => {
+      state.places.push(action.payload);
+    },
+    removePlace: (state, action: PayloadAction<string>) => {
+      const index = state.places.indexOf(action.payload);
+      if (index > -1) state.places.splice(index, 1);
+    },
+    addPerson: (state, action: PayloadAction<string>) => {
+      state.people.push(action.payload);
+    },
+    removePerson: (state, action: PayloadAction<string>) => {
+      const index = state.people.indexOf(action.payload);
+      if (index > -1) state.people.splice(index, 1);
     },
     setColorPrimary: (state, action: PayloadAction<string>) => {
       state.colorPrimary = action.payload;
@@ -129,9 +149,14 @@ export const {
   setFrequencyMinutesMax,
   updateNextNotification,
   setSettings,
-  setTagOptions,
-  addTagOption,
-  removeTagOption,
+  addFeeling,
+  removeFeeling,
+  addActivity,
+  removeActivity,
+  addPlace,
+  removePlace,
+  addPerson,
+  removePerson,
   setColorPrimary,
   setColorSecondary,
   toggleMode,
@@ -150,13 +175,22 @@ export const selectFrequencyMinutesMax = (state: RootState) =>
   state.settings.frequencyMinutesMax;
 export const selectNextNotification = (state: RootState) =>
   state.settings.nextNotification;
-export const selectTagOptions = (state: RootState) => state.settings.tagOptions;
+export const selectFeelings = (state: RootState) => state.settings.feelings;
+export const selectPlaces = (state: RootState) => state.settings.places;
+export const selectActivities = (state: RootState) => state.settings.activities;
+export const selectPeople = (state: RootState) => state.settings.people;
 export const selectColorPrimary = (state: RootState) =>
   state.settings.colorPrimary;
 export const selectColorSecondary = (state: RootState) =>
   state.settings.colorSecondary;
 export const selectMode = (state: RootState) => state.settings.mode;
-export const selectBlockTags = (state: RootState) =>
-  !state.premium.isPremium && state.settings.tagOptions.length >= 15;
+export const selectBlockFeelings = (state: RootState) =>
+  !state.premium.isPremium && state.settings.feelings.length >= 4;
+export const selectBlockPlaces = (state: RootState) =>
+  !state.premium.isPremium && state.settings.places.length >= 4;
+export const selectBlockActivities = (state: RootState) =>
+  !state.premium.isPremium && state.settings.activities.length >= 4;
+export const selectBlockPeople = (state: RootState) =>
+  !state.premium.isPremium && state.settings.people.length >= 4;
 
 export default settingsSlice.reducer;

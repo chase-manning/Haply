@@ -13,6 +13,22 @@ import {
   setColorSecondary,
   selectColorPrimary,
   selectColorSecondary,
+  selectFeelings,
+  selectPlaces,
+  selectActivities,
+  selectPeople,
+  selectBlockFeelings,
+  selectBlockPlaces,
+  selectBlockActivities,
+  selectBlockPeople,
+  addFeeling,
+  addPlace,
+  addActivity,
+  addPerson,
+  removeFeeling,
+  removePlace,
+  removeActivity,
+  removePerson,
 } from "../../state/settingsSlice";
 import { selectDarkModeUnlocked } from "../../state/dataSlice";
 import {
@@ -60,7 +76,10 @@ const StyledSettings = styled.div`
 
 class State {
   reminderPopupOpen: boolean = false;
-  tagPopupOpen: boolean = false;
+  feelingsOpen: boolean = false;
+  placesOpen: boolean = false;
+  activitiesOpen: boolean = false;
+  peopleOpen: boolean = false;
   themePrimaryPopupOpen: boolean = false;
   themeSecondaryPopupOpen: boolean = false;
 }
@@ -78,6 +97,14 @@ const Settings = () => {
   const colorPrimary = useSelector(selectColorPrimary);
   const colorSecondary = useSelector(selectColorSecondary);
   const passcode = useSelector(selectPasscode);
+  const feelings = useSelector(selectFeelings);
+  const places = useSelector(selectPlaces);
+  const activities = useSelector(selectActivities);
+  const people = useSelector(selectPeople);
+  const feelingsBlocked = useSelector(selectBlockFeelings);
+  const placesBlocked = useSelector(selectBlockPlaces);
+  const activitiesBlocked = useSelector(selectBlockActivities);
+  const peopleBlocked = useSelector(selectBlockPeople);
 
   return (
     <StyledSettings>
@@ -105,6 +132,32 @@ const Settings = () => {
           }
         }}
         icon={<CloudOutlinedIcon />}
+      />
+
+      <Header>Mood Choices</Header>
+      <Setting
+        label={"Feelings"}
+        isToggle={false}
+        clickFunction={() => setState({ ...state, feelingsOpen: true })}
+        icon={<LocalOfferOutlinedIcon />}
+      />
+      <Setting
+        label={"Places"}
+        isToggle={false}
+        clickFunction={() => setState({ ...state, placesOpen: true })}
+        icon={<LocalOfferOutlinedIcon />}
+      />
+      <Setting
+        label={"Activities"}
+        isToggle={false}
+        clickFunction={() => setState({ ...state, activitiesOpen: true })}
+        icon={<LocalOfferOutlinedIcon />}
+      />
+      <Setting
+        label={"People"}
+        isToggle={false}
+        clickFunction={() => setState({ ...state, peopleOpen: true })}
+        icon={<LocalOfferOutlinedIcon />}
       />
 
       <Header>Reminders</Header>
@@ -165,12 +218,6 @@ const Settings = () => {
           icon={<Brightness2OutlinedIcon />}
         />
       )}
-      <Setting
-        label={"Tags"}
-        isToggle={false}
-        clickFunction={() => setState({ ...state, tagPopupOpen: true })}
-        icon={<LocalOfferOutlinedIcon />}
-      />
 
       <Header>Contact</Header>
       <Setting
@@ -219,8 +266,36 @@ const Settings = () => {
         closePopup={() => setState({ ...state, reminderPopupOpen: false })}
       />
       <TagPopup
-        open={state.tagPopupOpen}
-        closePopup={() => setState({ ...state, tagPopupOpen: false })}
+        open={state.feelingsOpen}
+        closePopup={() => setState({ ...state, feelingsOpen: false })}
+        tags={feelings}
+        addTag={(tag: string) => dispatch(addFeeling(tag))}
+        removeTag={(tag: string) => dispatch(removeFeeling(tag))}
+        block={feelingsBlocked}
+      />
+      <TagPopup
+        open={state.placesOpen}
+        closePopup={() => setState({ ...state, placesOpen: false })}
+        tags={places}
+        addTag={(tag: string) => dispatch(addPlace(tag))}
+        removeTag={(tag: string) => dispatch(removePlace(tag))}
+        block={placesBlocked}
+      />
+      <TagPopup
+        open={state.activitiesOpen}
+        closePopup={() => setState({ ...state, activitiesOpen: false })}
+        tags={activities}
+        addTag={(tag: string) => dispatch(addActivity(tag))}
+        removeTag={(tag: string) => dispatch(removeActivity(tag))}
+        block={activitiesBlocked}
+      />
+      <TagPopup
+        open={state.peopleOpen}
+        closePopup={() => setState({ ...state, peopleOpen: false })}
+        tags={people}
+        addTag={(tag: string) => dispatch(addPerson(tag))}
+        removeTag={(tag: string) => dispatch(removePerson(tag))}
+        block={peopleBlocked}
       />
       <ThemePopup
         open={state.themePrimaryPopupOpen}
