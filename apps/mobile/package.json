@@ -25,7 +25,7 @@
     "@types/styled-components": "^5.1.4",
     "chart.js": "^2.9.4",
     "cordova-plugin-purchase": "^10.5.0",
-    "dateformat": "^3.0.3",
+    "dateformat": "^4.0.0",
     "firebase": "^7.24.0",
     "react": "^16.14.0",
     "react-chartjs-2": "^2.11.1",
