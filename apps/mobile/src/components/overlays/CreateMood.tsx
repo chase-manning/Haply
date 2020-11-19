@@ -104,7 +104,6 @@ const CreateMood = () => {
   return (
     <StyledCreateMood>
       {moods.length > 0 && <ExitBar exit={() => dispatch(hideMood())} />}
-      <Header>How are you feeling?</Header>
       <Emotion>{moodDescriptions[state.mood]}</Emotion>
       <Face>
         <img src={moodAsset(state.mood)} alt="Mood Illustration" width="80%" />
