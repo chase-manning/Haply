@@ -117,6 +117,7 @@ const ReminderPopup = (props: Props) => {
         frequencyMinutesMax
       ),
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -137,6 +138,9 @@ const ReminderPopup = (props: Props) => {
                 setState({
                   ...state,
                   reminderFrequencyMinimumInput: event.target.value,
+                  reminderFrequencyMaximumInput: randomReminders
+                    ? state.reminderFrequencyMaximumInput
+                    : event.target.value,
                 });
               }}
               type="number"
@@ -147,6 +151,9 @@ const ReminderPopup = (props: Props) => {
                 setState({
                   ...state,
                   reminderFrequencyMinimumDropdown: event.target.value,
+                  reminderFrequencyMaximumDropdown: randomReminders
+                    ? state.reminderFrequencyMaximumDropdown
+                    : event.target.value,
                 });
               }}
             >
@@ -205,7 +212,7 @@ const ReminderPopup = (props: Props) => {
           return;
         }
 
-        if (minFrequency > maxFrequncy) {
+        if (randomReminders && minFrequency > maxFrequncy) {
           dispatch(
             showError("Minimum Reminder must be less than Maximum Reminder")
           );
@@ -216,8 +223,6 @@ const ReminderPopup = (props: Props) => {
           dispatch(showError("Reminders can't be more than 7 days long"));
           return;
         }
-
-        maxFrequncy = randomReminders ? maxFrequncy : minFrequency;
 
         dispatch(setFrequencyMinutesMin(minFrequency));
         dispatch(setFrequencyMinutesMax(maxFrequncy));
