@@ -174,6 +174,7 @@ const Pixels = () => {
       <TransformContainer>
         {years.map((year: Year) => (
           <Transform
+            key={year.year}
             position={
               year.year < activeYear()
                 ? Position.Left
@@ -185,7 +186,7 @@ const Pixels = () => {
             <Card>
               <PixelsContainer>
                 {year.dayAverages.map((dayAverage: DayAverage) => (
-                  <PixelContainer>
+                  <PixelContainer key={dayAverage.date.toString()}>
                     <Pixel opacity={1} />
                     <Pixel primary={true} opacity={dayAverage.average / 10} />
                     <Pixel
