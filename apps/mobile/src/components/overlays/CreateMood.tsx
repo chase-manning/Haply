@@ -38,7 +38,7 @@ const StyledCreateMood = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
+  padding: 30px;
   color: var(--main);
 `;
 
