@@ -13,6 +13,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import EntryTags from "./EntryTags";
 import EntryNote from "./EntryNote";
+import EntryHeader from "./EntryHeader";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -42,11 +43,6 @@ const EntryText = styled.div`
   justify-content: space-between;
   text-align: left;
   margin-left: 15px;
-`;
-
-const EntryHeader = styled.div`
-  color: var(--main);
-  font-size: 15px;
 `;
 
 const EntrySubHeader = styled.div`
@@ -112,48 +108,7 @@ const Entry = (props: Props) => {
     <StyledEntry>
       <Card>
         <EntryContent>
-          <Header>
-            <HeaderLeft>
-              <DynamicIcon
-                percent={props.mood.value / 10}
-                value={props.mood.value}
-              />
-              <EntryText>
-                <EntryHeader>{"Feeling " + props.mood.value}</EntryHeader>
-                <EntrySubHeader>
-                  {dateFormat(props.mood.date, " dddd h:MM tt")}
-                </EntrySubHeader>
-              </EntryText>
-            </HeaderLeft>
-            <KebabMenu>
-              <MoreVertIcon
-                onClick={() =>
-                  setState({ ...state, popupOpen: !state.popupOpen })
-                }
-              />
-              {state.popupOpen && (
-                <ContextMenu
-                  onClick={() => {
-                    setState({ ...state, popupOpen: false });
-                    dispatch(removeMood(props.mood));
-                    MoodService.deleteMood(userToken, props.mood.moodId!).then(
-                      () => {
-                        dispatch(updateAll());
-                      }
-                    );
-                  }}
-                >
-                  <ContextColor />
-                  <ContentItem>
-                    <ContextIcon>
-                      <DeleteOutlineOutlinedIcon />
-                    </ContextIcon>
-                    <ItemLabel>Delete</ItemLabel>
-                  </ContentItem>
-                </ContextMenu>
-              )}
-            </KebabMenu>
-          </Header>
+          <EntryHeader mood={props.mood} />
           <EntryTags tags={props.mood.tags} percent={props.mood.value / 10} />
           <EntryNote note={props.mood.note} />
         </EntryContent>
