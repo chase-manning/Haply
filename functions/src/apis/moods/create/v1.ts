@@ -20,12 +20,23 @@ app.post("", async (request, response) => {
     if (!user) return response.status(403).send("Unauthorized");
     const userId = user.uid;
 
-    const { value, date, note, tags } = request.body;
+    const {
+      value,
+      date,
+      note,
+      feelings,
+      activities,
+      places,
+      people,
+    } = request.body;
     const data = {
       value,
       date,
       note,
-      tags,
+      feelings,
+      activities,
+      places,
+      people,
       userId,
     };
 
