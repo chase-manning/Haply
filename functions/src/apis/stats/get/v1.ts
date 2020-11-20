@@ -12,21 +12,6 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 
-const defaultTags = [
-  "With Friends",
-  "With Family",
-  "Tired",
-  "Well Rested",
-  "In Pain",
-  "Sick",
-  "Working",
-  "At Home",
-  "On Holiday",
-  "Eating Well",
-  "Eating Poorly",
-  "Exercising",
-];
-
 enum StatType {
   Bar,
   Chart,
@@ -69,7 +54,10 @@ interface Settings {
   frequencyMinutesMin: number;
   frequencyMinutesMax: number;
   nextNotification: string;
-  tagOptions: string[];
+  feelings: string[];
+  activities: string[];
+  places: string[];
+  people: string[];
   colorPrimary: string;
   mode: Mode;
   timezone: string;
@@ -96,8 +84,11 @@ app.get("", async (request: any, response) => {
         frequencyMinutesMin: 420,
         frequencyMinutesMax: 420,
         nextNotification: new Date().toString(),
-        tagOptions: defaultTags,
         colorPrimary: "#4071fe",
+        feelings: [],
+        activities: [],
+        places: [],
+        people: [],
         mode: Mode.Default,
         timezone: "Asia/Kolkata",
       };
@@ -109,7 +100,10 @@ app.get("", async (request: any, response) => {
         frequencyMinutesMin: settingData.frequencyMinutesMin,
         frequencyMinutesMax: settingData.frequencyMinutesMax,
         nextNotification: settingData.nextNotification,
-        tagOptions: settingData.tagOptions,
+        feelings: settingData.feelings || [],
+        activities: settingData.activities || [],
+        places: settingData.places || [],
+        people: settingData.people || [],
         colorPrimary: settingData.colorPrimary,
         mode: settingData.mode,
         timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
@@ -205,8 +199,19 @@ app.get("", async (request: any, response) => {
       )
     );
 
-    setting.tagOptions.forEach((tagOption: string) =>
-      stats.push(createStatPercent(moods, tagOption))
+    setting.feelings.forEach((tag: string) =>
+      stats.push(createStatPercent(moods, tag, "when"))
+    );
+
+    setting.places.forEach((tag: string) =>
+      stats.push(createStatPercent(moods, tag, "at"))
+    );
+    setting.activities.forEach((tag: string) =>
+      stats.push(createStatPercent(moods, tag, "while"))
+    );
+
+    setting.people.forEach((tag: string) =>
+      stats.push(createStatPercent(moods, tag, "with"))
     );
 
     stats.sort(function (a, b) {
@@ -220,7 +225,7 @@ app.get("", async (request: any, response) => {
   }
 });
 
-function createStatPercent(moods: Mood[], tag: string) {
+function createStatPercent(moods: Mood[], tag: string, compound: string) {
   const moodsWithoutTag = moods.filter(
     (mood: Mood) => !mood.tags || mood.tags.indexOf(tag) < 0
   );
@@ -231,13 +236,13 @@ function createStatPercent(moods: Mood[], tag: string) {
   const averageWithTag = averageMood(moodsWithTag);
 
   return {
-    title: "Feeling Change With " + tag,
+    title: "Mood " + compound + " " + tag,
     type: StatType.Percent,
     locked: moodsWithoutTag.length < 10 || moodsWithTag.length < 10,
     lockedMessage:
       moodsWithTag.length < 10
-        ? "Record 10 feelings using '" + tag + "' to unlock"
-        : "Record 10 feelings using '" + tag + "' to unlock",
+        ? "Record 10 feelings " + compound + " " + tag + " to unlock"
+        : "Record 10 feelings " + compound + " " + tag + " to unlock",
     percentComplete:
       (Math.min(moodsWithoutTag.length / 10, 1) +
         Math.min(moodsWithTag.length / 10, 1)) /
