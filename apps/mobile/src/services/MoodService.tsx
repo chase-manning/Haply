@@ -8,7 +8,8 @@ const api: string =
 const MoodService = {
   async createMood(userToken: string, mood: Mood): Promise<any> {
     try {
-      const route: string = api + "v3/moods";
+      const route: string =
+        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV1";
 
       return ApiService(route, userToken, "POST", mood.string);
     } catch (error) {
@@ -23,7 +24,8 @@ const MoodService = {
     limit?: number
   ): Promise<Mood[] | null> {
     try {
-      const route: string = api + "v2/moods";
+      const route: string =
+        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsGetV1";
 
       let fullRoute: string = route;
       if (!!order || !!limit) fullRoute += "?";
@@ -78,9 +80,9 @@ const MoodService = {
         date.getDate()
       );
       endDate.setDate(endDate.getDate() + 1);
+
       const route: string =
-        api +
-        "v2/moods?startdate=" +
+        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsGetV1?startdate=" +
         startDate.toISOString() +
         "&enddate=" +
         endDate.toISOString();
