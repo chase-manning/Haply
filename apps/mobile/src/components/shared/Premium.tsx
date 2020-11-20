@@ -39,7 +39,7 @@ const StyledPremium = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px;
+  padding: 30px;
   justify-content: space-between;
   overflow: auto;
 `;
