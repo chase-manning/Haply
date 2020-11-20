@@ -166,7 +166,7 @@ const Entry = (props: Props) => {
                 value={props.mood.value}
               />
               <EntryText>
-                <EntryHeader>{"Feeling " + props.mood.description}</EntryHeader>
+                <EntryHeader>{"Feeling " + props.mood.value}</EntryHeader>
                 <EntrySubHeader>
                   {dateFormat(props.mood.date, " dddd h:MM tt")}
                 </EntrySubHeader>
