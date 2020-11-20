@@ -15,21 +15,6 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 
-const defaultTags = [
-  "With Friends",
-  "With Family",
-  "Tired",
-  "Well Rested",
-  "In Pain",
-  "Sick",
-  "Working",
-  "At Home",
-  "On Holiday",
-  "Eating Well",
-  "Eating Poorly",
-  "Exercising",
-];
-
 interface DayAverage {
   date: string;
   average: number;
@@ -57,7 +42,6 @@ interface Settings {
   frequencyMinutesMin: number;
   frequencyMinutesMax: number;
   nextNotification: string;
-  tagOptions: string[];
   colorPrimary: string;
   mode: Mode;
   timezone: string;
@@ -84,7 +68,6 @@ app.get("", async (request: any, response) => {
         frequencyMinutesMin: 420,
         frequencyMinutesMax: 420,
         nextNotification: new Date().toString(),
-        tagOptions: defaultTags,
         colorPrimary: "#4071fe",
         mode: Mode.Default,
         timezone: "Asia/Kolkata",
@@ -97,7 +80,6 @@ app.get("", async (request: any, response) => {
         frequencyMinutesMin: settingData.frequencyMinutesMin,
         frequencyMinutesMax: settingData.frequencyMinutesMax,
         nextNotification: settingData.nextNotification,
-        tagOptions: settingData.tagOptions,
         colorPrimary: settingData.colorPrimary,
         mode: settingData.mode,
         timezone: settingData.timezone ? settingData.timezone : "Asia/Kolkata",
