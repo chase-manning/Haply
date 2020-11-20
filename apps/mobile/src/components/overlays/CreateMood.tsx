@@ -203,6 +203,7 @@ const CreateMood = () => {
               <TagOptions>
                 {feelings.map((feeling: string) => (
                   <TagOption
+                    key={feeling}
                     selected={state.feelings.indexOf(feeling) >= 0}
                     last={feelings.indexOf(feeling) === feelings.length - 1}
                     onClick={() => {
