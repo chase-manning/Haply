@@ -138,15 +138,26 @@ const CreateMood = () => {
         </TagSection>
         <TagSection>
           <TagText>while</TagText>
-          <TagSelected></TagSelected>
+          <TagInput
+            tags={activities}
+            setTags={(tags: string[]) =>
+              setState({ ...state, activities: tags })
+            }
+          />
         </TagSection>
         <TagSection>
           <TagText>at</TagText>
-          <TagSelected></TagSelected>
+          <TagInput
+            tags={places}
+            setTags={(tags: string[]) => setState({ ...state, places: tags })}
+          />
         </TagSection>
         <TagSection>
           <TagText>with</TagText>
-          <TagSelected></TagSelected>
+          <TagInput
+            tags={people}
+            setTags={(tags: string[]) => setState({ ...state, people: tags })}
+          />
           <TagText>.</TagText>
         </TagSection>
       </Tags>
