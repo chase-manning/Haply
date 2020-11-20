@@ -11,7 +11,6 @@ import highFlyer from "../assets/svgs/InstantSupport.svg";
 import lookingStylish from "../assets/svgs/MakingArt.svg";
 import fullMoon from "../assets/svgs/Moonlight.svg";
 import avidWriter from "../assets/svgs/Learning.svg";
-import masterTagger from "../assets/svgs/Typewriter.svg";
 import theJourney from "../assets/svgs/HomeCinema.svg";
 import settleIn from "../assets/svgs/DecorativeFriends.svg";
 import forBreakfast from "../assets/svgs/Breakfast.svg";
@@ -73,8 +72,6 @@ const getSvg = (name: string): string => {
       return fullMoon;
     case "avidWriter":
       return avidWriter;
-    case "masterTagger":
-      return masterTagger;
     case "theJourney":
       return theJourney;
     case "settleIn":
