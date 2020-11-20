@@ -1,22 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
-type ExpandButtonProps = {
-  show: boolean;
-  secondLine: boolean;
-};
-
-const ExpandButton = styled.div`
-  display: ${(props: ExpandButtonProps) => (props.show ? "flex" : "none")};
-  position: absolute;
-  top: ${(props: ExpandButtonProps) => (props.secondLine ? "15px" : "9px")};
-  right: 0;
-  background-color: var(--bg-mid);
-  padding: 1px;
-  font-size: 10px;
-  color: var(--sub);
-  box-shadow: -5px -0px 5px 2px var(--bg-mid);
-`;
+import { ExpandButton } from "../../styles/Shared";
 
 type EntryNoteProps = {
   open: boolean;
