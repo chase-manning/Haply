@@ -162,7 +162,6 @@ const CreateMood = () => {
             setTags={(tags: string[]) => setState({ ...state, people: tags })}
             text={getTagText(state.people)}
           />
-          <TagText>.</TagText>
         </TagSection>
       </Tags>
       <MoodSlider
