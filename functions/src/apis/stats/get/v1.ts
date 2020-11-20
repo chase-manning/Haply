@@ -38,7 +38,11 @@ interface Mood {
   userId: string;
   id: string;
   note: string;
-  tags: string[];
+  tags?: string[];
+  feelings?: string[];
+  activities?: string[];
+  places?: string[];
+  people?: string[];
   description: string;
 }
 
@@ -125,7 +129,11 @@ app.get("", async (request: any, response) => {
         date: getTimezoneDate(moodDate, setting.timezone),
         userId: mood.userId,
         note: mood.note,
-        tags: mood.tags,
+        tags: mood.tags || [],
+        feelings: mood.feelings || [],
+        activities: mood.activities || [],
+        places: mood.places || [],
+        people: mood.people || [],
         description: mood.description,
       });
     });
@@ -200,18 +208,18 @@ app.get("", async (request: any, response) => {
     );
 
     setting.feelings.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "when"))
+      stats.push(createStatPercent(moods, tag, "when", "feelings"))
     );
 
     setting.places.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "at"))
+      stats.push(createStatPercent(moods, tag, "at", "places"))
     );
     setting.activities.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "while"))
+      stats.push(createStatPercent(moods, tag, "while", "activities"))
     );
 
     setting.people.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "with"))
+      stats.push(createStatPercent(moods, tag, "with", "people"))
     );
 
     stats.sort(function (a, b) {
@@ -225,13 +233,18 @@ app.get("", async (request: any, response) => {
   }
 });
 
-function createStatPercent(moods: Mood[], tag: string, compound: string) {
+function createStatPercent(
+  moods: Mood[],
+  tag: string,
+  compound: string,
+  tagType: string
+) {
   const moodsWithoutTag = moods.filter(
-    (mood: Mood) => !mood.tags || mood.tags.indexOf(tag) < 0
+    (mood: Mood) => !containsTag(mood, tag, tagType)
   );
   const averageWithoutTag = averageMood(moodsWithoutTag);
-  const moodsWithTag = moods.filter(
-    (mood: Mood) => mood.tags && mood.tags.indexOf(tag) >= 0
+  const moodsWithTag = moods.filter((mood: Mood) =>
+    containsTag(mood, tag, tagType)
   );
   const averageWithTag = averageMood(moodsWithTag);
 
@@ -250,6 +263,27 @@ function createStatPercent(moods: Mood[], tag: string, compound: string) {
     dataPoints: [{ label: "", value: averageWithTag / averageWithoutTag - 1 }],
   };
 }
+
+const containsTag = (mood: Mood, tag: string, tagType: string): boolean => {
+  if (mood.tags && mood.tags.indexOf(tag) >= 0) return true;
+  if (
+    tagType === "feelings" &&
+    mood.feelings &&
+    mood.feelings.indexOf(tag) >= 0
+  )
+    return true;
+  if (tagType === "places" && mood.places && mood.places.indexOf(tag) >= 0)
+    return true;
+  if (
+    tagType === "activities" &&
+    mood.activities &&
+    mood.activities.indexOf(tag) >= 0
+  )
+    return true;
+  if (tagType === "people" && mood.people && mood.people.indexOf(tag) >= 0)
+    return true;
+  return false;
+};
 
 const averageMood = (moods: Mood[]) => {
   return moods.length === 0
