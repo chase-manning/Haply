@@ -60,6 +60,7 @@ class State {
 type Props = {
   tags: string[];
   setTags: (tags: string[]) => void;
+  text: string;
 };
 
 const TagInput = (props: Props) => {
@@ -67,6 +68,7 @@ const TagInput = (props: Props) => {
 
   return (
     <StyledTagInput>
+      {props.text}
       <TagClickHandler onClick={() => setState({ ...state, open: true })} />
       {state.open && (
         <TagExit
