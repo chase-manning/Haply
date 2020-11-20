@@ -134,6 +134,7 @@ const CreateMood = () => {
           <TagInput
             tags={feelings}
             setTags={(tags: string[]) => setState({ ...state, feelings: tags })}
+            text={getTagText(state.feelings)}
           />
         </TagSection>
         <TagSection>
@@ -143,6 +144,7 @@ const CreateMood = () => {
             setTags={(tags: string[]) =>
               setState({ ...state, activities: tags })
             }
+            text={getTagText(state.activities)}
           />
         </TagSection>
         <TagSection>
@@ -150,6 +152,7 @@ const CreateMood = () => {
           <TagInput
             tags={places}
             setTags={(tags: string[]) => setState({ ...state, places: tags })}
+            text={getTagText(state.places)}
           />
         </TagSection>
         <TagSection>
@@ -157,6 +160,7 @@ const CreateMood = () => {
           <TagInput
             tags={people}
             setTags={(tags: string[]) => setState({ ...state, people: tags })}
+            text={getTagText(state.people)}
           />
           <TagText>.</TagText>
         </TagSection>
@@ -205,6 +209,18 @@ const CreateMood = () => {
       </Button>
     </StyledCreateMood>
   );
+};
+
+const getTagText = (tags: string[]) => {
+  if (tags.length === 0) return "";
+  if (tags.length === 1) return tags[0];
+  let text: string = "";
+  tags.forEach((tag: string) => {
+    if (tags.indexOf(tag) === tags.length - 1) text += tag;
+    else if (tags.indexOf(tag) === tags.length - 2) text += tag + " & ";
+    else text += tag + ", ";
+  });
+  return text;
 };
 
 export default CreateMood;
