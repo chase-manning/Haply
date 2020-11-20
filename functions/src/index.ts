@@ -11,6 +11,7 @@ import { moodsUpdateV1 } from "./apis/moods/update/v1";
 import { pushNotificationTokensCreateV1 } from "./apis/push-notification-tokens/create/v1";
 import { settingsCreateV1 } from "./apis/settings/create/v1";
 import { settingsGetV1 } from "./apis/settings/get/v1";
+import { statsGetV1 } from "./apis/stats/get/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2680,3 +2681,7 @@ export const apisSettingsGetV1 = functions.https.onRequest(settingsGetV1);
 export const apisPushNotificationTokensCreateV1 = functions.https.onRequest(
   pushNotificationTokensCreateV1
 );
+
+/* Stats */
+//Get
+export const apisStatsGetV1 = functions.https.onRequest(statsGetV1);
