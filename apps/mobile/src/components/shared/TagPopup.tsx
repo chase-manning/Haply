@@ -4,7 +4,7 @@ import Popup from "../shared/Popup";
 import { SelectedTags, SelectedTag } from "../../styles/Shared";
 import CloseIcon from "@material-ui/icons/Close";
 import AddIcon from "@material-ui/icons/Add";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PremiumPopup from "./PremiumPopup";
 import { showError } from "../../state/navigationSlice";
 
@@ -86,7 +86,7 @@ const TagPopup = (props: Props) => {
             {props.tags.map((tag: string) => (
               <SelectedTag
                 key={tag}
-                onClick={() => dispatch(props.removeTag(tag))}
+                onClick={() => props.removeTag(tag)}
                 includeMargin={true}
               >
                 {tag}
