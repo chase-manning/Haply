@@ -21,7 +21,6 @@ interface Mood {
   userId: string;
   id: string;
   note: string;
-  tags: string[];
   description: string;
 }
 
@@ -105,7 +104,6 @@ app.get("", async (request: any, response) => {
         date: getTimezoneDate(moodDate, setting.timezone),
         userId: mood.userId,
         note: mood.note,
-        tags: mood.tags,
         description: mood.description,
       });
     });
