@@ -2661,18 +2661,14 @@ const getCurrentDateTimezone = (timezone: string): string => {
 
 //Create
 export const apisMoodsCreateV1 = functions.https.onRequest(moodsCreateV1);
-
 //Get
 export const apisMoodsGetV1 = functions.https.onRequest(moodsGetV1);
-
 //Update
 export const apisMoodsUpdateV1 = functions.https.onRequest(moodsUpdateV1);
-
 //Delete
 export const apisMoodsDeleteV1 = functions.https.onRequest(moodsDeleteV1);
 
 /* Push Notification Tokens */
-
 //Create
 export const apisPushNotificationTokensCreateV1 = functions.https.onRequest(
   pushNotificationTokensCreateV1
