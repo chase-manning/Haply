@@ -9,7 +9,6 @@ import merryChristmas from "../assets/svgs/ChristmasTree.svg";
 import happyHalloween from "../assets/svgs/Witch.svg";
 import highFlyer from "../assets/svgs/InstantSupport.svg";
 import lookingStylish from "../assets/svgs/MakingArt.svg";
-import tagTinkerer from "../assets/svgs/PersonalGoals.svg";
 import fullMoon from "../assets/svgs/Moonlight.svg";
 import avidWriter from "../assets/svgs/Learning.svg";
 import masterTagger from "../assets/svgs/Typewriter.svg";
@@ -70,8 +69,6 @@ const getSvg = (name: string): string => {
       return highFlyer;
     case "lookingStylish":
       return lookingStylish;
-    case "tagTinkerer":
-      return tagTinkerer;
     case "fullMoon":
       return fullMoon;
     case "avidWriter":
