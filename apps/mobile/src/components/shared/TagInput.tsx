@@ -14,6 +14,8 @@ const StyledTagInput = styled.div`
 const TagClickHandler = styled.button`
   width: 100%;
   height: 30px;
+  top: 0;
+  left: 0;
   position: absolute;
 `;
 
