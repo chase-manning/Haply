@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const TagSelected = styled.div`
+const StyledTagInput = styled.div`
   color: var(--primary);
   display: inline-block;
   min-width: 50px;
@@ -66,7 +66,7 @@ const TagInput = (props: Props) => {
   const [state, setState] = useState(new State());
 
   return (
-    <TagSelected>
+    <StyledTagInput>
       <TagClickHandler onClick={() => setState({ ...state, open: true })} />
       {state.open && (
         <TagExit
@@ -95,7 +95,7 @@ const TagInput = (props: Props) => {
           ))}
         </TagOptions>
       )}
-    </TagSelected>
+    </StyledTagInput>
   );
 };
 
