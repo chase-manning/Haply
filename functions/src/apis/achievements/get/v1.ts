@@ -271,22 +271,6 @@ app.get("", async (request: any, response) => {
       unlocks: [],
     });
 
-    // Tag Tinkerer
-    achievements.push({
-      svg: "tagTinkerer",
-      percentComplete:
-        setting.tagOptions &&
-        setting.tagOptions.some(
-          (tagOption: string) => defaultTags.indexOf(tagOption) < 0
-        )
-          ? 1
-          : 0,
-      title: "Tag Tinkerer",
-      description: "Create your own Custom Tags",
-      colorPrimary: "#FF69B4",
-      unlocks: [],
-    });
-
     // Full Moon
     achievements.push({
       svg: "fullMoon",
@@ -368,6 +352,7 @@ app.get("", async (request: any, response) => {
       unlocks: [],
     });
 
+    // #FF69B4
     // #008000
     // #808000
     // #00FFFF
