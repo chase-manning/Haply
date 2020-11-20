@@ -22,6 +22,7 @@ import {
   selectPlaces,
 } from "../../state/settingsSlice";
 import TagInput from "../shared/TagInput";
+import TagSelector from "../shared/TagSelector";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -113,42 +114,20 @@ const CreateMood = () => {
         />
       )}
 
-      <Tags>
-        <TagSection>
-          <TagText>I'm feeling</TagText>
-          <TagInput
-            tags={feelings}
-            setTags={(tags: string[]) => setState({ ...state, feelings: tags })}
-            text={getTagText(state.feelings)}
-          />
-        </TagSection>
-        <TagSection>
-          <TagText>while</TagText>
-          <TagInput
-            tags={activities}
-            setTags={(tags: string[]) =>
-              setState({ ...state, activities: tags })
-            }
-            text={getTagText(state.activities)}
-          />
-        </TagSection>
-        <TagSection>
-          <TagText>at</TagText>
-          <TagInput
-            tags={places}
-            setTags={(tags: string[]) => setState({ ...state, places: tags })}
-            text={getTagText(state.places)}
-          />
-        </TagSection>
-        <TagSection>
-          <TagText>with</TagText>
-          <TagInput
-            tags={people}
-            setTags={(tags: string[]) => setState({ ...state, people: tags })}
-            text={getTagText(state.people)}
-          />
-        </TagSection>
-      </Tags>
+      <TagSelector
+        feelings={state.feelings}
+        activities={state.activities}
+        places={state.places}
+        people={state.people}
+        setFeelingTags={(tags: string[]) =>
+          setState({ ...state, feelings: tags })
+        }
+        setActivitiesTags={(tags: string[]) =>
+          setState({ ...state, activities: tags })
+        }
+        setPlacesTags={(tags: string[]) => setState({ ...state, places: tags })}
+        setPeopleTags={(tags: string[]) => setState({ ...state, people: tags })}
+      />
 
       <SliderSection>
         <MoodSlider
