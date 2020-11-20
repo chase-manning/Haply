@@ -111,3 +111,20 @@ export const Button = styled.button`
   border-radius: 10px;
   background-color: var(--primary);
 `;
+
+type ExpandButtonProps = {
+  show: boolean;
+  secondLine: boolean;
+};
+
+export const ExpandButton = styled.div`
+  display: ${(props: ExpandButtonProps) => (props.show ? "flex" : "none")};
+  position: absolute;
+  top: ${(props: ExpandButtonProps) => (props.secondLine ? "15px" : "9px")};
+  right: 0;
+  background-color: var(--bg-mid);
+  padding: 1px;
+  font-size: 10px;
+  color: var(--sub);
+  box-shadow: -5px -0px 5px 2px var(--bg-mid);
+`;
