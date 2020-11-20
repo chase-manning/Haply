@@ -5,7 +5,7 @@ import { getTagText } from "./TagSelector";
 
 const StyledEntryDescription = styled.div`
   width: 100%;
-  font-size: 12px;
+  font-size: 14px;
   margin-top: 10px;
 `;
 
