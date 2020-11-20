@@ -9,6 +9,7 @@ import { moodsGetV1 } from "./apis/moods/get/v1";
 import { moodsDeleteV1 } from "./apis/moods/delete/v1";
 import { moodsUpdateV1 } from "./apis/moods/update/v1";
 import { pushNotificationTokensCreateV1 } from "./apis/push-notification-tokens/create/v1";
+import { settingsCreateV1 } from "./apis/settings/create/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2658,7 +2659,6 @@ const getCurrentDateTimezone = (timezone: string): string => {
  * /
 
 /* Mood */
-
 //Create
 export const apisMoodsCreateV1 = functions.https.onRequest(moodsCreateV1);
 //Get
@@ -2667,6 +2667,10 @@ export const apisMoodsGetV1 = functions.https.onRequest(moodsGetV1);
 export const apisMoodsUpdateV1 = functions.https.onRequest(moodsUpdateV1);
 //Delete
 export const apisMoodsDeleteV1 = functions.https.onRequest(moodsDeleteV1);
+
+/* Settings */
+//Get
+export const apisSettingsCreateV1 = functions.https.onRequest(settingsCreateV1);
 
 /* Push Notification Tokens */
 //Create
