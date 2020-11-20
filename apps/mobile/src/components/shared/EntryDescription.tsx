@@ -7,23 +7,11 @@ const StyledEntryDescription = styled.div`
   width: 100%;
   font-size: 14px;
   margin-top: 10px;
-`;
-
-const Section = styled.div`
-  display: inline-block;
-`;
-
-const Text = styled.div`
   color: var(--main);
-  display: inline-block;
-  margin-right: 3px;
 `;
 
-const Tag = styled.div`
+const Tag = styled.span`
   color: var(--primary);
-  display: inline-block;
-  margin-right: 3px;
-  position: relative;
 `;
 
 type Props = {
@@ -41,30 +29,30 @@ const EntryDescription = (props: Props) => {
 
   return (
     <StyledEntryDescription>
-      <Text>I'm</Text>
+      {"I'm "}
       {hasFeelings && (
-        <Section>
-          <Text>feeling</Text>
-          <Tag>{getTagText(props.mood.feelings)}</Tag>
-        </Section>
+        <span>
+          {"feeling "}
+          <Tag>{getTagText(props.mood.feelings)}</Tag>{" "}
+        </span>
       )}
       {hasActivities && (
-        <Section>
-          <Text>{hasFeelings ? "while" : ""}</Text>
-          <Tag>{getTagText(props.mood.activities)}</Tag>
-        </Section>
+        <span>
+          {hasFeelings ? "while " : ""}
+          <Tag>{getTagText(props.mood.activities)}</Tag>{" "}
+        </span>
       )}
       {hasPlaces && (
-        <Section>
-          <Text>at</Text>
-          <Tag>{getTagText(props.mood.places)}</Tag>
-        </Section>
+        <span>
+          {"at "}
+          <Tag>{getTagText(props.mood.places)}</Tag>{" "}
+        </span>
       )}
       {hasPeople && (
-        <Section>
-          <Text>with</Text>
-          <Tag>{getTagText(props.mood.people)}</Tag>
-        </Section>
+        <span>
+          {"with "}
+          <Tag>{getTagText(props.mood.people)}</Tag>{" "}
+        </span>
       )}
     </StyledEntryDescription>
   );
