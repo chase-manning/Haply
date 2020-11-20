@@ -13,6 +13,7 @@ import { settingsCreateV1 } from "./apis/settings/create/v1";
 import { settingsGetV1 } from "./apis/settings/get/v1";
 import { statsGetV1 } from "./apis/stats/get/v1";
 import { achievementGetV1 } from "./apis/achievements/get/v1";
+import { calendarGetV1 } from "./apis/calendar/get/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2692,3 +2693,7 @@ export const apisStatsGetV1 = functions.https.onRequest(statsGetV1);
 export const apisAchievementsGetV1 = functions.https.onRequest(
   achievementGetV1
 );
+
+/* Calendar */
+//Get
+export const apisCalendarGetV1 = functions.https.onRequest(calendarGetV1);
