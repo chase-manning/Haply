@@ -78,6 +78,50 @@ const TagSelected = styled.div`
   min-width: 50px;
   border-bottom: solid 2px var(--primary);
   margin-right: 10px;
+  position: relative;
+`;
+
+const TagClickHandler = styled.button`
+  width: 100%;
+  height: 30px;
+  position: absolute;
+`;
+
+const TagOptions = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-mid);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  z-index: 2;
+  font-size: 16px;
+`;
+
+type TagOptionProps = {
+  selected: boolean;
+  last: boolean;
+};
+
+const TagOption = styled.div`
+  color: ${(props: TagOptionProps) =>
+    props.selected ? "var(--primary)" : "var(--main)"};
+  padding: 5px 0;
+  border-bottom: ${(props: TagOptionProps) =>
+    props.last ? "none" : "solid: 1px var(--sub)"};
+`;
+
+const TagExit = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 `;
 
 const Face = styled.div`
@@ -102,6 +146,10 @@ class State {
   places: string[] = [];
   activities: string[] = [];
   people: string[] = [];
+  feelingsOpen: boolean = false;
+  placesOpen: boolean = false;
+  activitiesOpen: boolean = false;
+  peopleOpen: boolean = false;
 }
 
 const moodAsset = (mood: number): string => {
@@ -136,7 +184,39 @@ const CreateMood = () => {
       <Tags>
         <TagSection>
           <TagText>I'm feeling</TagText>
-          <TagSelected></TagSelected>
+          <TagSelected>
+            <TagClickHandler
+              onClick={() => {
+                setState({ ...state, feelingsOpen: true });
+                console.log("opening");
+              }}
+            />
+            {state.feelingsOpen && (
+              <TagExit
+                onClick={() => {
+                  setState({ ...state, feelingsOpen: false });
+                  console.log("closing");
+                }}
+              />
+            )}
+            {state.feelingsOpen && (
+              <TagOptions>
+                {feelings.map((feeling: string) => (
+                  <TagOption
+                    selected={state.feelings.indexOf(feeling) >= 0}
+                    last={feelings.indexOf(feeling) === feelings.length - 1}
+                    onClick={() => {
+                      const newFeelings = state.feelings;
+                      newFeelings.push(feeling);
+                      setState({ ...state, feelings: newFeelings });
+                    }}
+                  >
+                    {feeling}
+                  </TagOption>
+                ))}
+              </TagOptions>
+            )}
+          </TagSelected>
         </TagSection>
         <TagSection>
           <TagText>while</TagText>
