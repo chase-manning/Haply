@@ -138,6 +138,64 @@ app.get("", async (request: any, response) => {
       });
     });
 
+    //Temporary Override for Tags Still Existing
+    const feelings = [
+      "Tired",
+      "Stressed",
+      "Energetic",
+      "Well Rested",
+      "In Pain",
+      "Sick",
+      "Tipsy",
+      "Drunk",
+      "Hungover",
+      "High",
+    ];
+    const activities = [
+      "Relaxing",
+      "Exercising",
+      "Working",
+      "Holiday",
+      "Eating Well",
+      "Eating Poorly",
+      "Haply",
+      "Entertainment",
+      "IAG",
+      "Walking",
+      "Music",
+      "ASMR",
+      "Instagram",
+    ];
+    const places = [
+      "Home",
+      "Work",
+      "School",
+      "Office",
+      "Dads",
+      "Mums",
+      "Outside",
+    ];
+    const people = ["Friends", "Family", "Myself", "With Friends"];
+    moods.forEach((mood: any) => {
+      if (mood.data.tags) {
+        if (!mood.data.feelings) mood.data.feelings = [];
+        if (!mood.data.activities) mood.data.activities = [];
+        if (!mood.data.places) mood.data.places = [];
+        if (!mood.data.people) mood.data.people = [];
+        mood.data.tags.forEach((tag: string) => {
+          let newTag = tag;
+          newTag = newTag.replace("With ", "");
+          newTag = newTag.replace("At ", "");
+          newTag = newTag.replace("On ", "");
+          if (feelings.indexOf(newTag) >= 0) mood.data.feelings.push(newTag);
+          if (activities.indexOf(newTag) >= 0)
+            mood.data.activities.push(newTag);
+          if (places.indexOf(newTag) >= 0) mood.data.places.push(newTag);
+          if (people.indexOf(newTag) >= 0) mood.data.people.push(newTag);
+        });
+      }
+    });
+
     return response.json(moods);
   } catch (error) {
     console.log(error);
