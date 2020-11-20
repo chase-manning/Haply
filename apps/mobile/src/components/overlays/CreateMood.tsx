@@ -33,7 +33,7 @@ const StyledCreateMood = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: var(--bg);
+  background-color: var(--bg-mid);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
