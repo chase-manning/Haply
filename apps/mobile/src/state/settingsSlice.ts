@@ -24,8 +24,6 @@ export interface SettingsState {
   timezone: string;
 }
 
-// I'm feeling _____ while _____ at _____ with _____
-
 const initialState: SettingsState = {
   remindersEnabled: true,
   randomReminders: false,
