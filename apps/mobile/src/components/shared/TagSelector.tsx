@@ -9,7 +9,7 @@ import {
 } from "../../state/settingsSlice";
 import TagInput from "../shared/TagInput";
 
-const Tags = styled.div`
+const StyledTagSelector = styled.div`
   width: 100%;
   font-size: 24px;
 `;
@@ -43,7 +43,7 @@ const TagSelector = (props: Props) => {
   const people = useSelector(selectPeople);
 
   return (
-    <Tags>
+    <StyledTagSelector>
       <TagSection>
         <TagText>I'm feeling</TagText>
         <TagInput
@@ -76,7 +76,7 @@ const TagSelector = (props: Props) => {
           text={getTagText(props.people)}
         />
       </TagSection>
-    </Tags>
+    </StyledTagSelector>
   );
 };
 
