@@ -21,16 +21,14 @@ import aRoutine from "../assets/svgs/MyUniverse.svg";
 import aLifestyle from "../assets/svgs/SnapTheMoment.svg";
 import ApiService from "./ApiService";
 
-const api: string =
-  "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
-
 const AchievementService = {
   async getAchievements(
     userToken: string,
     currentAchievements: AchievementModel[]
   ): Promise<AchievementModel[] | null> {
     try {
-      const route: string = api + "v3/achievements";
+      const route =
+        "https://us-central1-happiness-software.cloudfunctions.net/apisAchievementsGetV1";
       const response = await ApiService(route, userToken, "GET");
 
       let achievements: AchievementModel[] = await response!.json();
