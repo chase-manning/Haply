@@ -12,6 +12,7 @@ import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import DynamicSelectedTag from "./DynamicSelectedTag";
+import EntryTags from "./EntryTags";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -97,17 +98,6 @@ const ItemLabel = styled.div`
 type EntryTagsProps = {
   open: boolean;
 };
-
-const EntryTags = styled.div`
-  margin-top: 15px;
-  color: var(--sub);
-  font-size: 12px;
-  align-items: center;
-  width: 100%;
-  overflow: hidden;
-  height: ${(props: EntryTagsProps) => (props.open ? "auto" : "25px")};
-  position: relative;
-`;
 
 type ExpandButtonProps = {
   show: boolean;
@@ -201,27 +191,7 @@ const Entry = (props: Props) => {
               )}
             </KebabMenu>
           </Header>
-          {props.mood.tags && props.mood.tags.length > 0 && (
-            <EntryTags
-              onClick={() => setState({ ...state, tagsOpen: !state.tagsOpen })}
-              open={state.tagsOpen}
-            >
-              {props.mood.tags.map((tag: string) => (
-                <DynamicSelectedTag
-                  tag={tag}
-                  percent={props.mood.value / 10}
-                  key={tag}
-                  includeMargin={true}
-                />
-              ))}
-              <ExpandButton
-                show={!state.tagsOpen && props.mood.tags.length >= 3}
-                secondLine={false}
-              >
-                ...more
-              </ExpandButton>
-            </EntryTags>
-          )}
+          <EntryTags tags={props.mood.tags} percent={props.mood.value / 10} />
           {props.mood.note && props.mood.note.length > 0 && (
             <EntryNote
               onClick={() =>
