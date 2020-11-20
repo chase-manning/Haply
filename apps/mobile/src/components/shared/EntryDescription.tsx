@@ -3,19 +3,36 @@ import styled from "styled-components";
 import Mood from "../../models/mood";
 import { getTagText } from "./TagSelector";
 
+type StyledEntryDescriptionProps = {
+  opacity: number;
+  overlay: boolean;
+};
+
 const StyledEntryDescription = styled.div`
   width: 100%;
   font-size: 14px;
   margin-top: 10px;
   color: var(--main);
+  opacity: ${(props: StyledEntryDescriptionProps) => props.opacity};
+  position: ${(props: StyledEntryDescriptionProps) =>
+    props.overlay ? "absolute" : "relative"};
+  top: 0;
+  left: 0;
 `;
 
+type TagProps = {
+  overlay: boolean;
+};
+
 const Tag = styled.span`
-  color: var(--primary);
+  color: ${(props: TagProps) =>
+    props.overlay ? "var(--primary)" : "var(--highlight)"};
 `;
 
 type Props = {
   mood: Mood;
+  overlay?: boolean;
+  opacity?: number;
 };
 
 const EntryDescription = (props: Props) => {
@@ -28,30 +45,41 @@ const EntryDescription = (props: Props) => {
   if (!hasFeelings && !hasActivities && !hasPlaces && !hasPeople) return null;
 
   return (
-    <StyledEntryDescription>
+    <StyledEntryDescription
+      opacity={props.opacity || 1}
+      overlay={props.overlay || false}
+    >
       {"I'm "}
       {hasFeelings && (
         <span>
           {"feeling "}
-          <Tag>{getTagText(props.mood.feelings)}</Tag>{" "}
+          <Tag overlay={props.overlay || false}>
+            {getTagText(props.mood.feelings)}
+          </Tag>{" "}
         </span>
       )}
       {hasActivities && (
         <span>
           {hasFeelings ? "while " : ""}
-          <Tag>{getTagText(props.mood.activities)}</Tag>{" "}
+          <Tag overlay={props.overlay || false}>
+            {getTagText(props.mood.activities)}
+          </Tag>{" "}
         </span>
       )}
       {hasPlaces && (
         <span>
           {"at "}
-          <Tag>{getTagText(props.mood.places)}</Tag>{" "}
+          <Tag overlay={props.overlay || false}>
+            {getTagText(props.mood.places)}
+          </Tag>{" "}
         </span>
       )}
       {hasPeople && (
         <span>
           {"with "}
-          <Tag>{getTagText(props.mood.people)}</Tag>{" "}
+          <Tag overlay={props.overlay || false}>
+            {getTagText(props.mood.people)}
+          </Tag>{" "}
         </span>
       )}
     </StyledEntryDescription>
