@@ -5,10 +5,7 @@ import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import { getUser } from "../../../get-user";
 
-const firebase = admin.initializeApp(
-  functions.config().firebase,
-  "apisMoodsGetV1"
-);
+const firebase = admin.initializeApp(functions.config().firebase, "moodsGetV1");
 const db = firebase.firestore();
 const app = express();
 app.use(cors({ origin: true }));
