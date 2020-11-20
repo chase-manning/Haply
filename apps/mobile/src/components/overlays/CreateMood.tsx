@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Mood, { moodDescriptions } from "../../models/mood";
+import Mood from "../../models/mood";
 import styled from "styled-components";
 import MoodService from "../../services/MoodService";
 import sadAsset from "../../assets/svgs/FeelingBlue.svg";
