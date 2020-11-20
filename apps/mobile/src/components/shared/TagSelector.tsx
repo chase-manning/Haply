@@ -80,7 +80,7 @@ const TagSelector = (props: Props) => {
   );
 };
 
-const getTagText = (tags: string[]) => {
+export const getTagText = (tags: string[]) => {
   if (tags.length === 0) return "";
   if (tags.length === 1) return tags[0];
   let text: string = "";
