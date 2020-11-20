@@ -64,6 +64,7 @@ import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 import PlaceOutlinedIcon from "@material-ui/icons/PlaceOutlined";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
@@ -161,7 +162,7 @@ const Settings = () => {
         label={"People"}
         isToggle={false}
         clickFunction={() => setState({ ...state, peopleOpen: true })}
-        icon={<LocalOfferOutlinedIcon />}
+        icon={<PersonOutlineIcon />}
       />
 
       <Header>Reminders</Header>
