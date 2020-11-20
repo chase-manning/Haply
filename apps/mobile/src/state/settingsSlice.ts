@@ -31,7 +31,7 @@ const initialState: SettingsState = {
   frequencyMinutesMax: 7 * 60,
   nextNotification: new Date(2040, 1, 1).toString(),
   places: ["Home", "Work", "School"],
-  activities: ["On Holiday", "Exercising", "Working"],
+  activities: ["Relaxing", "Exercising", "Working"],
   feelings: ["Tired", "Stressed", "Energetic"],
   people: ["Friends", "Family", "Colleagues"],
   colorPrimary: "#4071fe",
