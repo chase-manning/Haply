@@ -150,7 +150,7 @@ const TagPopup = (props: Props) => {
                     return;
                   }
 
-                  dispatch(props.addTag(state.newTag));
+                  props.addTag(state.newTag);
                 }}
               />
               <PremiumPopup
