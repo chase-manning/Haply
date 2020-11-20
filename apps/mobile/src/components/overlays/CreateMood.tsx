@@ -121,10 +121,13 @@ const CreateMood = () => {
         <Button
           onClick={() => {
             const mood: Mood = new Mood(
-              state.mood,
               user.id,
+              state.mood,
+              state.feelings,
+              state.activities,
+              state.places,
+              state.people,
               state.note,
-              [],
               dateOverride ? new Date(dateOverride) : undefined
             );
             clearState();

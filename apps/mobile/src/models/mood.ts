@@ -1,20 +1,32 @@
 export default class Mood {
-  value: number;
-  date: Date;
   userId: string;
+  value: number;
+  feelings: string[];
+  activities: string[];
+  places: string[];
+  people: string[];
+  date: Date;
   moodId?: string;
   note: string;
 
   constructor(
-    value: number,
     userId: string,
+    value: number,
+    feelings: string[],
+    activities: string[],
+    places: string[],
+    people: string[],
     note: string = "",
     date: Date = new Date(),
     moodId: string = ""
   ) {
-    this.value = value;
-    this.date = date;
     this.userId = userId;
+    this.value = value;
+    this.feelings = feelings;
+    this.activities = activities;
+    this.places = places;
+    this.people = people;
+    this.date = date;
     if (moodId !== "") this.moodId = moodId;
     this.note = note;
   }

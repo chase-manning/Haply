@@ -37,10 +37,13 @@ const MoodService = {
       moodResponses.forEach((moodResponse: MoodResponse) => {
         moods.push(
           new Mood(
-            moodResponse.data.value,
             moodResponse.data.userId,
+            moodResponse.data.value,
+            moodResponse.data.feelings,
+            moodResponse.data.activities,
+            moodResponse.data.places,
+            moodResponse.data.people,
             moodResponse.data.note,
-            moodResponse.data.tags,
             moodResponse.data.date,
             moodResponse.id
           )
@@ -92,10 +95,13 @@ const MoodService = {
       moodResponses.forEach((moodResponse: MoodResponse) => {
         moods.push(
           new Mood(
-            moodResponse.data.value,
             moodResponse.data.userId,
+            moodResponse.data.value,
+            moodResponse.data.feelings,
+            moodResponse.data.activities,
+            moodResponse.data.places,
+            moodResponse.data.people,
             moodResponse.data.note,
-            moodResponse.data.tags,
             moodResponse.data.date,
             moodResponse.id
           )
