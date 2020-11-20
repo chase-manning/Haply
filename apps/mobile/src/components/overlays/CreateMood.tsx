@@ -42,13 +42,6 @@ const StyledCreateMood = styled.div`
   color: var(--main);
 `;
 
-const Emotion = styled.div`
-  font-weight: 400;
-  font-size: 20px;
-  text-align: center;
-  color: var(--sub);
-`;
-
 const Tags = styled.div`
   width: 100%;
   font-size: 24px;
@@ -75,19 +68,18 @@ const TagSelected = styled.div`
   position: relative;
 `;
 
-const Face = styled.div`
-  height: 300px;
-  width: 300px;
+const SliderSection = styled.div`
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 `;
 
 const Additions = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
+  margin-top: 10px;
 `;
 
 class State {
@@ -98,13 +90,6 @@ class State {
   activities: string[] = [];
   people: string[] = [];
 }
-
-const moodAsset = (mood: number): string => {
-  if (mood <= 2) return sadAsset;
-  if (mood <= 4) return mehAsset;
-  else if (mood <= 7) return okayAsset;
-  else return happyAsset;
-};
 
 const CreateMood = () => {
   const [state, setState] = useState(new State());
@@ -141,10 +126,6 @@ const CreateMood = () => {
           }}
         />
       )}
-      <Emotion>{moodDescriptions[state.mood]}</Emotion>
-      {/* <Face>
-        <img src={moodAsset(state.mood)} alt="Mood Illustration" width="80%" />
-      </Face> */}
 
       <Tags>
         <TagSection>
@@ -182,40 +163,44 @@ const CreateMood = () => {
           />
         </TagSection>
       </Tags>
-      <MoodSlider
-        value={state.mood}
-        updateValue={(value: number) => {
-          setState({
-            ...state,
-            mood: value,
-          });
-        }}
-      />
-      <Additions>
-        <AddNote
-          setNote={(note: string) => setState({ ...state, note: note })}
+
+      <SliderSection>
+        <MoodSlider
+          value={state.mood}
+          updateValue={(value: number) => {
+            setState({
+              ...state,
+              mood: value,
+            });
+          }}
         />
-      </Additions>
-      <Button
-        onClick={() => {
-          const mood: Mood = new Mood(
-            state.mood,
-            user.id,
-            state.note,
-            [],
-            dateOverride ? new Date(dateOverride) : undefined
-          );
-          clearState();
-          dispatch(addMood(mood));
-          dispatch(hideMood());
-          MoodService.createMood(user.token, mood).then(() => {
-            dispatch(updateAll());
-            if (dateOverride) dispatch(updateDateSearchMoods());
-          });
-        }}
-      >
-        Done
-      </Button>
+        <Additions>
+          <div />
+          <AddNote
+            setNote={(note: string) => setState({ ...state, note: note })}
+          />
+        </Additions>
+        <Button
+          onClick={() => {
+            const mood: Mood = new Mood(
+              state.mood,
+              user.id,
+              state.note,
+              [],
+              dateOverride ? new Date(dateOverride) : undefined
+            );
+            clearState();
+            dispatch(addMood(mood));
+            dispatch(hideMood());
+            MoodService.createMood(user.token, mood).then(() => {
+              dispatch(updateAll());
+              if (dateOverride) dispatch(updateDateSearchMoods());
+            });
+          }}
+        >
+          Done
+        </Button>
+      </SliderSection>
     </StyledCreateMood>
   );
 };
