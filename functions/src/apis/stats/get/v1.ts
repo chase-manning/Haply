@@ -241,8 +241,8 @@ function createStatPercent(moods: Mood[], tag: string, compound: string) {
     locked: moodsWithoutTag.length < 10 || moodsWithTag.length < 10,
     lockedMessage:
       moodsWithTag.length < 10
-        ? "Record 10 feelings " + compound + " " + tag + " to unlock"
-        : "Record 10 feelings " + compound + " " + tag + " to unlock",
+        ? "Record 10 moods " + compound + " " + tag + " to unlock"
+        : "Record 10 moods " + compound + " " + tag + " to unlock",
     percentComplete:
       (Math.min(moodsWithoutTag.length / 10, 1) +
         Math.min(moodsWithTag.length / 10, 1)) /
@@ -288,11 +288,11 @@ function createStatLine(
     .reverse();
 
   return {
-    title: "Feeling by " + periodName,
+    title: "Mood by " + periodName,
     type: StatType.Chart,
     locked: dataPoints.length < 3,
     lockedMessage:
-      "Record your Feeling three " + periodName + "s in a row to unlock",
+      "Record your Mood three " + periodName + "s in a row to unlock",
     percentComplete: Math.min(dataPoints.length / 3, 1),
     dataPoints: dataPoints,
   };
@@ -315,10 +315,10 @@ function createStatBar(
     .filter((dataPoint: DataPoint) => dataPoint.value >= 0);
 
   return {
-    title: "Average Feeling by " + periodName,
+    title: "Average Mood by " + periodName,
     type: StatType.Bar,
     locked: dataPoints.length < periods.length,
-    lockedMessage: "Record a feeling for every " + periodName + " to unlock",
+    lockedMessage: "Record a mood for every " + periodName + " to unlock",
     percentComplete: dataPoints.length / periods.length,
     dataPoints: dataPoints,
   };
