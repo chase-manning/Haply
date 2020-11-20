@@ -6,6 +6,7 @@ import * as cors from "cors";
 import * as dateFormat from "dateformat";
 import { moodsCreateV1 } from "./apis/moods/create/v1";
 import { moodsGetV1 } from "./apis/moods/get/v1";
+import { moodsDeleteV1 } from "./apis/moods/delete/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2648,6 +2649,12 @@ const getCurrentDateTimezone = (timezone: string): string => {
   return getTimezoneDate(currentTime.toISOString(), timezone);
 };
 
+/*
+ *
+ * APIs
+ * 
+ * /
+
 /* Mood */
 
 //Create
@@ -2655,3 +2662,6 @@ export const apisMoodsCreateV1 = functions.https.onRequest(moodsCreateV1);
 
 //Get
 export const apisMoodsGetV1 = functions.https.onRequest(moodsGetV1);
+
+//Delete
+export const apisMoodsDeleteV1 = functions.https.onRequest(moodsDeleteV1);
