@@ -62,6 +62,7 @@ import FaceOutlinedIcon from "@material-ui/icons/FaceOutlined";
 import SecurityIcon from "@material-ui/icons/Security";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
+import PlaceOutlinedIcon from "@material-ui/icons/PlaceOutlined";
 
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
@@ -147,7 +148,7 @@ const Settings = () => {
         label={"Places"}
         isToggle={false}
         clickFunction={() => setState({ ...state, placesOpen: true })}
-        icon={<LocalOfferOutlinedIcon />}
+        icon={<PlaceOutlinedIcon />}
       />
       <Setting
         label={"Activities"}
