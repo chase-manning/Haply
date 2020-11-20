@@ -118,11 +118,29 @@ const CreateMood = () => {
   const moods = useSelector(selectMoods);
   const dateOverride = useSelector(selectMoodDateSearch);
 
+  const clearState = () =>
+    setState({
+      ...state,
+      feelings: [],
+      places: [],
+      activities: [],
+      people: [],
+      note: "",
+      mood: 5,
+    });
+
   if (!moodShowing) return null;
 
   return (
     <StyledCreateMood>
-      {moods.length > 0 && <ExitBar exit={() => dispatch(hideMood())} />}
+      {moods.length > 0 && (
+        <ExitBar
+          exit={() => {
+            dispatch(hideMood());
+            clearState();
+          }}
+        />
+      )}
       <Emotion>{moodDescriptions[state.mood]}</Emotion>
       {/* <Face>
         <img src={moodAsset(state.mood)} alt="Mood Illustration" width="80%" />
@@ -187,15 +205,7 @@ const CreateMood = () => {
             [],
             dateOverride ? new Date(dateOverride) : undefined
           );
-          setState({
-            ...state,
-            feelings: [],
-            places: [],
-            activities: [],
-            people: [],
-            note: "",
-            mood: 5,
-          });
+          clearState();
           dispatch(addMood(mood));
           dispatch(hideMood());
           MoodService.createMood(user.token, mood).then(() => {
