@@ -11,7 +11,6 @@ import { selectToken } from "../../state/userSlice";
 import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import DynamicSelectedTag from "./DynamicSelectedTag";
 import EntryTags from "./EntryTags";
 
 const StyledEntry = styled.div`
@@ -95,10 +94,6 @@ const ItemLabel = styled.div`
   margin-right: 10px;
 `;
 
-type EntryTagsProps = {
-  open: boolean;
-};
-
 type ExpandButtonProps = {
   show: boolean;
   secondLine: boolean;
@@ -132,7 +127,6 @@ const EntryNote = styled.div`
 
 class State {
   popupOpen: boolean = false;
-  tagsOpen: boolean = false;
   notesOpen: boolean = false;
 }
 
