@@ -63,6 +63,7 @@ import SecurityIcon from "@material-ui/icons/Security";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
 import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
 import PlaceOutlinedIcon from "@material-ui/icons/PlaceOutlined";
+import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
@@ -154,7 +155,7 @@ const Settings = () => {
         label={"Activities"}
         isToggle={false}
         clickFunction={() => setState({ ...state, activitiesOpen: true })}
-        icon={<LocalOfferOutlinedIcon />}
+        icon={<DirectionsRunIcon />}
       />
       <Setting
         label={"People"}
