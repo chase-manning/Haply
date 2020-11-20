@@ -237,20 +237,6 @@ app.get("", async (request: any, response) => {
       unlocks: [],
     });
 
-    // Master Tagger
-    achievements.push({
-      svg: "masterTagger",
-      percentComplete: Math.min(
-        moods.filter((mood: Mood) => mood.tags && mood.tags.length > 0).length /
-          100,
-        1
-      ),
-      title: "Master Tagger",
-      description: "Record 100 Feelings with a Tag",
-      colorPrimary: "#FA8072",
-      unlocks: [],
-    });
-
     // High Flyer
     achievements.push({
       svg: "highFlyer",
@@ -352,6 +338,7 @@ app.get("", async (request: any, response) => {
       unlocks: [],
     });
 
+    // #FA8072
     // #FF69B4
     // #008000
     // #808000
