@@ -10,6 +10,7 @@ import { moodsDeleteV1 } from "./apis/moods/delete/v1";
 import { moodsUpdateV1 } from "./apis/moods/update/v1";
 import { pushNotificationTokensCreateV1 } from "./apis/push-notification-tokens/create/v1";
 import { settingsCreateV1 } from "./apis/settings/create/v1";
+import { settingsGetV1 } from "./apis/settings/get/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2669,8 +2670,10 @@ export const apisMoodsUpdateV1 = functions.https.onRequest(moodsUpdateV1);
 export const apisMoodsDeleteV1 = functions.https.onRequest(moodsDeleteV1);
 
 /* Settings */
-//Get
+//Create
 export const apisSettingsCreateV1 = functions.https.onRequest(settingsCreateV1);
+//Get
+export const apisSettingsGetV1 = functions.https.onRequest(settingsGetV1);
 
 /* Push Notification Tokens */
 //Create
