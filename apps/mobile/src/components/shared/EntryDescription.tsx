@@ -31,8 +31,8 @@ const Tag = styled.span`
 
 type Props = {
   mood: Mood;
-  overlay?: boolean;
-  opacity?: number;
+  overlay: boolean;
+  opacity: number;
 };
 
 const EntryDescription = (props: Props) => {
@@ -45,15 +45,12 @@ const EntryDescription = (props: Props) => {
   if (!hasFeelings && !hasActivities && !hasPlaces && !hasPeople) return null;
 
   return (
-    <StyledEntryDescription
-      opacity={props.opacity || 1}
-      overlay={props.overlay || false}
-    >
+    <StyledEntryDescription opacity={props.opacity} overlay={props.overlay}>
       {"I'm "}
       {hasFeelings && (
         <span>
           {"feeling "}
-          <Tag overlay={props.overlay || false}>
+          <Tag overlay={props.overlay}>
             {getTagText(props.mood.feelings)}
           </Tag>{" "}
         </span>
@@ -61,7 +58,7 @@ const EntryDescription = (props: Props) => {
       {hasActivities && (
         <span>
           {hasFeelings ? "while " : ""}
-          <Tag overlay={props.overlay || false}>
+          <Tag overlay={props.overlay}>
             {getTagText(props.mood.activities)}
           </Tag>{" "}
         </span>
@@ -69,7 +66,7 @@ const EntryDescription = (props: Props) => {
       {hasPlaces && (
         <span>
           {"at "}
-          <Tag overlay={props.overlay || false}>
+          <Tag overlay={props.overlay}>
             {getTagText(props.mood.places)}
           </Tag>{" "}
         </span>
@@ -77,7 +74,7 @@ const EntryDescription = (props: Props) => {
       {hasPeople && (
         <span>
           {"with "}
-          <Tag overlay={props.overlay || false}>
+          <Tag overlay={props.overlay}>
             {getTagText(props.mood.people)}
           </Tag>{" "}
         </span>

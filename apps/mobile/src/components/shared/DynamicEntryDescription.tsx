@@ -14,7 +14,7 @@ type Props = {
 const DynamicEntryDescription = (props: Props) => {
   return (
     <StyledDynamicEntryDescription>
-      <EntryDescription mood={props.mood} />
+      <EntryDescription mood={props.mood} opacity={1} overlay={false} />
       <EntryDescription
         mood={props.mood}
         opacity={props.mood.value / 10}
