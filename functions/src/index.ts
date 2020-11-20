@@ -12,6 +12,7 @@ import { pushNotificationTokensCreateV1 } from "./apis/push-notification-tokens/
 import { settingsCreateV1 } from "./apis/settings/create/v1";
 import { settingsGetV1 } from "./apis/settings/get/v1";
 import { statsGetV1 } from "./apis/stats/get/v1";
+import { achievementGetV1 } from "./apis/achievements/get/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2685,3 +2686,9 @@ export const apisPushNotificationTokensCreateV1 = functions.https.onRequest(
 /* Stats */
 //Get
 export const apisStatsGetV1 = functions.https.onRequest(statsGetV1);
+
+/* Achievements */
+//Get
+export const apisAchievementsGetV1 = functions.https.onRequest(
+  achievementGetV1
+);
