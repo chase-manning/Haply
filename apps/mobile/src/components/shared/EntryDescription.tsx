@@ -11,6 +11,7 @@ type StyledEntryDescriptionProps = {
 const StyledEntryDescription = styled.div`
   width: 100%;
   font-size: 14px;
+  line-height: 1.3;
   margin-top: 10px;
   color: var(--main);
   opacity: ${(props: StyledEntryDescriptionProps) => props.opacity};
