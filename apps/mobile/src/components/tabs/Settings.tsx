@@ -61,6 +61,8 @@ import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
 import FaceOutlinedIcon from "@material-ui/icons/FaceOutlined";
 import SecurityIcon from "@material-ui/icons/Security";
 import VerifiedUserOutlinedIcon from "@material-ui/icons/VerifiedUserOutlined";
+import SentimentSatisfiedOutlinedIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
+
 import LoadingLine from "../shared/LoadingLine";
 import { selectSettingsLoading } from "../../state/loadingSlice";
 import { selectIsPremium } from "../../state/premiumSlice";
@@ -139,7 +141,7 @@ const Settings = () => {
         label={"Feelings"}
         isToggle={false}
         clickFunction={() => setState({ ...state, feelingsOpen: true })}
-        icon={<LocalOfferOutlinedIcon />}
+        icon={<SentimentSatisfiedOutlinedIcon />}
       />
       <Setting
         label={"Places"}
