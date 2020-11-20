@@ -59,7 +59,7 @@ export const settingsSlice = createSlice({
       if (action.payload.feelings) state.places = action.payload.feelings;
       if (action.payload.activities) state.places = action.payload.activities;
       if (action.payload.places) state.places = action.payload.places;
-      if (action.payload.people) state.places = action.payload.people;
+      if (action.payload.people) state.people = action.payload.people;
       if (action.payload.colorPrimary)
         state.colorPrimary = action.payload.colorPrimary;
       if (action.payload.colorSecondary)
