@@ -33,7 +33,7 @@ const initialState: SettingsState = {
   places: ["Home", "Work", "School"],
   activities: ["Relaxing", "Exercising", "Working"],
   feelings: ["Tired", "Stressed", "Energetic"],
-  people: ["Friends", "Family", "Colleagues"],
+  people: ["Friends", "Family", "Myself"],
   colorPrimary: "#4071fe",
   colorSecondary: "#ff6584",
   mode: Mode.Default,
