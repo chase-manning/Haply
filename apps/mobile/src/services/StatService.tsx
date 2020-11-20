@@ -1,16 +1,14 @@
 import { StatModel } from "../models/StatModel";
 import ApiService from "./ApiService";
 
-const api: string =
-  "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
-
 const StatService = {
   async getStats(
     userToken: string,
     currentStats: StatModel[]
   ): Promise<StatModel[] | null> {
     try {
-      const route: string = api + "v3/stats";
+      const route =
+        "https://us-central1-happiness-software.cloudfunctions.net/apisStatsGetV1";
       const response = await ApiService(route, userToken, "GET");
       if (!response) return null;
 
