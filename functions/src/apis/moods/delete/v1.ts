@@ -7,7 +7,7 @@ import { getUser } from "../../../get-user";
 
 const firebase = admin.initializeApp(
   functions.config().firebase,
-  "apisMoodsDeleteV1"
+  "moodsDeleteV1"
 );
 const db = firebase.firestore();
 const app = express();
@@ -33,4 +33,4 @@ app.delete("/moods/:id", async (request, response) => {
   }
 });
 
-export const apisMoodsDeleteV1 = app;
+export const moodsDeleteV1 = app;
