@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Mood from "../../models/mood";
 
 const StyledEntryDescription = styled.div`
   width: 100%;
 `;
 
 type Props = {
-  feelings: string[];
-  activities: string[];
-  places: string[];
-  people: string[];
-  percent: number;
+  mood: Mood;
 };
 
 const EntryDescription = (props: Props) => {
