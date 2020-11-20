@@ -1,17 +1,3 @@
-export const moodDescriptions: string[] = [
-  "...",
-  "Miserable",
-  "Dreadful",
-  "Lousy",
-  "Meh",
-  "Okay",
-  "Content",
-  "Good",
-  "Great",
-  "Awesome",
-  "Amazing!",
-];
-
 export default class Mood {
   value: number;
   date: Date;
@@ -19,7 +5,6 @@ export default class Mood {
   moodId?: string;
   note: string;
   tags: string[];
-  description: string;
 
   constructor(
     value: number,
@@ -35,7 +20,6 @@ export default class Mood {
     if (moodId !== "") this.moodId = moodId;
     this.note = note;
     this.tags = tags;
-    this.description = moodDescriptions[this.value];
   }
 
   get string(): string {
