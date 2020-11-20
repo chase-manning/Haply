@@ -12,6 +12,7 @@ import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import EntryTags from "./EntryTags";
+import EntryNote from "./EntryNote";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -111,20 +112,6 @@ const ExpandButton = styled.div`
   box-shadow: -5px -0px 5px 2px var(--bg-mid);
 `;
 
-type EntryNoteProps = {
-  open: boolean;
-};
-
-const EntryNote = styled.div`
-  color: var(--sub);
-  font-size: 12px;
-  margin-top: 15px;
-  width: 100%;
-  height: ${(props: EntryNoteProps) => (props.open ? "auto" : "26px")};
-  overflow: hidden;
-  position: relative;
-`;
-
 class State {
   popupOpen: boolean = false;
   notesOpen: boolean = false;
@@ -186,23 +173,7 @@ const Entry = (props: Props) => {
             </KebabMenu>
           </Header>
           <EntryTags tags={props.mood.tags} percent={props.mood.value / 10} />
-          {props.mood.note && props.mood.note.length > 0 && (
-            <EntryNote
-              onClick={() =>
-                setState({ ...state, notesOpen: !state.notesOpen })
-              }
-              open={state.notesOpen || props.mood.note.length < 90}
-            >
-              {props.mood.note.substring(0, 20000000) +
-                (props.mood.note.length > 2000000 ? "..." : "")}
-              <ExpandButton
-                show={!state.notesOpen && props.mood.note.length >= 90}
-                secondLine={true}
-              >
-                ...more
-              </ExpandButton>
-            </EntryNote>
-          )}
+          <EntryNote note={props.mood.note} />
         </EntryContent>
       </Card>
     </StyledEntry>
