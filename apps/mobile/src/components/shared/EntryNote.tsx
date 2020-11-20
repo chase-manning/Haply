@@ -9,7 +9,7 @@ type EntryNoteProps = {
 const StyledEntryNote = styled.div`
   color: var(--sub);
   font-size: 12px;
-  margin-top: 15px;
+  margin-top: 10px;
   width: 100%;
   height: ${(props: EntryNoteProps) => (props.open ? "auto" : "26px")};
   overflow: hidden;
