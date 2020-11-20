@@ -14,7 +14,7 @@ const app = express();
 app.use(cors({ origin: true }));
 app.use(bodyParser.json());
 
-app.delete("/moods/:id", async (request, response) => {
+app.delete("/:id", async (request, response) => {
   try {
     const user = await getUser(request);
     if (!user) return response.status(403).send("Unauthorized");
