@@ -15,13 +15,6 @@ import { updateAll, updateDateSearchMoods } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
-import {
-  selectActivities,
-  selectFeelings,
-  selectPeople,
-  selectPlaces,
-} from "../../state/settingsSlice";
-import TagInput from "../shared/TagInput";
 import TagSelector from "../shared/TagSelector";
 
 const StyledCreateMood = styled.div`
@@ -37,22 +30,6 @@ const StyledCreateMood = styled.div`
   align-items: center;
   padding: 30px;
   color: var(--main);
-`;
-
-const Tags = styled.div`
-  width: 100%;
-  font-size: 24px;
-`;
-
-const TagSection = styled.div`
-  display: inline-block;
-  margin-bottom: 5px;
-`;
-
-const TagText = styled.div`
-  color: var(--main);
-  display: inline-block;
-  margin-right: 10px;
 `;
 
 const SliderSection = styled.div`
@@ -82,10 +59,6 @@ const CreateMood = () => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
   const moodShowing = useSelector(selectMoodShowing);
-  const feelings = useSelector(selectFeelings);
-  const places = useSelector(selectPlaces);
-  const activities = useSelector(selectActivities);
-  const people = useSelector(selectPeople);
   const user = useSelector(selectUser);
   const moods = useSelector(selectMoods);
   const dateOverride = useSelector(selectMoodDateSearch);
@@ -168,18 +141,6 @@ const CreateMood = () => {
       </SliderSection>
     </StyledCreateMood>
   );
-};
-
-const getTagText = (tags: string[]) => {
-  if (tags.length === 0) return "";
-  if (tags.length === 1) return tags[0];
-  let text: string = "";
-  tags.forEach((tag: string) => {
-    if (tags.indexOf(tag) === tags.length - 1) text += tag;
-    else if (tags.indexOf(tag) === tags.length - 2) text += tag + " & ";
-    else text += tag + ", ";
-  });
-  return text;
 };
 
 export default CreateMood;
