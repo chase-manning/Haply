@@ -1,14 +1,10 @@
 import Mood, { MoodResponse } from "../models/mood";
 import ApiService from "./ApiService";
 
-const api: string =
-  "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
-//const api: string = "http://localhost:5001/happiness-software/us-central1/webApi/api/";
-
 const MoodService = {
   async createMood(userToken: string, mood: Mood): Promise<any> {
     try {
-      const route: string =
+      const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV1";
 
       return ApiService(route, userToken, "POST", mood.string);
@@ -24,7 +20,7 @@ const MoodService = {
     limit?: number
   ): Promise<Mood[] | null> {
     try {
-      const route: string =
+      const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsGetV1";
 
       let fullRoute: string = route;
@@ -59,7 +55,8 @@ const MoodService = {
 
   async deleteMood(userToken: string, moodId: string): Promise<any> {
     try {
-      const route: string = api + "moods";
+      const route =
+        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsDeleteV1";
       return await ApiService(route + "/" + moodId, userToken, "DELETE");
     } catch (error) {
       console.log(error);
