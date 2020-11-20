@@ -54,7 +54,6 @@ import HourglassEmptyOutlinedIcon from "@material-ui/icons/HourglassEmptyOutline
 import FormatPaintOutlinedIcon from "@material-ui/icons/FormatPaintOutlined";
 import BrushOutlinedIcon from "@material-ui/icons/BrushOutlined";
 import Brightness2OutlinedIcon from "@material-ui/icons/Brightness2Outlined";
-import LocalOfferOutlinedIcon from "@material-ui/icons/LocalOfferOutlined";
 import EmojiObjectsOutlinedIcon from "@material-ui/icons/EmojiObjectsOutlined";
 import BugReportOutlinedIcon from "@material-ui/icons/BugReportOutlined";
 import EmojiPeopleOutlinedIcon from "@material-ui/icons/EmojiPeopleOutlined";
