@@ -1,8 +1,5 @@
 import ApiService from "./ApiService";
 
-const api: string =
-  "https://us-central1-happiness-software.cloudfunctions.net/webApi/api/";
-
 interface DayAverage {
   date: Date;
   average: number;
@@ -11,7 +8,8 @@ interface DayAverage {
 const DayAveragesService = {
   async getDayAverages(userToken: string): Promise<DayAverage[] | null> {
     try {
-      const route: string = api + "v1/calendar";
+      const route =
+        "https://us-central1-happiness-software.cloudfunctions.net/apisCalendarGetV1";
       const response = await ApiService(route, userToken, "GET");
       if (!response) return null;
 
