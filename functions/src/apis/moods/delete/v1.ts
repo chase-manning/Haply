@@ -32,3 +32,5 @@ app.delete("/moods/:id", async (request, response) => {
     return response.status(500).send(error);
   }
 });
+
+export const apisMoodsDeleteV1 = app;
