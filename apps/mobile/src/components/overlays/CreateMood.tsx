@@ -56,6 +56,30 @@ const Emotion = styled.div`
   color: var(--sub);
 `;
 
+const Tags = styled.div`
+  width: 100%;
+  font-size: 24px;
+`;
+
+const TagSection = styled.div`
+  display: inline-block;
+  margin-bottom: 10px;
+`;
+
+const TagText = styled.div`
+  color: var(--main);
+  display: inline-block;
+  margin-right: 10px;
+`;
+
+const TagSelected = styled.div`
+  color: var(--primary);
+  display: inline-block;
+  min-width: 50px;
+  border-bottom: solid 2px var(--primary);
+  margin-right: 10px;
+`;
+
 const Face = styled.div`
   height: 300px;
   width: 300px;
@@ -101,13 +125,35 @@ const CreateMood = () => {
 
   if (!moodShowing) return null;
 
+  // I'm feeling _____ while _____ at _____ with _____
+
   return (
     <StyledCreateMood>
       {moods.length > 0 && <ExitBar exit={() => dispatch(hideMood())} />}
       <Emotion>{moodDescriptions[state.mood]}</Emotion>
-      <Face>
+      {/* <Face>
         <img src={moodAsset(state.mood)} alt="Mood Illustration" width="80%" />
-      </Face>
+      </Face> */}
+
+      <Tags>
+        <TagSection>
+          <TagText>I'm feeling</TagText>
+          <TagSelected></TagSelected>
+        </TagSection>
+        <TagSection>
+          <TagText>while</TagText>
+          <TagSelected></TagSelected>
+        </TagSection>
+        <TagSection>
+          <TagText>at</TagText>
+          <TagSelected></TagSelected>
+        </TagSection>
+        <TagSection>
+          <TagText>with</TagText>
+          <TagSelected></TagSelected>
+          <TagText>.</TagText>
+        </TagSection>
+      </Tags>
       <MoodSlider
         value={state.mood}
         updateValue={(value: number) => {
