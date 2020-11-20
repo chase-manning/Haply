@@ -206,8 +206,10 @@ const CreateMood = () => {
                     selected={state.feelings.indexOf(feeling) >= 0}
                     last={feelings.indexOf(feeling) === feelings.length - 1}
                     onClick={() => {
+                      const index = state.feelings.indexOf(feeling);
                       const newFeelings = state.feelings;
-                      newFeelings.push(feeling);
+                      if (index >= 0) newFeelings.splice(index, 1);
+                      else newFeelings.push(feeling);
                       setState({ ...state, feelings: newFeelings });
                     }}
                   >
