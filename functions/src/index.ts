@@ -4,6 +4,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as dateFormat from "dateformat";
+import { moodsCreateV1 } from "./apis/moods/create/v1";
+import { moodsGetV1 } from "./apis/moods/get/v1";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -277,34 +279,6 @@ app.post("/v3/moods", async (request, response) => {
 
     return response.json({
       id: moodRef.id,
-      data: mood.data(),
-    });
-  } catch (error) {
-    return response.status(500).send(error);
-  }
-});
-
-app.get("/moods/:id", async (request, response) => {
-  try {
-    const user = await getUser(request);
-    if (!user) return response.status(403).send("Unauthorized");
-    const userId = user.uid;
-
-    const moodId = request.params.id;
-
-    if (!moodId) throw new Error("Mood ID is required");
-
-    const mood = await db.collection("moods").doc(moodId).get();
-
-    if (!mood.exists) {
-      throw new Error("Mood doesnt exist.");
-    }
-
-    if (mood.data()?.userId !== userId)
-      response.status(403).send("Unauthorized");
-
-    return response.json({
-      id: mood.id,
       data: mood.data(),
     });
   } catch (error) {
@@ -2673,3 +2647,11 @@ const getCurrentDateTimezone = (timezone: string): string => {
   let currentTime = new Date();
   return getTimezoneDate(currentTime.toISOString(), timezone);
 };
+
+/* Mood */
+
+//Create
+export const apisMoodsCreateV1 = functions.https.onRequest(moodsCreateV1);
+
+//Get
+export const apisMoodsGetV1 = functions.https.onRequest(moodsGetV1);
