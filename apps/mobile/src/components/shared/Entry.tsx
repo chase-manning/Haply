@@ -157,7 +157,6 @@ const Entry = (props: Props) => {
 
   return (
     <StyledEntry>
-      {/* <Card onClick={() => setState({ ...state, popupOpen: true })}> */}
       <Card>
         <EntryContent>
           <Header>
@@ -242,55 +241,6 @@ const Entry = (props: Props) => {
           )}
         </EntryContent>
       </Card>
-      {/* <Popup
-        open={state.popupOpen}
-        content={
-          <PopupContent>
-            <PopupHeader>{props.mood.description}</PopupHeader>
-            <PopupDetails>
-              <HighlightedWord>Mood: </HighlightedWord>
-              {props.mood.value}
-            </PopupDetails>
-            <PopupDetails>
-              <HighlightedWord>Recorded: </HighlightedWord>
-              {dateFormat(props.mood.date, "h:MM tt d/m/yy")}
-            </PopupDetails>
-            {props.mood.note.length > 0 && (
-              <PopupDetails>
-                <HighlightedWord>Note: </HighlightedWord>
-
-                {props.mood.note}
-              </PopupDetails>
-            )}
-            {props.mood.tags.length > 0 && (
-              <PopupDetails>
-                <SelectedTags>
-                  {props.mood.tags.map((tag: string) => (
-                    <SelectedTag key={tag} includeMargin={true}>
-                      {tag}
-                    </SelectedTag>
-                  ))}
-                </SelectedTags>
-              </PopupDetails>
-            )}
-            <Button
-              onClick={() => {
-                setState({ ...state, popupOpen: false });
-                dispatch(removeMood(props.mood));
-                MoodService.deleteMood(userToken, props.mood.moodId!).then(
-                  () => {
-                    dispatch(updateAll());
-                  }
-                );
-              }}
-            >
-              Delete
-            </Button>
-          </PopupContent>
-        }
-        showButton={false}
-        close={() => setState({ ...state, popupOpen: false })}
-      ></Popup> */}
     </StyledEntry>
   );
 };
