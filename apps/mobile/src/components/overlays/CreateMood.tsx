@@ -125,8 +125,6 @@ const CreateMood = () => {
 
   if (!moodShowing) return null;
 
-  // I'm feeling _____ while _____ at _____ with _____
-
   return (
     <StyledCreateMood>
       {moods.length > 0 && <ExitBar exit={() => dispatch(hideMood())} />}
