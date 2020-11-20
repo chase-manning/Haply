@@ -7,7 +7,7 @@ import { getUser } from "../../../get-user";
 
 const firebase = admin.initializeApp(
   functions.config().firebase,
-  "apisMoodsCreateV1"
+  "moodsCreateV1"
 );
 const db = firebase.firestore();
 const app = express();
