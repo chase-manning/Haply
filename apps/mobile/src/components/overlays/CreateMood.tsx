@@ -54,16 +54,6 @@ const TagText = styled.div`
   margin-right: 10px;
 `;
 
-const TagSelected = styled.div`
-  color: var(--primary);
-  display: inline-block;
-  min-width: 50px;
-  min-height: 30px;
-  border-bottom: solid 2px var(--primary);
-  margin-right: 10px;
-  position: relative;
-`;
-
 const SliderSection = styled.div`
   width: 100%;
   display: flex;
