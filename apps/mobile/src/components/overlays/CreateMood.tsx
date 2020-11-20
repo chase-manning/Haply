@@ -8,7 +8,6 @@ import okayAsset from "../../assets/svgs/YoungAndHappy.svg";
 import mehAsset from "../../assets/svgs/WindyDay.svg";
 import MoodSlider from "../shared/MoodSlider";
 import AddNote from "../shared/AddNote";
-import AddTags from "../shared/AddTags";
 import { useSelector, useDispatch } from "react-redux";
 import {
   hideMood,
@@ -43,13 +42,6 @@ const StyledCreateMood = styled.div`
   color: var(--main);
 `;
 
-const Header = styled.div`
-  font-size: 40px;
-  text-align: center;
-  font-weight: 500;
-  color: var(--main);
-`;
-
 const Emotion = styled.div`
   font-weight: 400;
   font-size: 20px;
@@ -81,47 +73,6 @@ const TagSelected = styled.div`
   border-bottom: solid 2px var(--primary);
   margin-right: 10px;
   position: relative;
-`;
-
-const TagClickHandler = styled.button`
-  width: 100%;
-  height: 30px;
-  position: absolute;
-`;
-
-const TagOptions = styled.div`
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--bg-mid);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  padding: 10px 15px;
-  z-index: 2;
-  font-size: 16px;
-`;
-
-type TagOptionProps = {
-  selected: boolean;
-};
-
-const TagOption = styled.div`
-  color: ${(props: TagOptionProps) =>
-    props.selected ? "var(--primary)" : "var(--main)"};
-  padding: 5px 0;
-`;
-
-const TagExit = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: var(--main-light);
 `;
 
 const Face = styled.div`
