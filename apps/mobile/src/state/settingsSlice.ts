@@ -8,11 +8,6 @@ export enum Mode {
   Light,
 }
 
-export type TagCategory = {
-  name: string;
-  tags: string[];
-};
-
 export interface SettingsState {
   remindersEnabled: boolean;
   randomReminders: boolean;
