@@ -5,6 +5,7 @@ import { Card } from "../../styles/Shared";
 import EntryTags from "./EntryTags";
 import EntryNote from "./EntryNote";
 import EntryHeader from "./EntryHeader";
+import EntryDescription from "./EntryDescription";
 
 const StyledEntry = styled.div`
   width: 100%;
@@ -27,6 +28,7 @@ const Entry = (props: Props) => {
       <Card>
         <EntryContent>
           <EntryHeader mood={props.mood} />
+          <EntryDescription mood={props.mood} />
           <EntryTags tags={props.mood.tags} percent={props.mood.value / 10} />
           <EntryNote note={props.mood.note} />
         </EntryContent>
