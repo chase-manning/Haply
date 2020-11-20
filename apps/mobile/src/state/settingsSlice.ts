@@ -56,8 +56,9 @@ export const settingsSlice = createSlice({
         state.frequencyMinutesMax = action.payload.frequencyMinutesMax;
       if (action.payload.nextNotification)
         state.nextNotification = action.payload.nextNotification;
-      if (action.payload.feelings) state.places = action.payload.feelings;
-      if (action.payload.activities) state.places = action.payload.activities;
+      if (action.payload.feelings) state.feelings = action.payload.feelings;
+      if (action.payload.activities)
+        state.activities = action.payload.activities;
       if (action.payload.places) state.places = action.payload.places;
       if (action.payload.people) state.people = action.payload.people;
       if (action.payload.colorPrimary)
