@@ -41,7 +41,7 @@ const EntryDescription = (props: Props) => {
 
   return (
     <StyledEntryDescription>
-      <Text>I'm </Text>
+      <Text>I'm</Text>
       {hasFeelings && (
         <Section>
           <Text>feeling</Text>
