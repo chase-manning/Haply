@@ -56,7 +56,7 @@ const Tags = styled.div`
 
 const TagSection = styled.div`
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 
 const TagText = styled.div`
