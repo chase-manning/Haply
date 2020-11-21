@@ -256,10 +256,10 @@ function createStatPercent(
       moodsWithTag.length < 10
         ? "Record 10 moods " + compound + " " + tag + " to unlock"
         : "Record 10 moods " + compound + " " + tag + " to unlock",
-    percentComplete:
-      (Math.min(moodsWithoutTag.length / 10, 1) +
-        Math.min(moodsWithTag.length / 10, 1)) /
-      2,
+    percentComplete: Math.min(
+      Math.min(moodsWithoutTag.length / 10, 1),
+      Math.min(moodsWithTag.length / 10, 1)
+    ),
     dataPoints: [{ label: "", value: averageWithTag / averageWithoutTag - 1 }],
   };
 }
