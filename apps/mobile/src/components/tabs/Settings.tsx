@@ -138,7 +138,7 @@ const Settings = () => {
         icon={<CloudOutlinedIcon />}
       />
 
-      <Header>Mood Choices</Header>
+      <Header>Options</Header>
       <Setting
         label={"Feelings"}
         isToggle={false}
