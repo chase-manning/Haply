@@ -132,7 +132,7 @@ const CreateMood = () => {
             clearState();
             dispatch(addMood(mood));
             dispatch(hideMood());
-            MoodService.createMood(user.token, mood).then(() => {
+            MoodService.createMood(mood).then(() => {
               dispatch(updateAll());
               if (dateOverride) dispatch(updateDateSearchMoods());
             });

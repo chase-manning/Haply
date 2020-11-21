@@ -6,11 +6,11 @@ interface DayAverage {
 }
 
 const DayAveragesService = {
-  async getDayAverages(userToken: string): Promise<DayAverage[] | null> {
+  async getDayAverages(): Promise<DayAverage[] | null> {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisCalendarGetV1";
-      const response = await ApiService(route, userToken, "GET");
+      const response = await ApiService(route, "GET");
       if (!response) return null;
 
       let dayAverages: DayAverage[] = await response!.json();

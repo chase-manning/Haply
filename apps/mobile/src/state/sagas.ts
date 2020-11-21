@@ -258,27 +258,23 @@ function* runUpdateAll() {
 }
 
 function* runUpdateMoods() {
-  const userToken = yield select(selectToken);
-  const moods = yield MoodService.getMoods(userToken, "date", 32);
+  const moods = yield MoodService.getMoods("date", 32);
   if (moods) yield put(setMoods(moods));
   yield put(completeMoods());
 }
 
 function* runUpdateStats() {
-  const userToken = yield select(selectToken);
   const currentStats = yield select(selectStats);
-  const stats = yield StatService.getStats(userToken, currentStats);
+  const stats = yield StatService.getStats(currentStats);
   if (stats) yield put(setStats(stats));
   yield put(completeStats());
 }
 
 function* runUpdateAchievements() {
-  const userToken = yield select(selectToken);
   const currentAchievements: AchievementModel[] = yield select(
     selectAchievements
   );
   let newAchievements = yield AchievementService.getAchievements(
-    userToken,
     currentAchievements
   );
 
@@ -287,26 +283,23 @@ function* runUpdateAchievements() {
 }
 
 function* runUpdateDayAverages() {
-  const userToken = yield select(selectToken);
-  let dayAverages = yield DayAveragesService.getDayAverages(userToken);
+  let dayAverages = yield DayAveragesService.getDayAverages();
 
   if (dayAverages) yield put(setDayAverages(dayAverages!));
   yield put(completeDayAverages());
 }
 
 function* runUpdateDateSearchMoods() {
-  const userToken = yield select(selectToken);
   const date = yield select(selectMoodDateSearch);
   if (!date) return;
-  let moods = yield MoodService.getMoodsByDate(userToken, new Date(date!));
+  let moods = yield MoodService.getMoodsByDate(new Date(date!));
 
   if (moods) yield put(setDateSearchMoods(moods!));
   yield put(completeDateSearchMoods());
 }
 
 function* runUpdateSettings() {
-  const userToken = yield select(selectToken);
-  const setting = yield SettingService.getSetting(userToken);
+  const setting = yield SettingService.getSetting();
   if (setting) yield put(setSettings(setting));
 
   // Update Timezone if Different
@@ -334,13 +327,12 @@ function* savePushNotificationToken() {
   const userToken = yield select(selectToken);
   const pushNotificationToken = yield select(selectPushNotificationToken);
   if (userToken !== "" && pushNotificationToken)
-    yield PushNotificationService.updateToken(userToken, pushNotificationToken);
+    yield PushNotificationService.updateToken(pushNotificationToken);
 }
 
 function* saveSettings() {
   let settings: SettingsState = yield select(selectSettings);
-  const userToken = yield select(selectToken);
-  yield SettingService.createSetting(userToken, settings);
+  yield SettingService.createSetting(settings);
 }
 
 export default function* rootSaga() {

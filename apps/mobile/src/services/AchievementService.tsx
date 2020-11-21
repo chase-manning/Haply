@@ -21,13 +21,12 @@ import ApiService from "./ApiService";
 
 const AchievementService = {
   async getAchievements(
-    userToken: string,
     currentAchievements: AchievementModel[]
   ): Promise<AchievementModel[] | null> {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisAchievementsGetV1";
-      const response = await ApiService(route, userToken, "GET");
+      const response = await ApiService(route, "GET");
 
       let achievements: AchievementModel[] = await response!.json();
       achievements.forEach(

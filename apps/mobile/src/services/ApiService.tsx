@@ -1,12 +1,10 @@
 import { firebaseApp } from "../components/shared/Login";
+import { store } from "../state/store";
+import { selectToken } from "../state/userSlice";
 
-const ApiService = async (
-  route: string,
-  userToken: string,
-  method: string,
-  body?: any
-) => {
+const ApiService = async (route: string, method: string, body?: any) => {
   try {
+    const userToken = selectToken(store.getState());
     const requestOptions = RequestOptions(userToken, method, body);
     const response = await fetch(route, requestOptions);
     if (!response.ok && response.status === 403) {

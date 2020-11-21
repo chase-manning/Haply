@@ -2,23 +2,19 @@ import Mood, { MoodResponse } from "../models/mood";
 import ApiService from "./ApiService";
 
 const MoodService = {
-  async createMood(userToken: string, mood: Mood): Promise<any> {
+  async createMood(mood: Mood): Promise<any> {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV1";
 
-      return ApiService(route, userToken, "POST", mood.string);
+      return ApiService(route, "POST", mood.string);
     } catch (error) {
       console.log(error);
       return null;
     }
   },
 
-  async getMoods(
-    userToken: string,
-    order?: string,
-    limit?: number
-  ): Promise<Mood[] | null> {
+  async getMoods(order?: string, limit?: number): Promise<Mood[] | null> {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsGetV1";
@@ -29,7 +25,7 @@ const MoodService = {
       if (!!order && !!limit) fullRoute += "&";
       if (!!limit) fullRoute += "limit=" + limit;
 
-      const response = await ApiService(fullRoute, userToken, "GET");
+      const response = await ApiService(fullRoute, "GET");
 
       const moodResponses: MoodResponse[] = await response!.json();
 
@@ -56,18 +52,18 @@ const MoodService = {
     }
   },
 
-  async deleteMood(userToken: string, moodId: string): Promise<any> {
+  async deleteMood(moodId: string): Promise<any> {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsDeleteV1";
-      return await ApiService(route + "/" + moodId, userToken, "DELETE");
+      return await ApiService(route + "/" + moodId, "DELETE");
     } catch (error) {
       console.log(error);
       return null;
     }
   },
 
-  async getMoodsByDate(userToken: string, date: Date) {
+  async getMoodsByDate(date: Date) {
     try {
       const startDate = new Date(
         date.getFullYear(),
@@ -87,7 +83,7 @@ const MoodService = {
         "&enddate=" +
         endDate.toISOString();
 
-      const response = await ApiService(route, userToken, "GET");
+      const response = await ApiService(route, "GET");
 
       const moodResponses: MoodResponse[] = await response!.json();
 
