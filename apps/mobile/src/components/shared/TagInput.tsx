@@ -42,6 +42,7 @@ const TagOption = styled.div`
   color: ${(props: TagOptionProps) =>
     props.selected ? "var(--primary)" : "var(--main)"};
   padding: 5px 0;
+  white-space: nowrap;
 `;
 
 const TagExit = styled.div`
