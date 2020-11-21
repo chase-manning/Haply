@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { StatModel } from "../../models/StatModel";
+import { StatModel, StatType } from "../../models/StatModel";
 import Stat from "../shared/Stat";
 import { useSelector } from "react-redux";
 import { selectStats } from "../../state/dataSlice";
@@ -20,9 +20,25 @@ const Analytics = () => {
   const stats = useSelector(selectStats);
   const analyticsLoading = useSelector(selectStatsLoading);
 
+  const statModel: StatModel = {
+    title: "Mood by Location",
+    type: StatType.Comparison,
+    locked: false,
+    lockedMessage: "",
+    percentComplete: 1,
+    isNew: false,
+    dataPoints: [
+      {
+        label: "meow",
+        value: 1,
+      },
+    ],
+  };
+
   return (
     <StyledAnalytics>
       <LoadingLine loading={analyticsLoading} />
+      <Stat stat={statModel} />
       {stats.map((stat: StatModel) => (
         <Stat key={stat.title} stat={stat} />
       ))}

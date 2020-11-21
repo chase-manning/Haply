@@ -59,7 +59,7 @@ const StatComparison = (props: Props) => {
     labels: ["Outside", "Office", "Dairy", "Cafe", "School", "Orange"],
     datasets: [
       {
-        label: "# of Votes",
+        label: "",
         data: [12, -19, 3, 5, 2, 3],
         backgroundColor: [
           colorPrimary,
