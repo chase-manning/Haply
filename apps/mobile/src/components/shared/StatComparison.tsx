@@ -9,6 +9,9 @@ import {
 } from "../../state/settingsSlice";
 
 const options = {
+  legend: {
+    display: false,
+  },
   scales: {
     yAxes: [
       {
