@@ -99,8 +99,8 @@ const EntryHeader = (props: Props) => {
       <HeaderLeft>
         <DynamicIcon percent={props.mood.value / 10} value={props.mood.value} />
         <Text>
-          <Header>{"Feeling " + props.mood.value}</Header>
-          <SubHeader>{dateFormat(props.mood.date, " dddd h:MM tt")}</SubHeader>
+          <Header>{dateFormat(props.mood.date, " dddd h:MM tt")}</Header>
+          <SubHeader>{dateFormat(props.mood.date, "dS mmmm yyyy")}</SubHeader>
         </Text>
       </HeaderLeft>
       <KebabMenu>
