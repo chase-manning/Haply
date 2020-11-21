@@ -2,6 +2,7 @@ export enum StatType {
   Bar,
   Chart,
   Percent,
+  Comparison,
 }
 
 export type StatModel = {
