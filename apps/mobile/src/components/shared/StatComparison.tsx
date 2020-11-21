@@ -34,6 +34,12 @@ const options = {
   tooltips: {
     callbacks: {
       title: function () {},
+      label: function (tooltipItem: any, data: any) {
+        var dataset = data.datasets[tooltipItem.datasetIndex];
+        var currentValue = dataset.data[tooltipItem.index];
+        var percent = Math.round(currentValue * 100);
+        return percent + "%";
+      },
     },
     displayColors: false,
     backgroundColor: "#FF6584",
@@ -55,20 +61,14 @@ const StatComparison = (props: Props) => {
   const colorSecondary = useSelector(selectColorSecondary);
 
   const data = {
-    //   labels: props.dataPoints.map((dataPoint: DataPoint) => dataPoint.label),
-    labels: ["Outside", "Office", "Dairy", "Cafe", "School", "Orange"],
+    labels: props.dataPoints.map((dataPoint: DataPoint) => dataPoint.label),
     datasets: [
       {
         label: "",
-        data: [12, -19, 3, 5, 2, 3],
-        backgroundColor: [
-          colorPrimary,
-          colorSecondary,
-          colorPrimary,
-          colorPrimary,
-          colorPrimary,
-          colorPrimary,
-        ],
+        data: props.dataPoints.map((dataPoint: DataPoint) => dataPoint.value),
+        backgroundColor: props.dataPoints.map((dataPoint: DataPoint) =>
+          dataPoint.value >= 0 ? colorPrimary : colorSecondary
+        ),
         borderWidth: 0,
       },
     ],
