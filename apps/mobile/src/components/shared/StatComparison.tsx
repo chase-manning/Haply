@@ -15,11 +15,28 @@ const options = {
   scales: {
     yAxes: [
       {
+        display: true,
+        gridLines: {
+          display: false,
+        },
         ticks: {
-          beginAtZero: true,
+          fontColor: "#9399A9",
+          fontSize: "12",
         },
       },
     ],
+    xAxes: [
+      {
+        display: false,
+      },
+    ],
+  },
+  tooltips: {
+    callbacks: {
+      title: function () {},
+    },
+    displayColors: false,
+    backgroundColor: "#FF6584",
   },
 };
 
@@ -45,14 +62,14 @@ const StatComparison = (props: Props) => {
         label: "# of Votes",
         data: [12, -19, 3, 5, 2, 3],
         backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(255, 206, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
+          colorPrimary,
+          colorSecondary,
+          colorPrimary,
+          colorPrimary,
+          colorPrimary,
+          colorPrimary,
         ],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };
