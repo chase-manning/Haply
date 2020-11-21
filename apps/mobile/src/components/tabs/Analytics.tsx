@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { StatModel, StatType } from "../../models/StatModel";
+import { StatModel } from "../../models/StatModel";
 import Stat from "../shared/Stat";
 import { useSelector } from "react-redux";
 import { selectStats } from "../../state/dataSlice";
