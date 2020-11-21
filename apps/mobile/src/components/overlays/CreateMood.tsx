@@ -78,14 +78,13 @@ const CreateMood = () => {
 
   return (
     <StyledCreateMood>
-      {moods.length > 0 && (
-        <ExitBar
-          exit={() => {
-            dispatch(hideMood());
-            clearState();
-          }}
-        />
-      )}
+      <ExitBar
+        exit={() => {
+          dispatch(hideMood());
+          clearState();
+        }}
+        hideExit={moods.length === 0}
+      />
 
       <TagSelector
         feelings={state.feelings}
