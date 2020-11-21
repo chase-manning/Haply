@@ -73,6 +73,8 @@ export const settingsSlice = createSlice({
     },
     toggleRandomReminders: (state) => {
       state.randomReminders = !state.randomReminders;
+      if (!state.randomReminders)
+        state.frequencyMinutesMax = state.frequencyMinutesMin;
     },
     setFrequencyMinutesMin: (state, action: PayloadAction<number>) => {
       state.frequencyMinutesMin = action.payload;
