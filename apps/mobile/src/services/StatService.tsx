@@ -8,7 +8,7 @@ const StatService = {
   ): Promise<StatModel[] | null> {
     try {
       const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisStatsGetV1";
+        "https://us-central1-happiness-software.cloudfunctions.net/apisStatsGetV2";
       const response = await ApiService(route, userToken, "GET");
       if (!response) return null;
 
