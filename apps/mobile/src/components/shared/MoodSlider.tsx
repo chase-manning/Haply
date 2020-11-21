@@ -10,7 +10,7 @@ const MoodSliderValues = withStyles({
   thumb: {
     height: 24,
     width: 24,
-    backgroundColor: "var(--bg)",
+    backgroundColor: "var(--bg-mid)",
     border: "2px solid currentColor",
     marginTop: -8,
     marginLeft: -12,
