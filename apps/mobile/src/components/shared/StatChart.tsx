@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { DataPoint } from "../../models/StatModel";
 import { Line } from "react-chartjs-2";
+import { useSelector } from "react-redux";
+import { selectColorPrimary } from "../../state/settingsSlice";
 
 const Chart = styled.div`
   width: calc(100% + 20px);
@@ -50,17 +52,18 @@ const options = {
 
 type Props = {
   dataPoints: DataPoint[];
-  colorPrimary: string;
 };
 
 const StatChart = (props: Props) => {
+  const colorPrimary = useSelector(selectColorPrimary);
+
   const data = {
     labels: props.dataPoints.map((dataPoint: DataPoint) => dataPoint.label),
     datasets: [
       {
         data: props.dataPoints.map((dataPoint: DataPoint) => dataPoint.value),
         backgroundColor: "rgba(64,114,253,0.1)",
-        borderColor: props.colorPrimary,
+        borderColor: colorPrimary,
         fill: false,
         pointRadius:
           (window.innerWidth - 40 * 2) / (props.dataPoints.length * 2),

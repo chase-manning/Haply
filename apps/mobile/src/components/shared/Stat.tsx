@@ -65,8 +65,6 @@ type Props = {
 };
 
 const Stat = (props: Props) => {
-  const colorPrimary = useSelector(selectColorPrimary);
-
   return (
     <Card>
       <Header>{props.stat.title}</Header>
@@ -83,10 +81,7 @@ const Stat = (props: Props) => {
         <StatBar dataPoints={props.stat.dataPoints}></StatBar>
       )}
       {!props.stat.locked && props.stat.type === StatType.Chart && (
-        <StatChart
-          dataPoints={props.stat.dataPoints}
-          colorPrimary={colorPrimary}
-        ></StatChart>
+        <StatChart dataPoints={props.stat.dataPoints}></StatChart>
       )}
       {!props.stat.locked && props.stat.type === StatType.Percent && (
         <StatPercent percent={props.stat.dataPoints[0].value} />
