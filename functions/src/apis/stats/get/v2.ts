@@ -260,27 +260,27 @@ const createStatComparison = (
   const moodsWithTags = getMoodsWithTags(moods, tags, tagType);
   const moodsWithTagsAverage = averageMood(moodsWithTags);
 
-  const dataPoints: DataPoint[] = tags.map((tag: string) => {
-    return {
-      label: tag,
-      value:
-        averageMood(getMoodsWithTag(moodsWithTags, tag, tagType)) /
-          moodsWithTagsAverage -
-        1,
-    };
-  });
-
-  const validDataPoints = dataPoints.filter(
-    (dataPoint: DataPoint) => dataPoint.value !== -1
-  );
+  const dataPoints: DataPoint[] = tags
+    .filter(
+      (tag: string) => getMoodsWithTag(moodsWithTags, tag, tagType).length > 0
+    )
+    .map((tag: string) => {
+      return {
+        label: tag,
+        value:
+          averageMood(getMoodsWithTag(moodsWithTags, tag, tagType)) /
+            moodsWithTagsAverage -
+          1,
+      };
+    });
 
   return {
     title: "Mood by " + tagName,
     type: StatType.Comparison,
-    locked: validDataPoints.length < 3,
+    locked: dataPoints.length < 3,
     lockedMessage: "Record a mood with 3 " + tagType + " to unlock",
-    percentComplete: Math.min(validDataPoints.length / 3, 1),
-    dataPoints: validDataPoints,
+    percentComplete: Math.min(dataPoints.length / 3, 1),
+    dataPoints: dataPoints,
   };
 };
 
