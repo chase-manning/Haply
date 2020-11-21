@@ -11,7 +11,7 @@ const StyledTagInput = styled.div`
   position: relative;
 `;
 
-const TagClickHandler = styled.button`
+const ClickHandler = styled.button`
   width: 100%;
   height: 28px;
   top: 0;
@@ -19,7 +19,7 @@ const TagClickHandler = styled.button`
   position: absolute;
 `;
 
-const TagOptions = styled.div`
+const Options = styled.div`
   position: absolute;
   top: 100%;
   left: 50%;
@@ -34,18 +34,22 @@ const TagOptions = styled.div`
   font-size: 16px;
 `;
 
-type TagOptionProps = {
+type OptionProps = {
   selected: boolean;
 };
 
-const TagOption = styled.div`
-  color: ${(props: TagOptionProps) =>
+const Option = styled.div`
+  color: ${(props: OptionProps) =>
     props.selected ? "var(--primary)" : "var(--main)"};
   padding: 5px 0;
   white-space: nowrap;
 `;
 
-const TagExit = styled.div`
+const OptionIcon = styled.div``;
+
+const OptionText = styled.div``;
+
+const Exit = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -72,9 +76,9 @@ const TagInput = (props: Props) => {
   return (
     <StyledTagInput>
       {props.text}
-      <TagClickHandler onClick={() => setState({ ...state, open: true })} />
+      <ClickHandler onClick={() => setState({ ...state, open: true })} />
       {state.open && (
-        <TagExit
+        <Exit
           onClick={() => {
             setState({ ...state, open: false });
             props.setTags(state.tags);
@@ -82,9 +86,9 @@ const TagInput = (props: Props) => {
         />
       )}
       {state.open && (
-        <TagOptions>
+        <Options>
           {props.tags.map((tag: string) => (
-            <TagOption
+            <Option
               key={tag}
               selected={state.tags.indexOf(tag) >= 0}
               onClick={() => {
@@ -96,9 +100,9 @@ const TagInput = (props: Props) => {
               }}
             >
               {tag}
-            </TagOption>
+            </Option>
           ))}
-        </TagOptions>
+        </Options>
       )}
     </StyledTagInput>
   );
