@@ -1,5 +1,5 @@
 import React from "react";
-import { Bar } from "react-chartjs-2";
+import { HorizontalBar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { DataPoint, StatModel } from "../../models/StatModel";
@@ -40,7 +40,7 @@ const StatComparison = (props: Props) => {
     datasets: [
       {
         label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
+        data: [12, -19, 3, 5, 2, 3],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -56,7 +56,7 @@ const StatComparison = (props: Props) => {
 
   return (
     <StyledStatComparison>
-      <Bar data={data} options={options} />
+      <HorizontalBar data={data} options={options} />
     </StyledStatComparison>
   );
 };
