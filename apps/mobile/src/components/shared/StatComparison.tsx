@@ -2,7 +2,7 @@ import React from "react";
 import { HorizontalBar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { DataPoint, StatModel } from "../../models/StatModel";
+import { DataPoint } from "../../models/StatModel";
 import {
   selectColorPrimary,
   selectColorSecondary,
