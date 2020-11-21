@@ -5,8 +5,6 @@ import { StatModel, StatType } from "../../models/StatModel";
 import StatBar from "./StatBar";
 import StatChart from "./StatChart";
 import noData from "../../assets/svgs/NoData.svg";
-import { useSelector } from "react-redux";
-import { selectColorPrimary } from "../../state/settingsSlice";
 import StatPercent from "./StatPercent";
 import StatComparison from "./StatComparison";
 
