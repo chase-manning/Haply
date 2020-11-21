@@ -17,7 +17,7 @@
 		A084ECDBA7D38E1E42DFC39D /* Pods_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF277DCFFFF123FFC6DF26C7 /* Pods_App.framework */; };
 		E020736A2565C7C6008D5D6B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E02073692565C7C6008D5D6B /* UserNotifications.framework */; };
 		E0231EDF254CD82E0030BAED /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0231EDE254CD82E0030BAED /* StoreKit.framework */; };
-		E09AD62225189D59003834AC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E09AD62125189D59003834AC /* GoogleService-Info.plist */; };
+		E092E93F2569D07300570551 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E092E93E2569D07300570551 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +35,7 @@
 		E0089F3825218352005C61BB /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		E02073692565C7C6008D5D6B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		E0231EDE254CD82E0030BAED /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		E09AD62125189D59003834AC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E092E93E2569D07300570551 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FC68EB0AF532CFC21C3344DD /* Pods-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-App/Pods-App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,8 +84,8 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				E092E93E2569D07300570551 /* GoogleService-Info.plist */,
 				E0089F3825218352005C61BB /* App.entitlements */,
-				E09AD62125189D59003834AC /* GoogleService-Info.plist */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
@@ -174,7 +174,7 @@
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
-				E09AD62225189D59003834AC /* GoogleService-Info.plist in Resources */,
+				E092E93F2569D07300570551 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
