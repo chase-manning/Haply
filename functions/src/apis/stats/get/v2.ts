@@ -278,7 +278,7 @@ const createStatComparison = (
     title: "Mood by " + tagName,
     type: StatType.Comparison,
     locked: validDataPoints.length < 3,
-    lockedMessage: "Record 3 different " + tagType + " to unlock",
+    lockedMessage: "Record a mood with 3 " + tagType + " to unlock",
     percentComplete: Math.min(validDataPoints.length / 3, 1),
     dataPoints: validDataPoints,
   };
