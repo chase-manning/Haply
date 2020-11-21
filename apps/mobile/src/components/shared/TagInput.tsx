@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import CheckIcon from "@material-ui/icons/Check";
 
 const StyledTagInput = styled.div`
   color: var(--primary);
@@ -34,20 +35,36 @@ const Options = styled.div`
   font-size: 16px;
 `;
 
-type OptionProps = {
+const Option = styled.div`
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+`;
+
+type OptionIconProps = {
   selected: boolean;
 };
 
-const Option = styled.div`
-  color: ${(props: OptionProps) =>
-    props.selected ? "var(--primary)" : "var(--main)"};
-  padding: 5px 0;
-  white-space: nowrap;
+const OptionIcon = styled.div`
+  color: ${(props: OptionIconProps) =>
+    props.selected ? "var(--primary)" : "var(--bg-mid)"};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
 `;
 
-const OptionIcon = styled.div``;
+type OptionTextProps = {
+  selected: boolean;
+};
 
-const OptionText = styled.div``;
+const OptionText = styled.div`
+  color: ${(props: OptionTextProps) =>
+    props.selected ? "var(--primary)" : "var(--main)"};
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+`;
 
 const Exit = styled.div`
   position: fixed;
@@ -90,7 +107,6 @@ const TagInput = (props: Props) => {
           {props.tags.map((tag: string) => (
             <Option
               key={tag}
-              selected={state.tags.indexOf(tag) >= 0}
               onClick={() => {
                 const index = state.tags.indexOf(tag);
                 const newFeelings = state.tags;
@@ -99,7 +115,12 @@ const TagInput = (props: Props) => {
                 setState({ ...state, tags: newFeelings });
               }}
             >
-              {tag}
+              <OptionIcon selected={state.tags.indexOf(tag) >= 0}>
+                <CheckIcon fontSize={"small"} />
+              </OptionIcon>
+              <OptionText selected={state.tags.indexOf(tag) >= 0}>
+                {tag}
+              </OptionText>
             </Option>
           ))}
         </Options>
