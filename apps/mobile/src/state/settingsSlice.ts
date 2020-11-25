@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
-const FREE_TAG_LIMIT = 4;
+const FREE_TAG_LIMIT = 5;
 
 /* TYPES */
 export enum Mode {
