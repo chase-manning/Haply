@@ -145,7 +145,7 @@ app.get("", async (request: any, response) => {
         ? 1
         : 0,
       title: "Lunch Date",
-      description: "Record a Feeling at Luch Time between 12am and 1pm",
+      description: "Record a Feeling at Lunch Time between 12am and 1pm",
       colorPrimary: "#FFD700",
       unlocks: [],
     });
