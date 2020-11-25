@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
+const FREE_TAG_LIMIT = 4;
+
 /* TYPES */
 export enum Mode {
   Default,
@@ -181,12 +183,13 @@ export const selectColorSecondary = (state: RootState) =>
   state.settings.colorSecondary;
 export const selectMode = (state: RootState) => state.settings.mode;
 export const selectBlockFeelings = (state: RootState) =>
-  !state.premium.isPremium && state.settings.feelings.length >= 4;
+  !state.premium.isPremium && state.settings.feelings.length >= FREE_TAG_LIMIT;
 export const selectBlockPlaces = (state: RootState) =>
-  !state.premium.isPremium && state.settings.places.length >= 4;
+  !state.premium.isPremium && state.settings.places.length >= FREE_TAG_LIMIT;
 export const selectBlockActivities = (state: RootState) =>
-  !state.premium.isPremium && state.settings.activities.length >= 4;
+  !state.premium.isPremium &&
+  state.settings.activities.length >= FREE_TAG_LIMIT;
 export const selectBlockPeople = (state: RootState) =>
-  !state.premium.isPremium && state.settings.people.length >= 4;
+  !state.premium.isPremium && state.settings.people.length >= FREE_TAG_LIMIT;
 
 export default settingsSlice.reducer;
