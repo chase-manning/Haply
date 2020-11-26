@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -106,14 +106,20 @@ const Passcode = () => {
   const passcode = useSelector(selectPasscode);
   const locked = useSelector(selectLocked);
 
+  useEffect(() => loadPasscode(), []);
+
   App.addListener("appStateChange", () => {
+    loadPasscode();
+  });
+
+  const loadPasscode = () => {
     Storage.get({ key: "passcode" }).then((result: any) => {
       let ret: { value: any } = result;
       if (!ret.value || ret.value.length < 4) return;
       dispatch(enablePasscode(ret.value));
       dispatch(lock());
     });
-  });
+  };
 
   if (passcode === undefined || (passcode.length === 4 && !locked)) return null;
 
