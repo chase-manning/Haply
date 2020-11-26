@@ -106,7 +106,10 @@ const Passcode = () => {
   const passcode = useSelector(selectPasscode);
   const locked = useSelector(selectLocked);
 
-  useEffect(() => loadPasscode(), []);
+  useEffect(() => {
+    loadPasscode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   App.addListener("appStateChange", () => {
     loadPasscode();
