@@ -125,8 +125,9 @@ const CreateMood = () => {
               state.note,
               dateOverride ? new Date(dateOverride) : undefined
             );
-            dispatch(addMood(mood));
-            MoodService.createMood(mood).then(() => {
+            MoodService.createMood(mood).then((newMood: Mood | null) => {
+              if (!newMood) return;
+              dispatch(addMood(newMood));
               dispatch(updateAll());
               if (dateOverride) dispatch(updateDateSearchMoods());
               clearState();
