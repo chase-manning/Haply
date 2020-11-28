@@ -37,6 +37,11 @@ export const loadingSlice = createSlice({
     completeInitialisation: (state) => {
       state.initialising = false;
     },
+    updateMoodDependencies: (state) => {
+      state.updatingStats = true;
+      state.updatingAchievements = true;
+      state.updatingDayAverages = true;
+    },
     updateMoods: (state) => {
       state.updatingMoods = true;
     },
@@ -79,6 +84,7 @@ export const loadingSlice = createSlice({
 export const {
   updateAll,
   completeInitialisation,
+  updateMoodDependencies,
   updateMoods,
   completeMoods,
   updateStats,
