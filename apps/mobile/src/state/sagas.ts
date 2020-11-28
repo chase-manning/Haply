@@ -25,6 +25,7 @@ import {
   completeDayAverages,
   updateDateSearchMoods,
   completeDateSearchMoods,
+  updateMoodDependencies,
 } from "./loadingSlice";
 import {
   Plugins as CapacitorPlugins,
@@ -97,6 +98,10 @@ function* watchHideWelcome() {
 
 function* watchUpdateAll() {
   yield takeEvery(updateAll, runUpdateAll);
+}
+
+function* watchUpdateMoodDependencies() {
+  yield takeEvery(updateMoodDependencies, runUpdateMoodDependencies);
 }
 
 function* watchUpdateMoods() {
@@ -257,6 +262,14 @@ function* runUpdateAll() {
   yield put(completeInitialisation());
 }
 
+function* runUpdateMoodDependencies() {
+  yield all([
+    call(runUpdateStats),
+    call(runUpdateAchievements),
+    call(runUpdateDayAverages),
+  ]);
+}
+
 function* runUpdateMoods() {
   const moods = yield MoodService.getMoods("date", 32);
   if (moods) yield put(setMoods(moods));
@@ -339,6 +352,7 @@ export default function* rootSaga() {
   yield all([
     watchHideWelcome(),
     watchUpdateAll(),
+    watchUpdateMoodDependencies(),
     watchUpdateMoods(),
     watchUpdateStats(),
     watchUpdateAchievements(),
