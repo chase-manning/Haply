@@ -16,6 +16,7 @@ import { achievementGetV1 } from "./apis/achievements/get/v1";
 import { calendarGetV1 } from "./apis/calendar/get/v1";
 import { notificationsV1 } from "./schedules/notifications/v1";
 import { statsGetV2 } from "./apis/stats/get/v2";
+import { moodsCreateV2 } from "./apis/moods/create/v2";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2479,6 +2480,7 @@ const getCurrentDateTimezone = (timezone: string): string => {
 /* Mood */
 //Create
 export const apisMoodsCreateV1 = functions.https.onRequest(moodsCreateV1);
+export const apisMoodsCreateV2 = functions.https.onRequest(moodsCreateV2);
 //Get
 export const apisMoodsGetV1 = functions.https.onRequest(moodsGetV1);
 //Update
