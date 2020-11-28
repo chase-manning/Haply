@@ -1,6 +1,7 @@
 import React from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import styled from "styled-components";
+import LoadingCircle from "./LoadingCircle";
 
 const StyledLoadingSpinner = styled.div`
   position: absolute;
@@ -19,29 +20,10 @@ type Props = {
 };
 
 const LoadingSpinner = (props: Props) => {
-  const useStylesHaply = makeStyles(() => ({
-    top: {
-      color: "var(--primary)",
-    },
-    circle: {
-      strokeLinecap: "round",
-    },
-  }));
-  const classes = useStylesHaply();
-
   if (!props.loading) return null;
   return (
     <StyledLoadingSpinner>
-      <CircularProgress
-        variant="indeterminate"
-        className={classes.top}
-        classes={{
-          circle: classes.circle,
-        }}
-        size={40}
-        thickness={4}
-        {...props}
-      />
+      <LoadingCircle color={"var(--primary)"} size={40} />
     </StyledLoadingSpinner>
   );
 };
