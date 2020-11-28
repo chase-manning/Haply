@@ -53,6 +53,7 @@ class State {
   places: string[] = [];
   activities: string[] = [];
   people: string[] = [];
+  loading: boolean = false;
 }
 
 const CreateMood = () => {
@@ -119,6 +120,9 @@ const CreateMood = () => {
         </Additions>
         <Button
           onClick={() => {
+            if (state.loading) return;
+            setState({ ...state, loading: true });
+
             const mood: Mood = new Mood(
               user.id,
               state.mood,
@@ -135,6 +139,7 @@ const CreateMood = () => {
             MoodService.createMood(mood).then(() => {
               dispatch(updateAll());
               if (dateOverride) dispatch(updateDateSearchMoods());
+              setState({ ...state, loading: false });
             });
           }}
         >
