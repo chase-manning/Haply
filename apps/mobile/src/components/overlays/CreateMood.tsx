@@ -113,9 +113,7 @@ const CreateMood = () => {
         <Button
           onClick={() => {
             if (state.loading) return;
-            console.log("here");
             setState({ ...state, loading: true });
-            console.log("set");
 
             const mood: Mood = new Mood(
               user.id,
