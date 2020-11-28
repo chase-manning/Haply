@@ -16,6 +16,7 @@ import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
 import TagSelector from "../shared/TagSelector";
+import LoadingCircle from "../shared/LoadingCircle";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -64,16 +65,7 @@ const CreateMood = () => {
   const moods = useSelector(selectMoods);
   const dateOverride = useSelector(selectMoodDateSearch);
 
-  const clearState = () =>
-    setState({
-      ...state,
-      feelings: [],
-      places: [],
-      activities: [],
-      people: [],
-      note: "",
-      mood: 5,
-    });
+  const clearState = () => setState({ ...new State() });
 
   if (!moodShowing) return null;
 
@@ -121,7 +113,9 @@ const CreateMood = () => {
         <Button
           onClick={() => {
             if (state.loading) return;
+            console.log("here");
             setState({ ...state, loading: true });
+            console.log("set");
 
             const mood: Mood = new Mood(
               user.id,
@@ -133,17 +127,20 @@ const CreateMood = () => {
               state.note,
               dateOverride ? new Date(dateOverride) : undefined
             );
-            clearState();
             dispatch(addMood(mood));
-            dispatch(hideMood());
             MoodService.createMood(mood).then(() => {
               dispatch(updateAll());
               if (dateOverride) dispatch(updateDateSearchMoods());
-              setState({ ...state, loading: false });
+              clearState();
+              dispatch(hideMood());
             });
           }}
         >
-          Done
+          {state.loading ? (
+            <LoadingCircle color={"var(--bg-mid)"} size={19} />
+          ) : (
+            "Done"
+          )}
         </Button>
       </SliderSection>
     </StyledCreateMood>
