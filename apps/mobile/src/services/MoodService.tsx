@@ -5,12 +5,7 @@ const MoodService = {
   async createMood(mood: Mood): Promise<Mood> {
     const route =
       "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV2";
-
-    const response = await ApiService(route, "POST", mood.string);
-    if (!response) throw "no response";
-    const newMood: Mood = await response.json();
-    if (!newMood) throw "no mood";
-    return newMood;
+    return await ApiService(route, "POST", mood.string);
   },
 
   async getMoods(order?: string, limit?: number): Promise<Mood[] | null> {
@@ -24,9 +19,7 @@ const MoodService = {
       if (!!order && !!limit) fullRoute += "&";
       if (!!limit) fullRoute += "limit=" + limit;
 
-      const response = await ApiService(fullRoute, "GET");
-
-      const moodResponses: MoodResponse[] = await response!.json();
+      const moodResponses: MoodResponse[] = await ApiService(fullRoute, "GET");
 
       let moods: Mood[] = [];
       moodResponses.forEach((moodResponse: MoodResponse) => {
@@ -82,9 +75,7 @@ const MoodService = {
         "&enddate=" +
         endDate.toISOString();
 
-      const response = await ApiService(route, "GET");
-
-      const moodResponses: MoodResponse[] = await response!.json();
+      const moodResponses: MoodResponse[] = await ApiService(route, "GET");
 
       let moods: Mood[] = [];
       moodResponses.forEach((moodResponse: MoodResponse) => {

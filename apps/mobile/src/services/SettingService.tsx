@@ -17,8 +17,7 @@ const SettingService = {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisSettingsGetV1";
-      const response = await ApiService(route, "GET");
-      const settingResponse: any = await response!.json();
+      const settingResponse: any = await ApiService(route, "GET");
       let nextSeconds = settingResponse.nextNotification._seconds;
       let nextDate = new Date(nextSeconds * 1000);
       settingResponse.nextNotification = nextDate.toString();

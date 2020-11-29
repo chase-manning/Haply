@@ -10,10 +10,7 @@ const DayAveragesService = {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisCalendarGetV1";
-      const response = await ApiService(route, "GET");
-      if (!response) return null;
-
-      let dayAverages: DayAverage[] = await response!.json();
+      let dayAverages: DayAverage[] = await ApiService(route, "GET");
 
       return dayAverages;
     } catch (error) {

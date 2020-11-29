@@ -6,13 +6,8 @@ const StatService = {
     try {
       const route =
         "https://us-central1-happiness-software.cloudfunctions.net/apisStatsGetV2";
-      const response = await ApiService(route, "GET");
-      if (!response) return null;
-
-      let stats: StatModel[] = await response!.json();
-
+      let stats: StatModel[] = await ApiService(route, "GET");
       stats = getStatsWithIsNew(currentStats, stats);
-
       return stats;
     } catch (error) {
       console.log(error);

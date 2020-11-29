@@ -11,7 +11,7 @@ const ApiService = async (route: string, method: string, body?: any) => {
     const newRequestOptions = RequestOptions(newToken, method, body);
     return await fetch(route, newRequestOptions);
   }
-  return response;
+  return await response.json();
 };
 
 const RequestOptions = (userToken: string, method: string, body?: any): any => {
