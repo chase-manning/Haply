@@ -22,8 +22,6 @@ type Props = {
 };
 
 const Failed = (props: Props) => {
-  if (!props.open) return null;
-
   return (
     <Popup
       open={props.open}
