@@ -37,7 +37,7 @@ export const getMoods = async (
 };
 
 export const deleteMood = async (id: string): Promise<any> => {
-  return await ApiService("apisMoodsDeleteV1" + "/" + id, "DELETE");
+  return await ApiService("apisMoodsDeleteV1/" + id, "DELETE");
 };
 
 export const getMoodsByDate = async (date: Date): Promise<Mood[]> => {
