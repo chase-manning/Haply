@@ -2,19 +2,14 @@ import Mood, { MoodResponse } from "../models/mood";
 import ApiService from "./ApiService";
 
 const MoodService = {
-  async createMood(mood: Mood): Promise<Mood | null> {
-    try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV2";
+  async createMood(mood: Mood): Promise<Mood> {
+    const route =
+      "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV2";
 
-      const response = await ApiService(route, "POST", mood.string);
-      if (!response) return null;
-      const newMood: Mood = await response.json();
-      return newMood;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    const response = await ApiService(route, "POST", mood.string);
+    if (!response) throw "no response";
+    const newMood: Mood = await response.json();
+    return newMood;
   },
 
   async getMoods(order?: string, limit?: number): Promise<Mood[] | null> {
