@@ -3,30 +3,19 @@ import ApiService from "./ApiService";
 
 const SettingService = {
   async createSetting(setting: SettingsState): Promise<any> {
-    try {
-      return await ApiService(
-        "apisSettingsCreateV1",
-        "POST",
-        JSON.stringify(setting)
-      );
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    return await ApiService(
+      "apisSettingsCreateV1",
+      "POST",
+      JSON.stringify(setting)
+    );
   },
-
   async getSetting(): Promise<SettingsState | null> {
-    try {
-      const settingResponse: any = await ApiService("apisSettingsGetV1", "GET");
-      let nextSeconds = settingResponse.nextNotification._seconds;
-      let nextDate = new Date(nextSeconds * 1000);
-      settingResponse.nextNotification = nextDate.toString();
-      const setting: SettingsState = settingResponse;
-      return setting;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    const settingResponse: any = await ApiService("apisSettingsGetV1", "GET");
+    let nextSeconds = settingResponse.nextNotification._seconds;
+    let nextDate = new Date(nextSeconds * 1000);
+    settingResponse.nextNotification = nextDate.toString();
+    const setting: SettingsState = settingResponse;
+    return setting;
   },
 };
 
