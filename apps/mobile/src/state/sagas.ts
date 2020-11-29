@@ -63,7 +63,7 @@ import {
   setPushNotificationToken,
   setToken,
 } from "./userSlice";
-import PushNotificationService from "../services/PushNotificationService";
+import { updateToken } from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
 import { getMoods, getMoodsByDate } from "../services/MoodService";
 import {
@@ -346,9 +346,7 @@ function* savePushNotificationToken() {
   const userToken = yield select(selectToken);
   const pushNotificationToken = yield select(selectPushNotificationToken);
   if (userToken !== "" && pushNotificationToken)
-    yield PushNotificationService.updateToken(
-      pushNotificationToken
-    ).catch((ex) => console.log(ex));
+    yield updateToken(pushNotificationToken).catch((ex) => console.log(ex));
 }
 
 function* saveSettings() {
