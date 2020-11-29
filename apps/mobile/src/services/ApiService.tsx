@@ -3,20 +3,15 @@ import { store } from "../state/store";
 import { selectToken } from "../state/userSlice";
 
 const ApiService = async (route: string, method: string, body?: any) => {
-  try {
-    const userToken = selectToken(store.getState());
-    const requestOptions = RequestOptions(userToken, method, body);
-    const response = await fetch(route, requestOptions);
-    if (!response.ok && response.status === 403) {
-      const newToken = await firebaseApp.auth().currentUser!.getIdToken(true);
-      const newRequestOptions = RequestOptions(newToken, method, body);
-      return await fetch(route, newRequestOptions);
-    }
-    return response;
-  } catch (error) {
-    console.log(error);
-    return null;
+  const userToken = selectToken(store.getState());
+  const requestOptions = RequestOptions(userToken, method, body);
+  const response = await fetch(route, requestOptions);
+  if (!response.ok && response.status === 403) {
+    const newToken = await firebaseApp.auth().currentUser!.getIdToken(true);
+    const newRequestOptions = RequestOptions(newToken, method, body);
+    return await fetch(route, newRequestOptions);
   }
+  return response;
 };
 
 const RequestOptions = (userToken: string, method: string, body?: any): any => {
