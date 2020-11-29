@@ -74,7 +74,7 @@ import {
   selectPasscode,
   showMoodDateSearch,
 } from "./navigationSlice";
-import DayAveragesService from "../services/DayAveragesService";
+import { getDayAverages } from "../services/DayAveragesService";
 
 const { Storage } = CapacitorPlugins;
 const { StatusBar } = CapacitorPlugins;
@@ -298,9 +298,7 @@ function* runUpdateAchievements() {
 }
 
 function* runUpdateDayAverages() {
-  let dayAverages = yield DayAveragesService.getDayAverages().catch((ex) =>
-    console.log(ex)
-  );
+  let dayAverages = yield getDayAverages().catch((ex) => console.log(ex));
 
   if (dayAverages) yield put(setDayAverages(dayAverages!));
   yield put(completeDayAverages());

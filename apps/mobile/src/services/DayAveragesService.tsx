@@ -5,14 +5,7 @@ interface DayAverage {
   average: number;
 }
 
-const DayAveragesService = {
-  async getDayAverages(): Promise<DayAverage[]> {
-    let dayAverages: DayAverage[] = await ApiService(
-      "apisCalendarGetV1",
-      "GET"
-    );
-    return dayAverages;
-  },
+export const getDayAverages = async (): Promise<DayAverage[]> => {
+  let dayAverages: DayAverage[] = await ApiService("apisCalendarGetV1", "GET");
+  return dayAverages;
 };
-
-export default DayAveragesService;
