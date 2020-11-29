@@ -3,14 +3,8 @@ import ApiService from "./ApiService";
 
 const StatService = {
   async getStats(currentStats: StatModel[]): Promise<StatModel[] | null> {
-    try {
-      let stats: StatModel[] = await ApiService("apisStatsGetV2", "GET");
-      stats = getStatsWithIsNew(currentStats, stats);
-      return stats;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    let stats: StatModel[] = await ApiService("apisStatsGetV2", "GET");
+    return getStatsWithIsNew(currentStats, stats);
   },
 };
 
