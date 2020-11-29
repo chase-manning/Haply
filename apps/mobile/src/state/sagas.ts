@@ -1,7 +1,5 @@
 import { put, takeEvery, all, select, call } from "redux-saga/effects";
-import AchievementService, {
-  getAchievements,
-} from "../services/AchievementService";
+import { getAchievements } from "../services/AchievementService";
 import StatService from "../services/StatService";
 import {
   selectAchievements,
