@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import dateFormat from "dateformat";
-import MoodService from "../../services/MoodService";
+import { deleteMood } from "../../services/MoodService";
 import Mood from "../../models/mood";
 import { useDispatch } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
@@ -110,7 +110,7 @@ const EntryHeader = (props: Props) => {
             onClick={() => {
               setState({ ...state, popupOpen: false });
               dispatch(removeMood(props.mood));
-              MoodService.deleteMood(props.mood.moodId!).then(() => {
+              deleteMood(props.mood.moodId!).then(() => {
                 dispatch(updateAll());
               });
             }}
