@@ -20,6 +20,7 @@ import ExitBar from "../shared/ExitBar";
 import { Button } from "../../styles/Shared";
 import TagSelector from "../shared/TagSelector";
 import LoadingCircle from "../shared/LoadingCircle";
+import Failed from "../shared/Failed";
 
 const StyledCreateMood = styled.div`
   position: fixed;
@@ -58,6 +59,7 @@ class State {
   activities: string[] = [];
   people: string[] = [];
   loading: boolean = false;
+  error: boolean = false;
 }
 
 const CreateMood = () => {
@@ -69,6 +71,7 @@ const CreateMood = () => {
   const dateOverride = useSelector(selectMoodDateSearch);
 
   const clearState = () => setState({ ...new State() });
+  const showError = () => setState({ ...state, loading: false, error: true });
 
   if (!moodShowing) return null;
 
@@ -128,14 +131,16 @@ const CreateMood = () => {
               state.note,
               dateOverride ? new Date(dateOverride) : undefined
             );
-            MoodService.createMood(mood).then((newMood: Mood | null) => {
-              if (!newMood) return;
-              dispatch(addMood(newMood));
-              dispatch(updateMoodDependencies());
-              if (dateOverride) dispatch(updateDateSearchMoods());
-              clearState();
-              dispatch(hideMood());
-            });
+
+            MoodService.createMood(mood)
+              .then((newMood) => {
+                dispatch(addMood(newMood));
+                dispatch(updateMoodDependencies());
+                if (dateOverride) dispatch(updateDateSearchMoods());
+                clearState();
+                dispatch(hideMood());
+              })
+              .catch(() => showError());
           }}
         >
           {state.loading ? (
@@ -145,6 +150,12 @@ const CreateMood = () => {
           )}
         </Button>
       </SliderSection>
+      <Failed
+        open={state.error}
+        close={() => setState({ ...state, error: false })}
+        action={"Mood Creation"}
+        tryAgain={() => console.log("meow")}
+      />
     </StyledCreateMood>
   );
 };
