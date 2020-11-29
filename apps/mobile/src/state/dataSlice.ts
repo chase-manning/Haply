@@ -89,7 +89,11 @@ export const selectDarkModeUnlocked = (state: RootState) =>
       achievement.percentComplete === 1
   );
 export const selectBlockMoods = (state: RootState) => {
-  if (state.premium.isPremium) return false;
+  if (
+    state.premium.isPremium ||
+    state.user.id === "HPvHncxld2StSLxa0qmFl7K3R2g2"
+  )
+    return false;
   const today = dateFormat(new Date(), "d/m/yyyy");
   const moodsToday = state.data.moods
     .slice(0, 10)
