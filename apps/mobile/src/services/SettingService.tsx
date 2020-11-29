@@ -8,6 +8,7 @@ export const createSetting = async (setting: SettingsState): Promise<any> => {
     JSON.stringify(setting)
   );
 };
+
 export const getSetting = async (): Promise<SettingsState | null> => {
   const settingResponse: any = await ApiService("apisSettingsGetV1", "GET");
   let nextSeconds = settingResponse.nextNotification._seconds;
