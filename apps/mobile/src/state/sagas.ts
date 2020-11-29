@@ -64,7 +64,7 @@ import {
   setToken,
 } from "./userSlice";
 import { updateToken } from "../services/PushNotificationService";
-import SettingService from "../services/SettingService";
+import { getSetting, createSetting } from "../services/SettingService";
 import { getMoods, getMoodsByDate } from "../services/MoodService";
 import {
   disablePasscode,
@@ -316,9 +316,7 @@ function* runUpdateDateSearchMoods() {
 }
 
 function* runUpdateSettings() {
-  const setting = yield SettingService.getSetting().catch((ex) =>
-    console.log(ex)
-  );
+  const setting = yield getSetting().catch((ex) => console.log(ex));
   if (setting) yield put(setSettings(setting));
 
   // Update Timezone if Different
@@ -351,7 +349,7 @@ function* savePushNotificationToken() {
 
 function* saveSettings() {
   let settings: SettingsState = yield select(selectSettings);
-  yield SettingService.createSetting(settings).catch((ex) => console.log(ex));
+  yield createSetting(settings).catch((ex) => console.log(ex));
 }
 
 export default function* rootSaga() {
