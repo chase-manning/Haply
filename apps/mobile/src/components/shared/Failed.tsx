@@ -42,7 +42,7 @@ type Props = {
 const Failed = (props: Props) => {
   return (
     <Popup
-      open={true}
+      open={props.open}
       close={() => props.close()}
       content={
         <Content>
