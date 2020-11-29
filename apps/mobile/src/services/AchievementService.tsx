@@ -102,5 +102,3 @@ const getAchievementsWithIsNew = (
     });
   return newAchievements;
 };
-
-export default AchievementService;
