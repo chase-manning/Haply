@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Mood from "../../models/mood";
 import styled from "styled-components";
-import MoodService from "../../services/MoodService";
+import { createMood } from "../../services/MoodService";
 import MoodSlider from "../shared/MoodSlider";
 import AddNote from "../shared/AddNote";
 import { useSelector, useDispatch } from "react-redux";
@@ -132,7 +132,7 @@ const CreateMood = () => {
               dateOverride ? new Date(dateOverride) : undefined
             );
 
-            MoodService.createMood(mood)
+            createMood(mood)
               .then((newMood) => {
                 dispatch(addMood(newMood));
                 dispatch(updateMoodDependencies());
