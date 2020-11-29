@@ -22,27 +22,18 @@ import ApiService from "./ApiService";
 const AchievementService = {
   async getAchievements(
     currentAchievements: AchievementModel[]
-  ): Promise<AchievementModel[] | null> {
-    try {
-      let achievements: AchievementModel[] = await ApiService(
-        "apisAchievementsGetV1",
-        "GET"
-      );
-      achievements.forEach(
-        (achievement: AchievementModel) =>
-          (achievement.svg = getSvg(achievement.svg))
-      );
+  ): Promise<AchievementModel[]> {
+    let achievements: AchievementModel[] = await ApiService(
+      "apisAchievementsGetV1",
+      "GET"
+    );
 
-      achievements = getAchievementsWithIsNew(
-        currentAchievements,
-        achievements
-      );
+    achievements.forEach(
+      (achievement: AchievementModel) =>
+        (achievement.svg = getSvg(achievement.svg))
+    );
 
-      return achievements;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    return getAchievementsWithIsNew(currentAchievements, achievements);
   },
 };
 
