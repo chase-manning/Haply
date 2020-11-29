@@ -65,7 +65,7 @@ import {
 } from "./userSlice";
 import PushNotificationService from "../services/PushNotificationService";
 import SettingService from "../services/SettingService";
-import MoodService from "../services/MoodService";
+import { getMoods, getMoodsByDate } from "../services/MoodService";
 import {
   disablePasscode,
   enablePasscode,
@@ -271,7 +271,7 @@ function* runUpdateMoodDependencies() {
 }
 
 function* runUpdateMoods() {
-  const moods = yield MoodService.getMoods("date", 32);
+  const moods = yield getMoods("date", 32);
   if (moods) yield put(setMoods(moods));
   yield put(completeMoods());
 }
@@ -307,7 +307,7 @@ function* runUpdateDayAverages() {
 function* runUpdateDateSearchMoods() {
   const date = yield select(selectMoodDateSearch);
   if (!date) return;
-  let moods = yield MoodService.getMoodsByDate(new Date(date!)).catch((ex) =>
+  let moods = yield getMoodsByDate(new Date(date!)).catch((ex) =>
     console.log(ex)
   );
 
