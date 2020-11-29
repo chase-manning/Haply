@@ -73,6 +73,32 @@ const CreateMood = () => {
   const clearState = () => setState({ ...new State() });
   const showError = () => setState({ ...state, loading: false, error: true });
 
+  const submit = () => {
+    if (state.loading) return;
+    setState({ ...state, loading: true, error: false });
+
+    const mood: Mood = new Mood(
+      user.id,
+      state.mood,
+      state.feelings,
+      state.activities,
+      state.places,
+      state.people,
+      state.note,
+      dateOverride ? new Date(dateOverride) : undefined
+    );
+
+    createMood(mood)
+      .then((newMood) => {
+        dispatch(addMood(newMood));
+        dispatch(updateMoodDependencies());
+        if (dateOverride) dispatch(updateDateSearchMoods());
+        clearState();
+        dispatch(hideMood());
+      })
+      .catch(() => showError());
+  };
+
   if (!moodShowing) return null;
 
   return (
@@ -116,33 +142,7 @@ const CreateMood = () => {
             setNote={(note: string) => setState({ ...state, note: note })}
           />
         </Additions>
-        <Button
-          onClick={() => {
-            if (state.loading) return;
-            setState({ ...state, loading: true });
-
-            const mood: Mood = new Mood(
-              user.id,
-              state.mood,
-              state.feelings,
-              state.activities,
-              state.places,
-              state.people,
-              state.note,
-              dateOverride ? new Date(dateOverride) : undefined
-            );
-
-            createMood(mood)
-              .then((newMood) => {
-                dispatch(addMood(newMood));
-                dispatch(updateMoodDependencies());
-                if (dateOverride) dispatch(updateDateSearchMoods());
-                clearState();
-                dispatch(hideMood());
-              })
-              .catch(() => showError());
-          }}
-        >
+        <Button onClick={() => submit()}>
           {state.loading ? (
             <LoadingCircle color={"var(--bg-mid)"} size={19} />
           ) : (
@@ -154,7 +154,7 @@ const CreateMood = () => {
         open={state.error}
         close={() => setState({ ...state, error: false })}
         action={"Mood Creation"}
-        tryAgain={() => console.log("meow")}
+        tryAgain={() => submit()}
       />
     </StyledCreateMood>
   );
