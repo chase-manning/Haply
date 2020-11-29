@@ -1,5 +1,7 @@
 import { put, takeEvery, all, select, call } from "redux-saga/effects";
-import AchievementService from "../services/AchievementService";
+import AchievementService, {
+  getAchievements,
+} from "../services/AchievementService";
 import StatService from "../services/StatService";
 import {
   selectAchievements,
@@ -289,9 +291,9 @@ function* runUpdateAchievements() {
   const currentAchievements: AchievementModel[] = yield select(
     selectAchievements
   );
-  let newAchievements = yield AchievementService.getAchievements(
-    currentAchievements
-  ).catch((ex) => console.log(ex));
+  let newAchievements = yield getAchievements(currentAchievements).catch((ex) =>
+    console.log(ex)
+  );
 
   if (newAchievements) yield put(setAchievements(newAchievements!));
   yield put(completeAchievements());

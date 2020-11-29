@@ -19,22 +19,20 @@ import aRoutine from "../assets/svgs/MyUniverse.svg";
 import aLifestyle from "../assets/svgs/SnapTheMoment.svg";
 import ApiService from "./ApiService";
 
-const AchievementService = {
-  async getAchievements(
-    currentAchievements: AchievementModel[]
-  ): Promise<AchievementModel[]> {
-    let achievements: AchievementModel[] = await ApiService(
-      "apisAchievementsGetV1",
-      "GET"
-    );
+export const getAchievements = async (
+  currentAchievements: AchievementModel[]
+): Promise<AchievementModel[]> => {
+  let achievements: AchievementModel[] = await ApiService(
+    "apisAchievementsGetV1",
+    "GET"
+  );
 
-    achievements.forEach(
-      (achievement: AchievementModel) =>
-        (achievement.svg = getSvg(achievement.svg))
-    );
+  achievements.forEach(
+    (achievement: AchievementModel) =>
+      (achievement.svg = getSvg(achievement.svg))
+  );
 
-    return getAchievementsWithIsNew(currentAchievements, achievements);
-  },
+  return getAchievementsWithIsNew(currentAchievements, achievements);
 };
 
 const getSvg = (name: string): string => {
