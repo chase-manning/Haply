@@ -28,7 +28,7 @@ const Entries = () => {
         moods
           .slice(0, 30)
           .map((mood: Mood) => (
-            <Entry key={mood.moodId || mood.value} mood={mood} />
+            <Entry key={mood.id || mood.value} mood={mood} />
           ))}
       <NoData
         show={moods.length === 0}

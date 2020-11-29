@@ -460,7 +460,7 @@ app.put("/moods/:id", async (request, response) => {
     const user = await getUser(request);
     if (!user) return response.status(403).send("Unauthorized");
 
-    const moodId = request.params.id;
+    const id = request.params.id;
     const { value, date, note, tags } = request.body;
     const data = {
       value,
@@ -469,12 +469,12 @@ app.put("/moods/:id", async (request, response) => {
       note,
     };
 
-    if (!moodId) throw new Error("id is blank");
+    if (!id) throw new Error("id is blank");
 
-    await db.collection("moods").doc(moodId).set(data, { merge: true });
+    await db.collection("moods").doc(id).set(data, { merge: true });
 
     return response.json({
-      id: moodId,
+      id: id,
       data,
     });
   } catch (error) {
@@ -487,14 +487,14 @@ app.delete("/moods/:id", async (request, response) => {
     const user = await getUser(request);
     if (!user) return response.status(403).send("Unauthorized");
 
-    const moodId = request.params.id;
+    const id = request.params.id;
 
-    if (!moodId) throw new Error("id is blank");
+    if (!id) throw new Error("id is blank");
 
-    await db.collection("moods").doc(moodId).delete();
+    await db.collection("moods").doc(id).delete();
 
     return response.json({
-      id: moodId,
+      id: id,
     });
   } catch (error) {
     return response.status(500).send(error);

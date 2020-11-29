@@ -54,7 +54,10 @@ export const dataSlice = createSlice({
       state.dateSearchMoods = action.payload;
     },
     addMood: (state, action: PayloadAction<Mood>) => {
+      console.log(action.payload);
+      console.log(state.moods);
       state.moods.unshift(action.payload);
+      console.log(state.moods);
     },
     removeMood: (state, action: PayloadAction<Mood>) => {
       const index = state.moods.indexOf(action.payload);

@@ -17,11 +17,11 @@ app.get("/:id", async (request, response) => {
     if (!user) return response.status(403).send("Unauthorized");
     const userId = user.uid;
 
-    const moodId = request.params.id;
+    const id = request.params.id;
 
-    if (!moodId) throw new Error("Mood ID is required");
+    if (!id) throw new Error("Mood ID is required");
 
-    const mood = await db.collection("moods").doc(moodId).get();
+    const mood = await db.collection("moods").doc(id).get();
 
     if (!mood.exists) {
       throw new Error("Mood doesnt exist.");

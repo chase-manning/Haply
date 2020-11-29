@@ -105,7 +105,7 @@ const MoodDateSearch = () => {
         {moods.length > 0 && (
           <Content>
             {moods.map((mood: Mood) => (
-              <Entry key={mood.moodId || mood.value} mood={mood} />
+              <Entry key={mood.id || mood.value} mood={mood} />
             ))}
           </Content>
         )}

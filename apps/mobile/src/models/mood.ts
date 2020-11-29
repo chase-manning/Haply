@@ -6,7 +6,7 @@ export default class Mood {
   places: string[];
   people: string[];
   date: Date;
-  moodId?: string;
+  id?: string;
   note: string;
 
   constructor(
@@ -18,7 +18,7 @@ export default class Mood {
     people: string[],
     note: string = "",
     date: Date = new Date(),
-    moodId: string = ""
+    id: string = ""
   ) {
     this.userId = userId;
     this.value = value;
@@ -27,7 +27,7 @@ export default class Mood {
     this.places = places;
     this.people = people;
     this.date = date;
-    if (moodId !== "") this.moodId = moodId;
+    if (id !== "") this.id = id;
     this.note = note;
   }
 

@@ -110,7 +110,7 @@ const EntryHeader = (props: Props) => {
             onClick={() => {
               setState({ ...state, popupOpen: false });
               dispatch(removeMood(props.mood));
-              deleteMood(props.mood.moodId!).then(() => {
+              deleteMood(props.mood.id!).then(() => {
                 dispatch(updateAll());
               });
             }}

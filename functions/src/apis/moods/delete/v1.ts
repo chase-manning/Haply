@@ -19,14 +19,14 @@ app.delete("/:id", async (request, response) => {
     const user = await getUser(request);
     if (!user) return response.status(403).send("Unauthorized");
 
-    const moodId = request.params.id;
+    const id = request.params.id;
 
-    if (!moodId) throw new Error("id is blank");
+    if (!id) throw new Error("id is blank");
 
-    await db.collection("moods").doc(moodId).delete();
+    await db.collection("moods").doc(id).delete();
 
     return response.json({
-      id: moodId,
+      id: id,
     });
   } catch (error) {
     return response.status(500).send(error);
