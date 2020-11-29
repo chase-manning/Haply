@@ -1,6 +1,6 @@
 import { put, takeEvery, all, select, call } from "redux-saga/effects";
 import { getAchievements } from "../services/AchievementService";
-import StatService from "../services/StatService";
+import { getStats } from "../services/StatService";
 import {
   selectAchievements,
   selectStats,
@@ -278,9 +278,7 @@ function* runUpdateMoods() {
 
 function* runUpdateStats() {
   const currentStats = yield select(selectStats);
-  const stats = yield StatService.getStats(currentStats).catch((ex) =>
-    console.log(ex)
-  );
+  const stats = yield getStats(currentStats).catch((ex) => console.log(ex));
   if (stats) yield put(setStats(stats));
   yield put(completeStats());
 }

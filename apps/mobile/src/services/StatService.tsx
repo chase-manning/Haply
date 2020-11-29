@@ -1,11 +1,11 @@
 import { StatModel } from "../models/StatModel";
 import ApiService from "./ApiService";
 
-const StatService = {
-  async getStats(currentStats: StatModel[]): Promise<StatModel[] | null> {
-    let stats: StatModel[] = await ApiService("apisStatsGetV2", "GET");
-    return getStatsWithIsNew(currentStats, stats);
-  },
+export const getStats = async (
+  currentStats: StatModel[]
+): Promise<StatModel[] | null> => {
+  let stats: StatModel[] = await ApiService("apisStatsGetV2", "GET");
+  return getStatsWithIsNew(currentStats, stats);
 };
 
 const getStatsWithIsNew = (
@@ -31,5 +31,3 @@ const getStatsWithIsNew = (
     });
   return newStats;
 };
-
-export default StatService;
