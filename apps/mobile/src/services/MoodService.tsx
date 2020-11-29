@@ -8,7 +8,7 @@ export const createMood = async (mood: Mood): Promise<Mood> => {
 export const getMoods = async (
   order?: string,
   limit?: number
-): Promise<Mood[] | null> => {
+): Promise<Mood[]> => {
   let fullRoute: string = "apisMoodsGetV1";
   if (!!order || !!limit) fullRoute += "?";
   if (!!order) fullRoute += "order=" + order;
