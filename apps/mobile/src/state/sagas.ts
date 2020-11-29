@@ -278,7 +278,9 @@ function* runUpdateMoods() {
 
 function* runUpdateStats() {
   const currentStats = yield select(selectStats);
-  const stats = yield StatService.getStats(currentStats);
+  const stats = yield StatService.getStats(currentStats).catch((ex) =>
+    console.log(ex)
+  );
   if (stats) yield put(setStats(stats));
   yield put(completeStats());
 }
@@ -289,14 +291,16 @@ function* runUpdateAchievements() {
   );
   let newAchievements = yield AchievementService.getAchievements(
     currentAchievements
-  );
+  ).catch((ex) => console.log(ex));
 
   if (newAchievements) yield put(setAchievements(newAchievements!));
   yield put(completeAchievements());
 }
 
 function* runUpdateDayAverages() {
-  let dayAverages = yield DayAveragesService.getDayAverages();
+  let dayAverages = yield DayAveragesService.getDayAverages().catch((ex) =>
+    console.log(ex)
+  );
 
   if (dayAverages) yield put(setDayAverages(dayAverages!));
   yield put(completeDayAverages());
@@ -305,14 +309,18 @@ function* runUpdateDayAverages() {
 function* runUpdateDateSearchMoods() {
   const date = yield select(selectMoodDateSearch);
   if (!date) return;
-  let moods = yield MoodService.getMoodsByDate(new Date(date!));
+  let moods = yield MoodService.getMoodsByDate(new Date(date!)).catch((ex) =>
+    console.log(ex)
+  );
 
   if (moods) yield put(setDateSearchMoods(moods!));
   yield put(completeDateSearchMoods());
 }
 
 function* runUpdateSettings() {
-  const setting = yield SettingService.getSetting();
+  const setting = yield SettingService.getSetting().catch((ex) =>
+    console.log(ex)
+  );
   if (setting) yield put(setSettings(setting));
 
   // Update Timezone if Different
@@ -340,12 +348,14 @@ function* savePushNotificationToken() {
   const userToken = yield select(selectToken);
   const pushNotificationToken = yield select(selectPushNotificationToken);
   if (userToken !== "" && pushNotificationToken)
-    yield PushNotificationService.updateToken(pushNotificationToken);
+    yield PushNotificationService.updateToken(
+      pushNotificationToken
+    ).catch((ex) => console.log(ex));
 }
 
 function* saveSettings() {
   let settings: SettingsState = yield select(selectSettings);
-  yield SettingService.createSetting(settings);
+  yield SettingService.createSetting(settings).catch((ex) => console.log(ex));
 }
 
 export default function* rootSaga() {
