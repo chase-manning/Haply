@@ -6,18 +6,12 @@ interface DayAverage {
 }
 
 const DayAveragesService = {
-  async getDayAverages(): Promise<DayAverage[] | null> {
-    try {
-      let dayAverages: DayAverage[] = await ApiService(
-        "apisCalendarGetV1",
-        "GET"
-      );
-
-      return dayAverages;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+  async getDayAverages(): Promise<DayAverage[]> {
+    let dayAverages: DayAverage[] = await ApiService(
+      "apisCalendarGetV1",
+      "GET"
+    );
+    return dayAverages;
   },
 };
 
