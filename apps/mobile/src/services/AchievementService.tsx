@@ -24,9 +24,10 @@ const AchievementService = {
     currentAchievements: AchievementModel[]
   ): Promise<AchievementModel[] | null> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisAchievementsGetV1";
-      let achievements: AchievementModel[] = await ApiService(route, "GET");
+      let achievements: AchievementModel[] = await ApiService(
+        "apisAchievementsGetV1",
+        "GET"
+      );
       achievements.forEach(
         (achievement: AchievementModel) =>
           (achievement.svg = getSvg(achievement.svg))

@@ -8,9 +8,10 @@ interface DayAverage {
 const DayAveragesService = {
   async getDayAverages(): Promise<DayAverage[] | null> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisCalendarGetV1";
-      let dayAverages: DayAverage[] = await ApiService(route, "GET");
+      let dayAverages: DayAverage[] = await ApiService(
+        "apisCalendarGetV1",
+        "GET"
+      );
 
       return dayAverages;
     } catch (error) {

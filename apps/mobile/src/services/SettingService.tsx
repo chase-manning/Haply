@@ -4,9 +4,11 @@ import ApiService from "./ApiService";
 const SettingService = {
   async createSetting(setting: SettingsState): Promise<any> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisSettingsCreateV1";
-      return await ApiService(route, "POST", JSON.stringify(setting));
+      return await ApiService(
+        "apisSettingsCreateV1",
+        "POST",
+        JSON.stringify(setting)
+      );
     } catch (error) {
       console.log(error);
       return null;
@@ -15,9 +17,7 @@ const SettingService = {
 
   async getSetting(): Promise<SettingsState | null> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisSettingsGetV1";
-      const settingResponse: any = await ApiService(route, "GET");
+      const settingResponse: any = await ApiService("apisSettingsGetV1", "GET");
       let nextSeconds = settingResponse.nextNotification._seconds;
       let nextDate = new Date(nextSeconds * 1000);
       settingResponse.nextNotification = nextDate.toString();

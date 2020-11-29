@@ -3,17 +3,12 @@ import ApiService from "./ApiService";
 
 const MoodService = {
   async createMood(mood: Mood): Promise<Mood> {
-    const route =
-      "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsCreateV2";
-    return await ApiService(route, "POST", mood.string);
+    return await ApiService("apisMoodsCreateV2", "POST", mood.string);
   },
 
   async getMoods(order?: string, limit?: number): Promise<Mood[] | null> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsGetV1";
-
-      let fullRoute: string = route;
+      let fullRoute: string = "apisMoodsGetV1";
       if (!!order || !!limit) fullRoute += "?";
       if (!!order) fullRoute += "order=" + order;
       if (!!order && !!limit) fullRoute += "&";
@@ -46,9 +41,7 @@ const MoodService = {
 
   async deleteMood(moodId: string): Promise<any> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsDeleteV1";
-      return await ApiService(route + "/" + moodId, "DELETE");
+      return await ApiService("apisMoodsDeleteV1" + "/" + moodId, "DELETE");
     } catch (error) {
       console.log(error);
       return null;
@@ -70,7 +63,7 @@ const MoodService = {
       endDate.setDate(endDate.getDate() + 1);
 
       const route: string =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisMoodsGetV1?startdate=" +
+        "apisMoodsGetV1?startdate=" +
         startDate.toISOString() +
         "&enddate=" +
         endDate.toISOString();

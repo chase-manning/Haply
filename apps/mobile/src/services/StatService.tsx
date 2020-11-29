@@ -4,9 +4,7 @@ import ApiService from "./ApiService";
 const StatService = {
   async getStats(currentStats: StatModel[]): Promise<StatModel[] | null> {
     try {
-      const route =
-        "https://us-central1-happiness-software.cloudfunctions.net/apisStatsGetV2";
-      let stats: StatModel[] = await ApiService(route, "GET");
+      let stats: StatModel[] = await ApiService("apisStatsGetV2", "GET");
       stats = getStatsWithIsNew(currentStats, stats);
       return stats;
     } catch (error) {
