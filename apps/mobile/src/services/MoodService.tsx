@@ -9,6 +9,7 @@ const MoodService = {
     const response = await ApiService(route, "POST", mood.string);
     if (!response) throw "no response";
     const newMood: Mood = await response.json();
+    if (!newMood) throw "no mood";
     return newMood;
   },
 
