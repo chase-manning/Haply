@@ -5,7 +5,7 @@ import { selectToken } from "../state/userSlice";
 const API_URL = "https://us-central1-happiness-software.cloudfunctions.net/";
 
 const ApiService = async (route: string, method: string, body?: any) => {
-  const fullRoute = route + API_URL;
+  const fullRoute = API_URL + route;
   const userToken = selectToken(store.getState());
   const requestOptions = RequestOptions(userToken, method, body);
   const response = await fetch(fullRoute, requestOptions);
