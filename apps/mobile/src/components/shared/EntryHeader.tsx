@@ -9,6 +9,7 @@ import { updateAll } from "../../state/loadingSlice";
 import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import ContextMenu from "./ContextMenu";
 
 const StyledEntryHeader = styled.div`
   width: 100%;
@@ -39,20 +40,9 @@ const SubHeader = styled.div`
   font-size: 11px;
 `;
 
-const KebabMenu = styled.button`
+const KebabMenu = styled.div`
   color: var(--sub);
   position: relative;
-`;
-
-const ContextMenu = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 15px);
-  background-color: var(--bg-mid);
-  border-radius: 6px;
-  display: flex;
-  z-index: 1;
 `;
 
 const ContextColor = styled.div`
@@ -103,27 +93,31 @@ const EntryHeader = (props: Props) => {
       </HeaderLeft>
       <KebabMenu>
         <MoreVertIcon
-          onClick={() => setState({ ...state, popupOpen: !state.popupOpen })}
+          onClick={() => {
+            setState({ ...state, popupOpen: true });
+            console.log("meow");
+          }}
         />
-        {state.popupOpen && (
-          <ContextMenu
-            onClick={() => {
-              setState({ ...state, popupOpen: false });
-              dispatch(removeMood(props.mood));
-              deleteMood(props.mood.id!).then(() => {
-                dispatch(updateAll());
-              });
-            }}
-          >
-            <ContextColor />
-            <ContentItem>
-              <ContextIcon>
-                <DeleteOutlineOutlinedIcon />
-              </ContextIcon>
-              <ItemLabel>Delete</ItemLabel>
-            </ContentItem>
-          </ContextMenu>
-        )}
+        <ContextMenu
+          open={state.popupOpen}
+          close={() => {
+            setState({ ...state, popupOpen: false });
+            console.log("woof");
+          }}
+          options={[
+            {
+              text: "Delete",
+              icon: <DeleteOutlineOutlinedIcon fontSize="small" />,
+              click: () => {
+                dispatch(removeMood(props.mood));
+                deleteMood(props.mood.id!).then(() => {
+                  dispatch(updateAll());
+                });
+              },
+            },
+          ]}
+          multiSelect={false}
+        />
       </KebabMenu>
     </StyledEntryHeader>
   );
