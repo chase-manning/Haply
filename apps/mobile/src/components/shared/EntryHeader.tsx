@@ -43,6 +43,7 @@ const SubHeader = styled.div`
 const KebabMenu = styled.div`
   color: var(--sub);
   position: relative;
+  height: 24px;
 `;
 
 class State {
