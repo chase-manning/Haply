@@ -45,31 +45,6 @@ const KebabMenu = styled.div`
   position: relative;
 `;
 
-const ContextColor = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 6px;
-  background-color: var(--sub-light);
-`;
-
-const ContentItem = styled.button`
-  display: flex;
-  color: var(--main);
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  padding: 2px;
-`;
-
-const ContextIcon = styled.div`
-  transform: scale(0.65);
-`;
-
-const ItemLabel = styled.div`
-  margin-right: 10px;
-`;
-
 class State {
   popupOpen: boolean = false;
 }
