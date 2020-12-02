@@ -68,18 +68,10 @@ const EntryHeader = (props: Props) => {
         </Text>
       </HeaderLeft>
       <KebabMenu>
-        <MoreVertIcon
-          onClick={() => {
-            setState({ ...state, popupOpen: true });
-            console.log("meow");
-          }}
-        />
+        <MoreVertIcon onClick={() => setState({ ...state, popupOpen: true })} />
         <ContextMenu
           open={state.popupOpen}
-          close={() => {
-            setState({ ...state, popupOpen: false });
-            console.log("woof");
-          }}
+          close={() => setState({ ...state, popupOpen: false })}
           options={[
             {
               text: "Delete",
