@@ -26,12 +26,17 @@ const Option = styled.div`
 `;
 
 type OptionIconProps = {
+  multiSelect: boolean;
   selected: boolean;
 };
 
 const OptionIcon = styled.div`
   color: ${(props: OptionIconProps) =>
-    props.selected ? "var(--primary)" : "var(--bg-mid)"};
+    props.multiSelect
+      ? props.selected
+        ? "var(--primary)"
+        : "var(--bg-mid)"
+      : "var(--main)"};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,12 +114,18 @@ const ContextMenu = (props: Props) => {
               }}
             >
               {props.multiSelect && (
-                <OptionIcon selected={state.selected.indexOf(option.text) >= 0}>
+                <OptionIcon
+                  multiSelect={true}
+                  selected={state.selected.indexOf(option.text) >= 0}
+                >
                   <CheckIcon fontSize={"small"} />
                 </OptionIcon>
               )}
               {option.icon && (
-                <OptionIcon selected={state.selected.indexOf(option.text) >= 0}>
+                <OptionIcon
+                  multiSelect={props.multiSelect}
+                  selected={state.selected.indexOf(option.text) >= 0}
+                >
                   {option.icon}
                 </OptionIcon>
               )}
