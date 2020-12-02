@@ -71,6 +71,7 @@ class State {
 export type Option = {
   text: string;
   icon?: JSX.Element;
+  click?: () => void;
 };
 
 type Props = {
@@ -101,12 +102,14 @@ const ContextMenu = (props: Props) => {
               key={option.text}
               onClick={() => {
                 if (!props.multiSelect) {
+                  if (option.click) option.click();
                   props.close([option.text]);
                   return;
+                } else {
+                  const newSelected = state.selected;
+                  newSelected.push(option.text);
+                  setState({ ...state, selected: newSelected });
                 }
-                const newSelected = state.selected;
-                newSelected.push(option.text);
-                setState({ ...state, selected: newSelected });
               }}
             >
               {props.multiSelect && (
