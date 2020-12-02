@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import CheckIcon from "@material-ui/icons/Check";
+import ContextMenu from "./ContextMenu";
+import TagSelector from "./TagSelector";
 
 const StyledTagInput = styled.div`
   color: var(--primary);
@@ -77,7 +79,6 @@ const Exit = styled.div`
 `;
 
 class State {
-  tags: string[] = [];
   open: boolean = false;
 }
 
@@ -94,37 +95,19 @@ const TagInput = (props: Props) => {
     <StyledTagInput>
       {props.text}
       <ClickHandler onClick={() => setState({ ...state, open: true })} />
-      {state.open && (
-        <Exit
-          onClick={() => {
-            setState({ ...state, open: false });
-            props.setTags(state.tags);
-          }}
-        />
-      )}
-      {state.open && (
-        <Options>
-          {props.tags.map((tag: string) => (
-            <Option
-              key={tag}
-              onClick={() => {
-                const index = state.tags.indexOf(tag);
-                const newFeelings = state.tags;
-                if (index >= 0) newFeelings.splice(index, 1);
-                else newFeelings.push(tag);
-                setState({ ...state, tags: newFeelings });
-              }}
-            >
-              <OptionIcon selected={state.tags.indexOf(tag) >= 0}>
-                <CheckIcon fontSize={"small"} />
-              </OptionIcon>
-              <OptionText selected={state.tags.indexOf(tag) >= 0}>
-                {tag}
-              </OptionText>
-            </Option>
-          ))}
-        </Options>
-      )}
+      <ContextMenu
+        open={state.open}
+        options={props.tags.map((tag: string) => {
+          return {
+            text: tag,
+          };
+        })}
+        close={(selected: string[]) => {
+          props.setTags(selected);
+          setState({ ...state, open: false });
+        }}
+        multiSelect={true}
+      />
     </StyledTagInput>
   );
 };
