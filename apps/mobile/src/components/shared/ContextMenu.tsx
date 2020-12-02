@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CheckIcon from "@material-ui/icons/Check";
 
-const StyledContextMenu = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-`;
+const StyledContextMenu = styled.div``;
 
 const Options = styled.div`
   position: absolute;
