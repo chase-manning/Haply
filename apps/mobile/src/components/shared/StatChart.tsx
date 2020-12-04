@@ -19,14 +19,6 @@ const options = {
   legend: {
     display: false,
   },
-  layout: {
-    padding: {
-      left: 10,
-      right: 10,
-      top: 10,
-      bottom: 10,
-    },
-  },
   scales: {
     xAxes: [
       {
@@ -43,6 +35,12 @@ const options = {
     yAxes: [
       {
         display: false,
+        afterDataLimits(scale: any) {
+          var range = scale.max - scale.min;
+          var grace = range * 0.05;
+          scale.max += grace;
+          scale.min -= grace;
+        },
       },
     ],
   },
