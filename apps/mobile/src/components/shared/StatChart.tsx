@@ -11,6 +11,11 @@ const Chart = styled.div`
 `;
 
 const options = {
+  elements: {
+    line: {
+      capBezierPoints: false,
+    },
+  },
   legend: {
     display: false,
   },
