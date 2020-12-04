@@ -8,11 +8,11 @@ const ApiService = async (route: string, method: string, body?: any) => {
   const fullRoute = API_URL + route;
   const userToken = selectToken(store.getState());
   const requestOptions = RequestOptions(userToken, method, body);
-  const response = await fetch(fullRoute, requestOptions);
+  let response = await fetch(fullRoute, requestOptions);
   if (!response.ok && response.status === 403) {
     const newToken = await firebaseApp.auth().currentUser!.getIdToken(true);
     const newRequestOptions = RequestOptions(newToken, method, body);
-    return await fetch(fullRoute, newRequestOptions);
+    response = await fetch(fullRoute, newRequestOptions);
   }
   return await response.json();
 };
