@@ -85,6 +85,8 @@ type Props = {
 const ContextMenu = (props: Props) => {
   const [state, setState] = useState(new State());
 
+  const isSelected = (option: string) => state.selected.indexOf(option) >= 0;
+
   if (!props.open) return null;
 
   return (
@@ -107,8 +109,10 @@ const ContextMenu = (props: Props) => {
                   props.close([option.text]);
                   return;
                 } else {
-                  const newSelected = state.selected;
-                  newSelected.push(option.text);
+                  let newSelected = state.selected;
+                  const index = newSelected.indexOf(option.text);
+                  if (index > -1) newSelected.splice(index, 1);
+                  else newSelected.push(option.text);
                   setState({ ...state, selected: newSelected });
                 }
               }}
@@ -116,7 +120,7 @@ const ContextMenu = (props: Props) => {
               {props.multiSelect && (
                 <OptionIcon
                   multiSelect={true}
-                  selected={state.selected.indexOf(option.text) >= 0}
+                  selected={isSelected(option.text)}
                 >
                   <CheckIcon fontSize={"small"} />
                 </OptionIcon>
@@ -124,12 +128,12 @@ const ContextMenu = (props: Props) => {
               {option.icon && (
                 <OptionIcon
                   multiSelect={props.multiSelect}
-                  selected={state.selected.indexOf(option.text) >= 0}
+                  selected={isSelected(option.text)}
                 >
                   {option.icon}
                 </OptionIcon>
               )}
-              <OptionText selected={state.selected.indexOf(option.text) >= 0}>
+              <OptionText selected={isSelected(option.text)}>
                 {option.text}
               </OptionText>
             </Option>
