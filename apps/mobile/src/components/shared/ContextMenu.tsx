@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import CheckIcon from "@material-ui/icons/Check";
 
 const StyledContextMenu = styled.div``;
+
+type OptionsTransformProps = {
+  open: boolean;
+};
+
+const OptionsTransform = styled.div`
+  /* transform: ${(props: OptionsTransformProps) =>
+    props.open ? "scaleY(1)" : "scaleY(0)"};
+  transition: scale 0.1s 1s ease-in-out; */
+`;
+
+type OptionsProps = {
+  open: boolean;
+};
 
 const Options = styled.div`
   position: absolute;
@@ -16,6 +30,7 @@ const Options = styled.div`
   flex-direction: column;
   padding: 10px 15px;
   z-index: 2;
+  /* display: ${(props: OptionsProps) => (props.open ? "flex" : "none")}; */
   font-size: 16px;
 `;
 
@@ -84,13 +99,64 @@ type Props = {
 
 const ContextMenu = (props: Props) => {
   const [state, setState] = useState(new State());
+  const contextMenuRef = useRef<HTMLHeadingElement>(null);
+  const optionsRef = useRef<HTMLHeadingElement>(null);
 
   const isSelected = (option: string) => state.selected.indexOf(option) >= 0;
 
-  if (!props.open) return null;
+  const meow = () => {
+    let options = optionsRef.current;
+    const contextMenu = contextMenuRef.current;
+    const padding = 20;
+
+    if (!options || !contextMenu) return;
+
+    options.style.left = "50%";
+    options.style.right = "auto";
+    options.style.transform = `translateX(-50%) scaleY(${props.open ? 1 : 0})`;
+
+    if (options.getBoundingClientRect().x < padding) {
+      console.log(options.getBoundingClientRect().x);
+      console.log("lefting");
+      const left = contextMenu.getBoundingClientRect().x;
+      options.style.left = "0px";
+      options.style.right = "auto";
+      let meowmeow = `translateX(${-left + padding}px) scaleY(${
+        props.open ? 1 : 0
+      })`;
+      options.style.transform = meowmeow;
+    }
+
+    if (
+      options.getBoundingClientRect().x +
+        options.getBoundingClientRect().width >
+      window.outerWidth - padding
+    ) {
+      console.log("righting");
+      const right =
+        window.outerWidth -
+        contextMenu.getBoundingClientRect().x -
+        contextMenu.getBoundingClientRect().width;
+      console.log(right);
+      options.style.right = "0px";
+      options.style.left = "auto";
+      console.log(options.style.transform);
+      //   options.style.transform = `translateX(${right - padding}px)`;
+      let meowmeow = `translateX(${right - padding}px) scaleY(${
+        props.open ? 1 : 0
+      })`;
+      console.log(meowmeow);
+      options.style.transform = meowmeow;
+      console.log(options.style.transform);
+    }
+  };
+
+  useEffect(() => {
+    meow();
+  }, [props.open]);
 
   return (
-    <StyledContextMenu>
+    <StyledContextMenu ref={contextMenuRef} onChange={() => meow()}>
       {props.open && (
         <Exit
           onClick={() => {
@@ -98,48 +164,43 @@ const ContextMenu = (props: Props) => {
           }}
         />
       )}
-      {props.open && (
-        <Options>
-          {props.options.map((option: Option) => (
-            <Option
-              key={option.text}
-              onClick={() => {
-                if (!props.multiSelect) {
-                  if (option.click) option.click();
-                  props.close([option.text]);
-                  return;
-                } else {
-                  let newSelected = state.selected;
-                  const index = newSelected.indexOf(option.text);
-                  if (index > -1) newSelected.splice(index, 1);
-                  else newSelected.push(option.text);
-                  setState({ ...state, selected: newSelected });
-                }
-              }}
-            >
-              {props.multiSelect && (
-                <OptionIcon
-                  multiSelect={true}
-                  selected={isSelected(option.text)}
-                >
-                  <CheckIcon fontSize={"small"} />
-                </OptionIcon>
-              )}
-              {option.icon && (
-                <OptionIcon
-                  multiSelect={props.multiSelect}
-                  selected={isSelected(option.text)}
-                >
-                  {option.icon}
-                </OptionIcon>
-              )}
-              <OptionText selected={isSelected(option.text)}>
-                {option.text}
-              </OptionText>
-            </Option>
-          ))}
-        </Options>
-      )}
+      <Options ref={optionsRef} open={props.open}>
+        {props.options.map((option: Option) => (
+          <Option
+            key={option.text}
+            onClick={() => {
+              if (!props.multiSelect) {
+                if (option.click) option.click();
+                props.close([option.text]);
+                return;
+              } else {
+                let newSelected = state.selected;
+                const index = newSelected.indexOf(option.text);
+                if (index > -1) newSelected.splice(index, 1);
+                else newSelected.push(option.text);
+                setState({ ...state, selected: newSelected });
+              }
+            }}
+          >
+            {props.multiSelect && (
+              <OptionIcon multiSelect={true} selected={isSelected(option.text)}>
+                <CheckIcon fontSize={"small"} />
+              </OptionIcon>
+            )}
+            {option.icon && (
+              <OptionIcon
+                multiSelect={props.multiSelect}
+                selected={isSelected(option.text)}
+              >
+                {option.icon}
+              </OptionIcon>
+            )}
+            <OptionText selected={isSelected(option.text)}>
+              {option.text}
+            </OptionText>
+          </Option>
+        ))}
+      </Options>
     </StyledContextMenu>
   );
 };
