@@ -8,7 +8,7 @@ const Options = styled.div`
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scaleY(0);
   background-color: var(--bg-mid);
   border-radius: 10px;
   box-shadow: var(--shadow);
