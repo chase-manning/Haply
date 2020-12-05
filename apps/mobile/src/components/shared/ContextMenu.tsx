@@ -104,7 +104,7 @@ const ContextMenu = (props: Props) => {
 
   const isSelected = (option: string) => state.selected.indexOf(option) >= 0;
 
-  const meow = () => {
+  const correctPosition = () => {
     let options = optionsRef.current;
     const contextMenu = contextMenuRef.current;
     const padding = 20;
@@ -116,8 +116,6 @@ const ContextMenu = (props: Props) => {
     options.style.transform = `translateX(-50%) scaleY(${props.open ? 1 : 0})`;
 
     if (options.getBoundingClientRect().x < padding) {
-      console.log(options.getBoundingClientRect().x);
-      console.log("lefting");
       const left = contextMenu.getBoundingClientRect().x;
       options.style.left = "0px";
       options.style.right = "auto";
@@ -152,11 +150,11 @@ const ContextMenu = (props: Props) => {
   };
 
   useEffect(() => {
-    meow();
+    correctPosition();
   }, [props.open]);
 
   return (
-    <StyledContextMenu ref={contextMenuRef} onChange={() => meow()}>
+    <StyledContextMenu ref={contextMenuRef} onChange={() => correctPosition()}>
       {props.open && (
         <Exit
           onClick={() => {
