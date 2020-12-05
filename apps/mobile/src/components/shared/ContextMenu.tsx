@@ -4,16 +4,6 @@ import CheckIcon from "@material-ui/icons/Check";
 
 const StyledContextMenu = styled.div``;
 
-type OptionsTransformProps = {
-  open: boolean;
-};
-
-const OptionsTransform = styled.div`
-  /* transform: ${(props: OptionsTransformProps) =>
-    props.open ? "scaleY(1)" : "scaleY(0)"};
-  transition: scale 0.1s 1s ease-in-out; */
-`;
-
 const Options = styled.div`
   position: absolute;
   top: 100%;
