@@ -121,7 +121,6 @@ const ContextMenu = (props: Props) => {
         contextMenu.getBoundingClientRect().width;
       options.style.right = "0px";
       options.style.left = "auto";
-      //   options.style.transform = `translateX(${right - padding}px)`;
       let meowmeow = `translateX(${right - padding}px) scaleY(${
         props.open ? 1 : 0
       })`;
