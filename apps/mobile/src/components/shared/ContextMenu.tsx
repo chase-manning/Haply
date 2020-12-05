@@ -14,10 +14,6 @@ const OptionsTransform = styled.div`
   transition: scale 0.1s 1s ease-in-out; */
 `;
 
-type OptionsProps = {
-  open: boolean;
-};
-
 const Options = styled.div`
   position: absolute;
   top: 100%;
@@ -30,7 +26,6 @@ const Options = styled.div`
   flex-direction: column;
   padding: 10px 15px;
   z-index: 2;
-  /* display: ${(props: OptionsProps) => (props.open ? "flex" : "none")}; */
   font-size: 16px;
 `;
 
@@ -162,7 +157,7 @@ const ContextMenu = (props: Props) => {
           }}
         />
       )}
-      <Options ref={optionsRef} open={props.open}>
+      <Options ref={optionsRef}>
         {props.options.map((option: Option) => (
           <Option
             key={option.text}
