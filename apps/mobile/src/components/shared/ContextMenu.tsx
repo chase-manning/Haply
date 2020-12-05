@@ -154,7 +154,7 @@ const ContextMenu = (props: Props) => {
   }, [props.open]);
 
   return (
-    <StyledContextMenu ref={contextMenuRef} onChange={() => correctPosition()}>
+    <StyledContextMenu ref={contextMenuRef}>
       {props.open && (
         <Exit
           onClick={() => {
