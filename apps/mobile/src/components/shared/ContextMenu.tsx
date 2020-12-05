@@ -115,22 +115,17 @@ const ContextMenu = (props: Props) => {
         options.getBoundingClientRect().width >
       window.outerWidth - padding
     ) {
-      console.log("righting");
       const right =
         window.outerWidth -
         contextMenu.getBoundingClientRect().x -
         contextMenu.getBoundingClientRect().width;
-      console.log(right);
       options.style.right = "0px";
       options.style.left = "auto";
-      console.log(options.style.transform);
       //   options.style.transform = `translateX(${right - padding}px)`;
       let meowmeow = `translateX(${right - padding}px) scaleY(${
         props.open ? 1 : 0
       })`;
-      console.log(meowmeow);
       options.style.transform = meowmeow;
-      console.log(options.style.transform);
     }
   };
 
