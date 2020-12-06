@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import ToggleOnIcon from "@material-ui/icons/ToggleOn";
 import ToggleOffIcon from "@material-ui/icons/ToggleOff";
+import OpenInNewIcon from "@material-ui/icons/OpenInNew";
 import { Card, Icon } from "../../styles/Shared";
 
 type StyledSettingsProps = {
@@ -66,9 +67,15 @@ const Toggle = styled.div`
   align-items: center;
 `;
 
+export enum SettingType {
+  Toggle,
+  Popup,
+  Link,
+}
+
 type Props = {
+  type: SettingType;
   label: string;
-  isToggle: boolean;
   toggleOn?: boolean;
   clickFunction: () => void;
   icon: JSX.Element;
@@ -84,7 +91,7 @@ const Setting = (props: Props) => {
             <Icon highlight={props.highlight}>{props.icon}</Icon>
             <Label highlight={props.highlight}>{props.label}</Label>
           </LeftSide>
-          {props.isToggle ? (
+          {props.type === SettingType.Toggle && (
             <Value>
               <Toggle enabled={!!props.toggleOn}>
                 {props.toggleOn ? (
@@ -94,11 +101,13 @@ const Setting = (props: Props) => {
                 )}
               </Toggle>
             </Value>
-          ) : (
+          )}
+          {props.type === SettingType.Popup && (
             <Chevron highlight={props.highlight}>
               <ChevronRight />
             </Chevron>
           )}
+          {props.type === SettingType.Link && <OpenInNewIcon />}
         </Content>
       </Card>
     </StyledSettings>

@@ -38,7 +38,7 @@ import {
   enablePasscode,
   disablePasscode,
 } from "../../state/navigationSlice";
-import Setting from "../shared/Setting";
+import Setting, { SettingType } from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
 import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
@@ -115,17 +115,17 @@ const Settings = () => {
       <LoadingLine loading={settingsLoading} />
       {!isPremium && (
         <Setting
+          type={SettingType.Popup}
           highlight={true}
           label={"Get Haply Premium!"}
-          isToggle={false}
           clickFunction={() => dispatch(showPremium())}
           icon={<FavoriteBorderIcon />}
         />
       )}
       <Header>Profile</Header>
       <Setting
+        type={SettingType.Toggle}
         label={"Cloud Sync"}
-        isToggle={true}
         toggleOn={!user.isAnonymous}
         clickFunction={async () => {
           if (user.isAnonymous) {
@@ -140,56 +140,56 @@ const Settings = () => {
 
       <Header>Options</Header>
       <Setting
+        type={SettingType.Popup}
         label={"Feelings"}
-        isToggle={false}
         clickFunction={() => setState({ ...state, feelingsOpen: true })}
         icon={<SentimentSatisfiedOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Places"}
-        isToggle={false}
         clickFunction={() => setState({ ...state, placesOpen: true })}
         icon={<PlaceOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Activities"}
-        isToggle={false}
         clickFunction={() => setState({ ...state, activitiesOpen: true })}
         icon={<DirectionsRunIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"People"}
-        isToggle={false}
         clickFunction={() => setState({ ...state, peopleOpen: true })}
         icon={<PersonOutlineIcon />}
       />
 
       <Header>Reminders</Header>
       <Setting
+        type={SettingType.Toggle}
         label={"Reminders"}
-        isToggle={true}
         toggleOn={remindersEnabled}
         clickFunction={() => dispatch(toggleRemindersEnabled())}
         icon={<NotificationsOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Toggle}
         label={"Random Range"}
-        isToggle={true}
         toggleOn={randomReminders}
         clickFunction={() => dispatch(toggleRandomReminders())}
         icon={<CasinoOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Reminder Frequency"}
-        isToggle={false}
         clickFunction={() => setState({ ...state, reminderPopupOpen: true })}
         icon={<HourglassEmptyOutlinedIcon />}
       />
 
       <Header>Settings</Header>
       <Setting
+        type={SettingType.Toggle}
         label={"Passcode Protect"}
-        isToggle={true}
         toggleOn={!!passcode}
         clickFunction={() => {
           if (passcode) dispatch(disablePasscode());
@@ -198,16 +198,16 @@ const Settings = () => {
         icon={<LockOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Theme Primary"}
-        isToggle={false}
         clickFunction={() =>
           setState({ ...state, themePrimaryPopupOpen: true })
         }
         icon={<FormatPaintOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Theme Secondary"}
-        isToggle={false}
         clickFunction={() =>
           setState({ ...state, themeSecondaryPopupOpen: true })
         }
@@ -215,8 +215,8 @@ const Settings = () => {
       />
       {darkModeUnlocked && (
         <Setting
+          type={SettingType.Toggle}
           label={"Dark Mode"}
-          isToggle={true}
           toggleOn={mode === Mode.Dark}
           clickFunction={() => dispatch(toggleMode())}
           icon={<Brightness2OutlinedIcon />}
@@ -225,40 +225,40 @@ const Settings = () => {
 
       <Header>Contact</Header>
       <Setting
+        type={SettingType.Popup}
         label={"Suggest a Feature"}
-        isToggle={false}
         clickFunction={() => window.open("mailto:hello@haply.app")}
         icon={<EmojiObjectsOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Report an Issue"}
-        isToggle={false}
         clickFunction={() => window.open("mailto:hello@haply.app")}
         icon={<BugReportOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Say Hi"}
-        isToggle={false}
         clickFunction={() => window.open("mailto:hello@haply.app")}
         icon={<EmojiPeopleOutlinedIcon />}
       />
 
       <Header>About</Header>
       <Setting
+        type={SettingType.Popup}
         label={"Created By"}
-        isToggle={false}
         clickFunction={() => window.open("https://chasemanning.co.nz/")}
         icon={<FaceOutlinedIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Privacy Policy"}
-        isToggle={false}
         clickFunction={() => window.open("https://haply.app/privacy-policy")}
         icon={<SecurityIcon />}
       />
       <Setting
+        type={SettingType.Popup}
         label={"Terms & Conditions"}
-        isToggle={false}
         clickFunction={() =>
           window.open("https://haply.app/terms-and-conditions")
         }
