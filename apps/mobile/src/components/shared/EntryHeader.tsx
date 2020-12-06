@@ -10,6 +10,7 @@ import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import ContextMenu from "./ContextMenu";
+import Failed from "./Failed";
 
 const StyledEntryHeader = styled.div`
   width: 100%;
@@ -48,15 +49,29 @@ const KebabMenu = styled.div`
 
 class State {
   popupOpen: boolean = false;
+  error: boolean = false;
 }
 
 type Props = {
   mood: Mood;
+  load: () => void;
+  complete: () => void;
 };
 
 const EntryHeader = (props: Props) => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
+
+  const deleteEntry = () => {
+    props.load();
+    deleteMood(props.mood.id!)
+      .then(() => {
+        dispatch(removeMood(props.mood));
+        dispatch(updateAll());
+      })
+      .catch(() => {})
+      .finally(() => props.complete());
+  };
 
   return (
     <StyledEntryHeader>
@@ -76,17 +91,18 @@ const EntryHeader = (props: Props) => {
             {
               text: "Delete",
               icon: <DeleteOutlineOutlinedIcon fontSize="small" />,
-              click: () => {
-                dispatch(removeMood(props.mood));
-                deleteMood(props.mood.id!).then(() => {
-                  dispatch(updateAll());
-                });
-              },
+              click: () => deleteEntry(),
             },
           ]}
           multiSelect={false}
         />
       </KebabMenu>
+      <Failed
+        open={state.error}
+        close={() => setState({ ...state, error: false })}
+        action={"Mood Deletion"}
+        tryAgain={() => deleteEntry()}
+      />
     </StyledEntryHeader>
   );
 };
