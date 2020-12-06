@@ -225,19 +225,19 @@ const Settings = () => {
 
       <Header>Contact</Header>
       <Setting
-        type={SettingType.Popup}
+        type={SettingType.Link}
         label={"Suggest a Feature"}
         clickFunction={() => window.open("mailto:hello@haply.app")}
         icon={<EmojiObjectsOutlinedIcon />}
       />
       <Setting
-        type={SettingType.Popup}
+        type={SettingType.Link}
         label={"Report an Issue"}
         clickFunction={() => window.open("mailto:hello@haply.app")}
         icon={<BugReportOutlinedIcon />}
       />
       <Setting
-        type={SettingType.Popup}
+        type={SettingType.Link}
         label={"Say Hi"}
         clickFunction={() => window.open("mailto:hello@haply.app")}
         icon={<EmojiPeopleOutlinedIcon />}
@@ -245,19 +245,19 @@ const Settings = () => {
 
       <Header>About</Header>
       <Setting
-        type={SettingType.Popup}
+        type={SettingType.Link}
         label={"Created By"}
         clickFunction={() => window.open("https://chasemanning.co.nz/")}
         icon={<FaceOutlinedIcon />}
       />
       <Setting
-        type={SettingType.Popup}
+        type={SettingType.Link}
         label={"Privacy Policy"}
         clickFunction={() => window.open("https://haply.app/privacy-policy")}
         icon={<SecurityIcon />}
       />
       <Setting
-        type={SettingType.Popup}
+        type={SettingType.Link}
         label={"Terms & Conditions"}
         clickFunction={() =>
           window.open("https://haply.app/terms-and-conditions")
