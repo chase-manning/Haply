@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
       --main-light: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
           ? "#24274C28"
-          : "rgba(255,255,255,01)"} ;
+          : "rgba(255,255,255,0.1)"} ;
       --sub: ;
       --sub: ${(props: GlobalSyleProps) =>
         props.mode === Mode.Default || props.mode === Mode.Light
