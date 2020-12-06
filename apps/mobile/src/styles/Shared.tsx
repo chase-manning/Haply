@@ -19,7 +19,6 @@ export const Card = styled.div`
   box-shadow: var(--shadow);
   transition: all 0.2s ease-out;
   position: relative;
-  overflow: hidden;
 `;
 
 export const Header = styled.div`
