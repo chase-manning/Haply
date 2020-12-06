@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import CheckIcon from "@material-ui/icons/Check";
+import ContextMenuOption, { Option } from "./ContextMenuOption";
 
 const StyledContextMenu = styled.div``;
 
@@ -19,42 +19,6 @@ const Options = styled.div`
   font-size: 16px;
 `;
 
-const Option = styled.div`
-  padding: 5px 0;
-  display: flex;
-  align-items: center;
-`;
-
-type OptionIconProps = {
-  multiSelect: boolean;
-  selected: boolean;
-};
-
-const OptionIcon = styled.div`
-  color: ${(props: OptionIconProps) =>
-    props.multiSelect
-      ? props.selected
-        ? "var(--primary)"
-        : "var(--bg-mid)"
-      : "var(--main)"};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 5px;
-`;
-
-type OptionTextProps = {
-  selected: boolean;
-};
-
-const OptionText = styled.div`
-  color: ${(props: OptionTextProps) =>
-    props.selected ? "var(--primary)" : "var(--main)"};
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-`;
-
 const Exit = styled.div`
   position: fixed;
   top: 0;
@@ -69,12 +33,6 @@ class State {
   selected: string[] = [];
 }
 
-export type Option = {
-  text: string;
-  icon?: JSX.Element;
-  click?: () => void;
-};
-
 type Props = {
   open: boolean;
   options: Option[];
@@ -86,8 +44,6 @@ const ContextMenu = (props: Props) => {
   const [state, setState] = useState(new State());
   const contextMenuRef = useRef<HTMLHeadingElement>(null);
   const optionsRef = useRef<HTMLHeadingElement>(null);
-
-  const isSelected = (option: string) => state.selected.indexOf(option) >= 0;
 
   const setOptionsPosition = (left: string, right: string, pos: string) => {
     let options = optionsRef.current;
@@ -133,39 +89,22 @@ const ContextMenu = (props: Props) => {
       )}
       <Options ref={optionsRef}>
         {props.options.map((option: Option) => (
-          <Option
-            key={option.text}
-            onClick={() => {
-              if (!props.multiSelect) {
-                if (option.click) option.click();
-                props.close([option.text]);
-                return;
-              } else {
-                let newSelected = state.selected;
-                const index = newSelected.indexOf(option.text);
-                if (index > -1) newSelected.splice(index, 1);
-                else newSelected.push(option.text);
-                setState({ ...state, selected: newSelected });
-              }
+          <ContextMenuOption
+            option={option}
+            multiSelect={props.multiSelect}
+            selected={state.selected.indexOf(option.text) >= 0}
+            close={() => props.close([option.text])}
+            add={() => {
+              let newSelected = state.selected;
+              newSelected.push(option.text);
+              setState({ ...state, selected: newSelected });
             }}
-          >
-            {props.multiSelect && (
-              <OptionIcon multiSelect={true} selected={isSelected(option.text)}>
-                <CheckIcon fontSize={"small"} />
-              </OptionIcon>
-            )}
-            {option.icon && (
-              <OptionIcon
-                multiSelect={props.multiSelect}
-                selected={isSelected(option.text)}
-              >
-                {option.icon}
-              </OptionIcon>
-            )}
-            <OptionText selected={isSelected(option.text)}>
-              {option.text}
-            </OptionText>
-          </Option>
+            remove={() => {
+              let newSelected = state.selected;
+              newSelected.splice(newSelected.indexOf(option.text), 1);
+              setState({ ...state, selected: newSelected });
+            }}
+          />
         ))}
       </Options>
     </StyledContextMenu>
