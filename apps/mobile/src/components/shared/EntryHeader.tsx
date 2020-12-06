@@ -5,7 +5,11 @@ import { deleteMood } from "../../services/MoodService";
 import Mood from "../../models/mood";
 import { useDispatch } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
-import { updateAll } from "../../state/loadingSlice";
+import {
+  updateAll,
+  updateDayAverages,
+  updateStats,
+} from "../../state/loadingSlice";
 import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
@@ -67,7 +71,8 @@ const EntryHeader = (props: Props) => {
     deleteMood(props.mood.id!)
       .then(() => {
         dispatch(removeMood(props.mood));
-        dispatch(updateAll());
+        dispatch(updateStats());
+        dispatch(updateDayAverages());
       })
       .catch(() => {})
       .finally(() => props.complete());
