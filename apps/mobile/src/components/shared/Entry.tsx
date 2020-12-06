@@ -37,7 +37,7 @@ const Entry = (props: Props) => {
           <DynamicEntryDescription mood={props.mood} />
           <EntryNote note={props.mood.note} />
         </EntryContent>
-        <LoadingSpinner loading={loading} />
+        <LoadingSpinner loading={loading} borderRadius={10} />
       </Card>
     </StyledEntry>
   );
