@@ -5,11 +5,7 @@ import { deleteMood } from "../../services/MoodService";
 import Mood from "../../models/mood";
 import { useDispatch } from "react-redux";
 import { removeMood } from "../../state/dataSlice";
-import {
-  updateAll,
-  updateDayAverages,
-  updateStats,
-} from "../../state/loadingSlice";
+import { updateDayAverages, updateStats } from "../../state/loadingSlice";
 import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
