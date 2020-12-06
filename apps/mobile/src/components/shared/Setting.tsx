@@ -54,6 +54,7 @@ const Chevron = styled.div`
 
 const LinkIcon = styled.div`
   color: var(--sub);
+  margin-right: 5px;
 `;
 
 const Value = styled.div`
