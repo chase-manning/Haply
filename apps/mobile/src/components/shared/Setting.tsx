@@ -52,6 +52,10 @@ const Chevron = styled.div`
     props.highlight ? "var(--bg-mid)" : "var(--sub)"};
 `;
 
+const LinkIcon = styled.div`
+  color: var(--sub);
+`;
+
 const Value = styled.div`
   color: var(--main);
 `;
@@ -107,7 +111,11 @@ const Setting = (props: Props) => {
               <ChevronRight />
             </Chevron>
           )}
-          {props.type === SettingType.Link && <OpenInNewIcon />}
+          {props.type === SettingType.Link && (
+            <LinkIcon>
+              <OpenInNewIcon fontSize={"small"} />
+            </LinkIcon>
+          )}
         </Content>
       </Card>
     </StyledSettings>
