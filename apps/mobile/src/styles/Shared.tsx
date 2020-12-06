@@ -18,6 +18,8 @@ export const Card = styled.div`
     props.highlight ? "var(--primary)" : "var(--bg-mid)"};
   box-shadow: var(--shadow);
   transition: all 0.2s ease-out;
+  position: relative;
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
