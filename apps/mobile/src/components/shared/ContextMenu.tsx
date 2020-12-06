@@ -89,42 +89,36 @@ const ContextMenu = (props: Props) => {
 
   const isSelected = (option: string) => state.selected.indexOf(option) >= 0;
 
+  const setOptionsPosition = (
+    left: string,
+    right: string,
+    translateX: string
+  ) => {
+    let options = optionsRef.current;
+    if (!options) return;
+    options.style.left = left;
+    options.style.right = right;
+    const scale = "scaleY(" + (props.open ? "1" : "0") + ")";
+    options.style.transform = "translateX(" + translateX + ") " + scale;
+  };
+
   const correctPosition = () => {
+    const padding = 10;
     let options = optionsRef.current;
     const contextMenu = contextMenuRef.current;
-    const padding = 20;
+    if (!contextMenu || !options) return;
+    const contextPosition = contextMenu.getBoundingClientRect();
 
-    if (!options || !contextMenu) return;
+    setOptionsPosition("50%", "auto", "-50%");
 
-    options.style.left = "50%";
-    options.style.right = "auto";
-    options.style.transform = `translateX(-50%) scaleY(${props.open ? 1 : 0})`;
-
-    if (options.getBoundingClientRect().x < padding) {
-      const left = contextMenu.getBoundingClientRect().x;
-      options.style.left = "0px";
-      options.style.right = "auto";
-      let meowmeow = `translateX(${-left + padding}px) scaleY(${
-        props.open ? 1 : 0
-      })`;
-      options.style.transform = meowmeow;
-    }
-
-    if (
-      options.getBoundingClientRect().x +
-        options.getBoundingClientRect().width >
-      window.outerWidth - padding
-    ) {
-      const right =
-        window.outerWidth -
-        contextMenu.getBoundingClientRect().x -
-        contextMenu.getBoundingClientRect().width;
-      options.style.right = "0px";
-      options.style.left = "auto";
-      let meowmeow = `translateX(${right - padding}px) scaleY(${
-        props.open ? 1 : 0
-      })`;
-      options.style.transform = meowmeow;
+    let optionsPosition = options.getBoundingClientRect();
+    const rightMax = window.outerWidth - padding;
+    if (optionsPosition.x < padding) {
+      const position = -contextPosition.x + padding;
+      setOptionsPosition("0", "auto", position + "px");
+    } else if (optionsPosition.x + optionsPosition.width > rightMax) {
+      const position = rightMax - contextPosition.x - contextPosition.width;
+      setOptionsPosition("auto", "0", position + "px");
     }
   };
 
