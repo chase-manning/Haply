@@ -70,7 +70,7 @@ const EntryHeader = (props: Props) => {
         dispatch(updateStats());
         dispatch(updateDayAverages());
       })
-      .catch(() => {})
+      .catch(() => setState({ ...state, popupOpen: false, error: true }))
       .finally(() => props.complete());
   };
 
