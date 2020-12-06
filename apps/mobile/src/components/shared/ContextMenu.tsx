@@ -91,6 +91,7 @@ const ContextMenu = (props: Props) => {
       <Options ref={optionsRef}>
         {props.options.map((option: Option) => (
           <ContextMenuOption
+            key={option.text}
             option={option}
             multiSelect={props.multiSelect}
             selected={state.selected.indexOf(option.text) >= 0}
