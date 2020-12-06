@@ -89,17 +89,13 @@ const ContextMenu = (props: Props) => {
 
   const isSelected = (option: string) => state.selected.indexOf(option) >= 0;
 
-  const setOptionsPosition = (
-    left: string,
-    right: string,
-    translateX: string
-  ) => {
+  const setOptionsPosition = (left: string, right: string, pos: string) => {
     let options = optionsRef.current;
     if (!options) return;
     options.style.left = left;
     options.style.right = right;
     const scale = "scaleY(" + (props.open ? "1" : "0") + ")";
-    options.style.transform = "translateX(" + translateX + ") " + scale;
+    options.style.transform = "translateX(" + pos + ") " + scale;
   };
 
   const correctPosition = () => {
