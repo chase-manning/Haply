@@ -97,7 +97,7 @@ const Popup = (props: Props) => {
                 }}
                 marginTop={true}
               >
-                {props.cancelButtonText || "Nah"}
+                {props.cancelButtonText || "No"}
               </Button>
             )}
 
