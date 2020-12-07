@@ -227,19 +227,31 @@ const Settings = () => {
       <Setting
         type={SettingType.Link}
         label={"Suggest a Feature"}
-        clickFunction={() => window.open("mailto:hello@haply.app")}
+        clickFunction={() =>
+          window.open(
+            "mailto:hello@haply.app?subject=Suggesting a Feature for Haply"
+          )
+        }
         icon={<EmojiObjectsOutlinedIcon />}
       />
       <Setting
         type={SettingType.Link}
         label={"Report an Issue"}
-        clickFunction={() => window.open("mailto:hello@haply.app")}
+        clickFunction={() =>
+          window.open(
+            "mailto:hello@haply.app?subject=Reporting an Issue with Haply"
+          )
+        }
         icon={<BugReportOutlinedIcon />}
       />
       <Setting
         type={SettingType.Link}
         label={"Say Hi"}
-        clickFunction={() => window.open("mailto:hello@haply.app")}
+        clickFunction={() =>
+          window.open(
+            "mailto:hello@haply.app?subject=Hello Haply Developers!! :)"
+          )
+        }
         icon={<EmojiPeopleOutlinedIcon />}
       />
 
