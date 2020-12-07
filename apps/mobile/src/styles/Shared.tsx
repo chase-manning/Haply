@@ -107,7 +107,7 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   color: ${(props: ButtonProps) =>
-    !props.secondary
+    !props.outline
       ? "var(--bg-mid)"
       : props.secondary
       ? "var(--highlight)"
@@ -117,7 +117,7 @@ export const Button = styled.button`
   font-weight: 400;
   border-radius: 10px;
   background-color: ${(props: ButtonProps) =>
-    props.secondary
+    props.outline
       ? "var(--bg-mid)"
       : props.secondary
       ? "var(--highlight)"
@@ -125,7 +125,7 @@ export const Button = styled.button`
   margin-top: ${(props: ButtonProps) => (props.marginTop ? "20px" : "0")};
   border: solid 1px
     ${(props: ButtonProps) =>
-      !props.secondary
+      !props.outline
         ? "var(--bg-mid)"
         : props.secondary
         ? "var(--highlight)"
