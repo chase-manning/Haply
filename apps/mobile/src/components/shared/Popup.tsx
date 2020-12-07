@@ -95,6 +95,7 @@ const Popup = (props: Props) => {
                   props.close();
                   if (props.submit) props.submit!();
                 }}
+                marginTop={true}
               >
                 {props.cancelButtonText || "Nah"}
               </Button>
@@ -106,6 +107,7 @@ const Popup = (props: Props) => {
                 props.close();
                 if (props.submit) props.submit!();
               }}
+              marginTop={true}
             >
               {props.buttonText || "Done"}
             </Button>
