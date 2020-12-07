@@ -56,6 +56,10 @@ const Buttons = styled.div`
   width: 100%;
 `;
 
+const ButtonGap = styled.div`
+  width: 15px;
+`;
+
 type ButtonProps = {
   primary: boolean;
 };
@@ -100,6 +104,7 @@ const Popup = (props: Props) => {
                 {props.cancelButtonText || "No"}
               </Button>
             )}
+            {props.showCancelButton && <ButtonGap />}
 
             <Button
               outline={true}
