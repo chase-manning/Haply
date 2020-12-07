@@ -4,9 +4,32 @@ import styled from "styled-components";
 import { selectMoods } from "../../state/dataSlice";
 import Popup from "./Popup";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
+import likeDislike from "../../assets/svgs/LikeDislike.svg";
+
 const { Storage } = CapacitorPlugins;
 
 const StyledReview = styled.div``;
+
+const PopupContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PopupHeader = styled.div`
+  color: var(--main);
+  font-size: 18px;
+  padding-top: 30px;
+  margin-bottom: 6px;
+  border-top: solid 1px var(--sub);
+  text-align: center;
+`;
+
+const Svg = styled.img`
+  width: 70%;
+`;
 
 enum ReviewStatus {
   Unknown,
@@ -45,7 +68,12 @@ const Review = () => {
     <StyledReview>
       <Popup
         open={reviewStatus === ReviewStatus.Unknown}
-        content={<p>Are you enjoying Haply?</p>}
+        content={
+          <PopupContent>
+            <Svg src={likeDislike} />
+            <PopupHeader>Are you enjoying Haply?</PopupHeader>
+          </PopupContent>
+        }
         close={() => reviewComplete()}
         showButton={true}
         showCancelButton={true}
