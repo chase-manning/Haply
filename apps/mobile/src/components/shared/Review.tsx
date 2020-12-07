@@ -5,6 +5,9 @@ import { selectMoods } from "../../state/dataSlice";
 import Popup from "./Popup";
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import likeDislike from "../../assets/svgs/LikeDislike.svg";
+import feedback from "../../assets/svgs/Feedback.svg";
+import designFeedback from "../../assets/svgs/DesignFeedback.svg";
+import { selectIsAndroid } from "../../state/navigationSlice";
 
 const { Storage } = CapacitorPlugins;
 
@@ -39,6 +42,7 @@ enum ReviewStatus {
 
 const Review = () => {
   const moods = useSelector(selectMoods);
+  const isAndroid = useSelector(selectIsAndroid);
   const [reviewed, setReviewed] = useState(true);
   const [reviewStatus, setReviewStatus] = useState(ReviewStatus.Unknown);
 
@@ -62,6 +66,12 @@ const Review = () => {
 
   const reviewComplete = () => Storage.set({ key: "reviewed", value: "false" });
 
+  const openReview = () => {
+    if (isAndroid)
+      window.open("https://play.google.com/store/apps/details?id=haply.app");
+    else window.open("https://apps.apple.com/us/app/id1530768759");
+  };
+
   if (!showPopup) return null;
 
   return (
@@ -81,6 +91,21 @@ const Review = () => {
         cancelButtonText={"Nah"}
         submit={() => setReviewStatus(ReviewStatus.Happy)}
         cancel={() => setReviewStatus(ReviewStatus.Sad)}
+      />
+      <Popup
+        open={reviewStatus === ReviewStatus.Happy}
+        content={
+          <PopupContent>
+            <Svg src={feedback} />
+            <PopupHeader>Happy to give us a Review?</PopupHeader>
+          </PopupContent>
+        }
+        close={() => reviewComplete()}
+        showButton={true}
+        buttonText={"Absolutely!"}
+        submit={() => {
+          openReview();
+        }}
       />
     </StyledReview>
   );
