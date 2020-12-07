@@ -95,17 +95,41 @@ export const SelectedTags = styled.div`
   overflow: auto;
 `;
 
+type ButtonProps = {
+  secondary?: boolean;
+  outline?: boolean;
+  marginTop?: boolean;
+};
+
 export const Button = styled.button`
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--bg);
+  color: ${(props: ButtonProps) =>
+    !props.secondary
+      ? "var(--bg)"
+      : props.secondary
+      ? "var(--highlight)"
+      : "var(--primary)"};
   padding: 17px;
   font-size: 16px;
   font-weight: 400;
   border-radius: 10px;
-  background-color: var(--primary);
+  background-color: ${(props: ButtonProps) =>
+    props.secondary
+      ? "var(--bg)"
+      : props.secondary
+      ? "var(--highlight)"
+      : "var(--primary)"};
+  margin-top: ${(props: ButtonProps) => (props.marginTop ? "20px" : "0")};
+  border: solid 1px
+    ${(props: ButtonProps) =>
+      !props.secondary
+        ? "var(--bg)"
+        : props.secondary
+        ? "var(--highlight)"
+        : "var(--primary)"};
 `;
 
 type ExpandButtonProps = {
