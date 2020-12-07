@@ -94,6 +94,7 @@ const Review = () => {
         cancelButtonText={"Nah"}
         submit={() => setReviewStatus(ReviewStatus.Happy)}
         cancel={() => setReviewStatus(ReviewStatus.Sad)}
+        important={true}
       />
       <Popup
         open={reviewStatus === ReviewStatus.Happy}
@@ -107,6 +108,7 @@ const Review = () => {
         showButton={true}
         buttonText={"Absolutely!"}
         submit={() => openReview()}
+        important={true}
       />
       <Popup
         open={reviewStatus === ReviewStatus.Sad}
@@ -122,6 +124,7 @@ const Review = () => {
         submit={() =>
           window.open("mailto:hello@haply.app?subject=Haply Feedback")
         }
+        important={true}
       />
     </StyledReview>
   );
