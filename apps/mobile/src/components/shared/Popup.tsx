@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
+import { Button } from "../../styles/Shared";
 
 const StyledPopup = styled.div`
   position: fixed;
@@ -50,28 +51,25 @@ const ExitButton = styled.button`
   color: var(--main);
 `;
 
-const DoneButton = styled.button`
-  width: 100%;
+const Buttons = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--primary);
-  border: solid 1px var(--primary);
-  padding: 17px;
-  font-size: 16px;
-  font-weight: 400;
-  border-radius: 10px;
-  background-color: var(--bg-mid);
-  margin-top: 20px;
+  width: 100%;
 `;
+
+type ButtonProps = {
+  primary: boolean;
+};
 
 type Props = {
   content: JSX.Element;
   open: boolean;
   showButton: boolean;
+  showCancelButton?: boolean;
   close: () => void;
   submit?: () => void;
+  cancel?: () => void;
   buttonText?: string;
+  cancelButtonText?: string;
 };
 
 const Popup = (props: Props) => {
@@ -88,14 +86,30 @@ const Popup = (props: Props) => {
         </Header>
         {props.content}
         {props.showButton && (
-          <DoneButton
-            onClick={() => {
-              props.close();
-              if (props.submit) props.submit!();
-            }}
-          >
-            {props.buttonText ? props.buttonText! : "Done"}
-          </DoneButton>
+          <Buttons>
+            {props.showCancelButton && (
+              <Button
+                secondary={true}
+                outline={true}
+                onClick={() => {
+                  props.close();
+                  if (props.submit) props.submit!();
+                }}
+              >
+                {props.cancelButtonText || "Nah"}
+              </Button>
+            )}
+
+            <Button
+              outline={true}
+              onClick={() => {
+                props.close();
+                if (props.submit) props.submit!();
+              }}
+            >
+              {props.buttonText || "Done"}
+            </Button>
+          </Buttons>
         )}
       </Details>
     </StyledPopup>
