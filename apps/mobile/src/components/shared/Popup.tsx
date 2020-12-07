@@ -93,7 +93,7 @@ const Popup = (props: Props) => {
                 outline={true}
                 onClick={() => {
                   props.close();
-                  if (props.submit) props.submit!();
+                  if (props.cancel) props.cancel!();
                 }}
                 marginTop={true}
               >
