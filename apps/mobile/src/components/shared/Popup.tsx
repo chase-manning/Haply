@@ -92,8 +92,7 @@ const Popup = (props: Props) => {
                 secondary={true}
                 outline={true}
                 onClick={() => {
-                  props.close();
-                  if (props.cancel) props.cancel!();
+                  if (props.cancel) props.cancel();
                 }}
                 marginTop={true}
               >
