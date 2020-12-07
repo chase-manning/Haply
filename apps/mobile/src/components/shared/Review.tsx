@@ -87,10 +87,7 @@ const Review = () => {
             <PopupHeader>Are you enjoying Haply?</PopupHeader>
           </PopupContent>
         }
-        close={() => {
-          reviewComplete();
-          setReviewStatus(ReviewStatus.Happy);
-        }}
+        close={() => setReviewStatus(ReviewStatus.Happy)}
         showButton={true}
         showCancelButton={true}
         buttonText={"Yes!"}
