@@ -60,10 +60,6 @@ const ButtonGap = styled.div`
   width: 15px;
 `;
 
-type ButtonProps = {
-  primary: boolean;
-};
-
 type Props = {
   content: JSX.Element;
   open: boolean;
