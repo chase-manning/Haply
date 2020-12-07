@@ -56,6 +56,7 @@ const Alerts = () => {
           )
         }
         buttonText={"Awesome!"}
+        important={true}
       />
       <Popup
         open={
@@ -72,6 +73,7 @@ const Alerts = () => {
         showButton={true}
         close={() => dispatch(setStatAsOld(stats.indexOf(newStats[0])))}
         buttonText={"Awesome!"}
+        important={true}
       />
     </StyledAlerts>
   );
