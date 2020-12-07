@@ -70,6 +70,7 @@ type Props = {
   cancel?: () => void;
   buttonText?: string;
   cancelButtonText?: string;
+  important?: boolean;
 };
 
 const Popup = (props: Props) => {
@@ -77,7 +78,11 @@ const Popup = (props: Props) => {
 
   return (
     <StyledPopup>
-      <Shadow onClick={() => props.close()} />
+      <Shadow
+        onClick={() => {
+          if (!props.important) props.close();
+        }}
+      />
       <Details>
         <Header>
           <ExitButton onClick={() => props.close()}>
