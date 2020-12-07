@@ -17,6 +17,7 @@ import Welcome from "./shared/Welcome";
 import { selectActiveTab, Tab } from "../state/navigationSlice";
 import MoodDateSearch from "./shared/MoodDateSearch";
 import Passcode from "./shared/Passcode";
+import Review from "./shared/Review";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -57,6 +58,7 @@ const App = () => {
           <NavBar />
         </ContentContainer>
       )}
+      <Review />
       <Login />
       <MoodDateSearch />
       <CreateMood />
