@@ -39,10 +39,6 @@ const Review = () => {
 
   const reviewComplete = () => Storage.set({ key: "reviewed", value: "false" });
 
-  console.log(isHappy);
-  console.log(hasUsed);
-  console.log(reviewed);
-
   if (!showPopup) return null;
 
   return (

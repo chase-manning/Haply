@@ -108,7 +108,7 @@ export const Button = styled.button`
   align-items: center;
   color: ${(props: ButtonProps) =>
     !props.secondary
-      ? "var(--bg)"
+      ? "var(--bg-mid)"
       : props.secondary
       ? "var(--highlight)"
       : "var(--primary)"};
@@ -118,7 +118,7 @@ export const Button = styled.button`
   border-radius: 10px;
   background-color: ${(props: ButtonProps) =>
     props.secondary
-      ? "var(--bg)"
+      ? "var(--bg-mid)"
       : props.secondary
       ? "var(--highlight)"
       : "var(--primary)"};
@@ -126,7 +126,7 @@ export const Button = styled.button`
   border: solid 1px
     ${(props: ButtonProps) =>
       !props.secondary
-        ? "var(--bg)"
+        ? "var(--bg-mid)"
         : props.secondary
         ? "var(--highlight)"
         : "var(--primary)"};
