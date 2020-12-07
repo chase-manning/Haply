@@ -35,7 +35,7 @@ const Review = () => {
   const firstDate = moods[moods.length - 1].date;
   const hasUsed = moods.length >= 6 || firstDate < startDate;
 
-  const showPopup = isHappy && hasUsed && !reviewed;
+  const showPopup = isHappy && hasUsed && true;
 
   const reviewComplete = () => Storage.set({ key: "reviewed", value: "false" });
 
