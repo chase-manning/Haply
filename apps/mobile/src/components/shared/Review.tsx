@@ -62,7 +62,7 @@ const Review = () => {
   const firstDate = moods[moods.length - 1].date;
   const hasUsed = moods.length >= 6 || firstDate < startDate;
 
-  const showPopup = isHappy && hasUsed && !reviewed;
+  const showPopup = isHappy && hasUsed && !reviewed && isAndroid;
 
   const reviewComplete = () => {
     Storage.set({ key: "reviewed", value: "false" });
@@ -72,7 +72,10 @@ const Review = () => {
   const openReview = () => {
     if (isAndroid)
       window.open("https://play.google.com/store/apps/details?id=haply.app");
-    else window.open("https://apps.apple.com/us/app/id1530768759");
+    else
+      window.open(
+        "https://itunes.apple.com/us/app/haply/id1530768759?mt=8&action=write-review"
+      );
   };
 
   if (!showPopup) return null;
