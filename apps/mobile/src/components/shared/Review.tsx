@@ -103,9 +103,22 @@ const Review = () => {
         close={() => reviewComplete()}
         showButton={true}
         buttonText={"Absolutely!"}
-        submit={() => {
-          openReview();
-        }}
+        submit={() => openReview()}
+      />
+      <Popup
+        open={reviewStatus === ReviewStatus.Sad}
+        content={
+          <PopupContent>
+            <Svg src={designFeedback} />
+            <PopupHeader>How could we improve?</PopupHeader>
+          </PopupContent>
+        }
+        close={() => reviewComplete()}
+        showButton={true}
+        buttonText={"Give Feedback"}
+        submit={() =>
+          window.open("mailto:hello@haply.app?subject=Haply Feedback")
+        }
       />
     </StyledReview>
   );
