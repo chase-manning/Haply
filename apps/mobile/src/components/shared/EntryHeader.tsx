@@ -3,8 +3,8 @@ import styled from "styled-components";
 import dateFormat from "dateformat";
 import { deleteMood } from "../../services/MoodService";
 import Mood from "../../models/mood";
-import { useDispatch } from "react-redux";
-import { removeMood } from "../../state/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { removeMood, selectMoods } from "../../state/dataSlice";
 import { updateDayAverages, updateStats } from "../../state/loadingSlice";
 import DynamicIcon from "./DynamicIcon";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -61,12 +61,17 @@ type Props = {
 const EntryHeader = (props: Props) => {
   const [state, setState] = useState(new State());
   const dispatch = useDispatch();
+  const moods = useSelector(selectMoods);
 
   const deleteEntry = () => {
     props.load();
     deleteMood(props.mood.id!)
       .then(() => {
-        dispatch(removeMood(props.mood));
+        const moodToDelete = moods.filter(
+          (mood: Mood) => mood.id === props.mood.id
+        )[0];
+        const index = moods.indexOf(moodToDelete);
+        dispatch(removeMood(index));
         dispatch(updateStats());
         dispatch(updateDayAverages());
       })

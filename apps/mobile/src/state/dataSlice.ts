@@ -56,9 +56,8 @@ export const dataSlice = createSlice({
     addMood: (state, action: PayloadAction<Mood>) => {
       state.moods.unshift(action.payload);
     },
-    removeMood: (state, action: PayloadAction<Mood>) => {
-      const index = state.moods.indexOf(action.payload);
-      if (index > -1) state.moods.splice(index, 1);
+    removeMood: (state, action: PayloadAction<number>) => {
+      state.moods.splice(action.payload, 1);
     },
   },
 });
