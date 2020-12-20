@@ -10,7 +10,6 @@ import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import hookedAsset from "../../assets/svgs/Hooked.svg";
 import walkingOutsideAsset from "../../assets/svgs/WalkingOutside.svg";
 import designSprintAsset from "../../assets/svgs/DesignSprint.svg";
-import growthAnalyticsAsset from "../../assets/svgs/GrowthAnalytics.svg";
 import winnersAsset from "../../assets/svgs/Winners.svg";
 import duaLipaAsset from "../../assets/svgs/DuaLipa.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -239,17 +238,11 @@ const Welcome = () => {
           position={
             state.page < 3 ? "right" : state.page === 3 ? "middle" : "left"
           }
-          src={growthAnalyticsAsset}
-        />
-        <Svg
-          position={
-            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
-          }
           src={winnersAsset}
         />
         <Svg
           position={
-            state.page < 5 ? "right" : state.page === 5 ? "middle" : "left"
+            state.page < 4 ? "right" : state.page === 4 ? "middle" : "left"
           }
           src={duaLipaAsset}
         />
@@ -270,27 +263,20 @@ const Welcome = () => {
           </Description>
         </TextArea>
         <TextArea active={state.page === 2}>
-          <Header>Use Tags to Track your Activities</Header>
-          <Description>
-            Track where you are, what you are doing, who you are with and more
-            with Tags
-          </Description>
-        </TextArea>
-        <TextArea active={state.page === 3}>
           <Header>Get Personalised Insights into your Feelings</Header>
           <Description>
             Keep tracking your mood to unlock personalised insights into what
             makes you feel great
           </Description>
         </TextArea>
-        <TextArea active={state.page === 4}>
+        <TextArea active={state.page === 3}>
           <Header>Complete Achievement for Unique Rewards</Header>
           <Description>
             By completing achievements you can unlock new themes and even new
             features in Haply
           </Description>
         </TextArea>
-        <TextArea active={state.page === 5}>
+        <TextArea active={state.page === 4}>
           <Header>Let's Create your First Mood!</Header>
         </TextArea>
       </Section>
@@ -301,21 +287,20 @@ const Welcome = () => {
           <PageIndicator active={state.page === 2} />
           <PageIndicator active={state.page === 3} />
           <PageIndicator active={state.page === 4} />
-          <PageIndicator active={state.page === 5} />
         </PageIndicators>
         <NavBar>
           <div />
           <Next
-            final={state.page === 5}
+            final={state.page === 4}
             onClick={() => {
-              if (state.page === 5) dispatch(hideWelcome());
+              if (state.page === 4) dispatch(hideWelcome());
               setState({ ...state, page: state.page + 1 });
             }}
           >
-            <NextArrow active={state.page !== 5}>
+            <NextArrow active={state.page !== 4}>
               <ArrowForwardIcon fontSize={"large"} />
             </NextArrow>
-            <NextText active={state.page === 5}>I'm Ready!!</NextText>
+            <NextText active={state.page === 4}>I'm Ready!!</NextText>
           </Next>
         </NavBar>
       </BottomBar>
