@@ -9,7 +9,7 @@ import {
 import { Plugins as CapacitorPlugins } from "@capacitor/core";
 import hookedAsset from "../../assets/svgs/Hooked.svg";
 import walkingOutsideAsset from "../../assets/svgs/WalkingOutside.svg";
-import designSprintAsset from "../../assets/svgs/DesignSprint.svg";
+import growthAnalyticsAsset from "../../assets/svgs/GrowthAnalytics.svg";
 import winnersAsset from "../../assets/svgs/Winners.svg";
 import duaLipaAsset from "../../assets/svgs/DuaLipa.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
@@ -232,7 +232,7 @@ const Welcome = () => {
           position={
             state.page < 2 ? "right" : state.page === 2 ? "middle" : "left"
           }
-          src={designSprintAsset}
+          src={growthAnalyticsAsset}
         />
         <Svg
           position={
