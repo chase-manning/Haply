@@ -21,10 +21,23 @@
       "site": "happiness-software",
       "public": "apps/website/build",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "appAssociation": "AUTO",
       "rewrites": [
         {
-          "source": "**",
+          "source": "/",
           "destination": "/index.html"
+        },
+        {
+          "source": "/privacy-policy",
+          "destination": "/index.html"
+        },
+        {
+          "source": "/terms-and-conditions",
+          "destination": "/index.html"
+        },
+        {
+          "source": "/download/**",
+          "dynamicLinks": true
         }
       ]
     }
