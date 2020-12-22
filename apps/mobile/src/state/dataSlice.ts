@@ -81,12 +81,6 @@ export const selectAchievements = (state: RootState) => state.data.achievements;
 export const selectDayAverages = (state: RootState) => state.data.dayAverages;
 export const selectDateSearchMoods = (state: RootState) =>
   state.data.dateSearchMoods;
-export const selectDarkModeUnlocked = (state: RootState) =>
-  state.data.achievements.some(
-    (achievement: AchievementModel) =>
-      achievement.unlocks.indexOf("Dark Mode") >= 0 &&
-      achievement.percentComplete === 1
-  );
 export const selectBlockMoods = (state: RootState) => {
   if (
     state.premium.isPremium ||
