@@ -30,7 +30,6 @@ import {
   removeActivity,
   removePerson,
 } from "../../state/settingsSlice";
-import { selectDarkModeUnlocked } from "../../state/dataSlice";
 import {
   showLogin,
   showPremium,
@@ -94,7 +93,6 @@ const Settings = () => {
   const remindersEnabled = useSelector(selectRemindersEnabled)!;
   const randomReminders = useSelector(selectRandomReminders)!;
   const mode = useSelector(selectMode);
-  const darkModeUnlocked = useSelector(selectDarkModeUnlocked);
   const user = useSelector(selectUser);
   const settingsLoading = useSelector(selectSettingsLoading);
   const isPremium = useSelector(selectIsPremium);
@@ -213,15 +211,13 @@ const Settings = () => {
         }
         icon={<BrushOutlinedIcon />}
       />
-      {darkModeUnlocked && (
-        <Setting
-          type={SettingType.Toggle}
-          label={"Dark Mode"}
-          toggleOn={mode === Mode.Dark}
-          clickFunction={() => dispatch(toggleMode())}
-          icon={<Brightness2OutlinedIcon />}
-        />
-      )}
+      <Setting
+        type={SettingType.Toggle}
+        label={"Dark Mode"}
+        toggleOn={mode === Mode.Dark}
+        clickFunction={() => dispatch(toggleMode())}
+        icon={<Brightness2OutlinedIcon />}
+      />
 
       <Header>Contact</Header>
       <Setting
