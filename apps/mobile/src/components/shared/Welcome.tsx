@@ -272,8 +272,8 @@ const Welcome = () => {
         <TextArea active={state.page === 3}>
           <Header>Complete Achievement for Unique Rewards</Header>
           <Description>
-            By completing achievements you can unlock new themes and even new
-            features in Haply
+            By completing achievements you can unlock new themes for Haply to
+            customise your look and feel
           </Description>
         </TextArea>
         <TextArea active={state.page === 4}>
