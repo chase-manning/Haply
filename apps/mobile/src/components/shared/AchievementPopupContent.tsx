@@ -70,13 +70,6 @@ const AchievementPopupContent = (props: Props) => {
         description={"Theme Color"}
         color={props.achievement.colorPrimary}
       />
-      {props.achievement.unlocks.map((unlock: string) => (
-        <AcheivementReward
-          key={unlock}
-          unlocked={props.achievement.percentComplete === 1}
-          description={unlock}
-        />
-      ))}
     </StyledAchievementPopupContent>
   );
 };

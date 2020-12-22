@@ -23,7 +23,7 @@ export const getAchievements = async (
   currentAchievements: AchievementModel[]
 ): Promise<AchievementModel[]> => {
   let achievements: AchievementModel[] = await ApiService(
-    "apisAchievementsGetV1",
+    "apisAchievementsGetV2",
     "GET"
   );
 
