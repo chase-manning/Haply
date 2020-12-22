@@ -4,7 +4,7 @@ import ApiService from "./ApiService";
 export const getStats = async (
   currentStats: StatModel[]
 ): Promise<StatModel[] | null> => {
-  let stats: StatModel[] = await ApiService("apisStatsGetV2", "GET");
+  let stats: StatModel[] = await ApiService("apisStatsGetV3", "GET");
   return getStatsWithIsNew(currentStats, stats);
 };
 
