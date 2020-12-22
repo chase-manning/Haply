@@ -18,6 +18,7 @@ import { notificationsV1 } from "./schedules/notifications/v1";
 import { statsGetV2 } from "./apis/stats/get/v2";
 import { moodsCreateV2 } from "./apis/moods/create/v2";
 import { achievementGetV2 } from "./apis/achievements/get/v2";
+import { statsGetV3 } from "./apis/stats/get/v3";
 
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
@@ -2505,6 +2506,7 @@ export const apisPushNotificationTokensCreateV1 = functions.https.onRequest(
 //Get
 export const apisStatsGetV1 = functions.https.onRequest(statsGetV1);
 export const apisStatsGetV2 = functions.https.onRequest(statsGetV2);
+export const apisStatsGetV3 = functions.https.onRequest(statsGetV3);
 
 /* Achievements */
 //Get
