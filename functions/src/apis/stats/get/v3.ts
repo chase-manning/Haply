@@ -263,7 +263,7 @@ const createStatComparison = (
   };
 
   const tagAverages: TagAverage[] = tags
-    .filter((tag: string) => getMoodsWithTag(moods, tag, tagType).length > 0)
+    .filter((tag: string) => getMoodsWithTag(moods, tag, tagType).length > 10)
     .map((tag: string) => {
       return {
         tag: tag,
@@ -284,7 +284,7 @@ const createStatComparison = (
     title: "Mood by " + tagName,
     type: StatType.Comparison,
     locked: dataPoints.length < 3,
-    lockedMessage: "Record a mood with 3 " + tagType + " to unlock",
+    lockedMessage: "Record 10 moods with 3 " + tagType + " to unlock",
     percentComplete: Math.min(dataPoints.length / 3, 1),
     dataPoints: dataPoints,
   };
