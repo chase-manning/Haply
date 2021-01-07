@@ -66,7 +66,7 @@ const Pixel = (props: Props) => {
 
   return (
     <PixelContainer>
-      <StyledPixel pixelType={PixelType.MOOD} />
+      <StyledPixel pixelType={pixelType()} />
       {pixelType() === PixelType.MOOD && (
         <StyledPixel
           pixelType={PixelType.HIGHLIGHT}
