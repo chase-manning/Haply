@@ -9,7 +9,7 @@ const PixelContainer = styled.div`
   height: 15px;
 `;
 
-const Pixel = styled.div`
+const StyledPixel = styled.div`
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -48,12 +48,12 @@ type Props = {
   averageMood?: number;
 };
 
-const Pixels = (props: Props) => {
+const Pixel = (props: Props) => {
   return (
     <PixelContainer>
-      <Pixel pixelType={PixelType.MOOD} />
+      <StyledPixel pixelType={PixelType.MOOD} />
       {props.pixelType === PixelType.MOOD && (
-        <Pixel
+        <StyledPixel
           pixelType={PixelType.HIGHLIGHT}
           averageMood={props.averageMood}
         />
@@ -62,4 +62,4 @@ const Pixels = (props: Props) => {
   );
 };
 
-export default Pixels;
+export default Pixel;
