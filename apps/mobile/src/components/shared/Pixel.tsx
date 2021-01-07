@@ -67,7 +67,7 @@ const Pixel = (props: Props) => {
   return (
     <PixelContainer>
       <StyledPixel pixelType={pixelType()} />
-      {pixelType() === PixelType.MOOD && (
+      {props.averageMood >= 0 && (
         <StyledPixel
           pixelType={PixelType.HIGHLIGHT}
           averageMood={props.averageMood}
