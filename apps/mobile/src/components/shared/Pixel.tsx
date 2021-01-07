@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+export enum PixelType {
+  FUTURE,
+  EMPTY,
+  MOOD,
+  HIGHLIGHT,
+}
+
 const PixelContainer = styled.div`
   justify-self: center;
   align-self: center;
@@ -9,6 +16,11 @@ const PixelContainer = styled.div`
   height: 15px;
 `;
 
+type StyledPixelProps = {
+  pixelType: PixelType;
+  averageMood?: number;
+};
+
 const StyledPixel = styled.div`
   width: 15px;
   height: 15px;
@@ -16,7 +28,7 @@ const StyledPixel = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  background-color: ${(props: Props) => {
+  background-color: ${(props: StyledPixelProps) => {
     switch (props.pixelType) {
       case PixelType.FUTURE:
         return "var(--bg-mid)";
@@ -30,29 +42,32 @@ const StyledPixel = styled.div`
         throw new Error("Pixel Type Not Supported");
     }
   }};
-  opacity: ${(props: Props) =>
+  opacity: ${(props: StyledPixelProps) =>
     props.averageMood ? props.averageMood / 10 : 1};
-  border: ${(props: Props) =>
+  border: ${(props: StyledPixelProps) =>
     props.pixelType === PixelType.FUTURE ? "solid 1px var(--sub)" : "none"};
 `;
 
-export enum PixelType {
-  FUTURE,
-  EMPTY,
-  MOOD,
-  HIGHLIGHT,
-}
-
 type Props = {
-  pixelType: PixelType;
-  averageMood?: number;
+  averageMood: number;
 };
 
 const Pixel = (props: Props) => {
+  const pixelType = () => {
+    switch (props.averageMood) {
+      case -1:
+        return PixelType.EMPTY;
+      case -2:
+        return PixelType.FUTURE;
+      default:
+        return PixelType.MOOD;
+    }
+  };
+
   return (
     <PixelContainer>
       <StyledPixel pixelType={PixelType.MOOD} />
-      {props.pixelType === PixelType.MOOD && (
+      {pixelType() === PixelType.MOOD && (
         <StyledPixel
           pixelType={PixelType.HIGHLIGHT}
           averageMood={props.averageMood}
