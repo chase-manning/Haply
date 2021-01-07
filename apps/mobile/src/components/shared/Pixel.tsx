@@ -18,7 +18,7 @@ const PixelContainer = styled.div`
 
 type StyledPixelProps = {
   pixelType: PixelType;
-  averageMood?: number;
+  opacity: number;
 };
 
 const StyledPixel = styled.div`
@@ -42,8 +42,7 @@ const StyledPixel = styled.div`
         throw new Error("Pixel Type Not Supported");
     }
   }};
-  opacity: ${(props: StyledPixelProps) =>
-    props.averageMood ? props.averageMood / 10 : 1};
+  opacity: ${(props: StyledPixelProps) => props.opacity};
   border: ${(props: StyledPixelProps) =>
     props.pixelType === PixelType.FUTURE ? "solid 1px var(--sub)" : "none"};
 `;
@@ -66,11 +65,11 @@ const Pixel = (props: Props) => {
 
   return (
     <PixelContainer>
-      <StyledPixel pixelType={pixelType()} />
+      <StyledPixel pixelType={pixelType()} opacity={1} />
       {props.averageMood >= 0 && (
         <StyledPixel
           pixelType={PixelType.HIGHLIGHT}
-          averageMood={props.averageMood}
+          opacity={props.averageMood / 10}
         />
       )}
     </PixelContainer>
