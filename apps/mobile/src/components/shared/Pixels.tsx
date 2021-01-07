@@ -8,6 +8,7 @@ import { selectDayAverages, DayAverage } from "../../state/dataSlice";
 import dateFormat from "dateformat";
 import LoadingLine from "./LoadingLine";
 import { selectDayAveragesLoading } from "../../state/loadingSlice";
+import Pixel from "./Pixel";
 
 interface Year {
   year: number;
@@ -78,39 +79,6 @@ const PixelsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-row-gap: 10px;
-`;
-
-const PixelContainer = styled.div`
-  justify-self: center;
-  align-self: center;
-  position: relative;
-  width: 15px;
-  height: 15px;
-`;
-
-type PixelProps = {
-  empty?: boolean;
-  primary?: boolean;
-  opacity: number;
-  blocked?: boolean;
-};
-
-const Pixel = styled.div`
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  background-color: ${(props: PixelProps) => {
-    if (props.primary) return "var(--primary)";
-    else if (props.blocked) return "var(--bg-mid)";
-    else if (props.empty) return "var(--sub)";
-    else return "var(--highlight)";
-  }};
-  opacity: ${(props: PixelProps) => props.opacity};
-  border: ${(props: PixelProps) =>
-    props.blocked ? "solid 1px var(--sub)" : "none"};
 `;
 
 class State {
@@ -186,18 +154,7 @@ const Pixels = () => {
             <Card>
               <PixelsContainer>
                 {year.dayAverages.map((dayAverage: DayAverage) => (
-                  <PixelContainer key={dayAverage.date.toString()}>
-                    <Pixel opacity={1} />
-                    <Pixel primary={true} opacity={dayAverage.average / 10} />
-                    <Pixel
-                      empty={dayAverage.average === -1}
-                      opacity={dayAverage.average === -1 ? 1 : 0}
-                    />
-                    <Pixel
-                      blocked={dayAverage.average === -2}
-                      opacity={dayAverage.average === -2 ? 1 : 0}
-                    />
-                  </PixelContainer>
+                  <Pixel averageMood={dayAverage.average} />
                 ))}
               </PixelsContainer>
             </Card>
