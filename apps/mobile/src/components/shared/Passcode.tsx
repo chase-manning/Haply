@@ -144,6 +144,7 @@ const Passcode = () => {
         reset();
       } else if (state.saved.length === 4) {
         if (state.saved === newPasscode) dispatch(enablePasscode(newPasscode));
+        else Haptics.vibrate();
         reset();
       } else setState({ ...state, saved: newPasscode, passcode: "" });
     } else setState({ ...state, passcode: newPasscode });
