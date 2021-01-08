@@ -114,15 +114,14 @@ export const selectDataLoading = (state: RootState) => {
   return state.loading.initialising;
 };
 
-export const selectLoadingPercent = (state: RootState) => {
-  let updates = [
+export const selectLoadingSteps = (state: RootState) => {
+  return [
     state.loading.updatingMoods,
     state.loading.updatingStats,
     state.loading.updatingAchievements,
     state.loading.updatingDayAverages,
     state.loading.updatingSettings,
   ];
-  return updates.filter((update: boolean) => !update).length / updates.length;
 };
 
 export const selectDateSearchMoodsLoading = (state: RootState) =>
