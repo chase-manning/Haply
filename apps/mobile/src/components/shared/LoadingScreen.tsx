@@ -20,6 +20,10 @@ const Content = styled.div`
   width: 60%;
 `;
 
+const Image = styled.img`
+  width: "100%";
+`;
+
 const BarContainer = styled.div`
   margin-top: 20px;
   width: 100%;
@@ -52,11 +56,7 @@ const LoadingScreen = (props: Props) => {
   return (
     <StyledLoadingScreen>
       <Content>
-        <img
-          src={feelingAmazing}
-          alt="Haply Loading Illustration"
-          width="100%"
-        />
+        <Image src={feelingAmazing} />
         <BarContainer>
           <Progress percentComplete={props.percentComplete} />
         </BarContainer>
