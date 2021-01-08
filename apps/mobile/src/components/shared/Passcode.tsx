@@ -70,7 +70,7 @@ const Numbers = styled.div`
   grid-gap: 20px;
 `;
 
-const Number = styled.div`
+const Number = styled.button`
   width: 80px;
   height: 80px;
   border-radius: 50%;
