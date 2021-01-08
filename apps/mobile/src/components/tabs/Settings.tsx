@@ -36,6 +36,8 @@ import {
   selectPasscode,
   enablePasscode,
   disablePasscode,
+  selectActiveTab,
+  Tab,
 } from "../../state/navigationSlice";
 import Setting, { SettingType } from "../shared/Setting";
 import ReminderPopup from "../shared/ReminderPopup";
@@ -43,7 +45,7 @@ import ThemePopup from "../shared/ThemePopup";
 import TagPopup from "../shared/TagPopup";
 import { selectUser } from "../../state/userSlice";
 import { firebaseApp } from "../../components/shared/Login";
-import { Header } from "../../styles/Shared";
+import { Header, HideComponentProps } from "../../styles/Shared";
 
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import CloudOutlinedIcon from "@material-ui/icons/CloudOutlined";
@@ -70,8 +72,8 @@ import { selectIsPremium } from "../../state/premiumSlice";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const StyledSettings = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   width: 100%;
-  display: flex;
   flex-direction: column;
   padding: 15px 30px;
   position: relative;
@@ -107,9 +109,10 @@ const Settings = () => {
   const placesBlocked = useSelector(selectBlockPlaces);
   const activitiesBlocked = useSelector(selectBlockActivities);
   const peopleBlocked = useSelector(selectBlockPeople);
+  const activeTab = useSelector(selectActiveTab);
 
   return (
-    <StyledSettings>
+    <StyledSettings show={activeTab === Tab.Settings}>
       <LoadingLine loading={settingsLoading} />
       {!isPremium && (
         <Setting
