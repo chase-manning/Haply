@@ -41,7 +41,6 @@ const uiConfig = {
 const OverlayContainer = styled.div`
   display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   background-color: var(--bg-mid);
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
