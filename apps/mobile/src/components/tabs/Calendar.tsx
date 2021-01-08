@@ -7,6 +7,12 @@ import dateFormat from "dateformat";
 import DynamicIcon from "../shared/DynamicIcon";
 import LoadingLine from "../shared/LoadingLine";
 import { selectDayAveragesLoading } from "../../state/loadingSlice";
+import {
+  EntriesTab,
+  selectActiveTab,
+  selectEntriesTab,
+  Tab,
+} from "../../state/navigationSlice";
 
 interface Month {
   month: string;
@@ -38,6 +44,9 @@ const Dates = styled.div`
 const Calendar = () => {
   const dayAveragesLoading = useSelector(selectDayAveragesLoading);
   const dayAverages = useSelector(selectDayAverages);
+  const activeTab = useSelector(selectActiveTab);
+  const entriesTab = useSelector(selectEntriesTab);
+
   let months: Month[] = [];
 
   dayAverages.forEach((dayAverage: DayAverage) => {
@@ -47,7 +56,11 @@ const Calendar = () => {
     else months.push({ month: monthString, dayAverages: [dayAverage] });
   });
 
-  const show = dayAverages && dayAverages.length > 0;
+  const show =
+    activeTab === Tab.Entries &&
+    entriesTab === EntriesTab.Calander &&
+    dayAverages &&
+    dayAverages.length > 0;
 
   return (
     <StyledCalendar show={show}>
