@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Header, Card } from "../../styles/Shared";
+import { Header, Card, HideComponentProps } from "../../styles/Shared";
 import { useSelector } from "react-redux";
 import { selectDayAverages, DayAverage } from "../../state/dataSlice";
 import dateFormat from "dateformat";
@@ -14,8 +14,8 @@ interface Month {
 }
 
 const StyledCalendar = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   width: 100%;
-  display: flex;
   padding: 15px 30px;
   flex-direction: column;
   position: relative;
@@ -40,9 +40,6 @@ const Calendar = () => {
   const dayAverages = useSelector(selectDayAverages);
   let months: Month[] = [];
 
-  if (!dayAverages || !dayAverages.length || dayAverages.length === 0)
-    return null;
-
   dayAverages.forEach((dayAverage: DayAverage) => {
     const monthString = dateFormat(dayAverage.date, "mmmm yyyy");
     let month = months.filter((month: Month) => month.month === monthString);
@@ -50,8 +47,10 @@ const Calendar = () => {
     else months.push({ month: monthString, dayAverages: [dayAverage] });
   });
 
+  const show = dayAverages && dayAverages.length > 0;
+
   return (
-    <StyledCalendar>
+    <StyledCalendar show={show}>
       <LoadingLine loading={dayAveragesLoading} />
       {months.map((month: Month) => {
         return (
