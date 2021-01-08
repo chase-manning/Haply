@@ -113,7 +113,7 @@ const Pixels = () => {
     }
   });
 
-  const activeYear = () => years[state.yearIndex].year;
+  const activeYear = years[state.yearIndex].year;
 
   return (
     <StyledPixels>
@@ -121,16 +121,16 @@ const Pixels = () => {
       <YearSelector>
         <YearContainer>
           <YearNavButton
-            disabled={!years.some((year: Year) => year.year < activeYear())}
+            disabled={!years.some((year: Year) => year.year < activeYear)}
             onClick={() =>
               setState({ ...state, yearIndex: state.yearIndex + 1 })
             }
           >
             <ArrowBackIosIcon />
           </YearNavButton>
-          <Year>{activeYear()}</Year>
+          <Year>{activeYear}</Year>
           <YearNavButton
-            disabled={!years.some((year: Year) => year.year > activeYear())}
+            disabled={!years.some((year: Year) => year.year > activeYear)}
             onClick={() =>
               setState({ ...state, yearIndex: state.yearIndex - 1 })
             }
@@ -144,9 +144,9 @@ const Pixels = () => {
           <Transform
             key={year.year}
             position={
-              year.year < activeYear()
+              year.year < activeYear
                 ? Position.Left
-                : year.year === activeYear()
+                : year.year === activeYear
                 ? Position.Active
                 : Position.Right
             }
