@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
-import { Card } from "../../styles/Shared";
+import { Card, HideComponentProps } from "../../styles/Shared";
 import { useSelector } from "react-redux";
 import { selectDayAverages, DayAverage } from "../../state/dataSlice";
 import dateFormat from "dateformat";
@@ -16,6 +16,7 @@ interface Year {
 }
 
 const StyledPixels = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "block" : "none")};
   width: 100%;
   height: 100%;
   padding: 30px 30px 60px 30px;
@@ -93,9 +94,6 @@ const Pixels = () => {
 
   let years: Year[] = [];
 
-  if (!dayAverages || !dayAverages.length || dayAverages.length === 0)
-    return null;
-
   dayAverages.forEach((dayAverage: DayAverage) => {
     const yearNumber = Number.parseInt(dateFormat(dayAverage.date, "yyyy"));
     let year = years.filter((year: Year) => year.year === yearNumber);
@@ -116,8 +114,10 @@ const Pixels = () => {
 
   const activeYear = years[yearIndex].year;
 
+  const show = dayAverages && dayAverages.length > 0;
+
   return (
-    <StyledPixels>
+    <StyledPixels show={show}>
       <LoadingLine loading={dayAveragesLoading} />
       <YearSelector>
         <YearContainer>
