@@ -67,6 +67,11 @@ const YearNavButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--main);
+
+  :disabled {
+    color: var(--sub);
+  }
 `;
 
 const Year = styled.div`
