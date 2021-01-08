@@ -17,19 +17,19 @@ import {
 } from "../../state/loadingSlice";
 import { selectUser } from "../../state/userSlice";
 import ExitBar from "../shared/ExitBar";
-import { Button } from "../../styles/Shared";
+import { Button, HideComponentProps } from "../../styles/Shared";
 import TagSelector from "../shared/TagSelector";
 import LoadingCircle from "../shared/LoadingCircle";
 import Failed from "../shared/Failed";
 
 const StyledCreateMood = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background-color: var(--bg-mid);
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
@@ -99,10 +99,8 @@ const CreateMood = () => {
       .catch(() => showError());
   };
 
-  if (!moodShowing) return null;
-
   return (
-    <StyledCreateMood>
+    <StyledCreateMood show={moodShowing}>
       <ExitBar
         exit={() => {
           dispatch(hideMood());
