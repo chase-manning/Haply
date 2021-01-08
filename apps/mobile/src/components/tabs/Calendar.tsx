@@ -49,7 +49,6 @@ const Calendar = () => {
 
   let months: Month[] = [];
 
-  console.log(dayAverages);
   if (!dayAverages || !dayAverages.length || dayAverages.length === 0)
     return null;
   dayAverages.forEach((dayAverage: DayAverage) => {
