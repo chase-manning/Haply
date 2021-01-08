@@ -27,8 +27,7 @@ const Tabs = () => {
   const entriesTab = useSelector(selectEntriesTab);
 
   let tabContents;
-  if (activeTab === Tab.Profile) tabContents = <Achievements />;
-  else if (activeTab === Tab.Entries) {
+  if (activeTab === Tab.Entries) {
     if (entriesTab === EntriesTab.Recent) tabContents = <Entries />;
     else if (entriesTab === EntriesTab.Calander) tabContents = <Calendar />;
     else if (entriesTab === EntriesTab.Pixels) tabContents = <Pixels />;
@@ -37,7 +36,11 @@ const Tabs = () => {
   else if (activeTab === Tab.Settings) tabContents = <Settings />;
   else throw NOTFOUND;
 
-  return <StyledTabs>{tabContents}</StyledTabs>;
+  return (
+    <StyledTabs>
+      <Achievements />
+    </StyledTabs>
+  );
 };
 
 export default Tabs;

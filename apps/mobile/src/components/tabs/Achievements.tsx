@@ -4,13 +4,15 @@ import styled from "styled-components";
 import AchievementModel from "../../models/AchievementModel";
 import { selectAchievements } from "../../state/dataSlice";
 import { selectAchievementsLoading } from "../../state/loadingSlice";
-import { Card, Header } from "../../styles/Shared";
+import { selectActiveTab, Tab } from "../../state/navigationSlice";
+import { Card, Header, HideComponentProps } from "../../styles/Shared";
 import Acheivement from "../shared/Achievement";
 import AchievementPopupContent from "../shared/AchievementPopupContent";
 import LoadingLine from "../shared/LoadingLine";
 import Popup from "../shared/Popup";
 
 const StyledAchievements = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "block" : "none")};
   width: 100%;
   padding: 15px 30px;
   position: relative;
@@ -38,6 +40,7 @@ const Achievements = () => {
 
   const achievements = useSelector(selectAchievements);
   const achievementsLoading = useSelector(selectAchievementsLoading);
+  const activeTab = useSelector(selectActiveTab);
 
   const completedAchievements = achievements.filter(
     (achievement: AchievementModel) => achievement.percentComplete === 1
@@ -47,7 +50,7 @@ const Achievements = () => {
   );
 
   return (
-    <StyledAchievements>
+    <StyledAchievements show={activeTab === Tab.Profile}>
       <LoadingLine loading={achievementsLoading} />
       {completedAchievements.length > 0 && (
         <AchievementSection>
