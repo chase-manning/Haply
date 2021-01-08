@@ -9,6 +9,12 @@ import dateFormat from "dateformat";
 import LoadingLine from "./LoadingLine";
 import { selectDayAveragesLoading } from "../../state/loadingSlice";
 import Pixel from "./Pixel";
+import {
+  EntriesTab,
+  selectActiveTab,
+  selectEntriesTab,
+  Tab,
+} from "../../state/navigationSlice";
 
 interface Year {
   year: number;
@@ -91,6 +97,8 @@ const Pixels = () => {
   const [yearIndex, setYearIndex] = useState(0);
   const dayAverages = useSelector(selectDayAverages);
   const dayAveragesLoading = useSelector(selectDayAveragesLoading);
+  const activeTab = useSelector(selectActiveTab);
+  const entriesTab = useSelector(selectEntriesTab);
 
   let years: Year[] = [];
 
@@ -114,7 +122,11 @@ const Pixels = () => {
 
   const activeYear = years[yearIndex].year;
 
-  const show = dayAverages && dayAverages.length > 0;
+  const show =
+    activeTab === Tab.Entries &&
+    entriesTab === EntriesTab.Pixels &&
+    dayAverages &&
+    dayAverages.length > 0;
 
   return (
     <StyledPixels show={show}>
