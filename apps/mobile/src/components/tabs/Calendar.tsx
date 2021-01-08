@@ -49,7 +49,9 @@ const Calendar = () => {
 
   let months: Month[] = [];
 
-  if (!dayAverages || dayAverages.length > 0) return null;
+  console.log(dayAverages);
+  if (!dayAverages || !dayAverages.length || dayAverages.length === 0)
+    return null;
   dayAverages.forEach((dayAverage: DayAverage) => {
     const monthString = dateFormat(dayAverage.date, "mmmm yyyy");
     let month = months.filter((month: Month) => month.month === monthString);
