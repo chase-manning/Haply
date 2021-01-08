@@ -98,11 +98,7 @@ const LoadingScreen = () => {
   const updateLoadingRef = useRef(updateLoading);
   updateLoadingRef.current = updateLoading;
 
-  useEffect(
-    () => updateLoadingRef.current(),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  useEffect(() => updateLoadingRef.current(), []);
 
   if (percent >= 1) return null;
 
