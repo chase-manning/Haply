@@ -56,10 +56,9 @@ const Review = () => {
     });
   }, []);
 
-  const isHappy = moods[0].value >= 8;
-
   const showPopup = () => {
     if (moods.length === 0) return false;
+    const isHappy = moods[0].value >= 8;
     let date = new Date();
     const startDate = new Date(date.setDate(date.getDate() - 2));
     const firstDate = moods[moods.length - 1].date;
