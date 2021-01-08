@@ -62,4 +62,6 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <!-- Billing -->
     <uses-permission android:name="com.android.vending.BILLING" />
+    <!-- Vibration -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>
