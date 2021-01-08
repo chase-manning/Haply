@@ -8,7 +8,6 @@ import Login from "./shared/Login";
 import GlobalStyles from "../styles/GlobalStyles";
 import { useSelector } from "react-redux";
 import PushNotificationSetup from "./shared/PushNotifications";
-import { selectDataLoading, selectLoadingPercent } from "../state/loadingSlice";
 import LoadingScreen from "./shared/LoadingScreen";
 import Alerts from "./shared/Alerts";
 import Premium from "./shared/Premium";
@@ -18,6 +17,7 @@ import { selectActiveTab, Tab } from "../state/navigationSlice";
 import MoodDateSearch from "./shared/MoodDateSearch";
 import Passcode from "./shared/Passcode";
 import Review from "./shared/Review";
+import { selectDataLoading } from "../state/loadingSlice";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -43,9 +43,8 @@ const ContentContainer = styled.div`
 `;
 
 const App = () => {
-  const loading = useSelector(selectDataLoading);
-  const loadingPercent = useSelector(selectLoadingPercent);
   const activeTab = useSelector(selectActiveTab);
+  const loading = useSelector(selectDataLoading);
 
   return (
     <StyledApp>
@@ -65,7 +64,7 @@ const App = () => {
       <Alerts />
       <Premium />
       <Error />
-      <LoadingScreen loading={loading} percentComplete={loadingPercent} />
+      <LoadingScreen />
       <Welcome />
       <Passcode />
     </StyledApp>

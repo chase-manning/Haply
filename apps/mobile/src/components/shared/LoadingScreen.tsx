@@ -1,6 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import feelingAmazing from "../../assets/svgs/SuperThankYou.svg";
+import {
+  selectDataLoading,
+  selectLoadingPercent,
+} from "../../state/loadingSlice";
 
 const StyledLoadingScreen = styled.div`
   position: fixed;
@@ -46,19 +51,17 @@ const Progress = styled.div`
   transition: all 0.5s ease-out;
 `;
 
-type Props = {
-  loading: boolean;
-  percentComplete: number;
-};
+const LoadingScreen = () => {
+  const loading = useSelector(selectDataLoading);
+  const loadingPercent = useSelector(selectLoadingPercent);
 
-const LoadingScreen = (props: Props) => {
-  // if (!props.loading) return null;
+  // if (loading) return null;
   return (
     <StyledLoadingScreen>
       <Content>
         <Image src={feelingAmazing} />
         <BarContainer>
-          <Progress percentComplete={props.percentComplete} />
+          <Progress percentComplete={loadingPercent} />
         </BarContainer>
       </Content>
     </StyledLoadingScreen>
