@@ -150,7 +150,7 @@ const Passcode = () => {
     } else setState({ ...state, passcode: newPasscode });
   };
 
-  const show = passcode !== undefined && (passcode.length != 4 || locked);
+  const show = passcode !== undefined && (passcode.length !== 4 || locked);
 
   return (
     <StyledPasscode show={show}>
