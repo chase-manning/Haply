@@ -85,7 +85,6 @@ const LoadingScreen = () => {
       setPercent(basePercent + modifier);
       setMs(ms + 100);
     } else {
-      console.log("resetting");
       setStepsComplete(newStepsComplete);
       setMs(0);
     }
