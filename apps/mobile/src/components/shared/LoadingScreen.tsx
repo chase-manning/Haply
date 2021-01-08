@@ -2,10 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import feelingAmazing from "../../assets/svgs/SuperThankYou.svg";
-import {
-  selectDataLoading,
-  selectLoadingSteps,
-} from "../../state/loadingSlice";
+import { selectLoadingSteps } from "../../state/loadingSlice";
 
 const StyledLoadingScreen = styled.div`
   position: fixed;
@@ -68,7 +65,6 @@ const Text = styled.div`
 `;
 
 const LoadingScreen = () => {
-  const loading = useSelector(selectDataLoading);
   const loadingSteps = useSelector(selectLoadingSteps);
   const [ms, setMs] = useState(0);
   const [stepsComplete, setStepsComplete] = useState(0);
