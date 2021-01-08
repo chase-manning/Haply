@@ -8,10 +8,13 @@ import likeDislike from "../../assets/svgs/LikeDislike.svg";
 import feedback from "../../assets/svgs/Feedback.svg";
 import designFeedback from "../../assets/svgs/DesignFeedback.svg";
 import { selectIsAndroid } from "../../state/navigationSlice";
+import { HideComponentProps } from "../../styles/Shared";
 
 const { Storage } = CapacitorPlugins;
 
-const StyledReview = styled.div``;
+const StyledReview = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
+`;
 
 const PopupContent = styled.div`
   display: flex;
@@ -53,16 +56,16 @@ const Review = () => {
     });
   }, []);
 
-  if (moods.length === 0) return null;
-
   const isHappy = moods[0].value >= 8;
 
-  let date = new Date();
-  const startDate = new Date(date.setDate(date.getDate() - 2));
-  const firstDate = moods[moods.length - 1].date;
-  const hasUsed = moods.length >= 6 || firstDate < startDate;
-
-  const showPopup = isHappy && hasUsed && !reviewed;
+  const showPopup = () => {
+    if (moods.length === 0) return false;
+    let date = new Date();
+    const startDate = new Date(date.setDate(date.getDate() - 2));
+    const firstDate = moods[moods.length - 1].date;
+    const hasUsed = moods.length >= 6 || firstDate < startDate;
+    return isHappy && hasUsed && !reviewed;
+  };
 
   const reviewComplete = () => {
     Storage.set({ key: "reviewed", value: "false" });
@@ -78,10 +81,8 @@ const Review = () => {
       );
   };
 
-  if (!showPopup) return null;
-
   return (
-    <StyledReview>
+    <StyledReview show={showPopup()}>
       <Popup
         open={reviewStatus === ReviewStatus.Unknown}
         content={
