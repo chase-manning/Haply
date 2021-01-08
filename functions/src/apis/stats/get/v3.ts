@@ -313,7 +313,7 @@ function createStatPercent(
     type: StatType.Percent,
     locked: moodsWithoutTag.length < 10 || moodsWithTag.length < 10,
     lockedMessage:
-      moodsWithTag.length < 10
+      moodsWithTag.length <= moodsWithoutTag.length
         ? "Record 10 moods " + compound + " " + tag + " to unlock"
         : "Record 10 moods " + negativeCompount + " " + tag + " to unlock",
     percentComplete: Math.min(
