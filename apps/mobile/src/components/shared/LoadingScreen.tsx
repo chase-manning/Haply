@@ -90,43 +90,36 @@ const LoadingScreen = () => {
 
   const percentFomatted = Math.round(percent * 100) + "%";
 
-  // -0.812 + 0.23 ln x
-
   const getStepsComplete = () =>
     loadingStepsRef.current.filter((step: boolean) => !step).length;
 
   const getModifier = () => {
     const interval = 1 / loadingSteps.length;
-    let multiplier = 0.23 * Math.log(msRef.current) - 0.812;
-    multiplier = Math.min(Math.max(multiplier, 0), 1);
+    let multiplier = 0.177 * Math.log(msRef.current) - 0.541;
+    multiplier = Math.min(Math.max(multiplier, 0), 0.9);
     return multiplier * interval;
   };
 
   const updateLoading = () => {
-    console.log("in a tick of update loading ");
     const newStepsComplete = getStepsComplete();
     if (stepsCompleteRef.current === newStepsComplete) {
       const basePercent = newStepsComplete / loadingStepsRef.current.length;
-      console.log(basePercent);
-      const modifier = getModifier();
-      console.log(modifier);
-      const newPercent = basePercent + modifier;
-      setPercent(newPercent);
+      setPercent(basePercent * getModifier());
       setMs(msRef.current + 100);
     } else {
       setStepsComplete(newStepsComplete);
       setMs(0);
-    } //TODO Stop at end
-    if (loadingRef.current) setTimeout(() => updateLoading(), 100);
+    }
+    if (percentRef.current !== 1) setTimeout(() => updateLoading(), 100);
   };
 
-  useEffect(() => {
-    console.log("in use effect");
-    updateLoading();
+  useEffect(
+    () => updateLoading(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    []
+  );
 
-  if (!loading) return null;
+  if (percent === 1) return null;
 
   return (
     <StyledLoadingScreen>
