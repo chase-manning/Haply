@@ -14,13 +14,13 @@ const StyledLoadingScreen = styled.div`
   align-items: center;
 `;
 
-const LoadingContent = styled.div`
+const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 60%;
 `;
 
-const LoadingBarContainer = styled.div`
+const BarContainer = styled.div`
   margin-top: 20px;
   width: 100%;
   height: 10px;
@@ -32,7 +32,7 @@ type LoadingProgresProps = {
   percentComplete: number;
 };
 
-const LoadingProgress = styled.div`
+const Progress = styled.div`
   height: 100%;
   border-radius: 5px;
   width: ${(props: LoadingProgresProps) => {
@@ -48,19 +48,19 @@ type Props = {
 };
 
 const LoadingScreen = (props: Props) => {
-  if (!props.loading) return null;
+  // if (!props.loading) return null;
   return (
     <StyledLoadingScreen>
-      <LoadingContent>
+      <Content>
         <img
           src={feelingAmazing}
           alt="Haply Loading Illustration"
           width="100%"
         />
-        <LoadingBarContainer>
-          <LoadingProgress percentComplete={props.percentComplete} />
-        </LoadingBarContainer>
-      </LoadingContent>
+        <BarContainer>
+          <Progress percentComplete={props.percentComplete} />
+        </BarContainer>
+      </Content>
     </StyledLoadingScreen>
   );
 };
