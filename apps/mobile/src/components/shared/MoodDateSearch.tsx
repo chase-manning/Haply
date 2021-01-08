@@ -6,7 +6,7 @@ import {
   hideMoodDateSearch,
   showMood,
 } from "../../state/navigationSlice";
-import { Button } from "../../styles/Shared";
+import { Button, HideComponentProps } from "../../styles/Shared";
 import dateFormat from "dateformat";
 import { selectDateSearchMoods } from "../../state/dataSlice";
 import NoData from "./NoData";
@@ -17,13 +17,13 @@ import { selectDateSearchMoodsLoading } from "../../state/loadingSlice";
 import LoadingSpinner from "./LoadingSpinner";
 
 const StyledMoodDateSearch = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background-color: var(--bg);
-  display: flex;
   flex-direction: column;
 `;
 
@@ -91,15 +91,15 @@ const MoodDateSearch = () => {
   const moods = useSelector(selectDateSearchMoods);
   const loading = useSelector(selectDateSearchMoodsLoading);
 
-  if (!date) return null;
-
   return (
-    <StyledMoodDateSearch>
+    <StyledMoodDateSearch show={!!date}>
       <NavigationHeader>
         <BackButton onClick={() => dispatch(hideMoodDateSearch())}>
           <ArrowBackIcon />
         </BackButton>
-        <HeaderText>{dateFormat(new Date(date), "dS mmmm yyyy")}</HeaderText>
+        {date && (
+          <HeaderText>{dateFormat(new Date(date), "dS mmmm yyyy")}</HeaderText>
+        )}
       </NavigationHeader>
       <ScrollContainer>
         {moods.length > 0 && (
