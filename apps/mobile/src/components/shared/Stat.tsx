@@ -63,6 +63,8 @@ type Props = {
 };
 
 const Stat = (props: Props) => {
+  if (!props.stat) return null;
+
   return (
     <Card>
       <Header>{props.stat.title}</Header>
