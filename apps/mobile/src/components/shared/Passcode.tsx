@@ -12,7 +12,7 @@ import {
 import ExitBar from "./ExitBar";
 import { Plugins } from "@capacitor/core";
 
-const { App, Storage } = Plugins;
+const { App, Storage, Haptics } = Plugins;
 
 const StyledPasscode = styled.div`
   position: fixed;
@@ -140,6 +140,7 @@ const Passcode = () => {
     if (newPasscode.length === 4) {
       if (locked) {
         if (newPasscode === passcode) dispatch(unlock());
+        else Haptics.vibrate();
         reset();
       } else if (state.saved.length === 4) {
         if (state.saved === newPasscode) dispatch(enablePasscode(newPasscode));
