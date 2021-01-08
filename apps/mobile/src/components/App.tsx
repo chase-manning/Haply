@@ -17,7 +17,6 @@ import { selectActiveTab, Tab } from "../state/navigationSlice";
 import MoodDateSearch from "./shared/MoodDateSearch";
 import Passcode from "./shared/Passcode";
 import Review from "./shared/Review";
-import { selectDataLoading } from "../state/loadingSlice";
 
 const StyledApp = styled.div`
   position: fixed;
@@ -44,19 +43,16 @@ const ContentContainer = styled.div`
 
 const App = () => {
   const activeTab = useSelector(selectActiveTab);
-  const loading = useSelector(selectDataLoading);
 
   return (
     <StyledApp>
       <PushNotificationSetup />
       <GlobalStyles />
-      {!loading && (
-        <ContentContainer tabbedPage={activeTab === Tab.Entries}>
-          <Tabs />
-          <Header />
-          <NavBar />
-        </ContentContainer>
-      )}
+      <ContentContainer tabbedPage={activeTab === Tab.Entries}>
+        <Tabs />
+        <Header />
+        <NavBar />
+      </ContentContainer>
       <Review />
       <Login />
       <MoodDateSearch />
