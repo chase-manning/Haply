@@ -148,3 +148,7 @@ export const ExpandButton = styled.div`
   color: var(--sub);
   box-shadow: -5px -0px 5px 2px var(--bg-mid);
 `;
+
+export type HideComponentProps = {
+  show: boolean;
+};
