@@ -154,7 +154,10 @@ const Pixels = () => {
             <Card>
               <PixelsContainer>
                 {year.dayAverages.map((dayAverage: DayAverage) => (
-                  <Pixel averageMood={dayAverage.average} />
+                  <Pixel
+                    key={dayAverage.date.toString()}
+                    averageMood={dayAverage.average}
+                  />
                 ))}
               </PixelsContainer>
             </Card>
