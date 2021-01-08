@@ -38,8 +38,6 @@ const Error = () => {
   const dispatch = useDispatch();
   const error = useSelector(selectError);
 
-  if (error === "") return null;
-
   return (
     <Popup
       open={error !== ""}
