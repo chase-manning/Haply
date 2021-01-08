@@ -26,7 +26,7 @@ const Content = styled.div`
 `;
 
 const Image = styled.img`
-  width: "100%";
+  width: 100%;
 `;
 
 const BarContainer = styled.div`
@@ -55,7 +55,7 @@ const LoadingScreen = () => {
   const loading = useSelector(selectDataLoading);
   const loadingPercent = useSelector(selectLoadingPercent);
 
-  // if (loading) return null;
+  if (!loading) return null;
   return (
     <StyledLoadingScreen>
       <Content>
