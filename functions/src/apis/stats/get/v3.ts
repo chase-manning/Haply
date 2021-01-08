@@ -226,18 +226,20 @@ app.get("", async (request: any, response) => {
     stats.push(createStatComparison(moods, setting.people, "people", "People"));
 
     setting.feelings.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "when", "feelings"))
+      stats.push(createStatPercent(moods, tag, "when", "when not", "feelings"))
     );
 
     setting.places.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "at", "places"))
+      stats.push(createStatPercent(moods, tag, "at", "not at", "places"))
     );
     setting.activities.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "while", "activities"))
+      stats.push(
+        createStatPercent(moods, tag, "while", "while not", "activities")
+      )
     );
 
     setting.people.forEach((tag: string) =>
-      stats.push(createStatPercent(moods, tag, "with", "people"))
+      stats.push(createStatPercent(moods, tag, "with", "whithout", "people"))
     );
 
     stats.sort(function (a, b) {
@@ -294,6 +296,7 @@ function createStatPercent(
   moods: Mood[],
   tag: string,
   compound: string,
+  negativeCompount: string,
   tagType: string
 ) {
   const moodsWithoutTag = moods.filter(
@@ -312,7 +315,7 @@ function createStatPercent(
     lockedMessage:
       moodsWithTag.length < 10
         ? "Record 10 moods " + compound + " " + tag + " to unlock"
-        : "Record 10 moods " + compound + " " + tag + " to unlock",
+        : "Record 10 moods " + negativeCompount + " " + tag + " to unlock",
     percentComplete: Math.min(
       Math.min(moodsWithoutTag.length / 10, 1),
       Math.min(moodsWithTag.length / 10, 1)
