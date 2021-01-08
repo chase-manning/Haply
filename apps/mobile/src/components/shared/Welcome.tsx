@@ -13,16 +13,17 @@ import growthAnalyticsAsset from "../../assets/svgs/GrowthAnalytics.svg";
 import winnersAsset from "../../assets/svgs/Winners.svg";
 import duaLipaAsset from "../../assets/svgs/DuaLipa.svg";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import { HideComponentProps } from "../../styles/Shared";
 const { Storage } = CapacitorPlugins;
 
 const StyledWelcome = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   background-color: var(--bg-mid);
-  display: flex;
   flex-direction: column;
   padding: 40px;
   justify-content: space-between;
@@ -207,10 +208,8 @@ const Welcome = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!show) return null;
-
   return (
-    <StyledWelcome>
+    <StyledWelcome show={show}>
       <SkipContainer>
         <div />
         <Skip onClick={() => dispatch(hideWelcome())}>Skip</Skip>
