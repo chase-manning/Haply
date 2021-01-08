@@ -81,12 +81,8 @@ const PixelsContainer = styled.div`
   grid-row-gap: 10px;
 `;
 
-class State {
-  yearIndex: number = 0;
-}
-
 const Pixels = () => {
-  const [state, setState] = useState(new State());
+  const [yearIndex, setYearIndex] = useState(0);
   const dayAverages = useSelector(selectDayAverages);
   const dayAveragesLoading = useSelector(selectDayAveragesLoading);
 
@@ -113,7 +109,7 @@ const Pixels = () => {
     }
   });
 
-  const activeYear = years[state.yearIndex].year;
+  const activeYear = years[yearIndex].year;
 
   return (
     <StyledPixels>
@@ -122,18 +118,14 @@ const Pixels = () => {
         <YearContainer>
           <YearNavButton
             disabled={!years.some((year: Year) => year.year < activeYear)}
-            onClick={() =>
-              setState({ ...state, yearIndex: state.yearIndex + 1 })
-            }
+            onClick={() => setYearIndex(yearIndex + 1)}
           >
             <ArrowBackIosIcon />
           </YearNavButton>
           <Year>{activeYear}</Year>
           <YearNavButton
             disabled={!years.some((year: Year) => year.year > activeYear)}
-            onClick={() =>
-              setState({ ...state, yearIndex: state.yearIndex - 1 })
-            }
+            onClick={() => setYearIndex(yearIndex - 1)}
           >
             <ArrowForwardIosIcon />
           </YearNavButton>
