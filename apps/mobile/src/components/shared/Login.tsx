@@ -14,6 +14,7 @@ import {
   setToken,
 } from "../../state/userSlice";
 import ExitBar from "./ExitBar";
+import { HideComponentProps } from "../../styles/Shared";
 const { Storage } = CapacitorPlugins;
 
 const firebaseConfig = {
@@ -38,6 +39,7 @@ const uiConfig = {
 };
 
 const OverlayContainer = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   background-color: var(--bg-mid);
   display: flex;
   flex-direction: column;
@@ -96,10 +98,10 @@ const Login = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!loggingIn || (user && !user.isAnonymous)) return null;
+  const show = loggingIn && (!user || user.isAnonymous);
 
   return (
-    <OverlayContainer>
+    <OverlayContainer show={show}>
       <ExitBar exit={() => dispatch(hideLogin())} />
       <LoginHeader>Login to Enable Cloud Sync</LoginHeader>
       <StyledFirebaseAuth
