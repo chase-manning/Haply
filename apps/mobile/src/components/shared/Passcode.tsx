@@ -150,10 +150,6 @@ const Passcode = () => {
     } else setState({ ...state, passcode: newPasscode });
   };
 
-  console.log("meow");
-  console.log(!!passcode);
-  console.log(passcode?.length);
-  console.log(locked);
   const show = passcode !== undefined && (passcode.length != 4 || locked);
 
   return (
