@@ -56,6 +56,8 @@ type Props = {
 };
 
 const AchievementPopupContent = (props: Props) => {
+  if (!props.achievement) return null;
+
   return (
     <StyledAchievementPopupContent>
       <SvgDetails
