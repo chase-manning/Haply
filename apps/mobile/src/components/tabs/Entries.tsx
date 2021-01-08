@@ -8,7 +8,12 @@ import LoadingLine from "../shared/LoadingLine";
 import { selectMoodsLoading } from "../../state/loadingSlice";
 import NoData from "../shared/NoData";
 import { HideComponentProps } from "../../styles/Shared";
-import { selectActiveTab, Tab } from "../../state/navigationSlice";
+import {
+  EntriesTab,
+  selectActiveTab,
+  selectEntriesTab,
+  Tab,
+} from "../../state/navigationSlice";
 
 const StyledEntries = styled.div`
   display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
@@ -23,9 +28,12 @@ const Entries = () => {
   const moods = useSelector(selectMoods);
   const entriesLoading = useSelector(selectMoodsLoading);
   const activeTab = useSelector(selectActiveTab);
+  const entriesTab = useSelector(selectEntriesTab);
 
   return (
-    <StyledEntries show={activeTab === Tab.Entries}>
+    <StyledEntries
+      show={activeTab === Tab.Entries && entriesTab === EntriesTab.Recent}
+    >
       <LoadingLine loading={entriesLoading} />
       {moods.length > 0 &&
         moods
