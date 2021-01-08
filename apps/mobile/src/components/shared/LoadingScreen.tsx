@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import feelingAmazing from "../../assets/svgs/SuperThankYou.svg";
@@ -69,32 +69,62 @@ const Text = styled.div`
 
 const LoadingScreen = () => {
   const loading = useSelector(selectDataLoading);
+  const loadingRef = useRef(loading);
+  loadingRef.current = loading;
+
   const loadingSteps = useSelector(selectLoadingSteps);
+  const loadingStepsRef = useRef(loadingSteps);
+  loadingStepsRef.current = loadingSteps;
+
   const [ms, setMs] = useState(0);
+  const msRef = useRef(ms);
+  msRef.current = ms;
+
   const [stepsComplete, setStepsComplete] = useState(0);
+  const stepsCompleteRef = useRef(stepsComplete);
+  stepsCompleteRef.current = stepsComplete;
+
   const [percent, setPercent] = useState(0);
+  const percentRef = useRef(percent);
+  percentRef.current = percent;
 
   const percentFomatted = Math.round(percent * 100) + "%";
 
   // -0.812 + 0.23 ln x
 
   const getStepsComplete = () =>
-    loadingSteps.filter((step: boolean) => step).length;
+    loadingStepsRef.current.filter((step: boolean) => !step).length;
+
+  const getModifier = () => {
+    const interval = 1 / loadingSteps.length;
+    let multiplier = 0.23 * Math.log(msRef.current) - 0.812;
+    multiplier = Math.min(Math.max(multiplier, 0), 1);
+    return multiplier * interval;
+  };
 
   const updateLoading = () => {
+    console.log("in a tick of update loading ");
     const newStepsComplete = getStepsComplete();
-    if (stepsComplete === newStepsComplete) {
-      const basePercent = loadingSteps.length / newStepsComplete;
-      const modifier = 0.23 * Math.log(ms);
+    if (stepsCompleteRef.current === newStepsComplete) {
+      const basePercent = newStepsComplete / loadingStepsRef.current.length;
+      console.log(basePercent);
+      const modifier = getModifier();
+      console.log(modifier);
       const newPercent = basePercent + modifier;
       setPercent(newPercent);
-      setMs(ms + 100);
+      setMs(msRef.current + 100);
     } else {
       setStepsComplete(newStepsComplete);
       setMs(0);
-    }
-    setTimeout(() => updateLoading(), 100);
+    } //TODO Stop at end
+    if (loadingRef.current) setTimeout(() => updateLoading(), 100);
   };
+
+  useEffect(() => {
+    console.log("in use effect");
+    updateLoading();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!loading) return null;
 
