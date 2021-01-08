@@ -49,12 +49,14 @@ const Calendar = () => {
 
   let months: Month[] = [];
 
-  dayAverages.forEach((dayAverage: DayAverage) => {
-    const monthString = dateFormat(dayAverage.date, "mmmm yyyy");
-    let month = months.filter((month: Month) => month.month === monthString);
-    if (month.length > 0) month[0].dayAverages.push(dayAverage);
-    else months.push({ month: monthString, dayAverages: [dayAverage] });
-  });
+  if (dayAverages) {
+    dayAverages.forEach((dayAverage: DayAverage) => {
+      const monthString = dateFormat(dayAverage.date, "mmmm yyyy");
+      let month = months.filter((month: Month) => month.month === monthString);
+      if (month.length > 0) month[0].dayAverages.push(dayAverage);
+      else months.push({ month: monthString, dayAverages: [dayAverage] });
+    });
+  }
 
   const show =
     activeTab === Tab.Entries &&
