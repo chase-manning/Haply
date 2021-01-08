@@ -7,10 +7,12 @@ import { useSelector } from "react-redux";
 import LoadingLine from "../shared/LoadingLine";
 import { selectMoodsLoading } from "../../state/loadingSlice";
 import NoData from "../shared/NoData";
+import { HideComponentProps } from "../../styles/Shared";
+import { selectActiveTab, Tab } from "../../state/navigationSlice";
 
 const StyledEntries = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   width: 100%;
-  display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px;
@@ -20,9 +22,10 @@ const StyledEntries = styled.div`
 const Entries = () => {
   const moods = useSelector(selectMoods);
   const entriesLoading = useSelector(selectMoodsLoading);
+  const activeTab = useSelector(selectActiveTab);
 
   return (
-    <StyledEntries>
+    <StyledEntries show={activeTab === Tab.Entries}>
       <LoadingLine loading={entriesLoading} />
       {moods.length > 0 &&
         moods
