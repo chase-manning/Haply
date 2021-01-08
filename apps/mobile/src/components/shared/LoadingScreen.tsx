@@ -50,7 +50,7 @@ const Complete = styled.div`
   border-radius: 5px;
   width: ${(props: LoadingProgresProps) => props.width};
   background-color: var(--primary);
-  transition: all 0.5s ease-out;
+  transition: all 0.2s ease-out;
 `;
 
 const Percent = styled.div`
@@ -69,57 +69,42 @@ const Text = styled.div`
 
 const LoadingScreen = () => {
   const loading = useSelector(selectDataLoading);
-  const loadingRef = useRef(loading);
-  loadingRef.current = loading;
-
   const loadingSteps = useSelector(selectLoadingSteps);
-  const loadingStepsRef = useRef(loadingSteps);
-  loadingStepsRef.current = loadingSteps;
-
   const [ms, setMs] = useState(0);
-  const msRef = useRef(ms);
-  msRef.current = ms;
-
   const [stepsComplete, setStepsComplete] = useState(0);
-  const stepsCompleteRef = useRef(stepsComplete);
-  stepsCompleteRef.current = stepsComplete;
-
   const [percent, setPercent] = useState(0);
-  const percentRef = useRef(percent);
-  percentRef.current = percent;
 
-  const percentFomatted = Math.round(percent * 100) + "%";
-
-  const getStepsComplete = () =>
-    loadingStepsRef.current.filter((step: boolean) => !step).length;
-
-  const getModifier = () => {
-    const interval = 1 / loadingSteps.length;
-    let multiplier = 0.177 * Math.log(msRef.current) - 0.541;
-    multiplier = Math.min(Math.max(multiplier, 0), 0.9);
-    return multiplier * interval;
-  };
+  const percentFomatted = Math.min(Math.round(percent * 100), 100) + "%";
 
   const updateLoading = () => {
-    const newStepsComplete = getStepsComplete();
-    if (stepsCompleteRef.current === newStepsComplete) {
-      const basePercent = newStepsComplete / loadingStepsRef.current.length;
-      setPercent(basePercent * getModifier());
-      setMs(msRef.current + 100);
+    const newStepsComplete = loadingSteps.filter((step: boolean) => !step)
+      .length;
+    if (stepsComplete === newStepsComplete) {
+      const basePercent = newStepsComplete / loadingSteps.length;
+      const interval = 1 / loadingSteps.length;
+      let multiplier = 0.177 * Math.log(ms) - 0.541;
+      multiplier = Math.min(Math.max(multiplier, 0), 0.9);
+      const modifier = multiplier * interval;
+      setPercent(basePercent + modifier);
+      setMs(ms + 100);
     } else {
+      console.log("resetting");
       setStepsComplete(newStepsComplete);
       setMs(0);
     }
-    if (percentRef.current !== 1) setTimeout(() => updateLoading(), 100);
+    if (percent !== 1) setTimeout(() => updateLoadingRef.current(), 100);
   };
 
+  const updateLoadingRef = useRef(updateLoading);
+  updateLoadingRef.current = updateLoading;
+
   useEffect(
-    () => updateLoading(),
+    () => updateLoadingRef.current(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
-  if (percent === 1) return null;
+  if (percent >= 1) return null;
 
   return (
     <StyledLoadingScreen>
