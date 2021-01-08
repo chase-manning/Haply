@@ -1,16 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import Close from "@material-ui/icons/Close";
-import { Button } from "../../styles/Shared";
+import { Button, HideComponentProps } from "../../styles/Shared";
 
 const StyledPopup = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   position: fixed;
   height: 100%;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 1;
-  display: flex;
   justify-content: center;
   align-items: center;
 `;
@@ -74,10 +74,8 @@ type Props = {
 };
 
 const Popup = (props: Props) => {
-  if (!props.open) return null;
-
   return (
-    <StyledPopup>
+    <StyledPopup show={props.open}>
       <Shadow
         onClick={() => {
           if (!props.important) props.close();
