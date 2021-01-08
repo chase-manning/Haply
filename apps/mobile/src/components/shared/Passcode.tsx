@@ -11,10 +11,12 @@ import {
 } from "../../state/navigationSlice";
 import ExitBar from "./ExitBar";
 import { Plugins } from "@capacitor/core";
+import { HideComponentProps } from "../../styles/Shared";
 
 const { App, Storage, Haptics } = Plugins;
 
 const StyledPasscode = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -22,7 +24,6 @@ const StyledPasscode = styled.div`
   height: 100%;
   background-color: var(--bg);
   padding: 30px;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
@@ -124,9 +125,8 @@ const Passcode = () => {
     });
   };
 
-  if (passcode === undefined || (passcode.length === 4 && !locked)) return null;
-
   const headerText = () => {
+    if (!passcode) return "";
     if (passcode.length === 0) {
       if (state.saved.length < 4) return "Set Passcode";
       else return "Confirm Passcode";
@@ -149,14 +149,16 @@ const Passcode = () => {
     } else setState({ ...state, passcode: newPasscode });
   };
 
+  const show = !!passcode && (passcode.length != 4 || locked);
+
   return (
-    <StyledPasscode>
+    <StyledPasscode show={show}>
       <ExitBar
         exit={() => {
           dispatch(disablePasscode());
           reset();
         }}
-        hideExit={passcode.length === 4}
+        hideExit={!!passcode && passcode.length === 4}
       />
       <PasscodeContent>
         <Header>{headerText()}</Header>
