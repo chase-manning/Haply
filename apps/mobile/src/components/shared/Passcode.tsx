@@ -126,7 +126,7 @@ const Passcode = () => {
   };
 
   const headerText = () => {
-    if (!passcode) return "";
+    if (passcode === undefined) return "";
     if (passcode.length === 0) {
       if (state.saved.length < 4) return "Set Passcode";
       else return "Confirm Passcode";
@@ -149,7 +149,11 @@ const Passcode = () => {
     } else setState({ ...state, passcode: newPasscode });
   };
 
-  const show = !!passcode && (passcode.length != 4 || locked);
+  console.log("meow");
+  console.log(!!passcode);
+  console.log(passcode?.length);
+  console.log(locked);
+  const show = passcode !== undefined && (passcode.length != 4 || locked);
 
   return (
     <StyledPasscode show={show}>
