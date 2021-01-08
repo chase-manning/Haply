@@ -19,15 +19,16 @@ const StyledLoadingScreen = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 80%;
+  align-items: center;
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: 70%;
 `;
 
 const BarContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 40px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -53,15 +54,15 @@ const Complete = styled.div`
 const Percent = styled.div`
   margin-left: 10px;
   color: var(--main);
-  font-size: 12px;
+  font-size: 14px;
 `;
 
 const Text = styled.div`
   width: 100%;
   text-align: center;
   color: var(--main);
-  font-size: 20px;
-  margin-top: 20px;
+  font-size: 18px;
+  margin-top: 15px;
 `;
 
 const LoadingScreen = () => {
