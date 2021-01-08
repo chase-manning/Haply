@@ -16,7 +16,7 @@ import { Capacitor } from "@capacitor/core";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 // import CasinoIcon from "@material-ui/icons/Casino";
-import { Button } from "../../styles/Shared";
+import { Button, HideComponentProps } from "../../styles/Shared";
 import {
   selectProductPrice,
   setFree,
@@ -30,13 +30,13 @@ const { Device } = Plugins;
 const productId = "69";
 
 const StyledPremium = styled.div`
+  display: ${(props: HideComponentProps) => (props.show ? "flex" : "none")};
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-color: var(--bg-mid);
-  display: flex;
   flex-direction: column;
   align-items: center;
   padding: 30px;
@@ -132,10 +132,8 @@ const Premium = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!premium) return null;
-
   return (
-    <StyledPremium>
+    <StyledPremium show={premium}>
       <ExitBar exit={() => dispatch(hidePremium())} />
       <Header
         onClick={() => {
