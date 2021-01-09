@@ -28,6 +28,7 @@ type Props = {
   tags: string[];
   setTags: (tags: string[]) => void;
   text: string;
+  hideContextMenu?: boolean;
 };
 
 const TagInput = (props: Props) => {
@@ -37,19 +38,21 @@ const TagInput = (props: Props) => {
     <StyledTagInput>
       {props.text}
       <ClickHandler onClick={() => setState({ ...state, open: true })} />
-      <ContextMenu
-        open={state.open}
-        options={props.tags.map((tag: string) => {
-          return {
-            text: tag,
-          };
-        })}
-        close={(selected: string[]) => {
-          props.setTags(selected);
-          setState({ ...state, open: false });
-        }}
-        multiSelect={true}
-      />
+      {!props.hideContextMenu && (
+        <ContextMenu
+          open={state.open}
+          options={props.tags.map((tag: string) => {
+            return {
+              text: tag,
+            };
+          })}
+          close={(selected: string[]) => {
+            props.setTags(selected);
+            setState({ ...state, open: false });
+          }}
+          multiSelect={true}
+        />
+      )}
     </StyledTagInput>
   );
 };

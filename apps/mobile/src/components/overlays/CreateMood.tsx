@@ -70,7 +70,7 @@ const CreateMood = () => {
   const moods = useSelector(selectMoods);
   const dateOverride = useSelector(selectMoodDateSearch);
 
-  const clearState = () => setState({ ...new State() });
+  const clearState = () => setState(new State());
   const showError = () => setState({ ...state, loading: false, error: true });
 
   const submit = () => {
@@ -93,6 +93,7 @@ const CreateMood = () => {
         dispatch(addMood(newMood));
         dispatch(updateMoodDependencies());
         if (dateOverride) dispatch(updateDateSearchMoods());
+        console.log("Clearing State");
         clearState();
         dispatch(hideMood());
       })
@@ -122,6 +123,7 @@ const CreateMood = () => {
         }
         setPlacesTags={(tags: string[]) => setState({ ...state, places: tags })}
         setPeopleTags={(tags: string[]) => setState({ ...state, people: tags })}
+        hideContextMenus={!moodShowing}
       />
 
       <SliderSection>

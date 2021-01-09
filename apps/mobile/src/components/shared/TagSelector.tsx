@@ -34,6 +34,7 @@ type Props = {
   setActivitiesTags: (tags: string[]) => void;
   setPlacesTags: (tags: string[]) => void;
   setPeopleTags: (tags: string[]) => void;
+  hideContextMenus?: boolean;
 };
 
 const TagSelector = (props: Props) => {
@@ -50,6 +51,7 @@ const TagSelector = (props: Props) => {
           tags={feelings}
           setTags={(tags: string[]) => props.setFeelingTags(tags)}
           text={getTagText(props.feelings)}
+          hideContextMenu={props.hideContextMenus}
         />
       </TagSection>
       <TagSection>
@@ -58,6 +60,7 @@ const TagSelector = (props: Props) => {
           tags={activities}
           setTags={(tags: string[]) => props.setActivitiesTags(tags)}
           text={getTagText(props.activities)}
+          hideContextMenu={props.hideContextMenus}
         />
       </TagSection>
       <TagSection>
@@ -66,6 +69,7 @@ const TagSelector = (props: Props) => {
           tags={places}
           setTags={(tags: string[]) => props.setPlacesTags(tags)}
           text={getTagText(props.places)}
+          hideContextMenu={props.hideContextMenus}
         />
       </TagSection>
       <TagSection>
@@ -74,6 +78,7 @@ const TagSelector = (props: Props) => {
           tags={people}
           setTags={(tags: string[]) => props.setPeopleTags(tags)}
           text={getTagText(props.people)}
+          hideContextMenu={props.hideContextMenus}
         />
       </TagSection>
     </StyledTagSelector>
