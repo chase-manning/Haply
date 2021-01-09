@@ -2,7 +2,13 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ContextMenuOption, { Option } from "./ContextMenuOption";
 
-const StyledContextMenu = styled.div``;
+const StyledContextMenu = styled.div`
+  position: absolute;
+  bottom: 0;
+  height: 0;
+  left: 0;
+  width: 100%;
+`;
 
 const Options = styled.div`
   position: absolute;
@@ -17,6 +23,7 @@ const Options = styled.div`
   padding: 10px 15px;
   z-index: 2;
   font-size: 16px;
+  overflow-y: auto;
 `;
 
 const Exit = styled.div`
@@ -45,12 +52,18 @@ const ContextMenu = (props: Props) => {
   const contextMenuRef = useRef<HTMLHeadingElement>(null);
   const optionsRef = useRef<HTMLHeadingElement>(null);
 
-  const setOptionsPosition = (left: string, right: string, pos: string) => {
+  const setOptionsPosition = (
+    left: string,
+    right: string,
+    pos: string,
+    maxHeight?: string
+  ) => {
     let options = optionsRef.current;
     if (!options) return;
     options.style.left = left;
     options.style.right = right;
     options.style.transform = "translateX(" + pos + ") ";
+    if (maxHeight) options.style.maxHeight = maxHeight;
   };
 
   const correctPosition = () => {
@@ -60,7 +73,8 @@ const ContextMenu = (props: Props) => {
     if (!contextMenu || !options) return;
     const contextPosition = contextMenu.getBoundingClientRect();
 
-    setOptionsPosition("50%", "auto", "-50%");
+    const maxHeight = window.innerHeight - contextPosition.y - padding + "px";
+    setOptionsPosition("50%", "auto", "-50%", maxHeight);
 
     let optionsPosition = options.getBoundingClientRect();
     const rightMax = window.outerWidth - padding;
