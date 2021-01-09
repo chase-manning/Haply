@@ -48,13 +48,14 @@ const Complete = styled.div`
   border-radius: 5px;
   width: ${(props: LoadingProgresProps) => props.width};
   background-color: var(--primary);
-  transition: all 0.2s ease-out;
+  transition: width 1s;
 `;
 
 const Percent = styled.div`
   margin-left: 10px;
   color: var(--main);
   font-size: 14px;
+  min-width: 40px;
 `;
 
 const Text = styled.div`
@@ -71,7 +72,19 @@ const LoadingScreen = () => {
   const [stepsComplete, setStepsComplete] = useState(0);
   const [percent, setPercent] = useState(0);
 
-  const percentFomatted = Math.min(Math.round(percent * 100), 100) + "%";
+  const completeRef = useRef<HTMLHeadingElement>(null);
+  const incompleteRef = useRef<HTMLHeadingElement>(null);
+
+  const getActualPercent = () => {
+    if (!completeRef.current || !incompleteRef.current) return 1;
+    const completeWidth = completeRef.current.getBoundingClientRect().width;
+    const incompleteWidth = incompleteRef.current.getBoundingClientRect().width;
+    return completeWidth / incompleteWidth;
+  };
+
+  const formatPercent = (percentNumber: number) => {
+    return Math.min(Math.round(percentNumber * 100), 100) + "%";
+  };
 
   const updateLoading = () => {
     const newStepsComplete = loadingSteps.filter((step: boolean) => !step)
@@ -88,7 +101,8 @@ const LoadingScreen = () => {
       setStepsComplete(newStepsComplete);
       setMs(0);
     }
-    if (percent !== 1) setTimeout(() => updateLoadingRef.current(), 100);
+    if (getActualPercent() < 1)
+      setTimeout(() => updateLoadingRef.current(), 100);
   };
 
   const updateLoadingRef = useRef(updateLoading);
@@ -96,17 +110,17 @@ const LoadingScreen = () => {
 
   useEffect(() => updateLoadingRef.current(), []);
 
-  if (percent >= 1) return null;
+  if (getActualPercent() >= 1 && percent >= 1) return null;
 
   return (
     <StyledLoadingScreen>
       <Content>
         <Image src={feelingAmazing} />
         <BarContainer>
-          <Incomplete>
-            <Complete width={percentFomatted} />
+          <Incomplete ref={incompleteRef}>
+            <Complete ref={completeRef} width={formatPercent(percent)} />
           </Incomplete>
-          <Percent>{percentFomatted}</Percent>
+          <Percent>{formatPercent(getActualPercent())}</Percent>
         </BarContainer>
         <Text>Loading...</Text>
       </Content>
