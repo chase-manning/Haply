@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import ContextMenuOption, { Option } from "./ContextMenuOption";
 
@@ -8,7 +8,7 @@ const Options = styled.div`
   position: absolute;
   top: 100%;
   left: 50%;
-  transform: translateX(-50%) scaleY(0);
+  transform: translateX(-50%);
   background-color: var(--bg-mid);
   border-radius: 10px;
   box-shadow: var(--shadow);
@@ -50,8 +50,7 @@ const ContextMenu = (props: Props) => {
     if (!options) return;
     options.style.left = left;
     options.style.right = right;
-    const scale = "scaleY(" + (props.open ? "1" : "0") + ")";
-    options.style.transform = "translateX(" + pos + ") " + scale;
+    options.style.transform = "translateX(" + pos + ") ";
   };
 
   const correctPosition = () => {
@@ -74,20 +73,20 @@ const ContextMenu = (props: Props) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     correctPosition();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.open]);
 
+  if (!props.open) return null;
+
   return (
     <StyledContextMenu ref={contextMenuRef}>
-      {props.open && (
-        <Exit
-          onClick={() => {
-            props.close(state.selected);
-          }}
-        />
-      )}
+      <Exit
+        onClick={() => {
+          props.close(state.selected);
+        }}
+      />
       <Options ref={optionsRef}>
         {props.options.map((option: Option) => (
           <ContextMenuOption
