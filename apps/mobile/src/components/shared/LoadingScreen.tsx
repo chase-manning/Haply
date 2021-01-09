@@ -11,6 +11,7 @@ const StyledLoadingScreen = styled.div`
   width: 100%;
   height: 100%;
   background-color: var(--bg-mid);
+  transition: background-color 0.5s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,6 +39,7 @@ const BarContainer = styled.div`
 const Incomplete = styled.div`
   height: 10px;
   background-color: var(--primary-light);
+  transition: background-color 0.5s;
   border-radius: 5px;
   flex: 1;
 `;
@@ -48,12 +50,14 @@ const Complete = styled.div`
   border-radius: 5px;
   width: ${(props: LoadingProgresProps) => props.width};
   background-color: var(--primary);
+  transition: background-color 0.5s;
   transition: width 1s;
 `;
 
 const Percent = styled.div`
   margin-left: 10px;
   color: var(--main);
+  transition: color 0.5s;
   font-size: 14px;
   min-width: 40px;
 `;
@@ -62,6 +66,7 @@ const Text = styled.div`
   width: 100%;
   text-align: center;
   color: var(--main);
+  transition: color 0.5s;
   font-size: 18px;
   margin-top: 15px;
 `;
