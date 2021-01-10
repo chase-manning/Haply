@@ -9,6 +9,8 @@ import {
 } from "../../state/settingsSlice";
 
 const options = {
+  responsive: true,
+  maintainAspectRatio: false,
   legend: {
     display: false,
   },
@@ -22,6 +24,7 @@ const options = {
         ticks: {
           fontColor: "#9399A9",
           fontSize: "12",
+          autoSkip: false,
         },
       },
     ],
@@ -46,10 +49,15 @@ const options = {
   },
 };
 
+type StatProps = {
+  height: number;
+};
+
 const StyledStatComparison = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  height: ${(props: StatProps) => props.height + "px"};
 `;
 
 type Props = {
@@ -74,8 +82,10 @@ const StatComparison = (props: Props) => {
     ],
   };
 
+  const height = Math.max(props.dataPoints.length * 18, 150);
+
   return (
-    <StyledStatComparison>
+    <StyledStatComparison height={height}>
       <HorizontalBar data={data} options={options} />
     </StyledStatComparison>
   );
